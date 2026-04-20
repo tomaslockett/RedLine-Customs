@@ -1,3 +1,7 @@
 <Solution>
+  <Project Path="RedLine.Be/RedLine.BE.csproj" Id="f115ff04-2ee4-47fb-acc6-f25bf795ec7b" />
+  <Project Path="RedLine.Bll/RedLine.BLL.csproj" Id="12bfdcf7-d5de-4838-ae75-29605758c2de" />
+  <Project Path="RedLine.Dal/RedLine.DAL.csproj" Id="305ad79c-0a71-4930-98f5-d5d0e8fa2fe3" />
+  <Project Path="RedLine.Servicios/RedLine.Servicios.csproj" Id="29348c71-caad-4e9a-b78e-a59dc06482e2" />
   <Project Path="RedLine.Web/RedLine.Web.csproj" Id="483f207f-0c5c-4778-b6e2-371a574945b7" />
 </Solution>
