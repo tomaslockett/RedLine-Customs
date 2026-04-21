@@ -6,7 +6,8 @@ using System.Threading.Tasks;
 
 namespace RedLine.Be
 {
-    public class Class1
+    public class Auto
     {
+
     }
 }
