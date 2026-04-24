@@ -44,9 +44,16 @@
     <Compile Include="Auto.cs" />
     <Compile Include="AutoDecorator.cs" />
     <Compile Include="AutoDeportivo.cs" />
+    <Compile Include="Entidades\Factura.cs" />
+    <Compile Include="Interfaces\IRepositorioBasico.cs" />
     <Compile Include="MejorasAuto.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Usuario.cs" />
+    <Compile Include="Entidades\Usuario.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Abstracciones\" />
+    <Folder Include="DTOs\" />
+    <Folder Include="Emuns\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

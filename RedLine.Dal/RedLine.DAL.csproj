@@ -41,8 +41,15 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DAL_Usuario.cs" />
+    <Compile Include="AbstractDAL.cs" />
+    <Compile Include="Mappers\DAL_Usuario.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\RedLine.Be\RedLine.BE.csproj">
+      <Project>{f115ff04-2ee4-47fb-acc6-f25bf795ec7b}</Project>
+      <Name>RedLine.BE</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
