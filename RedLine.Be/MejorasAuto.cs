@@ -52,5 +52,4 @@ namespace RedLine.Be
 
         public override int GetAceleracion() => _auto.GetAceleracion() + 25;
     }
-}
-}
+ }
