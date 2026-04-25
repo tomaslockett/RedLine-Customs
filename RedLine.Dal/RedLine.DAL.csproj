@@ -33,6 +33,7 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Numerics" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -43,12 +44,17 @@
   <ItemGroup>
     <Compile Include="AbstractDAL.cs" />
     <Compile Include="Mappers\DAL_Usuario.cs" />
+    <Compile Include="ORM\SqlEnsamblador.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\RedLine.Be\RedLine.BE.csproj">
       <Project>{f115ff04-2ee4-47fb-acc6-f25bf795ec7b}</Project>
       <Name>RedLine.BE</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\RedLine.Servicios\RedLine.Servicios.csproj">
+      <Project>{29348c71-caad-4e9a-b78e-a59dc06482e2}</Project>
+      <Name>RedLine.Servicios</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
