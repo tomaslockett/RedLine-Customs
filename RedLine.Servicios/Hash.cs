@@ -10,7 +10,7 @@ namespace RedLine.Servicios
         {
             using (SHA256 sha256 = SHA256.Create())
             {
-                byte[] inputBytes = Encoding.UTF8.GetBytes(password);
+                byte[] inputBytes = Encoding.UTF8.GetBytes(contraseña);
                 byte[] hashBytes = sha256.ComputeHash(inputBytes);
                 StringBuilder sb = new StringBuilder();
                 for (int i = 0; i < hashBytes.Length; i++)

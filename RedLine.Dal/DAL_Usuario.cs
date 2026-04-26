@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using RedLine.Be;
 
 namespace RedLine.Dal
 {
@@ -12,10 +13,10 @@ namespace RedLine.Dal
 
         public void AltaUsuario(Usuario usuario)
         {
-            string query = @"INSERT INTO Usuario (Username, Contraseña, Rol, Intentos, Bloqueado, UltimoIntento) 
-                             VALUES (@Username, @Contraseña, @Rol, 0, 0, @UltimoIntento)";
+            string query = @"INSERT INTO Usuario (Username, Contraseña, Rol, Intentos, Bloqueado, Activo, UltimoIntento) 
+                             VALUES (@Username, @Contraseña, @Rol, 0, 0, 0, @UltimoIntento)";
 
-            using (SqlConnection con = new SqlConnection(connectionString))
+            using (SqlConnection con = new SqlConnection(cx))
             {
                 SqlCommand cmd = new SqlCommand(query, con);
                 cmd.Parameters.AddWithValue("@Username", usuario.Username);
@@ -28,34 +29,49 @@ namespace RedLine.Dal
             }
         }
 
-        public void BajaUsuario(int id)
+        public void ActivarUsuario(Usuario usuario)
         {
-            string query = "DELETE FROM Usuario WHERE ID = @ID";
-
-            using (SqlConnection con = new SqlConnection(connectionString))
+            string consulta = "UPDATE Usuario SET Activo = 1 WHERE ID = @ID";
+            using (SqlConnection conexion = new SqlConnection(cx))
             {
-                SqlCommand cmd = new SqlCommand(query, con);
-                cmd.Parameters.AddWithValue("@ID", id);
+                conexion.Open();
+                using (SqlCommand comando = new SqlCommand(consulta, conexion))
+                {
+                    comando.Parameters.AddWithValue("@ID", usuario.ID);
 
-                con.Open();
-                cmd.ExecuteNonQuery();
+                    comando.ExecuteNonQuery();
+                }
             }
         }
 
-        public void ModificarUsuario(Usuario usuario)
+        public void DesactivarUsuario(Usuario usuario)
+        {
+            string consulta = "UPDATE Usuario SET Activo = 0 WHERE ID = @ID";
+            using (SqlConnection conexion = new SqlConnection(cx))
+            {
+                conexion.Open();
+                using (SqlCommand comando = new SqlCommand(consulta, conexion))
+                {
+                    comando.Parameters.AddWithValue("@ID", usuario.ID);
+
+                    comando.ExecuteNonQuery();
+                }
+            }
+        }
+
+        public void ActualizarUsuario(Usuario usuario)
         {
             string query = @"UPDATE Usuario
                              SET Username = @Username, Rol = @Rol, Bloqueado = @Bloqueado 
                              WHERE ID = @ID";
 
-            using (SqlConnection con = new SqlConnection(connectionString))
+            using (SqlConnection con = new SqlConnection(cx))
             {
                 SqlCommand cmd = new SqlCommand(query, con);
                 cmd.Parameters.AddWithValue("@Username", usuario.Username);
                 cmd.Parameters.AddWithValue("@Rol", usuario.Rol);
                 cmd.Parameters.AddWithValue("@Bloqueado", usuario.Bloqueado);
-                cmd.Parameters.AddWithValue("@ID", usuario.ID);
-
+                cmd.Parameters.AddWithValue("@Activo", usuario.Activo);
                 con.Open();
                 cmd.ExecuteNonQuery();
             }
@@ -66,7 +82,7 @@ namespace RedLine.Dal
             List<Usuario> lista = new List<Usuario>();
             string query = "SELECT * FROM Usuario";
 
-            using (SqlConnection con = new SqlConnection(connectionString))
+            using (SqlConnection con = new SqlConnection(cx))
             {
                 SqlCommand cmd = new SqlCommand(query, con);
                 con.Open();
@@ -81,6 +97,7 @@ namespace RedLine.Dal
                             reader["Rol"].ToString(),
                             Convert.ToInt32(reader["Intentos"]),
                             Convert.ToBoolean(reader["Bloqueado"]),
+                            Convert.ToBoolean(reader["Activo"]),
                             Convert.ToDateTime(reader["UltimoIntento"])
                         ));
                     }
@@ -123,6 +140,7 @@ namespace RedLine.Dal
                             reader["Rol"].ToString(),
                             Convert.ToInt32(reader["Intentos"]),
                             Convert.ToBoolean(reader["Bloqueado"]),
+                            Convert.ToBoolean(reader["Activo"]),
                             Convert.ToDateTime(reader["UltimoIntento"])
                         );
                     }
