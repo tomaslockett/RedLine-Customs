@@ -1,21 +1,22 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Redline.Be;
+using RedLine.Dal;
 using Redline.Servicios;
 
 namespace RedLine.Bll
 {
-    public class BLL_Usuario
+    public class BLL_Usuario : AbstractBLL<int, Usuario>
     {
-        private DAL_Usuario _usuarioDAL = new DAL_Usuario();
+        public BLL_Usuario() : base(new DAL_Usuario()) { }
+
+        private DAL_Usuario Repo => (DAL_Usuario)_repositorio;
 
         public LoginResult Login(string username, string contraseña)
         {
             if (SessionManager.Instancia.IsLogged()) throw new LoginException(LoginResult.UserAlreadyLoggedIn);
 
-            Usuario user = _usuarioDAL.ObtenerPorUsername(username);
+            Usuario user = Repo.ObtenerPorUsername(username);
 
             if (user == null) throw new LoginException(LoginResult.InvalidUsername);
 
@@ -32,7 +33,7 @@ namespace RedLine.Bll
                 user.Intentos = 0;
             }
 
-            if (user.Activo == false) throw new Exception(LoginResult.UserInactive);
+            if (!user.Activo) throw new Exception("Usuario inactivo");
 
             string passHasheada = Hashing.HashearPassword(contraseña);
             if (!user.Contraseña.Equals(passHasheada))
@@ -41,13 +42,13 @@ namespace RedLine.Bll
                 user.UltimoIntento = DateTime.Now;
                 if (user.Intentos >= 3) user.Bloqueado = true;
 
-                _usuarioDAL.ActualizarUsuario(user);
+                this.Modificar(user);
                 throw new LoginException(LoginResult.InvalidPassword);
             }
 
             user.Intentos = 0;
             user.UltimoIntento = DateTime.Now;
-            _usuarioDAL.ActualizarUsuario(user);
+            this.Modificar(user);
             SessionManager.Instancia.Login(user);
             return LoginResult.ValidUser;
         }
@@ -55,26 +56,24 @@ namespace RedLine.Bll
         public void AltaUsuario(Usuario usuario)
         {
             usuario.Contraseña = Hashing.HashearPassword(usuario.Contraseña);
-            _usuarioDAL.AltaUsuario(usuario);
+            this.Insertar(usuario);
         }
 
         public void ActualizarUsuario(Usuario usuario)
         {
-            _usuarioDAL.ActualizarUsuario(usuario);
+            this.Modificar(usuario);
         }
 
         public List<Usuario> ObtenerUsuarios()
         {
-            List<Usuario> usuarios = new List<Usuario>();
-            return usuarios;
+            return this.Listar();
         }
 
         public void DesbloquearUsuario(Usuario usuario)
         {
-            _usuarioDAL.DesbloquearUsuario(usuario);
             usuario.Bloqueado = false;
             usuario.Intentos = 0;
-            _usuarioDAL.ActualizarUsuario(usuario);
+            this.Modificar(usuario);
         }
 
         public void Logout()
@@ -85,12 +84,14 @@ namespace RedLine.Bll
 
         public void Activar(Usuario usuario)
         {
-            _usuarioDAL.Activar(usuario);
+            usuario.Activo = true;
+            this.Modificar(usuario);
         }
 
         public void Desactivar(Usuario usuario)
         {
-            _usuarioDAL.Desactivar(usuario);
+            usuario.Activo = false;
+            this.Modificar(usuario);
         }
     }
 }
