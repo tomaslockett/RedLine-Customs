@@ -10,9 +10,9 @@ using System.Threading.Tasks;
 
 namespace RedLine.Bll
 {
-    public class DigitoVerificadorBLL : AbstractBLL<string, DigitoVerificador>
+    public class BLL_DigitoVerificador : AbstractBLL<string, DigitoVerificador>
     {
-        public DigitoVerificadorBLL() : base(new DAL_DigitoVerificador())
+        public BLL_DigitoVerificador() : base(new DAL_DigitoVerificador())
         {
         }
 
@@ -65,7 +65,7 @@ namespace RedLine.Bll
         {
             var listaInstancias = new List<IGestorIntegridad>();
 
-            var tiposVerificables = Assembly.GetExecutingAssembly().GetTypes().Where(tipo => typeof(IGestorIntegridad).IsAssignableFrom(tipo) && !tipo.IsInterface && !tipo.IsAbstract && tipo != typeof(DigitoVerificadorBLL)); 
+            var tiposVerificables = Assembly.GetExecutingAssembly().GetTypes().Where(tipo => typeof(IGestorIntegridad).IsAssignableFrom(tipo) && !tipo.IsInterface && !tipo.IsAbstract && tipo != typeof(BLL_DigitoVerificador)); 
 
             foreach (var tipo in tiposVerificables)
             {
