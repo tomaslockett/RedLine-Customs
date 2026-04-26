@@ -8,7 +8,7 @@ using RedLine.Be.Entidades;
 
 namespace RedLine.Bll
 {
-    public class UsuarioBLL : AbstractBLL<int, Usuario>
-    {
-    }
+    //public class UsuarioBLL : AbstractBLL<int, Usuario>
+    //{
+    //}
 }
