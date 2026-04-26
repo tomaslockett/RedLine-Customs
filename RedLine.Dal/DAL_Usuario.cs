@@ -1,152 +1,81 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
+using System.Data.SqlClient;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using RedLine.Be;
+using Redline.Be;
 
 namespace RedLine.Dal
 {
-    public class DAL_Usuario 
+    public class DAL_Usuario : AbstractDAL<int, Usuario>
     {
-        private string cx = "cadena coming soon";
+        protected override string NombreTabla => "Usuario";
+        protected override bool RequiereDigitoVerificador => true;
 
-        public void AltaUsuario(Usuario usuario)
+        protected override string SqlInsertar =>
+            @"INSERT INTO Usuario (Username, Contraseña, Rol, Intentos, Bloqueado, Activo, UltimoIntento) 
+              VALUES (@Username, @Contraseña, @Rol, 0, 0, 1, @UltimoIntento)";
+
+        protected override string SqlModificar =>
+            @"UPDATE Usuario SET Username = @Username, Rol = @Rol, Bloqueado = @Bloqueado, 
+              Activo = @Activo, Intentos = @Intentos, UltimoIntento = @UltimoIntento WHERE ID = @ID";
+
+        protected override string SqlEliminar => "DELETE FROM Usuario WHERE ID = @ID";
+        protected override string SqlListar => "SELECT * FROM Usuario";
+        protected override string SqlObtenerPorId => "SELECT * FROM Usuario WHERE ID = @ID";
+
+        protected override void ConfigurarParametros(SqlCommand cmd, Usuario entidad)
         {
-            string query = @"INSERT INTO Usuario (Username, Contraseña, Rol, Intentos, Bloqueado, Activo, UltimoIntento) 
-                             VALUES (@Username, @Contraseña, @Rol, 0, 0, 0, @UltimoIntento)";
-
-            using (SqlConnection con = new SqlConnection(cx))
-            {
-                SqlCommand cmd = new SqlCommand(query, con);
-                cmd.Parameters.AddWithValue("@Username", usuario.Username);
-                cmd.Parameters.AddWithValue("@Contraseña", usuario.Contraseña);
-                cmd.Parameters.AddWithValue("@Rol", usuario.Rol);
-                cmd.Parameters.AddWithValue("@UltimoIntento", DateTime.Now);
-
-                con.Open();
-                cmd.ExecuteNonQuery();
-            }
+            if (entidad.ID > 0) cmd.Parameters.AddWithValue("@ID", entidad.ID);
+            cmd.Parameters.AddWithValue("@Username", entidad.Username);
+            cmd.Parameters.AddWithValue("@Contraseña", entidad.Contraseña);
+            cmd.Parameters.AddWithValue("@Rol", entidad.Rol);
+            cmd.Parameters.AddWithValue("@Bloqueado", entidad.Bloqueado);
+            cmd.Parameters.AddWithValue("@Activo", entidad.Activo);
+            cmd.Parameters.AddWithValue("@Intentos", entidad.Intentos);
+            cmd.Parameters.AddWithValue("@UltimoIntento", entidad.UltimoIntento);
         }
 
-        public void ActivarUsuario(Usuario usuario)
+        protected override void ConfigurarParametrosId(SqlCommand cmd, int id)
         {
-            string consulta = "UPDATE Usuario SET Activo = 1 WHERE ID = @ID";
-            using (SqlConnection conexion = new SqlConnection(cx))
-            {
-                conexion.Open();
-                using (SqlCommand comando = new SqlCommand(consulta, conexion))
-                {
-                    comando.Parameters.AddWithValue("@ID", usuario.ID);
-
-                    comando.ExecuteNonQuery();
-                }
-            }
+            cmd.Parameters.AddWithValue("@ID", id);
         }
 
-        public void DesactivarUsuario(Usuario usuario)
+        protected override Usuario Mapear(SqlDataReader lector)
         {
-            string consulta = "UPDATE Usuario SET Activo = 0 WHERE ID = @ID";
-            using (SqlConnection conexion = new SqlConnection(cx))
-            {
-                conexion.Open();
-                using (SqlCommand comando = new SqlCommand(consulta, conexion))
-                {
-                    comando.Parameters.AddWithValue("@ID", usuario.ID);
-
-                    comando.ExecuteNonQuery();
-                }
-            }
-        }
-
-        public void ActualizarUsuario(Usuario usuario)
-        {
-            string query = @"UPDATE Usuario
-                             SET Username = @Username, Rol = @Rol, Bloqueado = @Bloqueado 
-                             WHERE ID = @ID";
-
-            using (SqlConnection con = new SqlConnection(cx))
-            {
-                SqlCommand cmd = new SqlCommand(query, con);
-                cmd.Parameters.AddWithValue("@Username", usuario.Username);
-                cmd.Parameters.AddWithValue("@Rol", usuario.Rol);
-                cmd.Parameters.AddWithValue("@Bloqueado", usuario.Bloqueado);
-                cmd.Parameters.AddWithValue("@Activo", usuario.Activo);
-                con.Open();
-                cmd.ExecuteNonQuery();
-            }
-        }
-
-        public List<Usuario> ObtenerUsuarios()
-        {
-            List<Usuario> lista = new List<Usuario>();
-            string query = "SELECT * FROM Usuario";
-
-            using (SqlConnection con = new SqlConnection(cx))
-            {
-                SqlCommand cmd = new SqlCommand(query, con);
-                con.Open();
-                using (SqlDataReader reader = cmd.ExecuteReader())
-                {
-                    while (reader.Read())
-                    {
-                        lista.Add(new Usuario(
-                            Convert.ToInt32(reader["ID"]),
-                            reader["Username"].ToString(),
-                            reader["Contraseña"].ToString(),
-                            reader["Rol"].ToString(),
-                            Convert.ToInt32(reader["Intentos"]),
-                            Convert.ToBoolean(reader["Bloqueado"]),
-                            Convert.ToBoolean(reader["Activo"]),
-                            Convert.ToDateTime(reader["UltimoIntento"])
-                        ));
-                    }
-                }
-            }
-            return lista;
-        }
-
-        public void DesbloquearUsuario(Usuario usuario)
-        {
-            string query = "UPDATE Usuario SET Bloqueado = 0 WHERE ID = @id";
-            using (SqlConnection conexion = new SqlConnection(cx))
-            {
-                conexion.Open();
-                using (SqlCommand comando = new SqlCommand(consulta, conexion))
-                {
-                    comando.Parameters.AddWithValue("@ID", usuario.ID);
-
-                    comando.ExecuteNonQuery();
-                }
-            }
+            return new Usuario(
+                Convert.ToInt32(lector["ID"]),
+                lector["Username"].ToString(),
+                lector["Contraseña"].ToString(),
+                lector["Rol"].ToString(),
+                Convert.ToInt32(lector["Intentos"]),
+                Convert.ToBoolean(lector["Bloqueado"]),
+                Convert.ToBoolean(lector["Activo"]),
+                Convert.ToDateTime(lector["UltimoIntento"])
+            );
         }
 
         public Usuario ObtenerPorUsername(string username)
         {
-            string query = "SELECT * FROM Usuario WHERE Username = @Username";
-            using (SqlConnection con = new SqlConnection(cx))
+            using (var con = new SqlConnection(cx))
             {
-                SqlCommand cmd = new SqlCommand(query, con);
-                cmd.Parameters.AddWithValue("@Username", username);
                 con.Open();
-                using (SqlDataReader reader = cmd.ExecuteReader())
+                string query = "SELECT * FROM Usuario WHERE Username = @un";
+                using (var cmd = new SqlCommand(query, con))
                 {
-                    if (reader.Read())
+                    cmd.Parameters.AddWithValue("@un", username);
+                    using (var reader = cmd.ExecuteReader())
                     {
-                        return new Usuario(
-                            Convert.ToInt32(reader["ID"]),
-                            reader["Username"].ToString(),
-                            reader["Contraseña"].ToString(),
-                            reader["Rol"].ToString(),
-                            Convert.ToInt32(reader["Intentos"]),
-                            Convert.ToBoolean(reader["Bloqueado"]),
-                            Convert.ToBoolean(reader["Activo"]),
-                            Convert.ToDateTime(reader["UltimoIntento"])
-                        );
+                        if (reader.Read()) return Mapear(reader);
                     }
                 }
             }
             return null;
+        }
+
+        public override Usuario ObtenerPorEntidad(Usuario entidad)
+        {
+            return ObtenerPorUsername(entidad.Username);
         }
     }
 }
