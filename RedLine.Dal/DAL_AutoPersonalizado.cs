@@ -53,5 +53,44 @@ namespace RedLine.Dal
         }
 
         public override AutoPersonalizado ObtenerPorEntidad(AutoPersonalizado entidad) => ObtenerPorId(entidad.ID);
+
+        public void GuardarAutoCompleto(AutoPersonalizado auto)
+        {
+            using (SqlConnection con = new SqlConnection(cx))
+            {
+                con.Open();
+                SqlTransaction tra = con.BeginTransaction();
+
+                try
+                {
+                    SqlCommand cmdAuto = new SqlCommand(SqlInsertar, con, tra);
+                    ConfigurarParametros(cmdAuto, auto);
+                    int idGenerado = Convert.ToInt32(cmdAuto.ExecuteScalar());
+                    auto.ID = idGenerado;
+
+                    DAL_Mejora dalMejora = new DAL_Mejora();
+
+                    foreach (var mejora in auto.Mejoras)
+                    {
+                        dalMejora.RestarStock(mejora.ID, 1, con, tra);
+
+                        string queryRelacion = "INSERT INTO Auto_Mejora (ID_Auto, ID_Mejora) VALUES (@idA, @idM)";
+                        using (SqlCommand cmdRel = new SqlCommand(queryRelacion, con, tra))
+                        {
+                            cmdRel.Parameters.AddWithValue("@idA", auto.ID);
+                            cmdRel.Parameters.AddWithValue("@idM", mejora.ID);
+                            cmdRel.ExecuteNonQuery();
+                        }
+                    }
+
+                    tra.Commit();
+                }
+                catch (Exception ex)
+                {
+                    tra.Rollback();
+                    throw new Exception("Error al guardar el auto y sus mejoras: " + ex.Message);
+                }
+            }
+        }
     }
 }
