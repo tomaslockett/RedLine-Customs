@@ -53,20 +53,10 @@ namespace RedLine.Bll
             return LoginResult.ValidUser;
         }
 
-        public void AltaUsuario(Usuario usuario)
+        public override void Insertar(Usuario usuario)
         {
             usuario.Contraseña = Hashing.HashearPassword(usuario.Contraseña);
             this.Insertar(usuario);
-        }
-
-        public void ActualizarUsuario(Usuario usuario)
-        {
-            this.Modificar(usuario);
-        }
-
-        public List<Usuario> ObtenerUsuarios()
-        {
-            return this.Listar();
         }
 
         public void DesbloquearUsuario(Usuario usuario)
