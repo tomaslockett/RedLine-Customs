@@ -7,7 +7,7 @@ using RedLine.Be.Interfaces;
 
 namespace RedLine.Bll
 {
-    public abstract class AbstractBLL<TKey, entidad> : IRepositorioBasico<TKey, entidad>
+    public abstract class AbstractBLL<TKey, entidad> : IRepositorioBasico<TKey, entidad>, IGestorIntegridad
     {
         protected IRepositorioBasico<TKey, entidad> _repositorio;
 
@@ -45,5 +45,41 @@ namespace RedLine.Bll
         {
             return _repositorio.ObtenerPorEntidad(entidad);
         }
+
+        #region Digitos Verificadores
+
+        //Gatilla el recálculo de los códigos de integridad en la base de datos.
+
+        public virtual void RecalcularIntegridad()
+        {
+            // Verificamos si el repositorio actual implementa la interfaz de seguridad
+            if (_repositorio is IGestorIntegridad repoSeguro)
+            {
+                repoSeguro.RecalcularIntegridad();
+            }
+        }
+
+        // Calcula los códigos actuales de la tabla para comparar contra los guardados.
+        public virtual (string DVH, string DVV) CalcularIntegridadActual()
+        {
+            if (_repositorio is IGestorIntegridad repoSeguro)
+            {
+                return repoSeguro.CalcularIntegridadActual();
+            }
+            return ("N/A", "N/A");
+        }
+
+
+        // Retorna el nombre de la tabla que este BLL gestiona.
+        public virtual string ObtenerNombreTabla()
+        {
+            if (_repositorio is IGestorIntegridad repoSeguro)
+            {
+                return repoSeguro.ObtenerNombreTabla();
+            }
+            return "Tabla_No_Protegida";
+        }
+
+        #endregion
     }
 }

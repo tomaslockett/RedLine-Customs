@@ -42,7 +42,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DigitoVerificador.cs" />
+    <Compile Include="MotorDigitoVerificador.cs" />
     <Compile Include="Hashing.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

@@ -44,7 +44,9 @@
     <Compile Include="Auto.cs" />
     <Compile Include="AutoDecorator.cs" />
     <Compile Include="AutoDeportivo.cs" />
+    <Compile Include="Entidades\DigitoVerificador.cs" />
     <Compile Include="Entidades\Factura.cs" />
+    <Compile Include="Interfaces\IGestorIntegridad.cs" />
     <Compile Include="Interfaces\IRepositorioBasico.cs" />
     <Compile Include="MejorasAuto.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
