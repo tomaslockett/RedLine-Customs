@@ -43,8 +43,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AbstractDAL.cs" />
-    <Compile Include="DigitoVerificadorDAL.cs" />
+    <Compile Include="Mappers\DAL_AutoBase.cs" />
+    <Compile Include="Mappers\DAL_AutoPersonalizado.cs" />
+    <Compile Include="Mappers\DAL_Cliente.cs" />
+    <Compile Include="Mappers\DAL_Mejora.cs" />
     <Compile Include="Mappers\DAL_Usuario.cs" />
+    <Compile Include="Mappers\DAL_DigitoVerificador.cs" />
     <Compile Include="ORM\SqlEnsamblador.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

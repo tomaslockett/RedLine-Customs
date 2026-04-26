@@ -1,4 +1,6 @@
 ﻿using System;
+using Redline.Be;
+using RedLine.Be.Entidades;
 
 namespace RedLine.Servicios
 {

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace RedLine.Servicios
+namespace RedLine.BLL
 {
     public class LoginException : Exception
     {

@@ -41,14 +41,19 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Auto.cs" />
-    <Compile Include="AutoDecorator.cs" />
-    <Compile Include="AutoDeportivo.cs" />
+    <Compile Include="Entidades\AutoBase.cs" />
+    <Compile Include="Entidades\AutoPersonalizacion\Aleron.cs" />
+    <Compile Include="Entidades\AutoPersonalizacion\KitCarroceria.cs" />
+    <Compile Include="Entidades\AutoPersonalizacion\Llantas.cs" />
+    <Compile Include="Entidades\AutoPersonalizacion\Pintura.cs" />
+    <Compile Include="Entidades\AutoPersonalizacion\Suspension.cs" />
+    <Compile Include="Entidades\AutoPersonalizado.cs" />
+    <Compile Include="Entidades\Cliente.cs" />
     <Compile Include="Entidades\DigitoVerificador.cs" />
     <Compile Include="Entidades\Factura.cs" />
     <Compile Include="Interfaces\IGestorIntegridad.cs" />
     <Compile Include="Interfaces\IRepositorioBasico.cs" />
-    <Compile Include="MejorasAuto.cs" />
+    <Compile Include="Entidades\Mejora.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Entidades\Usuario.cs" />
   </ItemGroup>

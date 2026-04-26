@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace RedLine.Dal
 {
-    public class DigitoVerificadorDAL : AbstractDAL<string, DigitoVerificador>
+    public class DAL_DigitoVerificador : AbstractDAL<string, DigitoVerificador>
     {
         protected override string NombreTabla => "DigitoVerificador";
 

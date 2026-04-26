@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace RedLine.Servicios
+namespace RedLine.BLL
 {
     public enum LoginResult
     {

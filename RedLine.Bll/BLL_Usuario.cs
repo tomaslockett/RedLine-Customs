@@ -1,8 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using Redline.Be;
+using RedLine.BLL;
 using RedLine.Dal;
-using Redline.Servicios;
+using RedLine.Servicios;
 
 namespace RedLine.Bll
 {
@@ -35,7 +36,7 @@ namespace RedLine.Bll
 
             if (!user.Activo) throw new Exception("Usuario inactivo");
 
-            string passHasheada = Hashing.HashearPassword(contraseña);
+            string passHasheada = Hashing.Sha256(contraseña);
             if (!user.Contraseña.Equals(passHasheada))
             {
                 user.Intentos++;
@@ -55,7 +56,7 @@ namespace RedLine.Bll
 
         public override void Insertar(Usuario usuario)
         {
-            usuario.Contraseña = Hashing.HashearPassword(usuario.Contraseña);
+            usuario.Contraseña = Hashing.Sha256(usuario.Contraseña);
             this.Insertar(usuario);
         }
 

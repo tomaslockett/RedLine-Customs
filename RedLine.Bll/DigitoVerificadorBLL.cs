@@ -12,7 +12,7 @@ namespace RedLine.Bll
 {
     public class DigitoVerificadorBLL : AbstractBLL<string, DigitoVerificador>
     {
-        public DigitoVerificadorBLL() : base(new DigitoVerificadorDAL())
+        public DigitoVerificadorBLL() : base(new DAL_DigitoVerificador())
         {
         }
 
