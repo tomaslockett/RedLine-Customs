@@ -10,8 +10,9 @@ namespace Redline.Be
         public string Rol { get; set; }
         public int Intentos { get; set; }
         public bool Bloqueado { get; set; }
+        public bool Activo { get; set; }
         public DateTime UltimoIntento { get; set; }
-        public Usuario(int id, string username, string contraseña, string rol, int intentos, bool bloqueado, DateTime ultimoIntento)
+        public Usuario(int id, string username, string contraseña, string rol, int intentos, bool bloqueado, bool activo, DateTime ultimoIntento)
         {
             this.ID = id;
             this.Username = username;
@@ -19,6 +20,7 @@ namespace Redline.Be
             this.Rol = rol;
             this.Intentos = intentos;
             this.Bloqueado = bloqueado;
+            this.Activo = activo;
             this.UltimoIntento = ultimoIntento;
         }
 
