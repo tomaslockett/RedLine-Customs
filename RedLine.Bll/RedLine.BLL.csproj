@@ -43,12 +43,16 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AbstractBLL.cs" />
+    <Compile Include="BLL_Auto.cs" />
+    <Compile Include="BLL_Cliente.cs" />
+    <Compile Include="BLL_Mejora.cs" />
+    <Compile Include="BLL_Usuario.cs" />
+    <Compile Include="BLL_DigitoVerificador.cs" />
+    <Compile Include="Exception\LoginException.cs" />
+    <Compile Include="Exception\LoginResult.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="UsuarioBLL.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Excepciones\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <ProjectReference Include="..\RedLine.Be\RedLine.BE.csproj">
       <Project>{f115ff04-2ee4-47fb-acc6-f25bf795ec7b}</Project>
@@ -57,6 +61,10 @@
     <ProjectReference Include="..\RedLine.Dal\RedLine.DAL.csproj">
       <Project>{305ad79c-0a71-4930-98f5-d5d0e8fa2fe3}</Project>
       <Name>RedLine.DAL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\RedLine.Servicios\RedLine.Servicios.csproj">
+      <Project>{29348c71-caad-4e9a-b78e-a59dc06482e2}</Project>
+      <Name>RedLine.Servicios</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

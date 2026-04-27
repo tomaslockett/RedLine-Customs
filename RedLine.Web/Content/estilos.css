@@ -1,0 +1,100 @@
+﻿body {
+    background-color: black;
+    color: white;
+    font-family: Arial, sans-serif;
+}
+
+.filtros {
+    display: inline-block;
+    margin-left: 2%;
+    width: 35%;
+    padding: 4px;
+}
+
+.filtro {
+    width: 20%;
+    margin-right: 5%;
+    border: 1px solid darkgray;
+    border-radius: 8px;
+    background: #161D29;
+    color: darkgray;
+}
+
+.btnFiltro {
+    border: 1px solid darkgray;
+    border-radius: 8px;
+    background: #161D29;
+    color: darkgray;
+}
+
+.titulo {
+    font-size: 42px;
+    color: #D93416;
+    margin: 20px;
+}
+
+.icono {
+    width: 20px;
+    height: 20px;
+    margin-right: 7px;
+    margin: 3px 7px 3px 4px;
+}
+
+.buscador {
+    margin-left: 5%;
+    margin-top: 20px;
+    background: #161D29;
+    width: 50%;
+    border: 1px solid darkgray;
+    border-radius: 8px;
+    display: inline-block;
+}
+
+.inputBarraBusqueda {
+    background: #161D29;
+    border: 0px;
+    color: #D93416;
+    width: 100%;
+}
+
+.divsRojosGradiente {
+    background: linear-gradient(to right, rgba(255, 0, 0, 0.1), black);
+    border: 1px solid #3B0901;
+    width: 100%;
+    padding: 10px;
+    margin: 0;
+}
+
+
+
+.subTitulo {
+    font-size: 22px;
+    color: darkgray;
+    margin: 10px 20px 30px 20px;
+}
+
+.textoEncontrados {
+    font-size: 16px;
+    color: darkgray;
+    margin-left: 5.2%;
+    margin-top: 0.7%;
+}
+.datosAuto {
+    display:inline;
+}
+.fotoAuto {
+    margin: 0;
+    display: block;
+    object-fit: cover;
+    width: 100%;
+    overflow: hidden;
+    
+}
+.auto {
+    border: 2px solid darkgray;
+    border-radius: 12px;
+    margin-left: 7%;
+    width: 150px;
+    text-align: center;
+    overflow: hidden;
+}

@@ -43,15 +43,22 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DigitoVerificador.cs" />
+    <Compile Include="MotorDigitoVerificador.cs" />
     <Compile Include="Hashing.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SessionManager.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Composite\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\RedLine.Be\RedLine.BE.csproj">
+      <Project>{f115ff04-2ee4-47fb-acc6-f25bf795ec7b}</Project>
+      <Name>RedLine.BE</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

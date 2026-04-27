@@ -33,35 +33,51 @@ namespace RedLine.Dal
 
         #endregion
 
-        #region Operaciones Base de datos
+        #region Operaciones Base de Datos con Transacción
 
         public virtual void Insertar(entidad entidad)
         {
-            using (var con = new SqlConnection(cx))
-            {
-                con.Open();
-                con.EjecutarNoConsulta(SqlInsertar, cmd => ConfigurarParametros(cmd, entidad));
-                if (RequiereDigitoVerificador) RedLine.Servicios.DigitoVerificador.Recalcular(con, NombreTabla);
-            }
+            EjecutarOperacionConIntegridad(SqlInsertar, cmd => ConfigurarParametros(cmd, entidad));
         }
 
         public virtual void Modificar(entidad entidad)
         {
-            using (var con = new SqlConnection(cx))
-            {
-                con.Open();
-                con.EjecutarNoConsulta(SqlModificar, cmd => ConfigurarParametros(cmd, entidad));
-                if (RequiereDigitoVerificador) RedLine.Servicios.DigitoVerificador.Recalcular(con, NombreTabla);
-            }
+            EjecutarOperacionConIntegridad(SqlModificar, cmd => ConfigurarParametros(cmd, entidad));
         }
 
         public virtual void Eliminar(TKey id)
         {
+            EjecutarOperacionConIntegridad(SqlEliminar, cmd => ConfigurarParametrosId(cmd, id));
+        }
+
+        private void EjecutarOperacionConIntegridad(string query, Action<SqlCommand> configurar)
+        {
             using (var con = new SqlConnection(cx))
             {
                 con.Open();
-                con.EjecutarNoConsulta(SqlEliminar, cmd => ConfigurarParametrosId(cmd, id));
-                if (RequiereDigitoVerificador) RedLine.Servicios.DigitoVerificador.Recalcular(con, NombreTabla);
+                using (var tra = con.BeginTransaction()) 
+                {
+                    try
+                    {
+                        using (var cmd = new SqlCommand(query, con, tra))
+                        {
+                            configurar(cmd);
+                            cmd.ExecuteNonQuery();
+                        }
+
+                        if (RequiereDigitoVerificador)
+                        {
+                            this.RecalcularMisDigitosVerificadores(con, tra);
+                        }
+
+                        tra.Commit(); 
+                    }
+                    catch (Exception)
+                    {
+                        tra.Rollback(); 
+                        throw; 
+                    }
+                }
             }
         }
 
@@ -87,5 +103,97 @@ namespace RedLine.Dal
         public abstract entidad ObtenerPorEntidad(entidad entidad);
 
         #endregion
+
+        #region Motor de Dígito Verificador 
+
+        public virtual string ObtenerNombreTabla() => this.NombreTabla;
+
+        public virtual void RecalcularMisDigitosVerificadores(SqlConnection con, SqlTransaction tra)
+        {
+            var (dvh, dvv) = CalcularIntegridadActual(con, tra);
+
+            string queryCheck = "SELECT COUNT(*) FROM DigitoVerificador WHERE NombreTabla = @nombre";
+            int existe;
+            using (var cmdCheck = new SqlCommand(queryCheck, con, tra))
+            {
+                cmdCheck.Parameters.AddWithValue("@nombre", this.NombreTabla);
+                existe = (int)cmdCheck.ExecuteScalar();
+            }
+
+            string queryUpsert = existe > 0
+                ? "UPDATE DigitoVerificador SET DVH = @dvh, DVV = @dvv WHERE NombreTabla = @nombre"
+                : "INSERT INTO DigitoVerificador (NombreTabla, DVH, DVV) VALUES (@nombre, @dvh, @dvv)";
+
+            using (var cmdUpsert = new SqlCommand(queryUpsert, con, tra))
+            {
+                cmdUpsert.Parameters.AddWithValue("@dvh", dvh);
+                cmdUpsert.Parameters.AddWithValue("@dvv", dvv);
+                cmdUpsert.Parameters.AddWithValue("@nombre", this.NombreTabla);
+                cmdUpsert.ExecuteNonQuery();
+            }
+        }
+
+        public virtual void RecalcularMisDigitosVerificadores()
+        {
+            if (!RequiereDigitoVerificador) return;
+
+            using (var con = new SqlConnection(cx))
+            {
+                con.Open();
+                this.RecalcularMisDigitosVerificadores(con, null);
+            }
+        }
+        public virtual (string DVH, string DVV) CalcularIntegridadActual()
+        {
+            if (!RequiereDigitoVerificador) return ("N/A", "N/A");
+
+            using (var con = new SqlConnection(cx))
+            {
+                con.Open();
+                return CalcularIntegridadActual(con, null);
+            }
+        }
+
+        private (string DVH, string DVV) CalcularIntegridadActual(SqlConnection con, SqlTransaction tra)
+        {
+            if (!RequiereDigitoVerificador) return ("N/A", "N/A");
+
+            var columnas = new List<string>();
+            string queryMeta = "SELECT COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = @Tabla AND DATA_TYPE NOT IN ('timestamp', 'rowversion') ORDER BY COLUMN_NAME ASC";
+
+            using (var cmdMeta = new SqlCommand(queryMeta, con, tra))
+            {
+                cmdMeta.Parameters.AddWithValue("@Tabla", this.NombreTabla);
+                using (var rdrMeta = cmdMeta.ExecuteReader())
+                {
+                    while (rdrMeta.Read()) columnas.Add(rdrMeta["COLUMN_NAME"].ToString());
+                }
+            }
+
+            if (columnas.Count == 0) return ("0", "0");
+
+            var motor = new RedLine.Servicios.MotorDigitoVerificador(columnas.Count);
+            string columnasQuery = string.Join(", ", columnas.Select(c => $"[{c}]"));
+            string queryData = $"SELECT {columnasQuery} FROM [{this.NombreTabla}]";
+
+            using (var cmdData = new SqlCommand(queryData, con, tra))
+            using (var rdrData = cmdData.ExecuteReader())
+            {
+                while (rdrData.Read())
+                {
+                    string[] filaTexto = new string[columnas.Count];
+                    for (int i = 0; i < columnas.Count; i++)
+                    {
+                        filaTexto[i] = rdrData[i]?.ToString() ?? "";
+                    }
+                    motor.ProcesarFila(filaTexto);
+                }
+            }
+
+            return motor.ObtenerResultadoFinal();
+        }
+
+        #endregion
+
     }
 }
