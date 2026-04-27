@@ -1,44 +1,51 @@
 ﻿<%@ Page Title="Home Page" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="Default.aspx.cs" Inherits="RedLine.Web._Default" %>
 
 <asp:Content ID="BodyContent" ContentPlaceHolderID="MainContent" runat="server">
+    
+    <div class ="divsRojosGradiente">
+        <h1 class = "titulo">Catalogo de autos deportivos</h1>
+        <h2 class="subTitulo">Descubra nuestra seleccion de autos de alta gamma</h2>
+    </div>
 
-    <main>
-        <section class="row" aria-labelledby="aspnetTitle">
-            <h1 id="aspnetTitle">ASP.NET</h1>
-            <p class="lead">ASP.NET is a free web framework for building great Web sites and Web applications using HTML, CSS, and JavaScript.</p>
-            <p><a href="http://www.asp.net" class="btn btn-primary btn-md">Learn more &raquo;</a></p>
-        </section>
+    <div class="buscador">
+        <img class="icono" src="Content/img/lupita.png"/>
+        <input type="text" placeholder="Buscar por modelo o marca..." class="inputBarraBusqueda"/>
+    </div>
 
-        <div class="row">
-            <section class="col-md-4" aria-labelledby="gettingStartedTitle">
-                <h2 id="gettingStartedTitle">Getting started</h2>
-                <p>
-                    ASP.NET Web Forms lets you build dynamic websites using a familiar drag-and-drop, event-driven model.
-                A design surface and hundreds of controls and components let you rapidly build sophisticated, powerful UI-driven sites with data access.
-                </p>
-                <p>
-                    <a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301948">Learn more &raquo;</a>
-                </p>
-            </section>
-            <section class="col-md-4" aria-labelledby="librariesTitle">
-                <h2 id="librariesTitle">Get more libraries</h2>
-                <p>
-                    NuGet is a free Visual Studio extension that makes it easy to add, remove, and update libraries and tools in Visual Studio projects.
-                </p>
-                <p>
-                    <a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301949">Learn more &raquo;</a>
-                </p>
-            </section>
-            <section class="col-md-4" aria-labelledby="hostingTitle">
-                <h2 id="hostingTitle">Web Hosting</h2>
-                <p>
-                    You can easily find a web hosting company that offers the right mix of features and price for your applications.
-                </p>
-                <p>
-                    <a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301950">Learn more &raquo;</a>
-                </p>
-            </section>
+    <div class="filtros">
+    <select class="filtro">
+        <option>Marca</option>
+    </select>
+
+    <select class="filtro">
+        <option>Precio</option>
+    </select>
+
+    <button class="btnFiltro">Aplicar</button>
+    </div>
+    <br />
+    <div>
+        <h2 id="lblAutosEncontrados" class ="textoEncontrados">Se encontraron x autos</h2>
+    </div>
+    <br />
+   <div class="auto">
+    
+    <img class="fotoAuto" src="Content/img/porsche.jfif"/>
+
+    <div class="contenidoAuto">
+        <h4>Porsche</h4>
+        <h2>911 Turbo S</h2>
+        <h3>2024</h3>
+
+        <div class="datos">
+            <div class="datosAuto">330 km/h</div>
+            <div class="datosAuto">640 HP</div>
+            <div class="datosAuto">2.7s</div>
         </div>
-    </main>
 
+        <h2 class="precio">$230.000</h2>
+        <div class="boton">Personalizar</div>
+    </div>
+
+</div>
 </asp:Content>
