@@ -121,6 +121,8 @@
     <Content Include="Content\img\lupita.png" />
     <Content Include="Content\img\porsche.jfif" />
     <Content Include="Content\Site.css" />
+    <Content Include="Content\CrearAutosEstilo.css" />
+    <Content Include="CrearAutos.aspx" />
     <Content Include="Default.aspx" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
@@ -202,6 +204,13 @@
     </Compile>
     <Compile Include="Contact.aspx.designer.cs">
       <DependentUpon>Contact.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="CrearAutos.aspx.cs">
+      <DependentUpon>CrearAutos.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="CrearAutos.aspx.designer.cs">
+      <DependentUpon>CrearAutos.aspx</DependentUpon>
     </Compile>
     <Compile Include="Default.aspx.cs">
       <DependentUpon>Default.aspx</DependentUpon>
