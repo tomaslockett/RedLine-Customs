@@ -44,6 +44,7 @@
   <ItemGroup>
     <Compile Include="AbstractBLL.cs" />
     <Compile Include="BLL_Auto.cs" />
+    <Compile Include="BLL_BackupRestore.cs" />
     <Compile Include="BLL_Cliente.cs" />
     <Compile Include="BLL_Mejora.cs" />
     <Compile Include="BLL_Usuario.cs" />
