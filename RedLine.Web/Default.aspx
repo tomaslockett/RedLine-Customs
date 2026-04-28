@@ -33,18 +33,20 @@
     <img class="fotoAuto" src="Content/img/porsche.jfif"/>
 
     <div class="contenidoAuto">
-        <h4>Porsche</h4>
-        <h2>911 Turbo S</h2>
-        <h3>2024</h3>
+        <h4 class="marca">Porsche</h4>
+        <h2 class="modelo">911 Turbo S</h2>
+        <h3 class="anio">2024</h3>
 
         <div class="datos">
-            <div class="datosAuto">330 km/h</div>
-            <div class="datosAuto">640 HP</div>
-            <div class="datosAuto">2.7s</div>
+            <div class="datosAuto">
+                <p class="lblDatosAuto">Vel. max</p>
+                330 km/h</div>
+            <div class="datosAuto"><p class="lblDatosAuto">Potencia</p>640 HP</div>
+            <div class="datosAuto"><p class="lblDatosAuto">0-100km/h</p> 2.7s</div>
         </div>
 
         <h2 class="precio">$230.000</h2>
-        <div class="boton">Personalizar</div>
+        <div class="botonBajo">Personalizar</div>
     </div>
 
 </div>

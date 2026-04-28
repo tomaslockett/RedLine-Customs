@@ -65,7 +65,11 @@
     margin: 0;
 }
 
-
+.precio {
+    color: #D93416;
+    font-size: 1.3rem;
+    margin-top:7px;
+}
 
 .subTitulo {
     font-size: 22px;
@@ -79,22 +83,111 @@
     margin-left: 5.2%;
     margin-top: 0.7%;
 }
+
 .datosAuto {
-    display:inline;
+    display: inline-block;
+    width: 30%;
+    background: #01010F;
+    border-radius: 6px;
+    padding: 4px;
+    font-size: 0.8rem;
+    height: 10%;
+    min-height: 60px;
+    max-height: 60px;
+    gap: 5px;
 }
+
+.lblDatosAuto {
+    margin-bottom: 2px;
+    color: darkgray;
+    font-size: 0.8rem;
+}
+
 .fotoAuto {
     margin: 0;
     display: block;
     object-fit: cover;
     width: 100%;
     overflow: hidden;
-    
 }
+
 .auto {
     border: 2px solid darkgray;
     border-radius: 12px;
     margin-left: 7%;
-    width: 150px;
+    width: 25%;
+    min-width: 240px;
+    max-width: 300px;
     text-align: center;
     overflow: hidden;
+    background: #0F141C;
+    display: flex;
+    flex-direction: column;
+}
+
+.modelo {
+    font-weight: bold;
+    font-size: 1.7rem;
+}
+
+.anio {
+    font-size: 1.0rem;
+    color: #696969;
+}
+.botonBajo {
+    background: red;
+    display: block;
+    width: 100%;
+    overflow: hidden;
+}
+.marca {
+    font-size: 1.0rem;
+    color: darkgray;
+    margin-top: 5px;
+}
+
+.loginContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 80vh;
+}
+
+.loginBox {
+    background: #0F141C;
+    padding: 30px;
+    border-radius: 12px;
+    border: 1px solid darkgray;
+    width: 300px;
+}
+
+.loginTitulo {
+    color: #D93416;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.campo {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 15px;
+    color: darkgray;
+}
+
+.inputLogin {
+    background: #161D29;
+    border: 1px solid darkgray;
+    border-radius: 6px;
+    padding: 8px;
+    color: white;
+}
+
+.btnLogin {
+    width: 100%;
+    padding: 10px;
+    background: #D93416;
+    border: none;
+    border-radius: 6px;
+    color: white;
+    font-weight: bold;
 }

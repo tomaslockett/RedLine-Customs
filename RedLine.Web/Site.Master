@@ -50,6 +50,7 @@
                         <li class="nav-item"><a class="nav-link" runat="server" href="~/">Inicio</a></li>
                         <li class="nav-item"><a class="nav-link" runat="server" href="~/About">Acerca de</a></li>
                         <li class="nav-item"><a class="nav-link" runat="server" href="~/Contact">Contacto</a></li>
+                        <li class="nav-item"><a class="nav-link" runat="server" href="~/LogIn">Log In</a></li>
                     </ul>
                 </div>
             </div>
@@ -59,7 +60,7 @@
             </asp:ContentPlaceHolder>
             <hr />
             <footer>
-                <p>&copy; <%: DateTime.Now.Year %> - Mi aplicación ASP.NET</p>
+                <p>&copy; RedlineCustoms</p>
             </footer>
         </div>
     </form>
