@@ -10,14 +10,14 @@ namespace RedLine.Dal
     public class DAL_Usuario : AbstractDAL<int, Usuario>
     {
         protected override string NombreTabla => "Usuario";
-        protected override bool RequiereDigitoVerificador => true;
+        protected override bool RequiereDigitoVerificador => false;
 
         protected override string SqlInsertar =>
-            @"INSERT INTO Usuario (Username, Contraseña, Rol, Intentos, Bloqueado, Activo, UltimoIntento) 
-              VALUES (@Username, @Contraseña, @Rol, 0, 0, 1, @UltimoIntento)";
+            @"INSERT INTO Usuario (Email, Contraseña, Rol, Intentos, Bloqueado, Activo, UltimoIntento) 
+              VALUES (@Email, @Contraseña, @Rol, 0, 0, 1, @UltimoIntento)";
 
         protected override string SqlModificar =>
-            @"UPDATE Usuario SET Username = @Username, Rol = @Rol, Bloqueado = @Bloqueado, 
+            @"UPDATE Usuario SET Email = @Email, Rol = @Rol, Bloqueado = @Bloqueado, 
               Activo = @Activo, Intentos = @Intentos, UltimoIntento = @UltimoIntento WHERE ID = @ID";
 
         protected override string SqlEliminar => "DELETE FROM Usuario WHERE ID = @ID";
@@ -26,8 +26,11 @@ namespace RedLine.Dal
 
         protected override void ConfigurarParametros(SqlCommand cmd, Usuario entidad)
         {
-            if (entidad.ID > 0) cmd.Parameters.AddWithValue("@ID", entidad.ID);
-            cmd.Parameters.AddWithValue("@Username", entidad.Username);
+            if (cmd.CommandText.Contains("@ID"))
+            {
+                cmd.Parameters.AddWithValue("@ID", entidad.ID);
+            }
+            cmd.Parameters.AddWithValue("@Email", entidad.Email);
             cmd.Parameters.AddWithValue("@Contraseña", entidad.Contraseña);
             cmd.Parameters.AddWithValue("@Rol", entidad.Rol);
             cmd.Parameters.AddWithValue("@Bloqueado", entidad.Bloqueado);
@@ -45,7 +48,7 @@ namespace RedLine.Dal
         {
             return new Usuario(
                 Convert.ToInt32(lector["ID"]),
-                lector["Username"].ToString(),
+                lector["Email"].ToString(),
                 lector["Contraseña"].ToString(),
                 lector["Rol"].ToString(),
                 Convert.ToInt32(lector["Intentos"]),
@@ -60,10 +63,10 @@ namespace RedLine.Dal
             using (var con = new SqlConnection(cx))
             {
                 con.Open();
-                string query = "SELECT * FROM Usuario WHERE Username = @un";
+                string query = "SELECT * FROM Usuario WHERE Email = @em";
                 using (var cmd = new SqlCommand(query, con))
                 {
-                    cmd.Parameters.AddWithValue("@un", username);
+                    cmd.Parameters.AddWithValue("@em", username);
                     using (var reader = cmd.ExecuteReader())
                     {
                         if (reader.Read()) return Mapear(reader);
@@ -75,7 +78,7 @@ namespace RedLine.Dal
 
         public override Usuario ObtenerPorEntidad(Usuario entidad)
         {
-            return ObtenerPorUsername(entidad.Username);
+            return ObtenerPorUsername(entidad.Email);
         }
     }
 }

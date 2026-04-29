@@ -158,7 +158,7 @@
     padding: 30px;
     border-radius: 12px;
     border: 1px solid darkgray;
-    width: 300px;
+    width: 650px;
 }
 
 .loginTitulo {
@@ -190,4 +190,30 @@
     border-radius: 6px;
     color: white;
     font-weight: bold;
+}
+
+.registroBox {
+    background: #0F141C;
+    padding: 30px;
+    border-radius: 12px;
+    border: 1px solid darkgray;
+    width: 400px; 
+}
+
+.btnLogin:hover {
+    background: #b32a12; 
+    cursor: pointer;
+}
+
+.linkVolver {
+    display: block;
+    text-align: center;
+    margin-top: 15px;
+    color: darkgray;
+    text-decoration: none;
+    font-size: 0.9rem;
+}
+
+linkVolver:hover {
+    color: #D93416;
 }

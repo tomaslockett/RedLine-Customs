@@ -57,7 +57,7 @@ namespace RedLine.Bll
         public override void Insertar(Usuario usuario)
         {
             usuario.Contraseña = Hashing.Sha256(usuario.Contraseña);
-            this.Insertar(usuario);
+            base.Insertar(usuario);
         }
 
         public void DesbloquearUsuario(Usuario usuario)
