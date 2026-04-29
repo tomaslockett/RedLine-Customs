@@ -43,6 +43,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Evento.cs" />
     <Compile Include="MotorDigitoVerificador.cs" />
     <Compile Include="Hashing.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
