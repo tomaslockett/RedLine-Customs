@@ -68,7 +68,7 @@
 .precio {
     color: #D93416;
     font-size: 1.3rem;
-    margin-top:7px;
+    margin-top: 7px;
 }
 
 .subTitulo {
@@ -134,12 +134,14 @@
     font-size: 1.0rem;
     color: #696969;
 }
+
 .botonBajo {
     background: red;
     display: block;
     width: 100%;
     overflow: hidden;
 }
+
 .marca {
     font-size: 1.0rem;
     color: darkgray;
@@ -190,4 +192,68 @@
     border-radius: 6px;
     color: white;
     font-weight: bold;
+}
+
+.autoExpandido {
+    align-items: center;
+    justify-content: center;
+    display: flex;
+    flex-direction: column;
+    border-top: 1px solid white;
+    border-radius: 12px 12px 0 0;
+    background: #030112;
+    width: 80vh;
+    border-bottom: 0;
+}
+
+.personalizar {
+    align-items: center;
+    justify-content: center;
+    display: flex;
+    flex-direction: column;
+    border-bottom: 1px solid white;
+    background: linear-gradient(to top,rgba(20, 20, 219, 0.2), #030112);
+    padding: 20px;
+    width: 80vh;
+    border-top: 0;
+    border-radius: 0 0 12px 12px;
+}
+
+.personalizarAutoContainer {
+    align-items: center;
+    justify-content: center;
+    display: flex;
+    font-family: 'Poppins', sans-serif;
+}
+.btnConfirmar {
+    border-radius: 8px;
+    background: rgba(0,0,0,1);
+    font-size: 0.9rem;
+    width: 50%;
+    color: white;
+    font-family: 'Inter', sans-serif;
+    border: 0;
+    padding: 12px 15px;
+}
+
+.listaPersonalizacion {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    color: #E6E6E6;
+}
+
+.itemPersonalizar {
+
+    background: rgba(0,0,0,1);
+    border: 1px solid #2a2f3a;
+    border-radius: 10px;
+    padding: 12px 15px;
+    margin-bottom: 10px;
+    transition: all 0.2s ease;
+}
+
+.precioExtra {
+    color: #D93416;
+    font-weight: 600;
 }
