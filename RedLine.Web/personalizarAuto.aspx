@@ -15,24 +15,24 @@
 
             <li class="itemPersonalizar">
                 <label>
-                    <input type="checkbox" name="extras" value="alfombrillas">
-                    Alfombrillas premium
+                    <input type="checkbox" name="extras" value="aleron">
+                    Aleron deportivo
                 </label>
                 <span class="precioExtra">+ $500</span>
             </li>
 
             <li class="itemPersonalizar">
                 <label>
-                    <input type="checkbox" name="extras" value="luces">
-                    Luces LED de alta potencia
+                    <input type="checkbox" name="extras" value="kitCarroceria">
+                    Kit de carroceria
                 </label>
                 <span class="precioExtra">+ $1200</span>
             </li>
 
             <li class="itemPersonalizar">
                 <label>
-                    <input type="checkbox" name="extras" value="escape">
-                    Sistema de escape deportivo
+                    <input type="checkbox" name="extras" value="llantas">
+                    Llantas personalizadas
                 </label>
                 <span class="precioExtra">+ $2500</span>
             </li>
@@ -47,8 +47,8 @@
 
             <li class="itemPersonalizar">
                 <label>
-                    <input type="checkbox" name="extras" value="interior">
-                    Interior de cuero premium
+                    <input type="checkbox" name="extras" value="pintura">
+                    Pintura personalizada
                 </label>
                 <span class="precioExtra">+ $1800</span>
             </li>
