@@ -9,9 +9,10 @@ using System.Web.UI.WebControls;
 
 namespace RedLine.Web
 {
-    public partial class RegistroUsuario : System.Web.UI.Page
+    public partial class RegistroCliente : System.Web.UI.Page
     {
         BLL_Usuario gestorUsuario = new BLL_Usuario();
+        BLL_Cliente gestorCliente = new BLL_Cliente();
         protected void Page_Load(object sender, EventArgs e)
         {
             lblMensaje.Text = "";
@@ -31,33 +32,42 @@ namespace RedLine.Web
             if (string.IsNullOrEmpty(dni) || string.IsNullOrEmpty(nombre) || string.IsNullOrEmpty(apellido) ||
                 string.IsNullOrEmpty(email) || string.IsNullOrEmpty(pass))
             {
-                lblMensaje.Text = "Los campos principales son obligatorios.";
+                lblMensaje.Text = "Los campos principales son obligatorios."; 
                 return;
             }
 
             if (pass != passConfirm)
             {
-                lblMensaje.Text = "Las contraseñas no coinciden.";
+                lblMensaje.Text = "Las contraseñas no coinciden."; 
                 return;
             }
 
             try
             {
-                Usuario nuevoUsuario = new Usuario();
-                nuevoUsuario.Email = email;
-                nuevoUsuario.Contraseña = pass;
-                nuevoUsuario.Rol = "Cliente";
-                nuevoUsuario.Activo = true;
-                nuevoUsuario.Bloqueado = false;
-                nuevoUsuario.Intentos = 0;
-                nuevoUsuario.UltimoIntento = DateTime.Now;
+                bool existeEnUsuarios = gestorUsuario.Listar().Exists(u => u.Email.Equals(email, StringComparison.OrdinalIgnoreCase));
+                bool existeEnClientes = gestorCliente.ExisteEmail(email);
 
-                gestorUsuario.Insertar(nuevoUsuario);
+                if (existeEnUsuarios || existeEnClientes)
+                {
+                    lblMensaje.Text = "El correo electrónico ya se encuentra registrado.";
+                    return;
+                }
+
+                Cliente nuevoCliente = new Cliente();
+                nuevoCliente.DNI = dni;
+                nuevoCliente.Nombre = nombre;
+                nuevoCliente.Apellido = apellido;
+                nuevoCliente.Email = email;
+                nuevoCliente.Contraseña = pass;
+                nuevoCliente.Telefono = telefono;
+                nuevoCliente.Direccion = direccion;
+
+                gestorCliente.Insertar(nuevoCliente);
 
                 string script = @"
                 Swal.fire({
                     title: '¡Bienvenido!',
-                    text: 'Tu cuenta fue creada con éxito.',
+                    text: 'Tu cuenta de cliente fue creada con éxito.',
                     icon: 'success',
                     background: '#0F141C',
                     color: '#fff',
@@ -68,18 +78,11 @@ namespace RedLine.Web
                         window.location.href = 'LogIn.aspx';
                     }
                 });";
-                ScriptManager.RegisterStartupScript(this, GetType(), "Popup", script, true);
+                ScriptManager.RegisterStartupScript(this, GetType(), "Popup", script, true); 
             }
             catch (Exception ex)
             {
-                if (ex.Message.Contains("UNIQUE") || ex.Message.Contains("duplicate"))
-                {
-                    lblMensaje.Text = "El email ya está registrado.";
-                }
-                else
-                {
-                    lblMensaje.Text = "Error técnico: " + ex.Message;
-                }
+                lblMensaje.Text = "Error al procesar el registro: " + ex.Message; 
             }
         }
     }

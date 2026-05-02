@@ -11,7 +11,7 @@ namespace RedLine.Web
 {
 
 
-    public partial class RegistroUsuario
+    public partial class RegistroCliente
     {
 
         /// <summary>

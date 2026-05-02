@@ -9,15 +9,15 @@ namespace RedLine.Dal
     public class DAL_Cliente : AbstractDAL<string, Cliente>
     {
         protected override string NombreTabla => "Cliente";
-        protected override bool RequiereDigitoVerificador => true;
+        protected override bool RequiereDigitoVerificador => false;
 
         protected override string SqlInsertar =>
-            @"INSERT INTO Cliente (DNI, Nombre, Apellido, Email, Telefono, Direccion) 
-              VALUES (@DNI, @Nombre, @Apellido, @Email, @Telefono, @Direccion)";
+            @"INSERT INTO Cliente (DNI, Nombre, Apellido, Email, Contraseña, Telefono, Direccion) 
+              VALUES (@DNI, @Nombre, @Apellido, @Email, @Contraseña, @Telefono, @Direccion)";
 
         protected override string SqlModificar =>
             @"UPDATE Cliente SET Nombre = @Nombre, Apellido = @Apellido, Email = @Email, 
-              Telefono = @Telefono, Direccion = @Direccion WHERE DNI = @DNI";
+             Contraseña = @Contraseña, Telefono = @Telefono, Direccion = @Direccion WHERE DNI = @DNI";
 
         protected override string SqlEliminar => "DELETE FROM Cliente WHERE DNI = @DNI";
 
@@ -31,6 +31,7 @@ namespace RedLine.Dal
             cmd.Parameters.AddWithValue("@Nombre", entidad.Nombre);
             cmd.Parameters.AddWithValue("@Apellido", entidad.Apellido);
             cmd.Parameters.AddWithValue("@Email", entidad.Email);
+            cmd.Parameters.AddWithValue("@Contraseña", entidad.Contraseña);
             cmd.Parameters.AddWithValue("@Telefono", entidad.Telefono);
             cmd.Parameters.AddWithValue("@Direccion", entidad.Direccion);
         }
@@ -48,6 +49,7 @@ namespace RedLine.Dal
                 Nombre = lector["Nombre"].ToString(),
                 Apellido = lector["Apellido"].ToString(),
                 Email = lector["Email"].ToString(),
+                Contraseña = lector["Contraseña"].ToString(),
                 Telefono = lector["Telefono"].ToString(),
                 Direccion = lector["Direccion"].ToString()
             };

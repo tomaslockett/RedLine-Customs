@@ -100,6 +100,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="About.aspx" />
+    <Content Include="CambioContraseña.aspx" />
     <Content Include="Contact.aspx" />
     <Content Include="Content\bootstrap-grid.css" />
     <Content Include="Content\bootstrap-grid.min.css" />
@@ -127,7 +128,7 @@
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="LogIn.aspx" />
-    <Content Include="RegistroUsuario.aspx" />
+    <Content Include="RegistroCliente.aspx" />
     <Content Include="Scripts\bootstrap.bundle.js" />
     <Content Include="Scripts\bootstrap.bundle.min.js" />
     <Content Include="Scripts\bootstrap.esm.js" />
@@ -199,6 +200,13 @@
       <DependentUpon>About.aspx</DependentUpon>
     </Compile>
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="CambioContraseña.aspx.cs">
+      <DependentUpon>CambioContraseña.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="CambioContraseña.aspx.designer.cs">
+      <DependentUpon>CambioContraseña.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Contact.aspx.cs">
       <DependentUpon>Contact.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -231,12 +239,12 @@
       <DependentUpon>LogIn.aspx</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="RegistroUsuario.aspx.cs">
-      <DependentUpon>RegistroUsuario.aspx</DependentUpon>
+    <Compile Include="RegistroCliente.aspx.cs">
+      <DependentUpon>RegistroCliente.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="RegistroUsuario.aspx.designer.cs">
-      <DependentUpon>RegistroUsuario.aspx</DependentUpon>
+    <Compile Include="RegistroCliente.aspx.designer.cs">
+      <DependentUpon>RegistroCliente.aspx</DependentUpon>
     </Compile>
     <Compile Include="Site.Master.cs">
       <DependentUpon>Site.Master</DependentUpon>
@@ -282,6 +290,10 @@
     <ProjectReference Include="..\RedLine.Bll\RedLine.BLL.csproj">
       <Project>{12bfdcf7-d5de-4838-ae75-29605758c2de}</Project>
       <Name>RedLine.BLL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\RedLine.Servicios\RedLine.Servicios.csproj">
+      <Project>{29348c71-caad-4e9a-b78e-a59dc06482e2}</Project>
+      <Name>RedLine.Servicios</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup>

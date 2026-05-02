@@ -153,18 +153,22 @@
     height: 80vh;
 }
 
+.loginTitulo {
+    text-align: center;
+    font-size: 42px;
+    color: #D93416;
+    margin: 0 0 30px 0; 
+    width: 100%;
+    display: block;
+}
+
 .loginBox {
     background: #0F141C;
     padding: 30px;
     border-radius: 12px;
     border: 1px solid darkgray;
-    width: 650px;
-}
-
-.loginTitulo {
-    color: #D93416;
-    text-align: center;
-    margin-bottom: 20px;
+    width: 100%;
+    max-width: 400px;
 }
 
 .campo {
@@ -172,14 +176,17 @@
     flex-direction: column;
     margin-bottom: 15px;
     color: darkgray;
+    text-align: left;
 }
 
 .inputLogin {
     background: #161D29;
     border: 1px solid darkgray;
     border-radius: 6px;
-    padding: 8px;
+    padding: 10px;
     color: white;
+    width: 100%;
+    box-sizing: border-box;
 }
 
 .btnLogin {
@@ -216,4 +223,37 @@
 
 linkVolver:hover {
     color: #D93416;
+}
+
+.loginBox .loginTitulo {
+    text-align: center !important;
+    display: block !important;
+    width: 100% !important;
+    margin: 0 0 30px 0 !important;
+}
+
+
+.password-wrapper {
+    position: relative;
+    width: 100%;
+}
+
+.password-wrapper .inputLogin {
+    width: 100%;
+    box-sizing: border-box;
+    padding-right: 40px; 
+}
+
+.toggle-icon {
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    color: rgba(255,255,255,0.3);
+    transition: color 0.3s;
+}
+
+.toggle-icon:hover {
+     color: white;
 }
