@@ -123,10 +123,12 @@
     <Content Include="Content\img\porsche.jfif" />
     <Content Include="Content\Site.css" />
     <Content Include="Content\CrearAutosEstilo.css" />
+    <Content Include="Content\Inventario.css" />
     <Content Include="CrearAutos.aspx" />
     <Content Include="Default.aspx" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
+    <Content Include="Inventario.aspx" />
     <Content Include="LogIn.aspx" />
     <Content Include="personalizarAuto.aspx" />
     <Content Include="RegistroCliente.aspx" />
@@ -231,6 +233,13 @@
     </Compile>
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
+    <Compile Include="Inventario.aspx.cs">
+      <DependentUpon>Inventario.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Inventario.aspx.designer.cs">
+      <DependentUpon>Inventario.aspx</DependentUpon>
     </Compile>
     <Compile Include="LogIn.aspx.cs">
       <DependentUpon>LogIn.aspx</DependentUpon>
