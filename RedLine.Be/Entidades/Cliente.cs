@@ -10,19 +10,21 @@ namespace Redline.Be
         public string Nombre { get; set; }
         public string Apellido { get; set; }
         public string Email { get; set; }
+        public string Contraseña { get; set; }
         public string Telefono { get; set; }
         public string Direccion { get; set; }
         public List<AutoPersonalizado> Garage { get; set; } = new List<AutoPersonalizado>();
 
         public Cliente() { }
 
-        public Cliente(int id, string dni, string nombre, string apellido, string email, string telefono, string direccion)
+        public Cliente(int id, string dni, string nombre, string apellido, string email, string contraseña, string telefono, string direccion)
         {
             this.ID = id;
             this.DNI = dni;
             this.Nombre = nombre;
             this.Apellido = apellido;
             this.Email = email;
+            this.Contraseña = contraseña;
             this.Telefono = telefono;
             this.Direccion = direccion;
         }
