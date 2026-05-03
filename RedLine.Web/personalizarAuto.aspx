@@ -1,5 +1,5 @@
 ﻿<%@Page Title= "LogIn" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="personalizarAuto.aspx.cs" Inherits="RedLine.Web.personalizarAuto" %>
-/* hola */
+
 <asp:Content ID="BodyContent" ContentPlaceHolderID="MainContent" runat="server">
      <main class="personalizarAutoContainer">
          <section>
