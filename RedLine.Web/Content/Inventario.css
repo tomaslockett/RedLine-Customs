@@ -1,4 +1,5 @@
-﻿body {
+﻿/*ESTILOS*/
+body {
     font-family: Arial, sans-serif;
     background-color: #f3f4f6;
     color: #1f2937;
@@ -15,18 +16,15 @@
     margin: 0 auto;
 }
 
-.volver-inventario {
-    margin-bottom: 20px;
-}
-
-.volver-inventario a {
-        text-decoration: none;
-        color: #4b5563;
-        font-size: 14px;
-}
-
+/*ENCABEZADOS Y TÍTULO*/
 .encabezado-pagina {
     margin-bottom: 30px;
+}
+
+.flex-encabezado {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 
 .titulo {
@@ -41,6 +39,7 @@
     margin: 0 0 20px 0;
 }
 
+/*TARJETAS Y ZONAS*/
 .tarjeta {
     background: #ffffff;
     border: 1px solid #d1d5db;
@@ -66,7 +65,7 @@
 }
 
 .icono-subida {
-    font-size: 32px;
+    font-size: 42px; 
     color: #6b7280;
     margin-bottom: 10px;
 }
@@ -77,20 +76,52 @@
     margin-bottom: 10px;
 }
 
-.formato-texto {
-    font-size: 12px;
-    color: #9ca3af;
+/*BOTONES*/
+.acciones-formulario {
+    margin-top: 30px;
+    display: flex;
+    justify-content: flex-end;
+    gap: 15px;
 }
 
-.contenedor-file {
-    margin: 15px 0;
+
+.acciones-centro {
+    justify-content: center;
+    margin-top: 20px;
 }
 
-.file-upload {
-    font-family: inherit;
+.btn {
+    padding: 10px 20px;
+    border-radius: 6px;
     font-size: 14px;
-    color: #1f2937;
+    font-weight: bold;
+    cursor: pointer;
+    border: none;
+    font-family: Arial, sans-serif;
+    text-decoration: none;
 }
+
+.btn-primario {
+    background: #D93416;
+    color: white;
+}
+
+    .btn-primario:hover {
+        background: #a82710;
+    }
+
+.btn-secundario {
+    background: #ffffff;
+    border: 1px solid #d1d5db;
+    color: #374151;
+}
+
+    .btn-secundario:hover {
+        background: #f3f4f6;
+    }
+
+
+/*FORMULARIOS*/
 
 .grid-formulario {
     display: grid;
@@ -103,12 +134,12 @@
     flex-direction: column;
 }
 
-.grupo-form label {
+    .grupo-form label {
         font-size: 14px;
         color: #374151;
         font-weight: bold;
         margin-bottom: 8px;
-}
+    }
 
 .input-control {
     background: #ffffff;
@@ -121,48 +152,12 @@
     width: 100%;
 }
 
-.input-control:focus {
+    .input-control:focus {
         outline: none;
         border-color: #D93416;
         box-shadow: 0 0 0 2px rgba(217, 52, 22, 0.2);
-}
+    }
 
 .ancho-completo {
     grid-column: span 2;
-}
-
-.acciones-formulario {
-    margin-top: 30px;
-    display: flex;
-    justify-content: flex-end;
-    gap: 15px;
-}
-
-.btn {
-    padding: 10px 20px;
-    border-radius: 6px;
-    font-size: 14px;
-    font-weight: bold;
-    cursor: pointer;
-    border: none;
-    font-family: Arial, sans-serif;
-}
-
-.btn-secundario {
-    background: #ffffff;
-    border: 1px solid #d1d5db;
-    color: #374151;
-}
-
-.btn-secundario:hover {
-        background: #f3f4f6;
-
-}
-
-.btn-primario {
-    background: #D93416;
-    color: white;
-}
-.btn-primario:hover {
-        background: #a82710;
 }

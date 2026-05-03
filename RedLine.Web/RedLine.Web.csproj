@@ -122,6 +122,7 @@
     <Content Include="Content\img\porsche.jfif" />
     <Content Include="Content\Site.css" />
     <Content Include="Content\CrearAutosEstilo.css" />
+    <Content Include="Content\Inventario.css" />
     <Content Include="CrearAutos.aspx" />
     <Content Include="Default.aspx" />
     <Content Include="favicon.ico" />
