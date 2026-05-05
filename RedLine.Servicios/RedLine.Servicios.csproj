@@ -43,15 +43,17 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Composite\ComponentePermiso.cs" />
+    <Compile Include="Composite\Familia.cs" />
+    <Compile Include="Composite\Perfil.cs" />
+    <Compile Include="Composite\Permiso.cs" />
     <Compile Include="Evento.cs" />
     <Compile Include="MotorDigitoVerificador.cs" />
     <Compile Include="Hashing.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SessionManager.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Composite\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
