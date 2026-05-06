@@ -9,6 +9,7 @@ namespace RedLine.Bll
     public class BLL_Cliente : AbstractBLL<string, Cliente>
     {
         public BLL_Cliente() : base(new DAL_Cliente()) { }
+        private BLL_Evento _bllEvento = new BLL_Evento();
 
         public override void Insertar(Cliente cliente)
         {
@@ -20,6 +21,8 @@ namespace RedLine.Bll
             cliente.Contraseña = Hashing.Sha256(cliente.Contraseña);
 
             base.Insertar(cliente);
+            string u = SessionManager.Instancia.IsLogged() ? SessionManager.Instancia.Usuario.Email : "Auto-Registro";
+            _bllEvento.Registrar(u, "Clientes", $"Registro de nuevo cliente: {cliente.Email}", 1);
         }
 
         public override void Modificar(Cliente cliente)
@@ -30,6 +33,8 @@ namespace RedLine.Bll
             cliente.Telefono = Hashing.EncriptarAES(cliente.Telefono);
             cliente.Direccion = Hashing.EncriptarAES(cliente.Direccion);
             base.Modificar(cliente);
+            string u = SessionManager.Instancia.IsLogged() ? SessionManager.Instancia.Usuario.Email : cliente.Email;
+            _bllEvento.Registrar(u, "Clientes", $"Modificación de datos del cliente: {cliente.Email}", 2);
         }
 
         public List<Cliente> ObtenerClientes()

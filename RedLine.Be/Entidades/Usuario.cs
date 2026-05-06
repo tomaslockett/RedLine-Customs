@@ -5,6 +5,9 @@ namespace Redline.Be
     public class Usuario
     {
         public int ID { get; set; }
+        public string DNI { get; set; }
+        public string Nombre { get; set; }
+        public string Apellido { get; set; }
         public string Email { get; set; }
         public string Contraseña { get; set; }
         public string Rol { get; set; }
@@ -12,7 +15,7 @@ namespace Redline.Be
         public bool Bloqueado { get; set; }
         public bool Activo { get; set; }
         public DateTime UltimoIntento { get; set; }
-        public Usuario(int id, string email, string contraseña, string rol, int intentos, bool bloqueado, bool activo, DateTime ultimoIntento)
+        public Usuario(int id, string dni, string nombre, string apellido, string email, string contraseña, string rol, int intentos, bool bloqueado, bool activo, DateTime ultimoIntento)
         {
             this.ID = id;
             this.Email = email;
@@ -22,6 +25,9 @@ namespace Redline.Be
             this.Bloqueado = bloqueado;
             this.Activo = activo;
             this.UltimoIntento = ultimoIntento;
+            this.DNI = dni;
+            this.Nombre = nombre;
+            this.Apellido = apellido;
         }
 
         public Usuario() { }

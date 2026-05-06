@@ -1,7 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using Redline.Be;
+﻿using Redline.Be;
 using RedLine.Dal;
+using RedLine.Servicios;
+using System;
+using System.Collections.Generic;
 
 namespace RedLine.Bll
 {
@@ -9,6 +10,7 @@ namespace RedLine.Bll
     {
         private DAL_AutoPersonalizado _dalAuto = new DAL_AutoPersonalizado();
         private DAL_AutoBase _dalBase = new DAL_AutoBase();
+        private BLL_Evento _bllEvento = new BLL_Evento();
 
         public BLL_Auto() : base(new DAL_AutoPersonalizado()) { }
 
@@ -21,6 +23,8 @@ namespace RedLine.Bll
                 throw new Exception("Un auto personalizado debe tener al menos una mejora.");
 
             _dalAuto.GuardarAutoCompleto(auto);
+            string u = SessionManager.Instancia.IsLogged() ? SessionManager.Instancia.Usuario.Email : "Sistema";
+            _bllEvento.Registrar(u, "Taller", $"Auto personalizado guardado para el cliente DNI: {auto.DNI_Cliente}", 1);
         }
     }
 }
