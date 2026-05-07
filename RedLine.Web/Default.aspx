@@ -28,26 +28,32 @@
         <h2 id="lblAutosEncontrados" class ="textoEncontrados">Se encontraron x autos</h2>
     </div>
     <br />
-   <div class="auto">
+    <asp:Repeater runat="server" ID="repAutos">
+        <ItemTemplate>
+               <div class="auto" >
     
-    <img class="fotoAuto" src="Content/img/porsche.jfif"/>
+               <img class="fotoAuto" src='<%# Eval("ImagenUrl") %>'/>
 
-    <div class="contenidoAuto">
-        <h4 class="marca">Porsche</h4>
-        <h2 class="modelo">911 Turbo S</h2>
-        <h3 class="anio">2024</h3>
+               <div class="contenidoAuto">
+                    <h4 class="marca"><%# Eval("Marca") %></h4>
+                    <h2 class="modelo"><%# Eval("Modelo") %></h2>
+                    <h3 class="anio"><%# Eval("Anio") %></h3>
 
-        <div class="datos">
-            <div class="datosAuto">
-                <p class="lblDatosAuto">Vel. max</p>
-                330 km/h</div>
-            <div class="datosAuto"><p class="lblDatosAuto">Potencia</p>640 HP</div>
-            <div class="datosAuto"><p class="lblDatosAuto">0-100km/h</p> 2.7s</div>
-        </div>
+                    <div class="datos">
+                          <div class="datosAuto">
+                                <p class="lblDatosAuto">Vel. max</p>
+                                <%# Eval("VelocidadMaxima") %>Km/h
+                          </div>
+                          <div class="datosAuto"><p class="lblDatosAuto">Potencia</p><%# Eval("Potencia") %>HP</div>
+                          <div class="datosAuto"><p class="lblDatosAuto">0-100km/h</p> <%# Eval("Aceleracion0a100") %>s</div>
+                   </div>
 
-        <h2 class="precio">$230.000</h2>
-        <div class="botonBajo">Personalizar</div>
-    </div>
+                   <h2 class="precio">$ <%# Eval("PrecioBase") %></h2>
+                   <a class="botonBajo" href='personalizarAuto.aspx?id=<%# Eval("ID") %>'>  Personalizar </a>
+               </div>
 
-</div>
+               </div>
+        </ItemTemplate>
+    </asp:Repeater>
+
 </asp:Content>
