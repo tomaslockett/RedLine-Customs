@@ -22,5 +22,19 @@ namespace RedLine.Bll
 
             _dalAuto.GuardarAutoCompleto(auto);
         }
+        public void GuardarAuto(AutoBase auto) 
+        {
+            _dalBase.Insertar(auto);
+        }
+        public AutoBase DevolverAuto(int id)
+        {
+            return _dalBase.ObtenerPorId(id);
+        }
+        //Lois
+        //por ahora no use DTOs, pasa que casi q en el DTO pondria lo mismo q en la clase normal
+        public List<AutoBase> MostrarAutosBase()
+        {
+            return _dalBase.Listar();
+        }
     }
 }

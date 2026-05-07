@@ -4,11 +4,11 @@
      <main class="personalizarAutoContainer">
          <section>
              <article class="autoExpandido">
-                 <h4 class="marca">Porsche</h4>
-                 <h2 class="modelo">911 Turbo S</h2>
-                 <h3 class="anio">2024</h3>
-                 <img src="Content/img/porsche.jfif" alt="Alternate Text" />
-                 <h2 class="precio">$230.000</h2>
+                 <h4 class="marca" id="lblMarca" runat="server"></h4>
+                 <h2 class="modelo" id="lblModelo" runat="server"></h2>
+                 <h3 class="anio" id="lblAnio" runat="server"></h3>
+                 <img src="Content/img/porsche.jfif" alt="Alternate Text" id="img" runat="server"/>
+                 <h2 class="precio" id="lblPrecio" runat="server">$</h2>
              </article>
              <article class="personalizar">
                  <ul class="listaPersonalizacion">

@@ -51,6 +51,7 @@
                             <asp:ListItem Text="Seleccione una marca" Value=""></asp:ListItem>
                             <asp:ListItem Text="Toyota" Value="Toyota"></asp:ListItem>
                             <asp:ListItem Text="Ford" Value="Ford"></asp:ListItem>
+                            <asp:ListItem Text="Porsche" Value="Porsche"></asp:ListItem>
                         </asp:DropDownList>
                     </div>
 
@@ -93,8 +94,8 @@
                 </div>
 
                 <div class="acciones-formulario">
-                    <asp:Button ID="ButtonCancelar" runat="server" Text="Cancelar" CssClass="btn btn-secundario" />
-                    <asp:Button ID="ButtonGuarda" runat="server" Text="Guardar" CssClass="btn btn-primario" />
+                    <asp:Button ID="ButtonCancelar" runat="server" Text="Cancelar" CssClass="btn btn-secundario" OnClick="Cancelar"/>
+                    <asp:Button ID="ButtonGuarda" runat="server" Text="Guardar" CssClass="btn btn-primario" OnClick="Agregar"/>
                 </div>
             </div>
 
