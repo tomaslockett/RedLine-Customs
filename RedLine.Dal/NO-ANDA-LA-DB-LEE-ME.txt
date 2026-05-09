@@ -1,0 +1,97 @@
+﻿
+HOLA Soy tomas, si estas leyendo esto es porque sos o Lois o Pachu
+Supongo que no te anduvo el proyecto verdad, bueno eso es porque me puse a tocar cosas jijiji
+Basicamente me pudri de los scripts de Sql y como en un proyecto Use el EF pense que esta bueno ponerlo aca 
+porque como somos varios tocando cosas 
+es mas facil poder hacer actualizaciones de la base de datos 
+basicamente comodida 
+yo seguro les voy a pasar audios de esto que voy a hacer o hice pero aca hay un txt que explica un poco todo
+si lo hizo Gpt no me juzgen
+
+===========================================================
+🏎️  REDLINE CUSTOMS - SISTEMA DE BASE DE DATOS AUTOMÁTICA 🏎️
+===========================================================
+
+Este proyecto usa Entity Framework (EF). 
+La base de datos se genera y actualiza SOLA a partir de las 
+clases en RedLine.BE. No hace falta crear tablas a mano.
+
+-----------------------------------------------------------
+1. CONFIGURACIÓN INICIAL (Tu Garage)
+-----------------------------------------------------------
+La conexión a la base de datos se configura en:
+📂 RedLine.Web / Web.config
+
+Buscá la sección <connectionStrings>. Si tu SQL Server tiene 
+un nombre distinto al de tus compañeros, solo cambiá el 
+"Data Source":
+
+Ejemplo: connectionString="Data Source=.; ... " 
+(El punto "." significa servidor local predeterminado).
+
+Despues Acordate que tambien esta la conexion a la base de datos en el AbstractDAL 
+Es un string de conexion Normal y Corriente 
+En las dos conecciones va lo mismo asi que tranqui
+
+-----------------------------------------------------------
+2. COMANDOS DE CONSOLA (Herramientas)
+-----------------------------------------------------------
+Para usar estos comandos, abrí en Visual Studio:
+Herramientas -> Administrador de paquetes NuGet -> Consola
+En la barra de arriba de todo!!
+
+⚠️ IMPORTANTE: En el desplegable "Proyecto predeterminado", 
+seleccioná siempre: RedLine.DAL
+
+O podes tambien click derecho en redline.dal -> Establecer proyecto de inicio
+despues pone el web como inicio para que te abra la pagina web
+
+A) SI AGREGÁS O CAMBIÁS ALGO EN LAS CLASES (BE):
+   Si agregás una propiedad a una entidad o creás una clase 
+   nueva, corré este comando para crear el "plano":
+   
+   > Add-Migration NombreDelCambio
+   (Ejemplo: Add-Migration AgregadoTelefonoUsuario)
+
+   otra opcion si no anda el tema de predeterminar el proyecto
+   >Add-Migration NombreDelCambio -ProjectName RedLine.DAL -StartUpProjectName RedLine.Web
+
+B) PARA IMPACTAR LOS CAMBIOS EN TU SQL LOCAL:
+   Para que las tablas aparezcan o se actualicen en tu SQL:
+   
+   > Update-Database
+
+   otra opcion si no anda el tema de predeterminar el proyecto
+   >Update-Database -ProjectName RedLine.DAL -StartUpProjectName RedLine.Web -Verbose
+
+   -Verbose es para ver los comando que hace en tiempo real te los muestra en la consola :D se puede sacar
+
+C) SI SOS NUEVO Y QUERÉS LA BD DESDE CERO:
+   Solo configurá tu Web.config y ejecutá:
+   
+   > Update-Database
+   (Esto crea la DB, las tablas y carga los permisos iniciales).
+
+   otra opcion si no anda el tema de predeterminar el proyecto
+   Update-Database -ProjectName RedLine.DAL -StartUpProjectName RedLine.Web -TargetMigration:0
+
+-----------------------------------------------------------
+3. DATOS DE FÁBRICA (Seed)
+-----------------------------------------------------------
+Los permisos del Composite y Familias que vienen "de fábrica" 
+se configuran en: 📂 RedLine.DAL / Migrations / Configuration.cs
+
+Si agregás un permiso nuevo al sistema, hacelo ahí adentro 
+usando "context.Permisos.AddOrUpdate(...)".
+
+Despues cuando ya tengamos esto un poco mas armado quiero poner nose un admin predetermindado y unos usuarios 
+Esto lo voy a hacer mas adelante 
+
+-----------------------------------------------------------
+⚠️ REGLA DE ORO:
+Antes de correr cualquier comando de Migrations, siempre 
+hacé "Recompilar Solución" (Build) para que EF vea los cambios.
+===========================================================
+
+
+CUALQUIER COSA DIGAME!!!!!!!!

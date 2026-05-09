@@ -16,7 +16,7 @@ namespace RedLine.Dal
     // llamada exactamente 'DigitoVerificador' con las columnas: NombreTabla (PK), DVH, DVV.
     public abstract class AbstractDAL<TKey, entidad> : IRepositorioBasico<TKey, entidad>
     {
-        protected string cx = "Data Source=.;Initial Catalog=\"Redline Customs\";Integrated Security=True;Encrypt=False;";
+        protected string cx = "Data Source=.;Initial Catalog=RedLineCustomsDB;Integrated Security=True";
 
         #region Configuracion
         protected abstract string NombreTabla { get; }
