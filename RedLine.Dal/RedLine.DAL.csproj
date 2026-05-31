@@ -67,6 +67,10 @@
     <Compile Include="Migrations\202605082229448_InitialCreate.Designer.cs">
       <DependentUpon>202605082229448_InitialCreate.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202605312248236_AutoMuestraSeed.cs" />
+    <Compile Include="Migrations\202605312248236_AutoMuestraSeed.Designer.cs">
+      <DependentUpon>202605312248236_AutoMuestraSeed.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="ORM\SqlEnsamblador.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -88,6 +92,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\202605082229448_InitialCreate.resx">
       <DependentUpon>202605082229448_InitialCreate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202605312248236_AutoMuestraSeed.resx">
+      <DependentUpon>202605312248236_AutoMuestraSeed.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

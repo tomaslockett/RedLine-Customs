@@ -24,6 +24,8 @@ namespace RedLine.Dal.Contexto
         public DbSet<Familia> Familias { get; set; }   
         public DbSet<Cliente> Cliente { get; set; }
         public DbSet<DigitoVerificador> DigitoVerificador { get; set; }
+        public DbSet<AutoBase> AutosBase { get; set; }
+        public DbSet<AutoPersonalizado> AutoPersonalizado { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
