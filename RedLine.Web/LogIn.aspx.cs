@@ -17,7 +17,7 @@ namespace RedLine.Web
         BLL_Usuario gestorUsuario = new BLL_Usuario();
         protected void Page_Load(object sender, EventArgs e)
         {
-
+            
         }
 
         protected void BtnLogin_Click(object sender, EventArgs e)

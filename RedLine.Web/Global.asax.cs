@@ -17,5 +17,6 @@ namespace RedLine.Web
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
         }
+       
     }
 }
