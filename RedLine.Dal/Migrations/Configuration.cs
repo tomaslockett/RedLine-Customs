@@ -1,5 +1,6 @@
 ﻿namespace RedLine.Dal.Migrations
 {
+    using Redline.Be;
     using RedLine.Servicios.Composite;
     using System;
     using System.Data.Entity;
@@ -21,7 +22,7 @@
             //var permisoStock = new Permiso { Nombre = "Cargar Stock" };
             //var permisoAdmin = new Permiso { Nombre = "Gestionar Usuarios" };
 
-    
+
             //context.Permisos.AddOrUpdate(p => p.Nombre, permisoVenta, permisoStock, permisoAdmin);
 
 
@@ -29,7 +30,23 @@
 
             //context.Familias.AddOrUpdate(f => f.Nombre, familiaVendedor);
 
-            //context.SaveChanges();
+            context.Usuarios.AddOrUpdate(u => u.Email,
+                new Usuario
+                {
+                    Nombre = "admin",
+                    Apellido = "admin",
+                    Email = "admin", 
+                    Contraseña = "8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a918", 
+                    DNI = "00000000", 
+                    Rol = "Admin", 
+                    Intentos = 0,
+                    Bloqueado = false,
+                    Activo = true,
+                    UltimoIntento = DateTime.Now
+                }
+            );
+
+            context.SaveChanges();
         }
     }
 }

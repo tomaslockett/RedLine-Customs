@@ -83,9 +83,7 @@ namespace RedLine.Bll
 
             if (string.IsNullOrEmpty(usuario.Contraseña))
             {
-                string claveInicial = usuario.Nombre.Substring(0, 3) +
-                                      usuario.Apellido.Substring(0, 3) +
-                                      usuario.DNI.Substring(0, 3);
+                string claveInicial = usuario.Nombre.Substring(0, 3) +usuario.Apellido.Substring(0, 3) +usuario.DNI.Substring(0, 3);
 
                 usuario.Contraseña = Hashing.Sha256(claveInicial);
             }
@@ -95,6 +93,7 @@ namespace RedLine.Bll
             }
 
             base.Insertar(usuario);
+
             string admin = SessionManager.Instancia.Usuario.Email;
             _bllEvento.Registrar(admin, "Usuarios", $"Desbloqueo manual y reset de clave para: {usuario.Email}", 2);
         }
