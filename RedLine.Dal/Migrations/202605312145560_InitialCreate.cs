@@ -8,6 +8,19 @@
         public override void Up()
         {
             CreateTable(
+                "dbo.Bitacora",
+                c => new
+                    {
+                        ID = c.Int(nullable: false, identity: true),
+                        Usuario = c.String(),
+                        Fecha = c.DateTime(nullable: false),
+                        Modulo = c.String(),
+                        Actividad = c.String(),
+                        Criticidad = c.Int(nullable: false),
+                    })
+                .PrimaryKey(t => t.ID);
+            
+            CreateTable(
                 "dbo.Cliente",
                 c => new
                     {
@@ -152,6 +165,7 @@
             DropTable("dbo.AutoBase");
             DropTable("dbo.AutoPersonalizado");
             DropTable("dbo.Cliente");
+            DropTable("dbo.Bitacora");
         }
     }
 }

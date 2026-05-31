@@ -13,7 +13,7 @@ namespace RedLine.Dal.Migrations
         
         string IMigrationMetadata.Id
         {
-            get { return "202605082229448_InitialCreate"; }
+            get { return "202605312145560_InitialCreate"; }
         }
         
         string IMigrationMetadata.Source

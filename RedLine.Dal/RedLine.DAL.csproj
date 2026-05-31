@@ -63,9 +63,9 @@
     <Compile Include="Mappers\DAL_Mejora.cs" />
     <Compile Include="Mappers\DAL_Usuario.cs" />
     <Compile Include="Mappers\DAL_DigitoVerificador.cs" />
-    <Compile Include="Migrations\202605082229448_InitialCreate.cs" />
-    <Compile Include="Migrations\202605082229448_InitialCreate.Designer.cs">
-      <DependentUpon>202605082229448_InitialCreate.cs</DependentUpon>
+    <Compile Include="Migrations\202605312145560_InitialCreate.cs" />
+    <Compile Include="Migrations\202605312145560_InitialCreate.Designer.cs">
+      <DependentUpon>202605312145560_InitialCreate.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="ORM\SqlEnsamblador.cs" />
@@ -86,12 +86,12 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\202605082229448_InitialCreate.resx">
-      <DependentUpon>202605082229448_InitialCreate.cs</DependentUpon>
-    </EmbeddedResource>
+    <Content Include="NO-ANDA-LA-DB-LEE-ME.txt" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="NO-ANDA-LA-DB-LEE-ME.txt" />
+    <EmbeddedResource Include="Migrations\202605312145560_InitialCreate.resx">
+      <DependentUpon>202605312145560_InitialCreate.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

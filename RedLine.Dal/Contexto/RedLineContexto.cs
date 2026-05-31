@@ -1,5 +1,6 @@
 ﻿using Redline.Be;
 using RedLine.Be.Entidades;
+using RedLine.Servicios;
 using RedLine.Servicios.Composite;
 using System;
 using System.Collections.Generic;
@@ -25,9 +26,13 @@ namespace RedLine.Dal.Contexto
         public DbSet<Cliente> Cliente { get; set; }
         public DbSet<DigitoVerificador> DigitoVerificador { get; set; }
 
+        public DbSet<Evento> Bitacora { get; set; }
+
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             modelBuilder.Conventions.Remove<PluralizingTableNameConvention>();
+
+            modelBuilder.Entity<Evento>().ToTable("Bitacora");
 
             base.OnModelCreating(modelBuilder);
         }
