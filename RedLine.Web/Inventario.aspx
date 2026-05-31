@@ -16,7 +16,7 @@
                     <p class="subTitulo">Lista de vehículos disponibles en el stock</p>
             </div>
             <div class="inventario-button">
-                <asp:Button ID="ButtonAgregarVehiculo" runat="server" Text="Agregar Vehículo" />
+                <asp:Button ID="ButtonAgregarVehiculo" runat="server" Text="Agregar Vehículo" onclick="IrAAgregarAuto" />
             </div>
             <div class="agregar-vehiculos">   
                 <div class="imagen-caja">
@@ -27,8 +27,8 @@
                     <h1 class="titulin">No hay vehiculos en el inventario</h1>
                     <p class="parafin">Comienza Agregando tu primer vehiculo al stock</p>
                 </div>
-                <div class="boton-primerAuto">
-                    <asp:Button ID="ButtonAgregarPrimerVehiculo" runat="server" Text="+ Agregar Primer Vehículo" />
+                <div class="boton-primerAuto" runat="server">
+                    <asp:Button ID="ButtonAgregarPrimerVehiculo" runat="server" Text="+ Agregar Primer Vehículo" onclick="IrAAgregarAuto" />
                 </div>
             </div>
         </div>

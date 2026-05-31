@@ -15,7 +15,7 @@
         <div class="contenedor-principal">
             
             <div class="volver-inventario">
-                <a href="#">← Volver al Inventario</a>
+                <a href="Inventario.aspx">← Volver al Inventario</a>
             </div>
 
             <div class="encabezado-pagina">
