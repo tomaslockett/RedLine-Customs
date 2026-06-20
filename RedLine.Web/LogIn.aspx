@@ -1,24 +1,26 @@
 ﻿<%@ Page Title="LogIn" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="LogIn.aspx.cs" Inherits="RedLine.Web.LogIn" %>
 
 <asp:Content ID="BodyContent" ContentPlaceHolderID="MainContent" runat="server">
-    <main class="loginContainer">
-        <section class="loginBox">
-            <h1 class="loginTitulo">Iniciar sesión</h1>
+    <link href="Content/LogIn.css" rel="stylesheet" type="text/css" />
 
-            <div class="campo">
+    <main class="login-contenedor">
+        <section class="login-caja">
+            <h1 class="login-titulo">Iniciar sesión</h1>
+
+            <div class="login-campo">
                 <label>Email</label>
-                <asp:TextBox ID="txtEmail" runat="server" CssClass="inputLogin" />
+                <asp:TextBox ID="txtEmail" runat="server" CssClass="login-input" />
             </div>
 
-            <div class="campo">
+            <div class="login-campo">
                 <label>Contraseña</label>
-                <div style="position: relative; width: 100%;">
-                    <asp:TextBox ID="txtPassword" runat="server" TextMode="Password" CssClass="inputLogin" style="width: 100%; box-sizing: border-box;" />
-                    <i class="fa-solid fa-eye-slash" id="togglePass" style="position: absolute; right: 10px; top: 10px; cursor: pointer; color: rgba(255,255,255,0.3);"></i>
+                <div class="login-pass-wrapper">
+                    <asp:TextBox ID="txtPassword" runat="server" TextMode="Password" CssClass="login-input" />
+                    <i class="fa-solid fa-eye-slash login-toggle-icon" id="togglePass"></i>
                 </div>
             </div>
 
-            <asp:Button ID="btnLogin" runat="server" Text="Ingresar" CssClass="btnLogin" OnClick="BtnLogin_Click" />
+            <asp:Button ID="btnLogin" runat="server" Text="Ingresar" CssClass="login-boton" OnClick="BtnLogin_Click" />
 
             <div style="text-align: center; margin-top: 25px;">
                 <p style="color: darkgray; font-size: 0.9rem; margin: 0;">

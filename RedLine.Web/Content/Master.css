@@ -1,0 +1,128 @@
+﻿body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #050505;
+    color: #ffffff;
+}
+
+
+.cabecera-principal {
+    background-color: #000000;
+    display: flex;
+    justify-content: space-between; 
+    align-items: center;
+    padding: 15px 30px;
+    border-bottom: 2px solid #222222; 
+}
+
+
+.contenedor-marca {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.caja-icono-marca {
+    background-color: #b30000; 
+    padding: 10px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+    .caja-icono-marca img {
+        width: 24px;
+        height: 24px;
+        object-fit: contain;
+    }
+
+.texto-marca h1 {
+    margin: 0;
+    font-size: 20px;
+    font-weight: bold;
+    letter-spacing: 1px;
+    color: #ffffff;
+}
+
+.texto-marca span {
+    margin: 0;
+    font-size: 12px;
+    color: #888888;
+    display: block;
+    margin-top: 2px;
+}
+
+
+.contenedor-navegacion {
+    display: flex;
+    align-items: center;
+    gap: 15px; 
+}
+
+
+.boton-menu {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px; 
+    padding: 10px 18px;
+    color: #ffffff;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 14px;
+    border-radius: 6px;
+    transition: background-color 0.2s ease, transform 0.1s ease;
+    cursor: pointer;
+}
+
+    .boton-menu img {
+        width: 18px;
+        height: 18px;
+        object-fit: contain;
+    }
+
+
+.boton-contorno-rojo {
+    border: 2px solid #b30000;
+    background-color: transparent;
+}
+
+    .boton-contorno-rojo:hover {
+        background-color: rgba(179, 0, 0, 0.1);
+    }
+
+
+.boton-texto-simple {
+    background-color: transparent;
+    color: #cccccc;
+}
+
+    .boton-texto-simple:hover {
+        color: #ffffff;
+        background-color: rgba(255, 255, 255, 0.05);
+    }
+
+
+.boton-solido-rojo {
+    background-color: #ff0000;
+    border: none;
+}
+
+    .boton-solido-rojo:hover {
+        background-color: #cc0000;
+        transform: translateY(-1px); 
+    }
+
+
+.contenedor-principal {
+    padding: 40px 30px;
+}
+
+.pie-pagina {
+    margin-top: 50px;
+    border-top: 1px solid #222222;
+    padding-top: 20px;
+    color: #555555;
+    font-size: 13px;
+}

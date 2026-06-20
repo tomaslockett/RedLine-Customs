@@ -1,0 +1,124 @@
+﻿.registro-contenedor {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 40px 20px;
+    min-height: 80vh;
+}
+
+.registro-caja {
+    background: #0F141C;
+    padding: 30px;
+    border-radius: 12px;
+    border: 1px solid darkgray;
+    width: 100%;
+    max-width: 650px; 
+}
+
+.registro-titulo {
+    text-align: center;
+    font-size: 32px;
+    color: #D93416;
+    margin: 0 0 30px 0;
+    display: block;
+}
+
+
+.registro-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+.registro-campo {
+    display: flex;
+    flex-direction: column;
+    color: darkgray;
+    text-align: left;
+}
+
+    .registro-campo label {
+        margin-bottom: 8px;
+        font-size: 0.9rem;
+    }
+
+.registro-input {
+    background: #161D29;
+    border: 1px solid darkgray;
+    border-radius: 6px;
+    padding: 10px;
+    color: white;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+
+.registro-pass-wrapper {
+    position: relative;
+    width: 100%;
+}
+
+.registro-toggle-icon {
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    color: rgba(255,255,255,0.3);
+    transition: color 0.3s;
+}
+
+    .registro-toggle-icon:hover {
+        color: white;
+    }
+
+
+.registro-boton-contenedor {
+    display: flex;
+    justify-content: center;
+    margin-top: 10px;
+}
+
+.registro-boton {
+    padding: 12px 30px;
+    background: #D93416;
+    border: none;
+    border-radius: 6px;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+    .registro-boton:hover {
+        background: #b32a12;
+    }
+
+.registro-mensaje {
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+.registro-link-contenedor {
+    text-align: center;
+    margin-top: 15px;
+}
+
+.registro-link {
+    color: darkgray;
+    text-decoration: none;
+    font-size: 0.9rem;
+    transition: color 0.2s;
+}
+
+    .registro-link:hover {
+        color: #D93416;
+    }
+
+
+@media (max-width: 600px) {
+    .registro-grid {
+        grid-template-columns: 1fr;
+    }
+}

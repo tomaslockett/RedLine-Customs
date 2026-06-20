@@ -37,7 +37,7 @@ namespace RedLine.Web
 
                 if (resultado == LoginResult.ValidUser)
                 { 
-                    Response.Redirect("Default.aspx"); 
+                    Response.Redirect("Catalogo.aspx"); 
                     return;
                 }
             }
@@ -54,7 +54,7 @@ namespace RedLine.Web
                     {
                         Session["ClienteSession"] = clienteLogueado; 
                         Session["UserEmail"] = email; 
-                        Response.Redirect("Default.aspx"); 
+                        Response.Redirect("Catalogo.aspx"); 
                     }
                     else
                     {

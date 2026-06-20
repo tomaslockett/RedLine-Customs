@@ -1,0 +1,92 @@
+﻿.loginContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 80vh;
+}
+
+.loginBox {
+    background: #0F141C;
+    padding: 30px;
+    border-radius: 12px;
+    border: 1px solid darkgray;
+    width: 100%;
+    max-width: 400px;
+}
+
+    .loginBox .loginTitulo {
+        text-align: center !important;
+        display: block !important;
+        width: 100% !important;
+        margin: 0 0 30px 0 !important;
+        font-size: 32px;
+        color: #D93416;
+        font-weight: bold;
+    }
+
+.campo {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 15px;
+    color: darkgray;
+    text-align: left;
+}
+
+    .campo label {
+        margin-bottom: 5px;
+        font-size: 14px;
+    }
+
+.inputLogin {
+    background: #161D29;
+    border: 1px solid #333333;
+    border-radius: 6px;
+    padding: 10px;
+    color: white;
+    width: 100%;
+    box-sizing: border-box;
+    font-size: 14px;
+}
+
+.btnLogin {
+    width: 100%;
+    padding: 12px;
+    background: #D93416;
+    border: none;
+    border-radius: 6px;
+    color: white;
+    font-weight: bold;
+    font-size: 15px;
+    margin-top: 10px;
+    transition: background 0.2s ease;
+}
+
+    .btnLogin:hover {
+        background: #b32a12;
+        cursor: pointer;
+    }
+
+
+.password-wrapper {
+    position: relative;
+    width: 100%;
+}
+
+    .password-wrapper .inputLogin {
+        padding-right: 40px;
+    }
+
+.toggle-icon {
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    color: rgba(255, 255, 255, 0.3);
+    transition: color 0.3s;
+    font-size: 16px;
+}
+
+    .toggle-icon:hover {
+        color: white;
+    }

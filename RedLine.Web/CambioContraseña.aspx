@@ -1,6 +1,9 @@
 ﻿<%@ Page Title="Cambiar Contraseña" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="CambioContraseña.aspx.cs" Inherits="RedLine.Web.CambioContraseña" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
+
+    <link href="/Content/CambioContraseña.css" rel="stylesheet" type="text/css" runat="server" />
+
     <div class="loginContainer">
         <section class="loginBox">
             <h1 class="loginTitulo">Cambiar Contraseña</h1>

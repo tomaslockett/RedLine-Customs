@@ -1,0 +1,101 @@
+﻿
+.personalizar-auto-main {
+    display: flex;
+    justify-content: center;
+    padding: 40px 20px;
+    background-color: #030509;
+    font-family: 'Inter', sans-serif;
+}
+
+.auto-expandido-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: #0B0E14;
+    padding: 30px;
+    border-radius: 16px 16px 0 0;
+    border: 1px solid #1C2533;
+    width: 100%;
+    max-width: 500px;
+}
+
+.marca-auto {
+    color: #94A3B8;
+    font-size: 0.9rem;
+    margin: 0;
+    text-transform: uppercase;
+}
+
+.modelo-auto {
+    color: #F8FAFC;
+    font-size: 2rem;
+    margin: 10px 0;
+}
+
+.anio-auto {
+    color: #64748B;
+    font-size: 1.1rem;
+    margin-bottom: 20px;
+}
+
+.img-auto {
+    width: 100%;
+    border-radius: 8px;
+    margin-bottom: 20px;
+}
+
+.precio-auto {
+    color: #D93416;
+    font-size: 1.8rem;
+    font-weight: 700;
+}
+
+.personalizar-extras-card {
+    background: #0A0F17;
+    padding: 30px;
+    border-radius: 0 0 16px 16px;
+    border: 1px solid #1C2533;
+    border-top: none;
+    width: 100%;
+    max-width: 500px;
+}
+
+.lista-extras {
+    list-style: none;
+    padding: 0;
+    margin-bottom: 25px;
+}
+
+.item-extra {
+    background: #121924;
+    border: 1px solid #2B3647;
+    border-radius: 8px;
+    padding: 15px;
+    margin-bottom: 12px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: #E2E8F0;
+}
+
+.precio-extra {
+    color: #FF5722;
+    font-weight: 600;
+}
+
+.btn-confirmar-config {
+    width: 100%;
+    padding: 15px;
+    background: #D93416;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-weight: bold;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+    .btn-confirmar-config:hover {
+        background: #B92D12;
+    }
