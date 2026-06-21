@@ -110,8 +110,10 @@
     <Content Include="Content\CambioContraseña.css" />
     <Content Include="Content\Catalogo.css" />
     <Content Include="Content\estilos.css" />
+    <Content Include="Content\GestionClientes.css" />
     <Content Include="Content\GestionEventos.css" />
     <Content Include="Content\GestionUsuarios.css" />
+    <Content Include="Content\HistorialVentas.css" />
     <Content Include="Content\img\lupita.png" />
     <Content Include="Content\img\porsche.jfif" />
     <Content Include="Content\LogIn.css" />
@@ -124,9 +126,11 @@
     <Content Include="CrearAutos.aspx" />
     <Content Include="Catalogo.aspx" />
     <Content Include="favicon.ico" />
+    <Content Include="GestionClientes.aspx" />
     <Content Include="GestionEventos.aspx" />
     <Content Include="GestionUsuarios.aspx" />
     <Content Include="Global.asax" />
+    <Content Include="HistorialVentas.aspx" />
     <Content Include="Inventario.aspx" />
     <Content Include="LogIn.aspx" />
     <Content Include="personalizarAuto.aspx" />
@@ -162,6 +166,13 @@
     <Compile Include="Catalogo.aspx.designer.cs">
       <DependentUpon>Catalogo.aspx</DependentUpon>
     </Compile>
+    <Compile Include="GestionClientes.aspx.cs">
+      <DependentUpon>GestionClientes.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="GestionClientes.aspx.designer.cs">
+      <DependentUpon>GestionClientes.aspx</DependentUpon>
+    </Compile>
     <Compile Include="GestionEventos.aspx.cs">
       <DependentUpon>GestionEventos.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -178,6 +189,13 @@
     </Compile>
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
+    <Compile Include="HistorialVentas.aspx.cs">
+      <DependentUpon>HistorialVentas.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="HistorialVentas.aspx.designer.cs">
+      <DependentUpon>HistorialVentas.aspx</DependentUpon>
     </Compile>
     <Compile Include="Inventario.aspx.cs">
       <DependentUpon>Inventario.aspx</DependentUpon>

@@ -53,6 +53,16 @@
                     Gestion Usuarios
                 </a>
 
+                <a runat="server" href="~/GestionClientes.aspx" class="boton-menu boton-texto-simple">
+                     <img src="<%= ResolveUrl("~/Content/img/lupita.png") %>" alt="Clientes" />
+                     Gestion Clientes
+                </a>
+
+                <a runat="server" href="~/HistorialVentas.aspx" class="boton-menu boton-texto-simple">
+                    <img src="<%= ResolveUrl("~/Content/img/lupita.png") %>" alt="Ventas" />
+                    Historial de Ventas
+                </a>
+
                 <a runat="server" href="~/RegistroCliente.aspx" class="boton-menu boton-texto-simple">
                     <img src="<%= ResolveUrl("~/Content/img/lupita.png") %>" alt="Cliente" />
                     Registrarse

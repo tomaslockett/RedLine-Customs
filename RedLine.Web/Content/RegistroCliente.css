@@ -2,8 +2,8 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    min-height: 80vh; 
     padding: 40px 20px;
-    min-height: 80vh;
 }
 
 .registro-caja {
@@ -13,6 +13,7 @@
     border: 1px solid darkgray;
     width: 100%;
     max-width: 650px; 
+    box-sizing: border-box;
 }
 
 .registro-titulo {
@@ -23,11 +24,10 @@
     display: block;
 }
 
-
 .registro-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 15px;
+    gap: 15px; 
     margin-bottom: 20px;
 }
 
@@ -51,8 +51,13 @@
     color: white;
     width: 100%;
     box-sizing: border-box;
+    transition: border-color 0.3s ease;
 }
 
+    .registro-input:focus {
+        outline: none;
+        border-color: #D93416;
+    }
 
 .registro-pass-wrapper {
     position: relative;
@@ -73,15 +78,13 @@
         color: white;
     }
 
-
 .registro-boton-contenedor {
-    display: flex;
-    justify-content: center;
     margin-top: 10px;
 }
 
 .registro-boton {
-    padding: 12px 30px;
+    width: 100%;
+    padding: 12px;
     background: #D93416;
     border: none;
     border-radius: 6px;
@@ -98,6 +101,7 @@
 .registro-mensaje {
     text-align: center;
     margin-bottom: 10px;
+    color: darkgray;
 }
 
 .registro-link-contenedor {
@@ -119,6 +123,6 @@
 
 @media (max-width: 600px) {
     .registro-grid {
-        grid-template-columns: 1fr;
+        grid-template-columns: 1fr; 
     }
 }
