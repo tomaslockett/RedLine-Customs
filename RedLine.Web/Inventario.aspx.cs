@@ -15,7 +15,7 @@ namespace RedLine.Web
         }
         protected void IrAAgregarAuto(object sender, EventArgs e)
         {
-            Response.Redirect("CrearAutos.aspx");
+            Response.Redirect("CrearAuto.aspx");
         }
     }
 }

@@ -1,0 +1,83 @@
+﻿.login-contenedor {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 80vh;
+}
+
+.login-caja {
+    background: #0F141C;
+    padding: 30px;
+    border-radius: 12px;
+    border: 1px solid darkgray;
+    width: 100%;
+    max-width: 400px;
+}
+
+.login-titulo {
+    text-align: center;
+    font-size: 32px;
+    color: #D93416;
+    margin: 0 0 30px 0;
+    display: block;
+}
+
+.login-campo {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 15px;
+    color: darkgray;
+    text-align: left;
+}
+
+    .login-campo label {
+        margin-bottom: 8px;
+        font-size: 0.9rem;
+    }
+
+.login-input {
+    background: #161D29;
+    border: 1px solid darkgray;
+    border-radius: 6px;
+    padding: 10px;
+    color: white;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+
+.login-boton {
+    width: 100%;
+    padding: 12px;
+    background: #D93416;
+    border: none;
+    border-radius: 6px;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+    .login-boton:hover {
+        background: #b32a12;
+    }
+
+
+.login-pass-wrapper {
+    position: relative;
+    width: 100%;
+}
+
+.login-toggle-icon {
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    color: rgba(255,255,255,0.3);
+    transition: color 0.3s;
+}
+
+    .login-toggle-icon:hover {
+        color: white;
+    }

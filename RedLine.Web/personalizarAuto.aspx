@@ -1,6 +1,7 @@
 ﻿<%@Page Title= "LogIn" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="personalizarAuto.aspx.cs" Inherits="RedLine.Web.personalizarAuto" %>
 
 <asp:Content ID="BodyContent" ContentPlaceHolderID="MainContent" runat="server">
+    <link href="/Content/PersonalizarAuto.css" rel="stylesheet" type="text/css" runat="server" />
      <main class="personalizarAutoContainer">
          <section>
              <article class="autoExpandido">

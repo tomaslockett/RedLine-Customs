@@ -53,6 +53,7 @@
     <Compile Include="Entidades\Cliente.cs" />
     <Compile Include="Entidades\DigitoVerificador.cs" />
     <Compile Include="Entidades\Factura.cs" />
+    <Compile Include="Entidades\Venta.cs" />
     <Compile Include="Interfaces\IGestorIntegridad.cs" />
     <Compile Include="Interfaces\IRepositorioBasico.cs" />
     <Compile Include="Entidades\Mejora.cs" />

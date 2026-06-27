@@ -25,6 +25,8 @@ namespace RedLine.Dal.Contexto
         public DbSet<Familia> Familias { get; set; }   
         public DbSet<Cliente> Cliente { get; set; }
         public DbSet<DigitoVerificador> DigitoVerificador { get; set; }
+        public DbSet<Venta> Ventas { get; set; }
+        public DbSet<Factura> Facturas { get; set; }
 
         public DbSet<Evento> Bitacora { get; set; }
 
@@ -33,6 +35,20 @@ namespace RedLine.Dal.Contexto
             modelBuilder.Conventions.Remove<PluralizingTableNameConvention>();
 
             modelBuilder.Entity<Evento>().ToTable("Bitacora");
+
+            modelBuilder.Entity<Venta>()
+                .HasOptional(v => v.AutoBase)
+                .WithMany()
+                .WillCascadeOnDelete(false);
+
+            modelBuilder.Entity<Venta>()
+                .HasOptional(v => v.AutoPersonalizado)
+                .WithMany()
+                .WillCascadeOnDelete(false);
+
+            modelBuilder.Entity<Venta>()
+                .HasOptional(v => v.Factura) 
+                .WithRequired(f => f.Venta);
 
             base.OnModelCreating(modelBuilder);
         }

@@ -1,0 +1,221 @@
+﻿.contenedor-principal {
+    max-width: 1100px;
+    margin: 40px auto;
+    padding: 0 20px;
+    font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    color: white; 
+}
+
+
+.encabezado-pagina {
+    margin-bottom: 35px;
+    text-align: left;
+    border-left: 6px solid #D93416;
+    padding-left: 15px;
+}
+
+.titulo {
+    font-size: 36px;
+    color: #D93416; 
+    margin: 0 0 8px 0;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: -0.5px;
+}
+
+.subTitulo {
+    font-size: 16px;
+    color: darkgray; 
+    margin: 0;
+    line-height: 1.5;
+}
+
+
+.kpi-contenedor {
+    width: 100%;
+    margin-bottom: 25px;
+    font-size: 0;
+}
+
+.kpi-tarjeta {
+    display: inline-block;
+    width: 23.5%;
+    margin-right: 2%;
+    background-color: #0F141C; 
+    border: 1px solid darkgray; 
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5); 
+    box-sizing: border-box;
+    vertical-align: top;
+}
+
+    .kpi-tarjeta:last-child {
+        margin-right: 0;
+    }
+
+    .kpi-tarjeta.destacados {
+        border-top: 4px solid #D93416;
+    }
+
+.kpi-etiqueta {
+    display: block;
+    font-size: 12px;
+    font-weight: 700;
+    color: darkgray;
+    text-transform: uppercase;
+    margin-bottom: 6px;
+    letter-spacing: 0.5px;
+}
+
+.kpi-valor {
+    display: block;
+    font-size: 22px;
+    font-weight: 800;
+    color: white;
+}
+
+.kpi-tarjeta.destacados .kpi-valor {
+    color: #D93416; 
+}
+
+
+.tarjeta-chasis {
+    background-color: #0F141C; 
+    border-radius: 12px;
+    padding: 25px 30px;
+    border: 1px solid darkgray;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+    margin-bottom: 25px;
+}
+
+.filtros-grid {
+    width: 100%;
+    font-size: 0;
+}
+
+.filtro-grupo {
+    display: inline-block;
+    width: 22%;
+    margin-right: 3%;
+    vertical-align: bottom;
+}
+
+    .filtro-grupo.busqueda-principal {
+        width: 30%;
+    }
+
+    .filtro-grupo.acciones-filtro {
+        width: 15%;
+        margin-right: 0;
+        text-align: right;
+    }
+
+    .filtro-grupo label {
+        display: block;
+        font-size: 12px;
+        font-weight: 600;
+        margin-bottom: 6px;
+        color: darkgray;
+        text-transform: uppercase;
+    }
+
+
+.input-taller {
+    width: 100%;
+    padding: 10px 12px;
+    background: #161D29; 
+    border: 1px solid darkgray;
+    color: white; 
+    border-radius: 6px;
+    box-sizing: border-box;
+    font-size: 14px;
+    font-family: inherit;
+    transition: all 0.2s ease;
+}
+
+    .input-taller:focus {
+        outline: none;
+        border-color: #D93416;
+        background-color: #161D29;
+        box-shadow: 0 0 0 2px rgba(217, 52, 22, 0.2);
+    }
+
+.btn-primario {
+    background-color: #D93416;
+    color: #ffffff;
+    padding: 11px 24px;
+    border: none;
+    border-radius: 6px;
+    font-size: 14px;
+    font-weight: 700;
+    cursor: pointer;
+    text-transform: uppercase;
+    width: 100%;
+    transition: background-color 0.2s ease;
+}
+
+    .btn-primario:hover {
+        background-color: #b32a12;
+    }
+
+
+.panel-tabla {
+    padding: 20px;
+}
+
+.tabla-contenedor {
+    overflow-x: auto;
+}
+
+.gridview-custom {
+    width: 100%;
+    border-collapse: collapse;
+    border: none;
+    color: white; 
+}
+
+   
+    .gridview-custom th {
+        background-color: #161D29; 
+        color: #D93416; 
+        padding: 14px 16px;
+        font-size: 13px;
+        text-align: left;
+        font-weight: 700;
+        text-transform: uppercase;
+        border: none;
+        border-bottom: 2px solid darkgray;
+    }
+
+  
+    .gridview-custom td {
+        padding: 14px 16px;
+        font-size: 14px;
+        color: lightgray;
+        border-bottom: 1px solid rgba(169, 169, 169, 0.2); 
+    }
+
+    .gridview-custom tr:nth-child(even) td {
+        background-color: rgba(255, 255, 255, 0.02);
+    }
+
+    .gridview-custom tr:hover td {
+        background-color: #161D29;
+    }
+
+.col-total {
+    font-weight: 700;
+    color: white !important;
+}
+
+
+.badge-custom {
+    background-color: rgba(217, 52, 22, 0.15); 
+    color: #D93416;
+    border: 1px solid #D93416;
+    padding: 4px 8px;
+    border-radius: 9999px;
+    font-size: 12px;
+    font-weight: 600;
+}

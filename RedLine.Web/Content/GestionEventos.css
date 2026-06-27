@@ -1,0 +1,109 @@
+﻿.contenedor-eventos-main {
+    display: flex;
+    justify-content: center;
+    padding: 40px 20px;
+    background-color: #030509;
+}
+
+.panel-bitacora-recuadro {
+    background: #0A0F17;
+    padding: 40px;
+    border-radius: 16px;
+    border: 1px solid #1C2533;
+    width: 95%;
+    max-width: 1300px;
+}
+
+.titulo-bitacora {
+    text-align: center;
+    font-size: 32px;
+    color: #FF5722;
+    margin-bottom: 35px;
+    font-weight: 700;
+    letter-spacing: 1px;
+}
+
+.grid-filtros {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px;
+    margin-bottom: 30px;
+}
+
+.campo-bitacora {
+    display: flex;
+    flex-direction: column;
+    gap: 8px; 
+}
+
+    .campo-bitacora label {
+        color: #94A3B8;
+        font-size: 0.85rem;
+        font-weight: 600;
+        text-transform: uppercase;
+    }
+
+.control-input-eventos {
+    background: #121924;
+    border: 1px solid #2B3647;
+    border-radius: 8px; 
+    padding: 12px 15px; 
+    color: white;
+    font-size: 0.95rem;
+    transition: border 0.3s;
+}
+
+    .control-input-eventos:focus {
+        border-color: #FF5722;
+        outline: none;
+    }
+
+
+.boton-bitacora-accion {
+    padding: 12px 25px;
+    border: none;
+    border-radius: 8px;
+    color: white;
+    font-weight: bold;
+    background: #FF5722;
+    cursor: pointer;
+    transition: transform 0.1s, background 0.2s;
+}
+
+    .boton-bitacora-accion:hover {
+        background: #E64A19;
+        transform: translateY(-2px);
+    }
+
+
+.contenedor-tabla-scroll {
+    overflow-x: auto;
+    border-radius: 12px;
+    border: 1px solid #1C2533;
+}
+
+.tabla-eventos-custom {
+    background: #0B0E14;
+    color: #E1E6ED;
+    border-collapse: collapse;
+    width: 100%;
+}
+
+    .tabla-eventos-custom th {
+        background: #161D29;
+        color: #FF5722;
+        padding: 18px; 
+        text-align: left;
+        font-weight: 700;
+    }
+
+    .tabla-eventos-custom td {
+        padding: 16px;
+        border-bottom: 1px solid #1C2533;
+        font-size: 0.95rem;
+    }
+
+   
+    .tabla-eventos-custom tr:hover {
+        background: #121924;
+    }

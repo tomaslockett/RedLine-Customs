@@ -1,80 +1,95 @@
 ﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="Site.master.cs" Inherits="RedLine.Web.SiteMaster" %>
 
 <!DOCTYPE html>
-
 <html lang="es">
 <head runat="server">
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title><%: Page.Title %> - Mi aplicación ASP.NET</title>
+    <title><%: Page.Title %> - RedLine Customs</title>
 
-    <asp:PlaceHolder runat="server">
-        <%: Scripts.Render("~/bundles/modernizr") %>
-    </asp:PlaceHolder>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-
-<link rel="preconnect" 
-      href="https://fonts.gstatic.com" 
-      crossorigin>
-
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=Poppins:wght@400;700&display=swap" 
-      rel="stylesheet">
-    <webopt:bundlereference runat="server" path="~/Content/css" />
-    <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
-    <link href="~/Content/estilos.css" rel="stylesheet" runat="server" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
+    <link href="~/Content/Master.css" rel="stylesheet" runat="server" />
 </head>
 <body>
     <form runat="server">
-        <asp:ScriptManager runat="server">
-            <Scripts>
-                <%--To learn more about bundling scripts in ScriptManager see https://go.microsoft.com/fwlink/?LinkID=301884 --%>
-                <%--Framework Scripts--%>
-                <asp:ScriptReference Name="MsAjaxBundle" />
-                <asp:ScriptReference Name="jquery" />
-                <asp:ScriptReference Name="WebForms.js" Assembly="System.Web" Path="~/Scripts/WebForms/WebForms.js" />
-                <asp:ScriptReference Name="WebUIValidation.js" Assembly="System.Web" Path="~/Scripts/WebForms/WebUIValidation.js" />
-                <asp:ScriptReference Name="MenuStandards.js" Assembly="System.Web" Path="~/Scripts/WebForms/MenuStandards.js" />
-                <asp:ScriptReference Name="GridView.js" Assembly="System.Web" Path="~/Scripts/WebForms/GridView.js" />
-                <asp:ScriptReference Name="DetailsView.js" Assembly="System.Web" Path="~/Scripts/WebForms/DetailsView.js" />
-                <asp:ScriptReference Name="TreeView.js" Assembly="System.Web" Path="~/Scripts/WebForms/TreeView.js" />
-                <asp:ScriptReference Name="WebParts.js" Assembly="System.Web" Path="~/Scripts/WebForms/WebParts.js" />
-                <asp:ScriptReference Name="Focus.js" Assembly="System.Web" Path="~/Scripts/WebForms/Focus.js" />
-                <asp:ScriptReference Name="WebFormsBundle" />
-                <%--Site Scripts--%>
-            </Scripts>
-        </asp:ScriptManager>
 
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-dark bg-dark">
-            <div class="container">
-                <a class="navbar-brand" runat="server" href="~/">Redline Customs</a>
-                <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" title="Alternar navegación" aria-controls="navbarSupportedContent"
-                    aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="collapse navbar-collapse d-sm-inline-flex justify-content-between">
-                    <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item"><a class="nav-link" runat="server" href="~/">Inicio</a></li>
-                        <li class="nav-item"><a class="nav-link" runat="server" href="~/LogIn">Log In</a></li>
-                        <li class="nav-item"><a class="nav-link" runat="server" href="~/GestionEventos.aspx">gestion eventos</a></li>
-                        <li class="nav-item"><a class="nav-link" runat="server" href="~/GestionUsuarios.aspx">gestion user</a></li>
-                        <li class="nav-item"><a class="nav-link" runat="server" href="~/Inventario.aspx">inventario</a></li>
-                    </ul>
+        <asp:ScriptManager ID="smGlobal" runat="server"></asp:ScriptManager>
+
+        <header class="cabecera-principal">
+            
+            <div class="contenedor-marca">
+                <div class="caja-icono-marca">
+                    <img src="<%= ResolveUrl("~/Content/img/lupita.png") %>" alt="Icono RedLine" /> 
+                </div>
+                <div class="texto-marca">
+                    <h1>REDLINE CUSTOMS</h1>
+                    <span>30 años de excelencia</span>
                 </div>
             </div>
-        </nav>
-        <div class="container-fluid body-content">
-            <asp:ContentPlaceHolder ID="MainContent" runat="server">
-            </asp:ContentPlaceHolder>
-            <hr />
-            <footer>
-                <p>&copy; RedlineCustoms</p>
+
+            <nav class="contenedor-navegacion">
+                
+                <a runat="server" href="~/Catalogo" class="boton-menu boton-texto-simple">
+                    <img src="<%= ResolveUrl("~/Content/img/lupita.png") %>" alt="Inicio" />
+                    Inicio
+                </a>
+
+                <a runat="server" href="~/CrearAuto.aspx" class="boton-menu boton-contorno-rojo">
+                    <img src="<%= ResolveUrl("~/Content/img/lupita.png") %>" alt="Crear Auto" />
+                    Crear Auto
+                </a>
+
+                <a runat="server" href="~/Inventario.aspx" class="boton-menu boton-texto-simple">
+                    <img src="<%= ResolveUrl("~/Content/img/lupita.png") %>" alt="Inventario" />
+                    Inventario
+                </a>
+
+                <a runat="server" href="~/GestionEventos.aspx" class="boton-menu boton-texto-simple">
+                    <img src="<%= ResolveUrl("~/Content/img/lupita.png") %>" alt="Eventos" />
+                    Gestion Eventos
+                </a>
+
+                <a runat="server" href="~/GestionUsuarios.aspx" class="boton-menu boton-texto-simple">
+                    <img src="<%= ResolveUrl("~/Content/img/lupita.png") %>" alt="Usuarios" />
+                    Gestion Usuarios
+                </a>
+
+                <a runat="server" href="~/GestionClientes.aspx" class="boton-menu boton-texto-simple">
+                     <img src="<%= ResolveUrl("~/Content/img/lupita.png") %>" alt="Clientes" />
+                     Gestion Clientes
+                </a>
+
+                <a runat="server" href="~/HistorialVentas.aspx" class="boton-menu boton-texto-simple">
+                    <img src="<%= ResolveUrl("~/Content/img/lupita.png") %>" alt="Ventas" />
+                    Historial de Ventas
+                </a>
+
+                <a runat="server" href="~/RegistroCliente.aspx" class="boton-menu boton-texto-simple">
+                    <img src="<%= ResolveUrl("~/Content/img/lupita.png") %>" alt="Cliente" />
+                    Registrarse
+                </a>
+
+                <a runat="server" href="~/CambioContraseña.aspx" class="boton-menu boton-texto-simple">
+                    <img src="<%= ResolveUrl("~/Content/img/lupita.png") %>" alt="Contraseña" />
+                    Cambio Contraseña
+                </a>
+
+                <a runat="server" href="~/LogIn.aspx" class="boton-menu boton-solido-rojo">
+                    <img src="<%= ResolveUrl("~/Content/img/lupita.png") %>" alt="Login" />
+                    Iniciar Sesión
+                </a>
+
+            </nav>
+        </header>
+
+        <main class="contenedor-principal">
+
+            <asp:ContentPlaceHolder ID="MainContent" runat="server"> </asp:ContentPlaceHolder>
+            
+            <footer class="pie-pagina">
+                <p>&copy; 2026 - RedLine Customs</p>
             </footer>
-        </div>
+        </main>
+
     </form>
-    <asp:PlaceHolder runat="server">
-        <%: Scripts.Render("~/Scripts/bootstrap.js") %>
-    </asp:PlaceHolder>
 </body>
 </html>

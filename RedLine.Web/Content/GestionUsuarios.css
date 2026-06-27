@@ -1,0 +1,98 @@
+﻿body {
+    background-color: #030509;
+}
+
+.bloque-administracion-usuarios {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: auto;
+    padding: 30px;
+}
+
+
+.panel-usuarios-recuadro {
+    background: #0A0F17;
+    padding: 30px;
+    border-radius: 12px;
+    border: 1px solid #1C2533; 
+    box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+    width: 95%;
+    max-width: 1200px;
+}
+
+
+.titulo-gestion-usuarios {
+    text-align: center !important;
+    display: block !important;
+    width: 100% !important;
+    margin: 0 0 30px 0 !important;
+    font-size: 32px;
+    color: #F8FAFC; 
+    font-weight: bold;
+}
+
+.casilla-formulario-usuario {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 15px;
+    color: #94A3B8; 
+    text-align: left;
+}
+
+.control-entrada-usuario {
+    background: #121924; 
+    border: 1px solid #2B3647;
+    border-radius: 6px;
+    padding: 10px;
+    color: white;
+    width: 100%;
+    box-sizing: border-box;
+    font-size: 14px;
+}
+
+.boton-control-usuario {
+    padding: 12px;
+    border: none;
+    border-radius: 6px;
+    color: white;
+    font-weight: bold;
+    font-size: 15px;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.grilla-usuarios-oscura {
+    background: #0A0F17;
+    color: #E1E6ED;
+    border-collapse: collapse;
+    width: 100%;
+}
+
+    .grilla-usuarios-oscura th {
+        background: #161D29;
+        color: #D93416; 
+        padding: 15px;
+        text-transform: uppercase;
+        border-bottom: 2px solid #1C2533;
+    }
+
+    .grilla-usuarios-oscura td {
+        padding: 12px;
+        border-bottom: 1px solid #1C2533;
+    }
+
+.link-accion-fila {
+    color: #38bdf8;
+    font-weight: bold;
+    text-decoration: none;
+    margin-right: 8px;
+}
+
+.link-accion-eliminar {
+    color: #f43f5e;
+}
+
+.columna-oculta {
+    display: none;
+}
