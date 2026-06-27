@@ -17,9 +17,8 @@ namespace RedLine.Be.Entidades
         public DateTime Fecha { get; set; }
         public int IVA { get; set; }
         public decimal Total { get; set; }
+        public Factura Factura { get; set; }
         public Venta() { }
-
-
 
     }
 }

@@ -123,15 +123,15 @@
     <Content Include="Content\Site.css" />
     <Content Include="Content\CrearAutosEstilo.css" />
     <Content Include="Content\Inventario.css" />
-    <Content Include="CrearAutos.aspx" />
     <Content Include="Catalogo.aspx" />
     <Content Include="favicon.ico" />
+    <Content Include="CrearAuto.aspx" />
+    <Content Include="Inventario.aspx" />
     <Content Include="GestionClientes.aspx" />
     <Content Include="GestionEventos.aspx" />
     <Content Include="GestionUsuarios.aspx" />
     <Content Include="Global.asax" />
     <Content Include="HistorialVentas.aspx" />
-    <Content Include="Inventario.aspx" />
     <Content Include="LogIn.aspx" />
     <Content Include="personalizarAuto.aspx" />
     <Content Include="RegistroCliente.aspx" />
@@ -152,19 +152,26 @@
     <Compile Include="CambioContraseña.aspx.designer.cs">
       <DependentUpon>CambioContraseña.aspx</DependentUpon>
     </Compile>
-    <Compile Include="CrearAutos.aspx.cs">
-      <DependentUpon>CrearAutos.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="CrearAutos.aspx.designer.cs">
-      <DependentUpon>CrearAutos.aspx</DependentUpon>
-    </Compile>
     <Compile Include="Catalogo.aspx.cs">
       <DependentUpon>Catalogo.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Catalogo.aspx.designer.cs">
       <DependentUpon>Catalogo.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="CrearAuto.aspx.cs">
+      <DependentUpon>CrearAuto.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="CrearAuto.aspx.designer.cs">
+      <DependentUpon>CrearAuto.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Inventario.aspx.cs">
+      <DependentUpon>Inventario.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Inventario.aspx.designer.cs">
+      <DependentUpon>Inventario.aspx</DependentUpon>
     </Compile>
     <Compile Include="GestionClientes.aspx.cs">
       <DependentUpon>GestionClientes.aspx</DependentUpon>
@@ -196,13 +203,6 @@
     </Compile>
     <Compile Include="HistorialVentas.aspx.designer.cs">
       <DependentUpon>HistorialVentas.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="Inventario.aspx.cs">
-      <DependentUpon>Inventario.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Inventario.aspx.designer.cs">
-      <DependentUpon>Inventario.aspx</DependentUpon>
     </Compile>
     <Compile Include="LogIn.aspx.cs">
       <DependentUpon>LogIn.aspx</DependentUpon>

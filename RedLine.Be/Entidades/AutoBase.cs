@@ -26,7 +26,8 @@ namespace Redline.Be
 
         public string DescripcionGeneral { get; set; }
 
-        public string ImagenUrl { get; set; }
+        public byte[] ImagenBinaria { get; set; }
+
         //Lois
         //Agregue campo stock
         public int Stock {  get; set; }
@@ -50,7 +51,7 @@ namespace Redline.Be
             int velocidadMaxima,
             decimal aceleracion0a100,
             string descripcionGeneral,
-            string imagenUrl)
+            byte[] imagenBinaria)
         {
             ID = id;
             CodigoVehiculo = codigoVehiculo;
@@ -64,7 +65,7 @@ namespace Redline.Be
             VelocidadMaxima = velocidadMaxima;
             Aceleracion0a100 = aceleracion0a100;
             DescripcionGeneral = descripcionGeneral;
-            ImagenUrl = imagenUrl;
+            ImagenBinaria = imagenBinaria;
         }
     }
 }

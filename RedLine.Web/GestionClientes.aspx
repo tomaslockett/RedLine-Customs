@@ -26,7 +26,7 @@
 
         <div class="tarjeta-chasis panel-tabla">
             <div class="tabla-contenedor">
-                <asp:GridView ID="dgvClientes" runat="server" AutoGenerateColumns="False" CssClass="gridview-custom">
+                <asp:GridView ID="dgvClientes" runat="server" AutoGenerateColumns="False" CssClass="gridview-custom" OnRowCommand="dgvClientes_RowCommand" OnSelectedIndexChanged="dgvClientes_SelectedIndexChanged">
                     <Columns>
 
                         <asp:TemplateField HeaderText="ID" ItemStyle-Width="10%">

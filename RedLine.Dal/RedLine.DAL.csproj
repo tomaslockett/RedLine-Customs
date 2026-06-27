@@ -67,6 +67,10 @@
     <Compile Include="Migrations\202605312145560_InitialCreate.Designer.cs">
       <DependentUpon>202605312145560_InitialCreate.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202606241408587_UpdateAutoBaseImageToBinary.cs" />
+    <Compile Include="Migrations\202606241408587_UpdateAutoBaseImageToBinary.Designer.cs">
+      <DependentUpon>202606241408587_UpdateAutoBaseImageToBinary.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="ORM\SqlEnsamblador.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -91,6 +95,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\202605312145560_InitialCreate.resx">
       <DependentUpon>202605312145560_InitialCreate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202606241408587_UpdateAutoBaseImageToBinary.resx">
+      <DependentUpon>202606241408587_UpdateAutoBaseImageToBinary.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

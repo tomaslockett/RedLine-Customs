@@ -1,11 +1,6 @@
 ﻿using Redline.Be;
 using RedLine.Bll;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
 
 namespace RedLine.Web
 {
@@ -16,19 +11,44 @@ namespace RedLine.Web
         {
             if (!IsPostBack)
             {
-                int id = int.Parse(Request.QueryString["id"]);
+                try
+                {
+                    if (Request.QueryString["id"] == null)
+                    {
+                        Response.Redirect("Inventario.aspx");
+                        return;
+                    }
 
-                AutoBase auto = bllAut.DevolverAuto(id);
+                    int id = int.Parse(Request.QueryString["id"]);
 
-                lblMarca.InnerText = auto.Marca;
+                    AutoBase auto = bllAut.DevolverAuto(id);
 
-                lblModelo.InnerText = auto.Modelo;
+                    if (auto != null)
+                    {
+                        lblMarca.InnerText = auto.Marca;
+                        lblModelo.InnerText = auto.Modelo;
+                        lblAnio.InnerText = auto.Anio.ToString();
+                        lblPrecio.InnerText = "$ " + auto.PrecioBase.ToString("N2"); 
 
-                lblAnio.InnerText = auto.Anio.ToString();
-
-                lblPrecio.InnerText = "$ " + auto.PrecioBase.ToString();
-
-                img.Src = auto.ImagenUrl;
+                        if (auto.ImagenBinaria != null && auto.ImagenBinaria.Length > 0)
+                        {
+                            string base64String = Convert.ToBase64String(auto.ImagenBinaria);
+                            img.Src = "data:image/jpeg;base64," + base64String;
+                        }
+                        else
+                        {
+                            img.Src = "Content/img/auto-reemplazo.png";
+                        }
+                    }
+                    else
+                    {
+                        throw new Exception("El vehículo solicitado no se encuentra en el stock.");
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Response.Write("<script>alert('" + ex.Message.Replace("'", "\\'") + "'); window.location='Inventario.aspx';</script>");
+                }
             }
         }
     }

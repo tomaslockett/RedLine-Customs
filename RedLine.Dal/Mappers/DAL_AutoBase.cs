@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
 using Redline.Be;
@@ -12,32 +13,32 @@ namespace RedLine.Dal
         protected override bool RequiereDigitoVerificador => false;
 
         protected override string SqlInsertar =>
-@"INSERT INTO AutoBase
-(CodigoVehiculo, Marca, Modelo, Anio, PrecioBase, Stock, Tipo,
-Potencia, VelocidadMaxima, Aceleracion0a100,
-DescripcionGeneral, ImagenUrl)
+            @"INSERT INTO AutoBase
+            (CodigoVehiculo, Marca, Modelo, Anio, PrecioBase, Stock, Tipo,
+            Potencia, VelocidadMaxima, Aceleracion0a100,
+            DescripcionGeneral, ImagenBinaria)
 
-VALUES
+            VALUES
 
-(@CodigoVehiculo, @Marca, @Modelo, @Anio, @PrecioBase, @Stock, @Tipo,
-@Potencia, @VelocidadMaxima, @Aceleracion0a100,
-@DescripcionGeneral, @ImagenUrl)";
+            (@CodigoVehiculo, @Marca, @Modelo, @Anio, @PrecioBase, @Stock, @Tipo,
+            @Potencia, @VelocidadMaxima, @Aceleracion0a100,
+            @DescripcionGeneral, @ImagenBinaria)";
         protected override string SqlModificar =>
- @"UPDATE AutoBase SET
-CodigoVehiculo = @CodigoVehiculo,
-Marca = @Marca,
-Modelo = @Modelo,
-Anio = @Anio,
-PrecioBase = @PrecioBase,
-Stock = @Stock,
-Tipo = @Tipo,
-Potencia = @Potencia,
-VelocidadMaxima = @VelocidadMaxima,
-Aceleracion0a100 = @Aceleracion0a100,
-DescripcionGeneral = @DescripcionGeneral,
-ImagenUrl = @ImagenUrl
+            @"UPDATE AutoBase SET
+            CodigoVehiculo = @CodigoVehiculo,
+            Marca = @Marca,
+            Modelo = @Modelo,
+            Anio = @Anio,
+            PrecioBase = @PrecioBase,
+            Stock = @Stock,
+            Tipo = @Tipo,
+            Potencia = @Potencia,
+            VelocidadMaxima = @VelocidadMaxima,
+            Aceleracion0a100 = @Aceleracion0a100,
+            DescripcionGeneral = @DescripcionGeneral,
+            ImagenBinaria = @ImagenBinaria
 
-WHERE ID = @ID";
+            WHERE ID = @ID";
         protected override string SqlEliminar => "DELETE FROM AutoBase WHERE ID = @ID";
         protected override string SqlListar => "SELECT * FROM AutoBase";
         protected override string SqlObtenerPorId => "SELECT * FROM AutoBase WHERE ID = @ID";
@@ -58,7 +59,14 @@ WHERE ID = @ID";
             cmd.Parameters.AddWithValue("@VelocidadMaxima", entidad.VelocidadMaxima);
             cmd.Parameters.AddWithValue("@Aceleracion0a100", entidad.Aceleracion0a100);
             cmd.Parameters.AddWithValue("@DescripcionGeneral", entidad.DescripcionGeneral);
-            cmd.Parameters.AddWithValue("@ImagenUrl", entidad.ImagenUrl);
+            if (entidad.ImagenBinaria != null)
+            {
+                cmd.Parameters.Add("@ImagenBinaria", SqlDbType.VarBinary).Value = entidad.ImagenBinaria;
+            }
+            else
+            {
+                cmd.Parameters.Add("@ImagenBinaria", SqlDbType.VarBinary).Value = DBNull.Value;
+            }
         }
 
         protected override void ConfigurarParametrosId(SqlCommand cmd, int id)
@@ -68,6 +76,8 @@ WHERE ID = @ID";
 
         protected override AutoBase Mapear(SqlDataReader lector)
         {
+            byte[] imagenData = lector["ImagenBinaria"] != DBNull.Value ? (byte[])lector["ImagenBinaria"] : null;
+
             return new AutoBase(
                 Convert.ToInt32(lector["ID"]),
                 lector["CodigoVehiculo"].ToString(),
@@ -92,7 +102,7 @@ WHERE ID = @ID";
                     : 0,
 
                 lector["DescripcionGeneral"].ToString(),
-                lector["ImagenUrl"].ToString()
+                imagenData
             );
         }
 

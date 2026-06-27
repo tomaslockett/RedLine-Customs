@@ -33,7 +33,7 @@
                     Inicio
                 </a>
 
-                <a runat="server" href="~/CrearAutos.aspx" class="boton-menu boton-contorno-rojo">
+                <a runat="server" href="~/CrearAuto.aspx" class="boton-menu boton-contorno-rojo">
                     <img src="<%= ResolveUrl("~/Content/img/lupita.png") %>" alt="Crear Auto" />
                     Crear Auto
                 </a>
