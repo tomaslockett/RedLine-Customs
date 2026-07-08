@@ -106,7 +106,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="BackupRestore.aspx" />
     <Content Include="CambioContraseña.aspx" />
+    <Content Include="Content\BackupRestore.css" />
     <Content Include="Content\CambioContraseña.css" />
     <Content Include="Content\Catalogo.css" />
     <Content Include="Content\estilos.css" />
@@ -145,6 +147,13 @@
   <ItemGroup>
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="BackupRestore.aspx.cs">
+      <DependentUpon>BackupRestore.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="BackupRestore.aspx.designer.cs">
+      <DependentUpon>BackupRestore.aspx</DependentUpon>
+    </Compile>
     <Compile Include="CambioContraseña.aspx.cs">
       <DependentUpon>CambioContraseña.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>

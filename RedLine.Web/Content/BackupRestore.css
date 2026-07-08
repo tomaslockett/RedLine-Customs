@@ -1,0 +1,82 @@
+﻿body {
+    background-color: #0a0a0a;
+    color: #ffffff;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+h1 {
+    color: #ff3715;
+    font-size: 28px;
+    border-bottom: 2px solid #1a1a1a;
+    padding-bottom: 10px;
+    margin-bottom: 30px;
+}
+
+h2 {
+    color: #e25822;
+    font-size: 20px;
+    margin-top: 25px;
+    margin-bottom: 15px;
+}
+
+hr {
+    border: 0;
+    height: 1px;
+    background: #1a1a1a;
+    margin: 30px 0;
+}
+
+input[type="text"] {
+    background-color: #12161f;
+    border: 1px solid #222834;
+    color: #ffffff;
+    padding: 8px 12px;
+    border-radius: 4px;
+    font-size: 14px;
+    outline: none;
+    transition: border-color 0.3s;
+}
+
+    input[type="text"]:focus {
+        border-color: #ff3715;
+    }
+
+input[type="file"] {
+    color: #cccccc;
+    font-size: 14px;
+    background-color: #12161f;
+    padding: 6px;
+    border-radius: 4px;
+    border: 1px dashed #222834;
+}
+
+input[type="submit"] {
+    background-color: #ff3715;
+    color: #ffffff;
+    border: none;
+    padding: 8px 20px;
+    font-size: 14px;
+    font-weight: 600;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.2s, transform 0.1s;
+    margin-left: 10px;
+}
+
+    input[type="submit"]:hover {
+        background-color: #e02d0f;
+    }
+
+    input[type="submit"]:active {
+        transform: scale(0.98);
+    }
+
+span[id*="lblEstado"] {
+    display: inline-block;
+    margin-top: 15px;
+    padding: 10px 15px;
+    border-radius: 4px;
+    font-size: 14px;
+    background-color: #12161f;
+    border-left: 4px solid #ff3715;
+}
