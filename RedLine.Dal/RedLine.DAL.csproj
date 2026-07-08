@@ -71,6 +71,10 @@
     <Compile Include="Migrations\202606241408587_UpdateAutoBaseImageToBinary.Designer.cs">
       <DependentUpon>202606241408587_UpdateAutoBaseImageToBinary.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202607081611115_AgregadoTelefonoUsuario.cs" />
+    <Compile Include="Migrations\202607081611115_AgregadoTelefonoUsuario.Designer.cs">
+      <DependentUpon>202607081611115_AgregadoTelefonoUsuario.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="ORM\SqlEnsamblador.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -98,6 +102,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202606241408587_UpdateAutoBaseImageToBinary.resx">
       <DependentUpon>202606241408587_UpdateAutoBaseImageToBinary.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202607081611115_AgregadoTelefonoUsuario.resx">
+      <DependentUpon>202607081611115_AgregadoTelefonoUsuario.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

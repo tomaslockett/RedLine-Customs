@@ -12,7 +12,7 @@
 <body>
     <form runat="server">
 
-        <asp:ScriptManager ID="smGlobal" runat="server"></asp:ScriptManager>
+        <asp:ScriptManager ID="smGlobal" runat="server" AjaxFrameworkMode="Disabled" EnableCdn="false"></asp:ScriptManager>
 
         <header class="cabecera-principal">
             

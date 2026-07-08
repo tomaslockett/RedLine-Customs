@@ -270,7 +270,8 @@ linkVolver:hover {
     border-top: 1px solid white;
     border-radius: 12px 12px 0 0;
     background: #030112;
-    width: 80vh;
+    width: 100%;
+    max-width: 500px;
     border-bottom: 0;
 }
 
