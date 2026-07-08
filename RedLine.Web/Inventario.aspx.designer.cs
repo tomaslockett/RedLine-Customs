@@ -24,6 +24,15 @@ namespace RedLine.Web
         protected global::System.Web.UI.WebControls.Button ButtonAgregarVehiculo;
 
         /// <summary>
+        /// Control phInventarioVacio.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.PlaceHolder phInventarioVacio;
+
+        /// <summary>
         /// Control ButtonAgregarPrimerVehiculo.
         /// </summary>
         /// <remarks>
@@ -31,5 +40,23 @@ namespace RedLine.Web
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button ButtonAgregarPrimerVehiculo;
+
+        /// <summary>
+        /// Control phInventarioLista.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.PlaceHolder phInventarioLista;
+
+        /// <summary>
+        /// Control repInventario.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Repeater repInventario;
     }
 }
