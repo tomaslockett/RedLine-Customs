@@ -24,7 +24,7 @@ namespace RedLine.Dal
 
         public void RealizarBackup(string rutaCompleta)
         {
-            string comando = $"BACKUP DATABASE [Redline Customs] TO DISK = '{rutaCompleta}' WITH FORMAT";
+            string comando = $"BACKUP DATABASE [RedLineCustomsDB] TO DISK = '{rutaCompleta}' WITH FORMAT";
 
             using (SqlConnection con = new SqlConnection(cx))
             {
@@ -43,13 +43,13 @@ namespace RedLine.Dal
                 con.Open();
                 using (SqlCommand cmd = new SqlCommand("USE master;", con)) { cmd.ExecuteNonQuery(); }
 
-                string sqlSingle = "ALTER DATABASE [Redline Customs] SET SINGLE_USER WITH ROLLBACK IMMEDIATE;";
+                string sqlSingle = "ALTER DATABASE [RedLineCustomsDB] SET SINGLE_USER WITH ROLLBACK IMMEDIATE;";
                 using (SqlCommand cmd = new SqlCommand(sqlSingle, con)) { cmd.ExecuteNonQuery(); }
 
-                string sqlRestore = $"RESTORE DATABASE [Redline Customs] FROM DISK = '{rutaArchivo}' WITH REPLACE;";
+                string sqlRestore = $"RESTORE DATABASE [RedLineCustomsDB] FROM DISK = '{rutaArchivo}' WITH REPLACE;";
                 using (SqlCommand cmd = new SqlCommand(sqlRestore, con)) { cmd.ExecuteNonQuery(); }
 
-                string sqlMulti = "ALTER DATABASE [Redline Customs] SET MULTI_USER;";
+                string sqlMulti = "ALTER DATABASE [RedLineCustomsDB] SET MULTI_USER;";
                 using (SqlCommand cmd = new SqlCommand(sqlMulti, con)) { cmd.ExecuteNonQuery(); }
             }
         }
