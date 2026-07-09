@@ -119,6 +119,7 @@
     <Content Include="Content\img\lupita.png" />
     <Content Include="Content\img\porsche.jfif" />
     <Content Include="Content\LogIn.css" />
+    <Content Include="Content\Logout.css" />
     <Content Include="Content\Master.css" />
     <Content Include="Content\PersonalizarAuto.css" />
     <Content Include="Content\RegistroCliente.css" />
@@ -135,6 +136,7 @@
     <Content Include="Global.asax" />
     <Content Include="HistorialVentas.aspx" />
     <Content Include="LogIn.aspx" />
+    <Content Include="Logout.aspx" />
     <Content Include="personalizarAuto.aspx" />
     <Content Include="RegistroCliente.aspx" />
     <Content Include="Scripts\RegistroCliente.js" />
@@ -219,6 +221,13 @@
     </Compile>
     <Compile Include="LogIn.aspx.designer.cs">
       <DependentUpon>LogIn.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Logout.aspx.cs">
+      <DependentUpon>Logout.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Logout.aspx.designer.cs">
+      <DependentUpon>Logout.aspx</DependentUpon>
     </Compile>
     <Compile Include="personalizarAuto.aspx.cs">
       <DependentUpon>personalizarAuto.aspx</DependentUpon>
