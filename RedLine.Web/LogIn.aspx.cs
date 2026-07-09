@@ -17,7 +17,7 @@ namespace RedLine.Web
         BLL_Usuario gestorUsuario = new BLL_Usuario();
         protected void Page_Load(object sender, EventArgs e)
         {
-            
+
         }
 
         protected void BtnLogin_Click(object sender, EventArgs e)
@@ -27,17 +27,17 @@ namespace RedLine.Web
 
             if (string.IsNullOrEmpty(email) || string.IsNullOrEmpty(password))
             {
-                ScriptManager.RegisterStartupScript(this, GetType(), "alert", "alert('Ingresa tus credenciales.');", true);
+                MostrarMensaje("Ingresa tus credenciales.", true);
                 return;
             }
 
             try
             {
-                LoginResult resultado = gestorUsuario.Login(email, password); 
+                LoginResult resultado = gestorUsuario.Login(email, password);
 
                 if (resultado == LoginResult.ValidUser)
-                { 
-                    Response.Redirect("Catalogo.aspx"); 
+                {
+                    Response.Redirect("Catalogo.aspx");
                     return;
                 }
             }
@@ -48,13 +48,13 @@ namespace RedLine.Web
                     var clientes = gestorCliente.ObtenerClientes();
                     var clienteLogueado = clientes.Find(c =>
                         c.Email.Equals(email, StringComparison.OrdinalIgnoreCase) &&
-                        c.Contraseña.Equals(Hashing.Sha256(password))); 
+                        c.Contraseña.Equals(Hashing.Sha256(password)));
 
                     if (clienteLogueado != null)
                     {
-                        Session["ClienteSession"] = clienteLogueado; 
-                        Session["UserEmail"] = email; 
-                        Response.Redirect("Catalogo.aspx"); 
+                        Session["ClienteSession"] = clienteLogueado;
+                        Session["UserEmail"] = email;
+                        Response.Redirect("Catalogo.aspx");
                     }
                     else
                     {
@@ -68,7 +68,7 @@ namespace RedLine.Web
             }
             catch (Exception ex)
             {
-                ScriptManager.RegisterStartupScript(this, GetType(), "alert", $"alert('Error técnico: {ex.Message}');", true); 
+                MostrarMensaje($"Error técnico: {ex.Message}", true);
             }
         }
 
@@ -82,7 +82,13 @@ namespace RedLine.Web
                 case LoginResult.UserBlocked: mensajeError = "Usuario bloqueado."; break; 
                 default: mensajeError = "Error al iniciar sesión."; break; 
             }
-            ScriptManager.RegisterStartupScript(this, GetType(), "alert", $"alert('{mensajeError}');", true); 
+            MostrarMensaje(mensajeError, true);
+        }
+
+        private void MostrarMensaje(string texto, bool esError)
+        {
+            lblMensaje.Text = texto;
+            lblMensaje.ForeColor = esError ? System.Drawing.Color.FromName("#D93416") : System.Drawing.Color.Green;
         }
     }
 }

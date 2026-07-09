@@ -7,7 +7,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title><%: Page.Title %> - RedLine Customs</title>
 
-    <link href="~/Content/Master.css" rel="stylesheet" runat="server" />
+    <link href="~/Content/Master.css?v=1.1" rel="stylesheet" runat="server" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
 </head>
 <body>
     <form runat="server">
@@ -16,69 +17,59 @@
 
         <header class="cabecera-principal">
             
-            <div class="contenedor-marca">
-                <div class="caja-icono-marca">
-                    <img src="<%= ResolveUrl("~/Content/img/lupita.png") %>" alt="Icono RedLine" /> 
-                </div>
-                <div class="texto-marca">
-                    <h1>REDLINE CUSTOMS</h1>
-                    <span>30 años de excelencia</span>
-                </div>
-            </div>
-
             <nav class="contenedor-navegacion">
-                
-                <a runat="server" href="~/Catalogo" class="boton-menu boton-texto-simple">
-                    <img src="<%= ResolveUrl("~/Content/img/lupita.png") %>" alt="Inicio" />
-                    Inicio
-                </a>
+    
+    <a runat="server" href="~/Catalogo" class="boton-menu boton-texto-simple">
+        <img src="<%= ResolveUrl("~/Content/img/lupita.png") %>" alt="Inicio" />
+        Inicio
+    </a>
 
-                <a runat="server" href="~/CrearAuto.aspx" class="boton-menu boton-contorno-rojo">
-                    <img src="<%= ResolveUrl("~/Content/img/lupita.png") %>" alt="Crear Auto" />
-                    Crear Auto
-                </a>
+    <div class="dropdown-menu-container">
+        <button type="button" class="boton-menu boton-texto-simple dropdown-toggle">
+            Taller y Ventas
+        </button>
+        <div class="dropdown-content">
+            <a runat="server" href="~/CrearAuto.aspx">Crear Auto</a>
+            <a runat="server" href="~/personalizarAuto.aspx">Personalizar Auto</a>
+            <a runat="server" href="~/Inventario.aspx">Inventario</a>
+            <a runat="server" href="~/HistorialVentas.aspx">Historial de Ventas</a>
+        </div>
+    </div>
 
-                <a runat="server" href="~/Inventario.aspx" class="boton-menu boton-texto-simple">
-                    <img src="<%= ResolveUrl("~/Content/img/lupita.png") %>" alt="Inventario" />
-                    Inventario
-                </a>
+    <div class="dropdown-menu-container">
+        <button type="button" class="boton-menu boton-texto-simple dropdown-toggle">
+            Gestión ABM
+        </button>
+        <div class="dropdown-content">
+            <a runat="server" href="~/GestionUsuarios.aspx">Gestión Usuarios</a>
+            <a runat="server" href="~/GestionClientes.aspx">Gestión Clientes</a>
+            <a runat="server" href="~/GestionEventos.aspx">Gestión Eventos</a>
+        </div>
+    </div>
 
-                <a runat="server" href="~/GestionEventos.aspx" class="boton-menu boton-texto-simple">
-                    <img src="<%= ResolveUrl("~/Content/img/lupita.png") %>" alt="Eventos" />
-                    Gestion Eventos
-                </a>
+    <div class="dropdown-menu-container">
+        <button type="button" class="boton-menu boton-texto-simple dropdown-toggle">
+            Sistema
+        </button>
+        <div class="dropdown-content">
+            <a runat="server" href="~/BackupRestore.aspx">Backup & Restore</a>
+            <a runat="server" href="#!">Dígito Verificador</a>
+        </div>
+    </div>
 
-                <a runat="server" href="~/GestionUsuarios.aspx" class="boton-menu boton-texto-simple">
-                    <img src="<%= ResolveUrl("~/Content/img/lupita.png") %>" alt="Usuarios" />
-                    Gestion Usuarios
-                </a>
+    <div class="dropdown-menu-container alinear-derecha">
+        <button type="button" class="boton-menu boton-solido-rojo dropdown-toggle">
+            <asp:Literal ID="litNombreUsuario" runat="server" Text="Mi Cuenta"></asp:Literal>
+        </button>
+        <div class="dropdown-content">
+            <a runat="server" href="~/RegistroCliente.aspx" id="lnkRegistrarse">Registrarse</a>
+            <a runat="server" href="~/LogIn.aspx" id="lnkLogin">Iniciar Sesión</a>
+            <a runat="server" href="~/CambioContraseña.aspx" id="lnkCambioPass">Cambiar Contraseña</a>
+            <a runat="server" href="~/Logout.aspx" id="lnkLogout">Cerrar Sesión</a>
+        </div>
+    </div>
 
-                <a runat="server" href="~/GestionClientes.aspx" class="boton-menu boton-texto-simple">
-                     <img src="<%= ResolveUrl("~/Content/img/lupita.png") %>" alt="Clientes" />
-                     Gestion Clientes
-                </a>
-
-                <a runat="server" href="~/HistorialVentas.aspx" class="boton-menu boton-texto-simple">
-                    <img src="<%= ResolveUrl("~/Content/img/lupita.png") %>" alt="Ventas" />
-                    Historial de Ventas
-                </a>
-
-                <a runat="server" href="~/RegistroCliente.aspx" class="boton-menu boton-texto-simple">
-                    <img src="<%= ResolveUrl("~/Content/img/lupita.png") %>" alt="Cliente" />
-                    Registrarse
-                </a>
-
-                <a runat="server" href="~/CambioContraseña.aspx" class="boton-menu boton-texto-simple">
-                    <img src="<%= ResolveUrl("~/Content/img/lupita.png") %>" alt="Contraseña" />
-                    Cambio Contraseña
-                </a>
-
-                <a runat="server" href="~/LogIn.aspx" class="boton-menu boton-solido-rojo">
-                    <img src="<%= ResolveUrl("~/Content/img/lupita.png") %>" alt="Login" />
-                    Iniciar Sesión
-                </a>
-
-            </nav>
+</nav>
         </header>
 
         <main class="contenedor-principal">

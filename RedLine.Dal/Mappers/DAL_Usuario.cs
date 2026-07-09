@@ -104,5 +104,20 @@ namespace RedLine.Dal
             }
             return null;
         }
+
+        public void ActualizarContraseña(int idUsuario, string nuevaPasswordHasheada)
+        {
+            using (var con = new SqlConnection(cx))
+            {
+                con.Open();
+                string query = "UPDATE Usuario SET Contraseña = @pass WHERE ID = @id";
+                using (var cmd = new SqlCommand(query, con))
+                {
+                    cmd.Parameters.AddWithValue("@pass", nuevaPasswordHasheada);
+                    cmd.Parameters.AddWithValue("@id", idUsuario);
+                    cmd.ExecuteNonQuery();
+                }
+            }
+        }
     }
 }

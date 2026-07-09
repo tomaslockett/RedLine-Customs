@@ -45,18 +45,21 @@ namespace RedLine.Web
 
                 Usuario usuarioActual = SessionManager.Instancia.Usuario;
 
-                string actualHasheada = Hashing.Sha256(actual); 
+                string actualHasheada = Hashing.Sha256(actual);
                 if (usuarioActual.Contraseña != actualHasheada)
                 {
                     MostrarMensaje("La contraseña actual es incorrecta.", true);
                     return;
                 }
 
-                usuarioActual.Contraseña = Hashing.Sha256(nueva); 
-                bllUsuario.Modificar(usuarioActual); 
+                string nuevaHasheada = Hashing.Sha256(nueva);
 
-                MostrarMensaje("Contraseña actualizada con éxito.", false);
-                LimpiarCampos();
+                bllUsuario.CambiarContraseñaDirecto(usuarioActual.ID, nuevaHasheada);
+
+                BLL_Evento bllEvento = new BLL_Evento();
+                bllEvento.Registrar(usuarioActual.Email, "Seguridad", "Cambio de contraseña exitoso", 1);
+                bllUsuario.Logout();
+                Response.Redirect("LogIn.aspx");
             }
             catch (Exception ex)
             {
@@ -68,11 +71,6 @@ namespace RedLine.Web
         {
             lblMensaje.Text = texto;
             lblMensaje.ForeColor = esError ? System.Drawing.Color.Red : System.Drawing.Color.Green;
-        }
-
-        private void LimpiarCampos()
-        {
-            txtPassActual.Text = txtPassNueva.Text = txtPassConfirm.Text = "";
         }
     }
  }

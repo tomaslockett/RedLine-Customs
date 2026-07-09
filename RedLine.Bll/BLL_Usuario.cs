@@ -135,5 +135,10 @@ namespace RedLine.Bll
             string admin = SessionManager.Instancia.Usuario.Email;
             _bllEvento.Registrar(admin, "Usuarios", $"Desactivación de usuario: {usuario.Email}", 2);
         }
+
+        public void CambiarContraseñaDirecto(int idUsuario, string nuevaPasswordHasheada)
+        {
+            Repo.ActualizarContraseña(idUsuario, nuevaPasswordHasheada);
+        }
     }
 }

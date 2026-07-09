@@ -6,16 +6,14 @@
     color: #ffffff;
 }
 
-
 .cabecera-principal {
     background-color: #000000;
     display: flex;
-    justify-content: space-between; 
+    justify-content: space-between;
     align-items: center;
     padding: 15px 30px;
-    border-bottom: 2px solid #222222; 
+    border-bottom: 2px solid #222222;
 }
-
 
 .contenedor-marca {
     display: flex;
@@ -24,7 +22,7 @@
 }
 
 .caja-icono-marca {
-    background-color: #b30000; 
+    background-color: #b30000;
     padding: 10px;
     border-radius: 8px;
     display: flex;
@@ -54,18 +52,16 @@
     margin-top: 2px;
 }
 
-
 .contenedor-navegacion {
     display: flex;
     align-items: center;
-    gap: 15px; 
+    gap: 15px;
 }
-
 
 .boton-menu {
     display: inline-flex;
     align-items: center;
-    gap: 10px; 
+    gap: 10px;
     padding: 10px 18px;
     color: #ffffff;
     text-decoration: none;
@@ -74,6 +70,7 @@
     border-radius: 6px;
     transition: background-color 0.2s ease, transform 0.1s ease;
     cursor: pointer;
+    font-family: inherit;
 }
 
     .boton-menu img {
@@ -81,7 +78,6 @@
         height: 18px;
         object-fit: contain;
     }
-
 
 .boton-contorno-rojo {
     border: 2px solid #b30000;
@@ -92,17 +88,16 @@
         background-color: rgba(179, 0, 0, 0.1);
     }
 
-
 .boton-texto-simple {
     background-color: transparent;
     color: #cccccc;
+    border: none;
 }
 
     .boton-texto-simple:hover {
         color: #ffffff;
         background-color: rgba(255, 255, 255, 0.05);
     }
-
 
 .boton-solido-rojo {
     background-color: #ff0000;
@@ -111,9 +106,57 @@
 
     .boton-solido-rojo:hover {
         background-color: #cc0000;
-        transform: translateY(-1px); 
+        transform: translateY(-1px);
     }
 
+.dropdown-menu-container {
+    position: relative;
+    display: inline-block;
+    padding-bottom: 10px;
+    margin-bottom: -10px;
+}
+
+.dropdown-toggle {
+    cursor: pointer;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #0a0a0a;
+    min-width: 200px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.6);
+    border: 1px solid #222222;
+    border-radius: 6px;
+    z-index: 1000;
+    top: 100%;
+    left: 0;
+    padding: 5px 0;
+}
+
+    .dropdown-content a {
+        color: #cccccc;
+        padding: 12px 18px;
+        text-decoration: none;
+        display: block;
+        font-size: 14px;
+        font-weight: 500;
+        transition: background-color 0.2s ease, color 0.2s ease;
+    }
+
+        .dropdown-content a:hover {
+            background-color: #ff0000;
+            color: #ffffff;
+        }
+
+.dropdown-menu-container:hover .dropdown-content {
+    display: block;
+}
+
+.alinear-derecha .dropdown-content {
+    right: 0;
+    left: auto;
+}
 
 .contenedor-principal {
     padding: 40px 30px;

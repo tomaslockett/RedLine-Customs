@@ -20,6 +20,10 @@
                 </div>
             </div>
 
+            <div style="text-align: center; margin-bottom: 15px; margin-top: 15px;">
+                <asp:Label ID="lblMensaje" runat="server" ForeColor="#D93416" Font-Size="0.9em" Text=""></asp:Label>
+            </div>
+
             <asp:Button ID="btnLogin" runat="server" Text="Ingresar" CssClass="login-boton" OnClick="BtnLogin_Click" />
 
             <div style="text-align: center; margin-top: 25px;">
