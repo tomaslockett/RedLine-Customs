@@ -8,31 +8,31 @@ namespace RedLine.Servicios.Composite
 {
     public class Familia : ComponentePermiso
     {
-        private readonly List<ComponentePermiso> Hijos = new List<ComponentePermiso>();
-
-        public Familia(int id, string nombre) : base(id, nombre) 
+        public Familia(int id, string nombre) : base(id, nombre)
         {
-            
         }
+
+        protected Familia() { }
 
         public override void Agregar(ComponentePermiso componente)
         {
-            if (!Hijos.Any(c => c.Id == componente.Id))
+            if (!ComponentesHijos.Any(c => c.Id == componente.Id))
             {
-                Hijos.Add(componente);
+                ComponentesHijos.Add(componente);
             }
         }
 
         public override void Quitar(ComponentePermiso componente)
         {
-            var item = Hijos.FirstOrDefault(c => c.Id == componente.Id);
-            if (item != null) Hijos.Remove(item);
+            var item = ComponentesHijos.FirstOrDefault(c => c.Id == componente.Id);
+            if (item != null)
+                ComponentesHijos.Remove(item);
         }
 
         public override IEnumerable<ComponentePermiso> ObtenerHijos()
         {
             var todosLosPermisos = new List<ComponentePermiso>();
-            foreach (var hijo in Hijos)
+            foreach (var hijo in ComponentesHijos)
             {
                 todosLosPermisos.AddRange(hijo.ObtenerHijos());
             }

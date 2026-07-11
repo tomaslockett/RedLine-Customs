@@ -1,11 +1,7 @@
 ﻿using Redline.Be;
 using RedLine.Bll;
-using RedLine.Servicios;
+using RedLine.Servicios.Composite;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.UI;
 using System.Web.UI.WebControls;
 
 namespace RedLine.Web
@@ -24,6 +20,7 @@ namespace RedLine.Web
             if (!IsPostBack)
             {
                 CargarGrilla();
+                CargarPerfiles();
             }
         }
 
@@ -33,10 +30,29 @@ namespace RedLine.Web
             gvUsuarios.DataBind();
         }
 
+        private void CargarPerfiles()
+        {
+            BLL_Perfil bllPerfil = new BLL_Perfil();
+            ddlRol.DataSource = bllPerfil.Listar();
+            ddlRol.DataTextField = "Nombre";
+            ddlRol.DataValueField = "Id";
+            ddlRol.DataBind();
+        }
+
+
         protected void btnAgregar_Click(object sender, EventArgs e)
         {
             try
             {
+                if (string.IsNullOrEmpty(ddlRol.SelectedValue))
+                {
+                    throw new Exception("Debes seleccionar un perfil.");
+                }
+
+                BLL_Perfil bllPerfil = new BLL_Perfil();
+                int idPerfilSeleccionado = int.Parse(ddlRol.SelectedValue);
+                Perfil perfilSeleccionado = bllPerfil.ObtenerPorId(idPerfilSeleccionado);
+
                 if (ViewState["ID_EDIT"] != null)
                 {
                     int id = (int)ViewState["ID_EDIT"];
@@ -44,7 +60,7 @@ namespace RedLine.Web
                     actual.Nombre = txtNombre.Text.Trim();
                     actual.Apellido = txtApellido.Text.Trim();
                     actual.Email = txtEmail.Text.Trim();
-                    actual.Rol = ddlRol.SelectedValue;
+                    actual.Perfil = perfilSeleccionado;
                     actual.DNI = txtDNI.Text.Trim();
 
                     bllUsuario.Modificar(actual);
@@ -58,7 +74,7 @@ namespace RedLine.Web
                         Nombre = txtNombre.Text.Trim(),
                         Apellido = txtApellido.Text.Trim(),
                         Email = txtEmail.Text.Trim(),
-                        Rol = ddlRol.SelectedValue,
+                        Perfil = perfilSeleccionado,
                         Activo = true,
                         Bloqueado = false,
                         Intentos = 0,
@@ -90,8 +106,10 @@ namespace RedLine.Web
             txtNombre.Text = u.Nombre;
             txtApellido.Text = u.Apellido;
             txtEmail.Text = u.Email;
-            ddlRol.SelectedValue = u.Rol;
-
+            if (u.Perfil != null)
+            {
+                ddlRol.SelectedValue = u.Perfil.Id.ToString();
+            }
             btnAgregar.Text = "Confirmar Cambios";
             txtDNI.Enabled = false;
         }

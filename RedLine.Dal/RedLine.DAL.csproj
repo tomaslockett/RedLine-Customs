@@ -60,7 +60,10 @@
     <Compile Include="Mappers\DAL_AutoPersonalizado.cs" />
     <Compile Include="Mappers\DAL_Cliente.cs" />
     <Compile Include="Mappers\DAL_Evento.cs" />
+    <Compile Include="Mappers\DAL_Familia.cs" />
     <Compile Include="Mappers\DAL_Mejora.cs" />
+    <Compile Include="Mappers\DAL_Perfil.cs" />
+    <Compile Include="Mappers\DAL_Permisos.cs" />
     <Compile Include="Mappers\DAL_Usuario.cs" />
     <Compile Include="Mappers\DAL_DigitoVerificador.cs" />
     <Compile Include="Migrations\202605312145560_InitialCreate.cs" />
@@ -74,6 +77,34 @@
     <Compile Include="Migrations\202607081611115_AgregadoTelefonoUsuario.cs" />
     <Compile Include="Migrations\202607081611115_AgregadoTelefonoUsuario.Designer.cs">
       <DependentUpon>202607081611115_AgregadoTelefonoUsuario.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202607102031331_AgregarNuevasTablasCore.cs" />
+    <Compile Include="Migrations\202607102031331_AgregarNuevasTablasCore.Designer.cs">
+      <DependentUpon>202607102031331_AgregarNuevasTablasCore.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202607102123411_AjusteComposite.cs" />
+    <Compile Include="Migrations\202607102123411_AjusteComposite.Designer.cs">
+      <DependentUpon>202607102123411_AjusteComposite.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202607102133538_AjusteRelacionPerfil.cs" />
+    <Compile Include="Migrations\202607102133538_AjusteRelacionPerfil.Designer.cs">
+      <DependentUpon>202607102133538_AjusteRelacionPerfil.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202607102136224_AjusteCompositeFinal.cs" />
+    <Compile Include="Migrations\202607102136224_AjusteCompositeFinal.Designer.cs">
+      <DependentUpon>202607102136224_AjusteCompositeFinal.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202607102245006_ActualizacionPerfilUsuario.cs" />
+    <Compile Include="Migrations\202607102245006_ActualizacionPerfilUsuario.Designer.cs">
+      <DependentUpon>202607102245006_ActualizacionPerfilUsuario.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202607111151469_DVActivacionPrueva.cs" />
+    <Compile Include="Migrations\202607111151469_DVActivacionPrueva.Designer.cs">
+      <DependentUpon>202607111151469_DVActivacionPrueva.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202607111220167_DVCambios2.cs" />
+    <Compile Include="Migrations\202607111220167_DVCambios2.Designer.cs">
+      <DependentUpon>202607111220167_DVCambios2.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="ORM\SqlEnsamblador.cs" />
@@ -105,6 +136,27 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202607081611115_AgregadoTelefonoUsuario.resx">
       <DependentUpon>202607081611115_AgregadoTelefonoUsuario.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202607102031331_AgregarNuevasTablasCore.resx">
+      <DependentUpon>202607102031331_AgregarNuevasTablasCore.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202607102123411_AjusteComposite.resx">
+      <DependentUpon>202607102123411_AjusteComposite.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202607102133538_AjusteRelacionPerfil.resx">
+      <DependentUpon>202607102133538_AjusteRelacionPerfil.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202607102136224_AjusteCompositeFinal.resx">
+      <DependentUpon>202607102136224_AjusteCompositeFinal.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202607102245006_ActualizacionPerfilUsuario.resx">
+      <DependentUpon>202607102245006_ActualizacionPerfilUsuario.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202607111151469_DVActivacionPrueva.resx">
+      <DependentUpon>202607111151469_DVActivacionPrueva.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202607111220167_DVCambios2.resx">
+      <DependentUpon>202607111220167_DVCambios2.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

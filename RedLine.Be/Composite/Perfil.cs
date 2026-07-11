@@ -7,7 +7,7 @@ namespace RedLine.Servicios.Composite
     {
         public int Id { get; set; }
         public string Nombre { get; set; }
-        private readonly List<ComponentePermiso> PermisosRaiz = new List<ComponentePermiso>();
+        public virtual ICollection<ComponentePermiso> PermisosRaiz { get; set; } = new List<ComponentePermiso>();
 
         public void AsignarPermiso(ComponentePermiso permiso)
         {

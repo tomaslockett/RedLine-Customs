@@ -47,7 +47,10 @@
     <Compile Include="BLL_BackupRestore.cs" />
     <Compile Include="BLL_Cliente.cs" />
     <Compile Include="BLL_Evento.cs" />
+    <Compile Include="BLL_Familia.cs" />
     <Compile Include="BLL_Mejora.cs" />
+    <Compile Include="BLL_Perfil.cs" />
+    <Compile Include="BLL_Permisos.cs" />
     <Compile Include="BLL_Usuario.cs" />
     <Compile Include="BLL_DigitoVerificador.cs" />
     <Compile Include="Exception\LoginException.cs" />

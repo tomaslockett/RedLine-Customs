@@ -8,7 +8,7 @@ namespace RedLine.Dal
     public class DAL_Mejora : AbstractDAL<int, Mejora>
     {
         protected override string NombreTabla => "Mejora";
-        protected override bool RequiereDigitoVerificador => false;
+        protected override bool RequiereDigitoVerificador => true;
 
         protected override string SqlInsertar =>
             @"INSERT INTO Mejora (Nombre, Precio, Stock, Categoria) 

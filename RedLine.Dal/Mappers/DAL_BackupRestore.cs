@@ -10,7 +10,7 @@ namespace RedLine.Dal
     public class DAL_BackupRestore : AbstractDAL<int, object>
     {
         protected override string NombreTabla => ""; 
-        protected override bool RequiereDigitoVerificador => false;
+        protected override bool RequiereDigitoVerificador => true;
 
         protected override string SqlInsertar => "";
         protected override string SqlModificar => "";

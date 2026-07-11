@@ -1,6 +1,7 @@
 ﻿namespace RedLine.Dal.Migrations
 {
     using Redline.Be;
+    using RedLine.Dal.Mappers;
     using RedLine.Servicios.Composite;
     using System;
     using System.Data.Entity;
@@ -30,6 +31,43 @@
 
             //context.Familias.AddOrUpdate(f => f.Nombre, familiaVendedor);
 
+            var pLogin = new Permiso(1, "Login");
+            var pLogout = new Permiso(2, "Logout");
+            var pCatalogo = new Permiso(3, "Catalogo");
+            var pCompra = new Permiso(4, "RealizarCompra");
+            var pInventario = new Permiso(5, "GestionInventario");
+            var pClientes = new Permiso(6, "GestionClientes");
+            var pEventos = new Permiso(7, "BitacoraEventos");
+            var pUsuarios = new Permiso(8, "GestionUsuarios");
+            var pSeguridad = new Permiso(9, "GestionSeguridad"); 
+
+            context.Componentes.AddOrUpdate(c => c.Id, pLogin, pLogout, pCatalogo, pCompra,
+                                             pInventario, pClientes, pEventos, pUsuarios, pSeguridad);
+
+            context.SaveChanges();
+
+            var famWebMaster = new Familia(10, "WebMaster");
+            var famAdmin = new Familia(11, "Administrador");
+            var famCliente = new Familia(12, "Cliente");
+
+            famWebMaster.Agregar(pLogin); famWebMaster.Agregar(pLogout); famWebMaster.Agregar(pCatalogo);
+            famWebMaster.Agregar(pCompra); famWebMaster.Agregar(pInventario); famWebMaster.Agregar(pClientes);
+            famWebMaster.Agregar(pEventos); famWebMaster.Agregar(pUsuarios); famWebMaster.Agregar(pSeguridad);
+
+            famAdmin.Agregar(pLogin); famAdmin.Agregar(pLogout); famAdmin.Agregar(pCatalogo);
+            famAdmin.Agregar(pInventario); famAdmin.Agregar(pClientes); famAdmin.Agregar(pEventos); famAdmin.Agregar(pUsuarios);
+
+            famCliente.Agregar(pLogin); famCliente.Agregar(pLogout); famCliente.Agregar(pCatalogo); famCliente.Agregar(pCompra);
+
+            context.Familias.AddOrUpdate(f => f.Id, famWebMaster, famAdmin, famCliente);
+
+            context.SaveChanges();
+
+            var perfilAdmin = new Perfil { Nombre = "WebMaster" };
+            context.Perfil.AddOrUpdate(p => p.Nombre, perfilAdmin);
+
+            context.SaveChanges();
+
             context.Usuarios.AddOrUpdate(u => u.Email,
                 new Usuario
                 {
@@ -37,8 +75,8 @@
                     Apellido = "admin",
                     Email = "admin", 
                     Contraseña = "8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a918", 
-                    DNI = "00000000", 
-                    Rol = "Admin", 
+                    DNI = "00000000",
+                    PerfilId = perfilAdmin.Id,
                     Intentos = 0,
                     Bloqueado = false,
                     Activo = true,
@@ -65,7 +103,20 @@
                     ImagenBinaria = fotoPredeterminada 
                 }
             );
+            var dalAutoBase = new DAL_AutoBase();
+            dalAutoBase.RecalcularMisDigitosVerificadores();
+            var dalUsuario = new DAL_Usuario();
+            dalUsuario.RecalcularMisDigitosVerificadores();
+            var dalPerfil = new DAL_Perfil();
+            var dalPermiso = new DAL_Permisos();
+            var dalfamilia = new DAL_Familia();
+            dalPerfil.GuardarRelacion(perfilAdmin.Id, 10);
+            dalPerfil.RecalcularMisDigitosVerificadores();
+            dalPermiso.RecalcularMisDigitosVerificadores();
+            dalfamilia.RecalcularMisDigitosVerificadores();
 
+
+            
             context.SaveChanges();
         }
     }

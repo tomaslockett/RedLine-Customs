@@ -114,6 +114,7 @@
     <Content Include="Content\estilos.css" />
     <Content Include="Content\GestionClientes.css" />
     <Content Include="Content\GestionEventos.css" />
+    <Content Include="Content\GestionPermisos.css" />
     <Content Include="Content\GestionUsuarios.css" />
     <Content Include="Content\HistorialVentas.css" />
     <Content Include="Content\img\lupita.png" />
@@ -129,6 +130,7 @@
     <Content Include="Catalogo.aspx" />
     <Content Include="favicon.ico" />
     <Content Include="CrearAuto.aspx" />
+    <Content Include="Gestion_Perfiles_Permisos.aspx" />
     <Content Include="Inventario.aspx" />
     <Content Include="GestionClientes.aspx" />
     <Content Include="GestionEventos.aspx" />
@@ -176,6 +178,13 @@
     </Compile>
     <Compile Include="CrearAuto.aspx.designer.cs">
       <DependentUpon>CrearAuto.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Gestion_Perfiles_Permisos.aspx.cs">
+      <DependentUpon>Gestion_Perfiles_Permisos.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Gestion_Perfiles_Permisos.aspx.designer.cs">
+      <DependentUpon>Gestion_Perfiles_Permisos.aspx</DependentUpon>
     </Compile>
     <Compile Include="Inventario.aspx.cs">
       <DependentUpon>Inventario.aspx</DependentUpon>

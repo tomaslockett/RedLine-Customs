@@ -1,0 +1,391 @@
+﻿:root {
+    --bg-main: #0a0c10;
+    --bg-card: rgba(22, 29, 41, 0.65);
+    --border-glass: rgba(255, 255, 255, 0.07);
+    --text-white: #ffffff;
+    --text-silver: #a0aec0;
+    --red-sport: #dc2626;
+    --red-hover: #b91c1c;
+    --gray-neutro: #2d3748;
+}
+
+body {
+    background-color: var(--bg-main);
+    color: var(--text-white);
+}
+
+.contenedor-permisos {
+    max-width: 1300px;
+    margin: 0 auto;
+    padding: 30px 15px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* --- ENCABEZADO --- */
+.encabezado-seccion {
+    margin-bottom: 35px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    padding-bottom: 20px;
+}
+
+.btn-volver {
+    color: var(--text-silver);
+    text-decoration: none;
+    font-size: 14px;
+    transition: color 0.2s;
+    display: inline-block;
+    margin-bottom: 10px;
+}
+
+    .btn-volver:hover {
+        color: var(--red-sport);
+    }
+
+.titulo-principal {
+    font-size: 32px;
+    font-weight: 700;
+    color: var(--text-white);
+    margin: 0 0 5px 0;
+    letter-spacing: -0.5px;
+}
+
+.subtitulo-tecnico {
+    font-size: 15px;
+    color: var(--text-silver);
+    margin: 0;
+}
+
+/* --- CONTENEDOR EN COLUMNAS DIVIDIDAS --- */
+.split-panel {
+    display: flex;
+    gap: 25px;
+}
+
+.columna-perfiles {
+    flex: 0 0 40%;
+}
+
+.columna-permisos-matriz {
+    flex: 0 0 60%;
+}
+
+/* --- TARJETA GLASSMORPHIC GENERAL --- */
+.tarjeta-glassmorphic {
+    background: var(--bg-card);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid var(--border-glass);
+    border-radius: 12px;
+    padding: 25px;
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.4);
+    display: flex;
+    flex-direction: column;
+    height: 600px; /* Altura fija simétrica para ambos paneles */
+}
+
+.titulo-tarjeta {
+    font-size: 20px;
+    font-weight: 600;
+    margin: 0 0 6px 0;
+    color: var(--text-white);
+}
+
+.descripcion-tarjeta {
+    font-size: 13px;
+    color: var(--text-silver);
+    margin: 0 0 20px 0;
+}
+
+.info-alerta {
+    background: rgba(220, 38, 38, 0.1);
+    border-left: 3px solid var(--red-sport);
+    padding: 10px;
+    border-radius: 4px;
+    color: #fca5a5;
+}
+
+/* --- FORMULARIO DE CREACIÓN (IZQUIERDA) --- */
+.formulario-creacion {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.input-premium {
+    flex: 1;
+    background: rgba(10, 12, 16, 0.8);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 6px;
+    padding: 10px 14px;
+    color: var(--text-white);
+    font-size: 14px;
+    transition: border-color 0.2s;
+}
+
+    .input-premium:focus {
+        border-color: var(--red-sport);
+        outline: none;
+        box-shadow: 0 0 0 2px rgba(220, 38, 38, 0.2);
+    }
+
+.btn-accion-rojo {
+    background: var(--red-sport);
+    color: var(--text-white);
+    border: none;
+    border-radius: 6px;
+    padding: 0 18px;
+    font-weight: 600;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+    .btn-accion-rojo:hover {
+        background: var(--red-hover);
+    }
+
+/* --- LISTBOX DE ROLES PREMIUM --- */
+.lista-scroll-contenedor {
+    flex: 1;
+    overflow-y: auto;
+    margin-bottom: 15px;
+}
+
+.listbox-premium {
+    width: 100%;
+    height: 100% !important;
+    background: rgba(0, 0, 0, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: 8px;
+    padding: 5px;
+    color: var(--text-silver);
+    font-size: 14px;
+    outline: none;
+}
+    /* Estilo de los renglones del ListBox */
+    .listbox-premium option {
+        padding: 12px 15px;
+        border-radius: 6px;
+        margin-bottom: 4px;
+        cursor: pointer;
+        background: transparent;
+        transition: all 0.2s;
+        border-left: 3px solid transparent;
+    }
+
+        .listbox-premium option:hover {
+            background: rgba(255, 255, 255, 0.05);
+            color: var(--text-white);
+        }
+        /* Elemento Seleccionado en ASP.NET con acento rojo Redline */
+        .listbox-premium option:checked {
+            background: rgba(220, 38, 38, 0.15) !important;
+            color: var(--text-white) !important;
+            border-left: 3px solid var(--red-sport) !important;
+            font-weight: 600;
+        }
+
+.acciones-perfil-pie {
+    display: flex;
+    justify-content: space-between;
+}
+
+.btn-link-gris {
+    background: none;
+    border: none;
+    color: var(--text-silver);
+    cursor: pointer;
+    font-size: 13px;
+}
+
+    .btn-link-gris:hover {
+        color: var(--text-white);
+        text-decoration: underline;
+    }
+
+.btn-link-rojo {
+    background: none;
+    border: none;
+    color: #f87171;
+    cursor: pointer;
+    font-size: 13px;
+}
+
+    .btn-link-rojo:hover {
+        color: var(--red-sport);
+        text-decoration: underline;
+    }
+
+/* --- SECCIÓN DERECHA: MATRIZ DE PERMISOS --- */
+.rol-seleccionado-badge {
+    color: var(--red-sport);
+    font-weight: 700;
+}
+
+.matriz-scroll-contenedor {
+    flex: 1;
+    overflow-y: auto;
+    padding-right: 10px;
+    margin-bottom: 20px;
+}
+    /* Scrollbar personalizado estilo gamer/premium */
+    .matriz-scroll-contenedor::-webkit-scrollbar,
+    .lista-scroll-contenedor::-webkit-scrollbar {
+        width: 6px;
+    }
+
+    .matriz-scroll-contenedor::-webkit-scrollbar-thumb,
+    .lista-scroll-contenedor::-webkit-scrollbar-thumb {
+        background: rgba(255, 255, 255, 0.1);
+        border-radius: 4px;
+    }
+
+.bloque-modulo {
+    background: rgba(0, 0, 0, 0.15);
+    border: 1px solid rgba(255, 255, 255, 0.03);
+    border-radius: 8px;
+    padding: 16px;
+    margin-bottom: 15px;
+}
+
+.titulo-modulo-interno {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text-white);
+    margin: 0 0 12px 0;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+/* --- TUNEO DE CHECKBOXLIST DE ASP.NET --- */
+.checkboxlist-premium {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+    .checkboxlist-premium li {
+        display: flex;
+        align-items: center;
+        padding: 8px 0;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.02);
+    }
+
+        .checkboxlist-premium li:last-child {
+            border-bottom: none;
+        }
+    /* Estilo del label pegado al input */
+    .checkboxlist-premium label {
+        margin-left: 10px;
+        font-size: 14px;
+        color: var(--text-silver);
+        cursor: pointer;
+        user-select: none;
+        transition: color 0.2s;
+    }
+    /* El control input checkbox real */
+    .checkboxlist-premium input[type="checkbox"] {
+        appearance: none;
+        -webkit-appearance: none;
+        width: 18px;
+        height: 18px;
+        border: 2px solid var(--gray-neutro);
+        border-radius: 4px;
+        background: rgba(0, 0, 0, 0.3);
+        cursor: pointer;
+        position: relative;
+        transition: all 0.2s;
+    }
+
+        .checkboxlist-premium input[type="checkbox"]:checked {
+            background: var(--red-sport);
+            border-color: var(--red-sport);
+        }
+            /* Simulación del "Check" o tilde blanca */
+            .checkboxlist-premium input[type="checkbox"]:checked::after {
+                content: '✓';
+                position: absolute;
+                color: white;
+                font-size: 12px;
+                font-weight: bold;
+                top: -1px;
+                left: 3px;
+            }
+
+    .checkboxlist-premium li:hover label {
+        color: var(--text-white);
+    }
+
+/* --- ACCIONES INFERIORES MATRIZ --- */
+.footer-tarjeta-acciones {
+    display: flex;
+    justify-content: flex-end;
+    gap: 15px;
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+    padding-top: 20px;
+    margin-top: auto;
+}
+
+.btn-primario-rojo {
+    background: var(--red-sport);
+    color: var(--text-white);
+    border: none;
+    border-radius: 6px;
+    padding: 12px 24px;
+    font-weight: 600;
+    font-size: 14px;
+    cursor: pointer;
+    box-shadow: 0 4px 14px rgba(220, 38, 38, 0.3);
+    transition: all 0.2s;
+}
+
+    .btn-primario-rojo:hover {
+        background: var(--red-hover);
+        transform: translateY(-1px);
+    }
+
+.btn-secundario-gris {
+    background: rgba(255, 255, 255, 0.05);
+    color: var(--text-silver);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 6px;
+    padding: 12px 20px;
+    font-weight: 500;
+    font-size: 14px;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+    .btn-secundario-gris:hover {
+        background: rgba(255, 255, 255, 0.1);
+        color: var(--text-white);
+    }
+
+/* --- ANIMACIONES --- */
+.animate-fade-in {
+    animation: fadeIn 0.4s ease-out;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(8px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* --- RESPONSIVE BASICO --- */
+@media (max-width: 900px) {
+    .split-panel {
+        flex-direction: column;
+    }
+
+    .tarjeta-glassmorphic {
+        height: auto;
+        max-height: 500px;
+    }
+}

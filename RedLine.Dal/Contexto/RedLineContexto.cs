@@ -2,13 +2,8 @@
 using RedLine.Be.Entidades;
 using RedLine.Servicios;
 using RedLine.Servicios.Composite;
-using System;
-using System.Collections.Generic;
 using System.Data.Entity;
 using System.Data.Entity.ModelConfiguration.Conventions;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace RedLine.Dal.Contexto
 {
@@ -21,9 +16,11 @@ namespace RedLine.Dal.Contexto
 
         // Definicion de Tablas
         public DbSet<Usuario> Usuarios { get; set; }
-        public DbSet<Permiso> Permisos { get; set; } 
-        public DbSet<Familia> Familias { get; set; }   
+        public DbSet<Permiso> Permisos { get; set; }
+        public DbSet<Perfil> Perfil { get; set; }
+        public DbSet<Familia> Familias { get; set; }
         public DbSet<Cliente> Cliente { get; set; }
+        public DbSet<ComponentePermiso> Componentes { get; set; }
         public DbSet<DigitoVerificador> DigitoVerificador { get; set; }
         public DbSet<Venta> Ventas { get; set; }
         public DbSet<Factura> Facturas { get; set; }
@@ -47,8 +44,39 @@ namespace RedLine.Dal.Contexto
                 .WillCascadeOnDelete(false);
 
             modelBuilder.Entity<Venta>()
-                .HasOptional(v => v.Factura) 
+                .HasOptional(v => v.Factura)
                 .WithRequired(f => f.Venta);
+
+            modelBuilder.Entity<ComponentePermiso>()
+                .HasMany(c => c.ComponentesHijos)
+                .WithMany()
+                .Map(m =>
+                {
+                     m.ToTable("Permisos_Jerarquia"); 
+                     m.MapLeftKey("IdPadre");
+                     m.MapRightKey("IdHijo");
+                });
+
+            modelBuilder.Entity<ComponentePermiso>()
+                .Map<Familia>(m => m.Requires("TipoComponente").HasValue("Familia"))
+                .Map<Permiso>(m => m.Requires("TipoComponente").HasValue("Permiso"));
+
+            modelBuilder.Entity<Perfil>()
+                .HasMany(p => p.PermisosRaiz) 
+                .WithMany()
+                .Map(m =>
+                {
+                    m.ToTable("Perfil_Componente");
+                    m.MapLeftKey("IdPerfil");
+                    m.MapRightKey("IdComponente");
+                });
+
+            modelBuilder.Entity<ComponentePermiso>().ToTable("Componentes");
+
+            modelBuilder.Entity<Usuario>()
+                .HasOptional(u => u.Perfil) 
+                .WithMany()
+                .HasForeignKey(u => u.PerfilId);
 
             base.OnModelCreating(modelBuilder);
         }

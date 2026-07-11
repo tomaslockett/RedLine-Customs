@@ -52,6 +52,7 @@
             Sistema
         </button>
         <div class="dropdown-content">
+            <a runat="server" href="~/Gestion_Perfiles_Permisos.aspx">Gestión de Permisos</a>
             <a runat="server" href="~/BackupRestore.aspx">Backup & Restore</a>
             <a runat="server" href="#!">Dígito Verificador</a>
         </div>

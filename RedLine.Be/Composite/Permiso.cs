@@ -12,7 +12,7 @@ namespace RedLine.Servicios.Composite
         {
             
         }
-
+        protected Permiso() { }
         public override void Agregar(ComponentePermiso componente)
         {
             throw new InvalidOperationException($"'{Nombre}' es un permiso atómico. No puede contener otros permisos.");

@@ -1,25 +1,27 @@
-﻿using System;
+﻿using Redline.Be;
+using RedLine.Dal.ORM;
+using RedLine.Servicios.Composite;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
-using Redline.Be;
 
 namespace RedLine.Dal
 {
     public class DAL_Usuario : AbstractDAL<int, Usuario>
     {
         protected override string NombreTabla => "Usuario";
-        protected override bool RequiereDigitoVerificador => false;
+        protected override bool RequiereDigitoVerificador => true;
 
         protected override string SqlInsertar =>
-            @"INSERT INTO Usuario (DNI, Nombre, Apellido, Email, Contraseña, Rol, Intentos, Bloqueado, Activo, UltimoIntento) 
-              VALUES (@DNI, @Nombre, @Apellido, @Email, @Contraseña, @Rol, 0, 0, 1, @UltimoIntento)";
+    @"INSERT INTO Usuario (DNI, Nombre, Apellido, Email, Contraseña, PerfilId, Intentos, Bloqueado, Activo, UltimoIntento) 
+      VALUES (@DNI, @Nombre, @Apellido, @Email, @Contraseña, @PerfilId, 0, 0, 1, @UltimoIntento)";
 
         protected override string SqlModificar =>
-            @"UPDATE Usuario SET DNI = @DNI, Nombre = @Nombre, Apellido = @Apellido, Email = @Email, Rol = @Rol, Bloqueado = @Bloqueado, 
-              Activo = @Activo, Intentos = @Intentos, UltimoIntento = @UltimoIntento WHERE ID = @ID";
-
+    @"UPDATE Usuario SET DNI = @DNI, Nombre = @Nombre, Apellido = @Apellido, Email = @Email, PerfilId = @PerfilId, 
+      Bloqueado = @Bloqueado, Activo = @Activo, Intentos = @Intentos, UltimoIntento = @UltimoIntento 
+      WHERE ID = @ID";
         protected override string SqlEliminar => "DELETE FROM Usuario WHERE ID = @ID";
         protected override string SqlListar => "SELECT * FROM Usuario";
         protected override string SqlObtenerPorId => "SELECT * FROM Usuario WHERE ID = @ID";
@@ -35,7 +37,7 @@ namespace RedLine.Dal
             cmd.Parameters.AddWithValue("@Apellido", entidad.Apellido);
             cmd.Parameters.AddWithValue("@Email", entidad.Email);
             cmd.Parameters.AddWithValue("@Contraseña", entidad.Contraseña);
-            cmd.Parameters.AddWithValue("@Rol", entidad.Rol);
+            cmd.Parameters.AddWithValue("@PerfilId", entidad.Perfil != null ? (object)entidad.Perfil.Id : DBNull.Value);
             cmd.Parameters.AddWithValue("@Bloqueado", entidad.Bloqueado);
             cmd.Parameters.AddWithValue("@Activo", entidad.Activo);
             cmd.Parameters.AddWithValue("@Intentos", entidad.Intentos);
@@ -49,6 +51,9 @@ namespace RedLine.Dal
 
         protected override Usuario Mapear(SqlDataReader lector)
         {
+            object idPerfilObj = lector["PerfilId"];
+            int? idPerfil = (idPerfilObj == DBNull.Value) ? (int?)null : Convert.ToInt32(idPerfilObj);
+
             return new Usuario(
                 Convert.ToInt32(lector["ID"]),
                 lector["DNI"].ToString(),
@@ -56,7 +61,7 @@ namespace RedLine.Dal
                 lector["Apellido"].ToString(),
                 lector["Email"].ToString(),
                 lector["Contraseña"].ToString(),
-                lector["Rol"].ToString(),
+                idPerfil,
                 Convert.ToInt32(lector["Intentos"]),
                 Convert.ToBoolean(lector["Bloqueado"]),
                 Convert.ToBoolean(lector["Activo"]),

@@ -43,6 +43,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Composite\ComponentePermiso.cs" />
+    <Compile Include="Composite\Familia.cs" />
+    <Compile Include="Composite\Perfil.cs" />
+    <Compile Include="Composite\Permiso.cs" />
     <Compile Include="Entidades\AutoBase.cs" />
     <Compile Include="Entidades\AutoPersonalizacion\Aleron.cs" />
     <Compile Include="Entidades\AutoPersonalizacion\KitCarroceria.cs" />
@@ -64,6 +68,9 @@
     <Folder Include="Abstracciones\" />
     <Folder Include="DTOs\" />
     <Folder Include="Emuns\" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Connected Services\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -51,7 +51,11 @@
                         <asp:BoundField DataField="Nombre" HeaderText="Nombre" />
                         <asp:BoundField DataField="Apellido" HeaderText="Apellido" />
                         <asp:BoundField DataField="Email" HeaderText="Email" />
-                        <asp:BoundField DataField="Rol" HeaderText="Rol" />
+                        <asp:TemplateField HeaderText="Perfil">
+                            <ItemTemplate>
+                                <%# Eval("Perfil") != null ? Eval("Perfil.Nombre") : "Sin perfil" %>
+                            </ItemTemplate>
+                        </asp:TemplateField>
                         <asp:TemplateField HeaderText="Estado">
                             <ItemTemplate>
                                 <span style='<%# (bool)Eval("Activo") ? "color: #28a745;" : "color: #dc3545;" %>'><%# (bool)Eval("Activo") ? "Activo" : "Inactivo" %></span>

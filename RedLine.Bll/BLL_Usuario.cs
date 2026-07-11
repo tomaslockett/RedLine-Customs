@@ -98,6 +98,23 @@ namespace RedLine.Bll
             _bllEvento.Registrar(admin, "Usuarios", $"Desbloqueo manual y reset de clave para: {usuario.Email}", 2);
         }
 
+        public override List<Usuario> Listar()
+        {
+            List<Usuario> usuarios = base.Listar();
+
+            BLL_Perfil bllPerfil = new BLL_Perfil();
+
+            foreach (Usuario u in usuarios)
+            {
+                if (u.PerfilId.HasValue)
+                {
+                    u.Perfil = bllPerfil.ObtenerPorId(u.PerfilId.Value);
+                }
+            }
+
+            return usuarios;
+        }
+
         public void DesbloquearUsuario(Usuario usuario)
         {
             usuario.Bloqueado = false;

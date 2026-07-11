@@ -9,7 +9,7 @@ namespace RedLine.Dal
     public class DAL_Cliente : AbstractDAL<string, Cliente>
     {
         protected override string NombreTabla => "Cliente";
-        protected override bool RequiereDigitoVerificador => false;
+        protected override bool RequiereDigitoVerificador => true;
 
         protected override string SqlInsertar =>
             @"INSERT INTO Cliente (DNI, Nombre, Apellido, Email, Contraseña, Telefono, Direccion) 

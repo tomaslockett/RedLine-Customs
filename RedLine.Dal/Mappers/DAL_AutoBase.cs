@@ -10,7 +10,7 @@ namespace RedLine.Dal
     public class DAL_AutoBase : AbstractDAL<int, AutoBase>
     {
         protected override string NombreTabla => "AutoBase";
-        protected override bool RequiereDigitoVerificador => false;
+        protected override bool RequiereDigitoVerificador => true;
 
         protected override string SqlInsertar =>
             @"INSERT INTO AutoBase

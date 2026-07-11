@@ -11,7 +11,7 @@ namespace RedLine.Dal.Mappers
     public class DAL_Evento : AbstractDAL<int, Evento>
     {
         protected override string NombreTabla => "Bitacora";
-        protected override bool RequiereDigitoVerificador => false; 
+        protected override bool RequiereDigitoVerificador => true; 
 
         protected override string SqlInsertar =>
             "INSERT INTO Bitacora (Usuario, Fecha, Modulo, Actividad, Criticidad) VALUES (@Usu, @Fec, @Mod, @Act, @Cri)";
