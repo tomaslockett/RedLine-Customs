@@ -103,21 +103,23 @@
                     ImagenBinaria = fotoPredeterminada 
                 }
             );
+
+            context.SaveChanges();
+
             var dalAutoBase = new DAL_AutoBase();
-            dalAutoBase.RecalcularMisDigitosVerificadores();
             var dalUsuario = new DAL_Usuario();
-            dalUsuario.RecalcularMisDigitosVerificadores();
             var dalPerfil = new DAL_Perfil();
             var dalPermiso = new DAL_Permisos();
             var dalfamilia = new DAL_Familia();
+
             dalPerfil.GuardarRelacion(perfilAdmin.Id, 10);
+
+
+            dalAutoBase.RecalcularMisDigitosVerificadores();
+            dalUsuario.RecalcularMisDigitosVerificadores();
             dalPerfil.RecalcularMisDigitosVerificadores();
             dalPermiso.RecalcularMisDigitosVerificadores();
             dalfamilia.RecalcularMisDigitosVerificadores();
-
-
-            
-            context.SaveChanges();
         }
     }
 }
