@@ -56,7 +56,7 @@
 
         </ul>
 
-        <button type="submit" class="btnConfirmar">Confirmar configuración</button>
+        <asp:Button ID="btnConfirmar" runat="server" CssClass="btnConfirmar" Text="Confirmar configuración" OnClick="btnConfirmar_Click" />
              </article>
          </section>
     </main>

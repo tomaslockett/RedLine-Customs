@@ -108,9 +108,11 @@
   <ItemGroup>
     <Content Include="BackupRestore.aspx" />
     <Content Include="CambioContraseña.aspx" />
+    <Content Include="Checkout.aspx" />
     <Content Include="Content\BackupRestore.css" />
     <Content Include="Content\CambioContraseña.css" />
     <Content Include="Content\Catalogo.css" />
+    <Content Include="Content\Checkout.css" />
     <Content Include="Content\estilos.css" />
     <Content Include="Content\GestionClientes.css" />
     <Content Include="Content\GestionEventos.css" />
@@ -139,8 +141,10 @@
     <Content Include="HistorialVentas.aspx" />
     <Content Include="LogIn.aspx" />
     <Content Include="Logout.aspx" />
+    <Content Include="PagoExitoso.aspx" />
     <Content Include="personalizarAuto.aspx" />
     <Content Include="RegistroCliente.aspx" />
+    <Content Include="Scripts\Checkout.js" />
     <Content Include="Scripts\RegistroCliente.js" />
     <Content Include="Site.Master" />
     <Content Include="ViewSwitcher.ascx" />
@@ -171,6 +175,13 @@
     </Compile>
     <Compile Include="Catalogo.aspx.designer.cs">
       <DependentUpon>Catalogo.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Checkout.aspx.cs">
+      <DependentUpon>Checkout.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Checkout.aspx.designer.cs">
+      <DependentUpon>Checkout.aspx</DependentUpon>
     </Compile>
     <Compile Include="CrearAuto.aspx.cs">
       <DependentUpon>CrearAuto.aspx</DependentUpon>
@@ -237,6 +248,13 @@
     </Compile>
     <Compile Include="Logout.aspx.designer.cs">
       <DependentUpon>Logout.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="PagoExitoso.aspx.cs">
+      <DependentUpon>PagoExitoso.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="PagoExitoso.aspx.designer.cs">
+      <DependentUpon>PagoExitoso.aspx</DependentUpon>
     </Compile>
     <Compile Include="personalizarAuto.aspx.cs">
       <DependentUpon>personalizarAuto.aspx</DependentUpon>
