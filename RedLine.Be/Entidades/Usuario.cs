@@ -44,6 +44,15 @@ namespace Redline.Be
             this.DNI = dni;
             this.Nombre = nombre;
             this.Apellido = apellido;
+
+            if (perfilId.HasValue)
+            {
+                this.Perfil = new Perfil { Id = perfilId.Value };
+            }
+            else
+            {
+                this.Perfil = null;
+            }
         }
         public Usuario() { }
     }

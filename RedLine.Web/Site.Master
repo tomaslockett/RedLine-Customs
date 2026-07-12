@@ -16,7 +16,9 @@
         <asp:ScriptManager ID="smGlobal" runat="server" AjaxFrameworkMode="Disabled" EnableCdn="false"></asp:ScriptManager>
 
         <header class="cabecera-principal">
-            
+            <a runat="server" href="~/Catalogo" class="texto-logo-nav">
+                REDLINE<span>CUSTOMS</span>
+            </a>
             <nav class="contenedor-navegacion">
     
     <a runat="server" href="~/Catalogo" class="boton-menu boton-texto-simple">
@@ -24,37 +26,37 @@
         Inicio
     </a>
 
-    <div class="dropdown-menu-container">
+    <div id="menuTallerVentas" runat="server" class="dropdown-menu-container">
         <button type="button" class="boton-menu boton-texto-simple dropdown-toggle">
             Taller y Ventas
         </button>
         <div class="dropdown-content">
             <a runat="server" href="~/CrearAuto.aspx">Crear Auto</a>
             <a runat="server" href="~/personalizarAuto.aspx">Personalizar Auto</a>
-            <a runat="server" href="~/Inventario.aspx">Inventario</a>
+            <a id="lnkInventario" runat="server" href="~/Inventario.aspx">Inventario</a>
             <a runat="server" href="~/HistorialVentas.aspx">Historial de Ventas</a>
         </div>
     </div>
 
-    <div class="dropdown-menu-container">
+    <div id="menuGestionABM" runat="server" class="dropdown-menu-container">
         <button type="button" class="boton-menu boton-texto-simple dropdown-toggle">
             Gestión ABM
         </button>
         <div class="dropdown-content">
-            <a runat="server" href="~/GestionUsuarios.aspx">Gestión Usuarios</a>
-            <a runat="server" href="~/GestionClientes.aspx">Gestión Clientes</a>
-            <a runat="server" href="~/GestionEventos.aspx">Gestión Eventos</a>
+            <a id="lnkGestionUsuarios" runat="server" href="~/GestionUsuarios.aspx">Gestión Usuarios</a>
+            <a id="lnkGestionClientes" runat="server" href="~/GestionClientes.aspx">Gestión Clientes</a>
+            <a id="lnkGestionEventos" runat="server" href="~/GestionEventos.aspx">Gestión Eventos</a>
         </div>
     </div>
 
-    <div class="dropdown-menu-container">
+    <div id="menuSistema" runat="server" class="dropdown-menu-container">
         <button type="button" class="boton-menu boton-texto-simple dropdown-toggle">
             Sistema
         </button>
         <div class="dropdown-content">
-            <a runat="server" href="~/Gestion_Perfiles_Permisos.aspx">Gestión de Permisos</a>
-            <a runat="server" href="~/BackupRestore.aspx">Backup & Restore</a>
-            <a runat="server" href="#!">Dígito Verificador</a>
+            <a id="lnkGestionPermisos" runat="server" href="~/Gestion_Perfiles_Permisos.aspx">Gestión de Permisos</a>
+            <a id="lnkBackupRestore" runat="server" href="~/BackupRestore.aspx">Backup & Restore</a>
+            <a id="lnkDigitoVerificador" runat="server" href="#!">Dígito Verificador</a>
         </div>
     </div>
 
