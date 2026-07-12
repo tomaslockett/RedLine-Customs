@@ -193,12 +193,10 @@ namespace RedLine.Dal
             return motor.ObtenerResultadoFinal();
         }
 
-        public void RecalcularIntegridad()
+        public virtual void RecalcularIntegridad()
         {
             this.RecalcularMisDigitosVerificadores();
         }
-
-
 
         #endregion
 
