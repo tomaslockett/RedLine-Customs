@@ -22,7 +22,7 @@ namespace RedLine.Bll
 
             if (user == null)
             {
-                _bllEvento.Registrar(email, "Seguridad", "Intento de login con email inexistente", 2);
+                _bllEvento.Registrar(email, ModulosEventos.Seguridad, "Intento de login con email inexistente", 2);
                 throw new LoginException(LoginResult.InvalidUsername);
             }
                 
@@ -50,11 +50,11 @@ namespace RedLine.Bll
                 if (user.Intentos >= 3)
                 {
                     user.Bloqueado = true;
-                    _bllEvento.Registrar(email, "Seguridad", "Usuario bloqueado por exceder intentos", 3);
+                    _bllEvento.Registrar(email, ModulosEventos.Seguridad, "Usuario bloqueado por exceder intentos", 3);
                 }
                 else
                 {
-                    _bllEvento.Registrar(email, "Seguridad", $"Intento de login fallido ({user.Intentos}/3)", 2);
+                    _bllEvento.Registrar(email, ModulosEventos.Seguridad, $"Intento de login fallido ({user.Intentos}/3)", 2);
                 }
 
                 this.Modificar(user);
@@ -78,7 +78,7 @@ namespace RedLine.Bll
                     return LoginResult.InconsistencyDVUserNormal;
                 }
             }
-            _bllEvento.Registrar(user.Email, "Seguridad", "Inicio de sesión exitoso", 1);
+            _bllEvento.Registrar(user.Email, ModulosEventos.Seguridad, "Inicio de sesión exitoso", 1);
             return LoginResult.ValidUser;
         }
         BLL_DigitoVerificador blldv = new BLL_DigitoVerificador();
@@ -107,8 +107,8 @@ namespace RedLine.Bll
 
             base.Insertar(usuario);
 
-            string admin = SessionManager.Instancia.Usuario.Email;
-            _bllEvento.Registrar(admin, "Usuarios", $"Desbloqueo manual y reset de clave para: {usuario.Email}", 2);
+            string ejecutor = SessionManager.Instancia.IsLogged() ? SessionManager.Instancia.Usuario.Email : "Sistema";
+            _bllEvento.Registrar(ejecutor, ModulosEventos.Usuarios, $"Se creó un nuevo usuario con Email: {usuario.Email}", 1);
         }
 
         public override List<Usuario> Listar()
@@ -128,18 +128,31 @@ namespace RedLine.Bll
             return usuarios;
         }
 
+        public override void Modificar(Usuario usuario)
+        {
+            base.Modificar(usuario);
+            string ejecutor = SessionManager.Instancia.IsLogged() ? SessionManager.Instancia.Usuario.Email : "Sistema";
+            _bllEvento.Registrar(ejecutor, ModulosEventos.Usuarios, $"Se actualizaron los datos del usuario: {usuario.Email}", 2);
+        }
+
+        public override void Eliminar(int id)
+        {
+            var userAEliminar = this.ObtenerPorId(id);
+            base.Eliminar(id);
+            string ejecutor = SessionManager.Instancia.IsLogged() ? SessionManager.Instancia.Usuario.Email : "Sistema";
+            string detalle = userAEliminar != null ? userAEliminar.Email : $"ID {id}";
+            _bllEvento.Registrar(ejecutor, ModulosEventos.Usuarios, $"Se eliminó el usuario: {detalle}", 3);
+        }
+
         public void DesbloquearUsuario(Usuario usuario)
         {
             usuario.Bloqueado = false;
             usuario.Intentos = 0;
-            string claveInicial = usuario.Nombre.Substring(0, 3) +
-                                  usuario.Apellido.Substring(0, 3) +
-                                  usuario.DNI.Substring(0, 3);
-
+            string claveInicial = usuario.Nombre.Substring(0, 3) + usuario.Apellido.Substring(0, 3) + usuario.DNI.Substring(0, 3);
             usuario.Contraseña = Hashing.Sha256(claveInicial); 
             this.Modificar(usuario);
             string admin = SessionManager.Instancia.Usuario.Email;
-            _bllEvento.Registrar(admin, "Usuarios", $"Desbloqueo de usuario: {usuario.Email}", 2);
+            _bllEvento.Registrar(admin, ModulosEventos.Usuarios, $"Desbloqueo de usuario y reset de clave: {usuario.Email}", 2);
         }
 
         public void Logout()
@@ -147,7 +160,7 @@ namespace RedLine.Bll
             if (!SessionManager.Instancia.IsLogged()) throw new Exception("No hay sesión iniciada");
             string email = SessionManager.Instancia.Usuario.Email;
             SessionManager.Instancia.Logout();
-            _bllEvento.Registrar(email, "Seguridad", "Cierre de sesión", 1);
+            _bllEvento.Registrar(email, ModulosEventos.Seguridad, "Cierre de sesión", 1);
         }
 
         public void Activar(Usuario usuario)
@@ -155,7 +168,7 @@ namespace RedLine.Bll
             usuario.Activo = true;
             this.Modificar(usuario);
             string admin = SessionManager.Instancia.Usuario.Email;
-            _bllEvento.Registrar(admin, "Usuarios", $"Activación de usuario: {usuario.Email}", 2);
+            _bllEvento.Registrar(admin, ModulosEventos.Usuarios, $"Activación de usuario: {usuario.Email}", 2);
         }
 
         public void Desactivar(Usuario usuario)
@@ -163,12 +176,14 @@ namespace RedLine.Bll
             usuario.Activo = false;
             this.Modificar(usuario);
             string admin = SessionManager.Instancia.Usuario.Email;
-            _bllEvento.Registrar(admin, "Usuarios", $"Desactivación de usuario: {usuario.Email}", 2);
+            _bllEvento.Registrar(admin, ModulosEventos.Usuarios, $"Desactivación de usuario: {usuario.Email}", 2);
         }
 
         public void CambiarContraseñaDirecto(int idUsuario, string nuevaPasswordHasheada)
         {
             Repo.ActualizarContraseña(idUsuario, nuevaPasswordHasheada);
         }
+
+       
     }
 }

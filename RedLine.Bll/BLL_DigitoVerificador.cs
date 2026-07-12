@@ -1,6 +1,7 @@
 ﻿using RedLine.Be.Entidades;
 using RedLine.Be.Interfaces;
 using RedLine.Dal;
+using RedLine.Servicios;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,8 +13,10 @@ namespace RedLine.Bll
 {
     public class BLL_DigitoVerificador : AbstractBLL<string, DigitoVerificador>
     {
+        private BLL_Evento _bllEvento;
         public BLL_DigitoVerificador() : base(new DAL_DigitoVerificador())
         {
+            _bllEvento = new BLL_Evento();
         }
 
         public void RecalcularTodaLaBaseDeDatos()
@@ -24,6 +27,7 @@ namespace RedLine.Bll
             {
                 bll.RecalcularIntegridad();
             }
+            RegistrarEventoBitacora("Se forzó el recálculo masivo de los dígitos verificadores (DVH/DVV) de toda la base de datos.", 3);
         }
 
         public string VerificarTodaLaBaseDeDatos()
@@ -58,6 +62,8 @@ namespace RedLine.Bll
                 return "OK. La integridad de la base de datos es 100% correcta.";
             }
 
+            RegistrarEventoBitacora($"Alerta de Integridad:\n{reporteErrores.ToString()}", 3);
+
             return reporteErrores.ToString();
         }
 
@@ -74,6 +80,18 @@ namespace RedLine.Bll
             }
 
             return listaInstancias;
+        }
+
+        private void RegistrarEventoBitacora(string mensaje, int criticidad)
+        {
+            try
+            {
+                string usuario = SessionManager.Instancia.IsLogged() ? SessionManager.Instancia.Usuario.Email : "Sistema";
+                _bllEvento.Registrar(usuario, ModulosEventos.BaseDeDatos, mensaje, criticidad);
+            }
+            catch
+            {
+            }
         }
 
     }

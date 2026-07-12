@@ -11,6 +11,8 @@ namespace RedLine.Bll
         public BLL_Cliente() : base(new DAL_Cliente()) { }
         private BLL_Evento _bllEvento = new BLL_Evento();
 
+        #region Auditoría de CRUD (Overrides)
+
         public override void Insertar(Cliente cliente)
         {
             cliente.Nombre = Hashing.EncriptarAES(cliente.Nombre);
@@ -21,8 +23,8 @@ namespace RedLine.Bll
             cliente.Contraseña = Hashing.Sha256(cliente.Contraseña);
 
             base.Insertar(cliente);
-            string u = SessionManager.Instancia.IsLogged() ? SessionManager.Instancia.Usuario.Email : "Auto-Registro";
-            _bllEvento.Registrar(u, "Clientes", $"Registro de nuevo cliente: {cliente.Email}", 1);
+
+            RegistrarEventoBitacora($"Registro de nuevo cliente: {cliente.Email}", 1);
         }
 
         public override void Modificar(Cliente cliente)
@@ -32,10 +34,25 @@ namespace RedLine.Bll
             cliente.DNI = Hashing.EncriptarAES(cliente.DNI);
             cliente.Telefono = Hashing.EncriptarAES(cliente.Telefono);
             cliente.Direccion = Hashing.EncriptarAES(cliente.Direccion);
+
             base.Modificar(cliente);
-            string u = SessionManager.Instancia.IsLogged() ? SessionManager.Instancia.Usuario.Email : cliente.Email;
-            _bllEvento.Registrar(u, "Clientes", $"Modificación de datos del cliente: {cliente.Email}", 2);
+
+            RegistrarEventoBitacora($"Modificación de datos sensibles del cliente: {cliente.Email}", 2);
         }
+
+        public override void Eliminar(string email)
+        {
+            var clienteAEliminar = BuscarPorEmail(email);
+            string detalle = clienteAEliminar != null ? clienteAEliminar.Email : email;
+
+            base.Eliminar(email);
+
+            RegistrarEventoBitacora($"Se eliminó la cuenta del cliente: {detalle}", 3);
+        }
+
+        #endregion
+
+        #region Métodos de Negocio
 
         public List<Cliente> ObtenerClientes()
         {
@@ -72,5 +89,24 @@ namespace RedLine.Bll
             }
             return null;
         }
+
+        #endregion
+
+        #region Métodos Privados
+
+        private void RegistrarEventoBitacora(string mensaje, int criticidad = 2)
+        {
+            try
+            {
+                string usuario = SessionManager.Instancia.IsLogged() ? SessionManager.Instancia.Usuario.Email : "Auto-Registro";
+
+                _bllEvento.Registrar(usuario, ModulosEventos.Clientes, mensaje, criticidad);
+            }
+            catch
+            {
+            }
+        }
+
+        #endregion
     }
 }

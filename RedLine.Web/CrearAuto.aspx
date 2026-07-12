@@ -38,9 +38,42 @@
                     <label>Marca *</label>
                     <asp:DropDownList ID="DropDownListMarca" runat="server" CssClass="input-control">
                         <asp:ListItem Text="Seleccione una marca" Value=""></asp:ListItem>
-                        <asp:ListItem Text="Toyota" Value="Toyota"></asp:ListItem>
+                        <asp:ListItem Text="Alfa Romeo" Value="Alfa Romeo"></asp:ListItem>
+                        <asp:ListItem Text="Audi" Value="Audi"></asp:ListItem>
+                        <asp:ListItem Text="BMW" Value="BMW"></asp:ListItem>
+                        <asp:ListItem Text="BYD" Value="BYD"></asp:ListItem>
+                        <asp:ListItem Text="Chevrolet" Value="Chevrolet"></asp:ListItem>
+                        <asp:ListItem Text="Citroën" Value="Citroën"></asp:ListItem>
+                        <asp:ListItem Text="Chery" Value="Chery"></asp:ListItem>
+                        <asp:ListItem Text="Chrysler" Value="Chrysler"></asp:ListItem>
+                        <asp:ListItem Text="Dodge" Value="Dodge"></asp:ListItem>
+                        <asp:ListItem Text="Ferrari" Value="Ferrari"></asp:ListItem>
+                        <asp:ListItem Text="Fiat" Value="Fiat"></asp:ListItem>
                         <asp:ListItem Text="Ford" Value="Ford"></asp:ListItem>
+                        <asp:ListItem Text="Geely" Value="Geely"></asp:ListItem>
+                        <asp:ListItem Text="Honda" Value="Honda"></asp:ListItem>
+                        <asp:ListItem Text="Hyundai" Value="Hyundai"></asp:ListItem>
+                        <asp:ListItem Text="Jeep" Value="Jeep"></asp:ListItem>
+                        <asp:ListItem Text="Kia" Value="Kia"></asp:ListItem>
+                        <asp:ListItem Text="Lamborghini" Value="Lamborghini"></asp:ListItem>
+                        <asp:ListItem Text="Land Rover" Value="Land Rover"></asp:ListItem>
+                        <asp:ListItem Text="Lexus" Value="Lexus"></asp:ListItem>
+                        <asp:ListItem Text="Maserati" Value="Maserati"></asp:ListItem>
+                        <asp:ListItem Text="Mazda" Value="Mazda"></asp:ListItem>
+                        <asp:ListItem Text="Mercedes-Benz" Value="Mercedes-Benz"></asp:ListItem>
+                        <asp:ListItem Text="MINI" Value="MINI"></asp:ListItem>
+                        <asp:ListItem Text="Mitsubishi" Value="Mitsubishi"></asp:ListItem>
+                        <asp:ListItem Text="Nissan" Value="Nissan"></asp:ListItem>
+                        <asp:ListItem Text="Peugeot" Value="Peugeot"></asp:ListItem>
                         <asp:ListItem Text="Porsche" Value="Porsche"></asp:ListItem>
+                        <asp:ListItem Text="RAM" Value="RAM"></asp:ListItem>
+                        <asp:ListItem Text="Renault" Value="Renault"></asp:ListItem>
+                        <asp:ListItem Text="Subaru" Value="Subaru"></asp:ListItem>
+                        <asp:ListItem Text="Suzuki" Value="Suzuki"></asp:ListItem>
+                        <asp:ListItem Text="Tesla" Value="Tesla"></asp:ListItem>
+                        <asp:ListItem Text="Toyota" Value="Toyota"></asp:ListItem>
+                        <asp:ListItem Text="Volkswagen" Value="Volkswagen"></asp:ListItem>
+                        <asp:ListItem Text="Volvo" Value="Volvo"></asp:ListItem>
                     </asp:DropDownList>
                 </div>
 

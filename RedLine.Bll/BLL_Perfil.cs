@@ -3,20 +3,17 @@ using RedLine.Servicios;
 using RedLine.Servicios.Composite;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace RedLine.Bll
 {
     public class BLL_Perfil : AbstractBLL<int, Perfil>
     {
         private BLL_Evento _bllEvento;
-        public BLL_Perfil() : base(new DAL_Perfil()) 
+        public BLL_Perfil() : base(new DAL_Perfil())
         {
             _bllEvento = new BLL_Evento();
         }
-        
+
         public void AsignarComponenteAPerfil(int idPerfil, ComponentePermiso componente)
         {
             var perfil = _repositorio.ObtenerPorId(idPerfil);
@@ -43,10 +40,13 @@ namespace RedLine.Bll
         public void SincronizarPermisos(int idPerfil, List<int> nuevosIdsPermisos)
         {
             if (idPerfil <= 0)
+            {
                 throw new ArgumentException("El ID del perfil no es válido.");
+            }
+
             DAL_Perfil dalPerfil = (DAL_Perfil)_repositorio;
 
-            
+
             dalPerfil.EliminarRelacionesPorPerfil(idPerfil);
 
             if (nuevosIdsPermisos != null && nuevosIdsPermisos.Count > 0)
@@ -56,18 +56,10 @@ namespace RedLine.Bll
                     dalPerfil.GuardarRelacion(idPerfil, idPermiso);
                 }
             }
-            RegistrarEventoBitacora($"Se sincronizaron los permisos del Perfil ID: {idPerfil}");
+            RegistrarEventoBitacora($"Se sincronizaron los permisos del Perfil ID: {idPerfil}", 2);
         }
 
-        private void RegistrarEventoBitacora(string mensaje)
-        {
-            try
-            {
-                string usuario = SessionManager.Instancia.IsLogged() ? SessionManager.Instancia.Usuario.Email : "Sistema";
-                _bllEvento.Registrar(usuario, "Seguridad", mensaje, 2);
-            }
-            catch { }
-        }
+      
 
         /// <summary>
         /// Obtiene todos los permisos finales (desplegando las familias) 
@@ -83,5 +75,45 @@ namespace RedLine.Bll
 
             return dalPerfil.ObtenerPermisosAtomicosDePerfil(idPerfil);
         }
+
+
+        #region Auditoría de CRUD (Overrides)
+
+        public override void Insertar(Perfil entidad)
+        {
+            base.Insertar(entidad);
+            RegistrarEventoBitacora($"Se creó un nuevo perfil: {entidad.Nombre}", 1);
+        }
+
+        public override void Modificar(Perfil entidad)
+        {
+            base.Modificar(entidad);
+            RegistrarEventoBitacora($"Se modificó el perfil: {entidad.Nombre}", 2);
+        }
+
+        public override void Eliminar(int id)
+        {
+            var perfilAEliminar = base.ObtenerPorId(id);
+            string detalle = perfilAEliminar != null ? perfilAEliminar.Nombre : $"ID {id}";
+
+            base.Eliminar(id);
+            RegistrarEventoBitacora($"Se eliminó el perfil: {detalle}", 3);
+        }
+
+        #endregion
+
+        #region Métodos Privados
+
+        private void RegistrarEventoBitacora(string mensaje, int criticidad = 2)
+        {
+            try
+            {
+                string usuario = SessionManager.Instancia.IsLogged() ? SessionManager.Instancia.Usuario.Email : "Sistema";
+                _bllEvento.Registrar(usuario, ModulosEventos.Seguridad, mensaje, criticidad);
+            }
+            catch { }
+        }
+
+        #endregion
     }
 }

@@ -53,6 +53,7 @@
     <Compile Include="BLL_Permisos.cs" />
     <Compile Include="BLL_Usuario.cs" />
     <Compile Include="BLL_DigitoVerificador.cs" />
+    <Compile Include="ModulosEventos.cs" />
     <Compile Include="Exception\LoginException.cs" />
     <Compile Include="Exception\LoginResult.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

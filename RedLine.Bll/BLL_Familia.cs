@@ -40,34 +40,48 @@ namespace RedLine.Bll
                 }
             }
 
-            RegistrarEventoBitacora($"Se actualizaron los permisos/jerarquía de la Familia ID: {familia.Id}");
+            RegistrarEventoBitacora($"Se actualizaron los permisos/jerarquía de la Familia ID: {familia.Id}", 2);
         }
+
+        #region Auditoría de CRUD (Overrides)
 
         public override void Insertar(Familia entidad)
         {
             base.Insertar(entidad);
-            RegistrarEventoBitacora($"Se creó una nueva familia de permisos: {entidad.Nombre}");
+            RegistrarEventoBitacora($"Se creó una nueva familia de permisos: {entidad.Nombre}", 1);
+        }
+
+        public override void Modificar(Familia entidad)
+        {
+            base.Modificar(entidad);
+            RegistrarEventoBitacora($"Se modificó el nombre o datos de la familia: {entidad.Nombre}", 2);
         }
 
         public override void Eliminar(int id)
         {
+            var familiaAEliminar = base.ObtenerPorId(id);
+            string detalle = familiaAEliminar != null ? familiaAEliminar.Nombre : $"ID {id}";
+
             _dalFamilia.EliminarRelacionesPorFamilia(id);
             base.Eliminar(id);
-            RegistrarEventoBitacora($"Se eliminó la familia de permisos ID: {id}");
+
+            RegistrarEventoBitacora($"Se eliminó la familia de permisos: {detalle}", 3);
         }
+
+        #endregion
 
         #region Métodos Privados
 
-        private void RegistrarEventoBitacora(string mensaje)
+        private void RegistrarEventoBitacora(string mensaje, int criticidad = 2)
         {
             try
             {
                 string usuario = SessionManager.Instancia.IsLogged() ? SessionManager.Instancia.Usuario.Email : "Sistema";
-                _bllEvento.Registrar(usuario, "Seguridad", mensaje, 2);
+
+                _bllEvento.Registrar(usuario, ModulosEventos.Seguridad, mensaje, criticidad);
             }
             catch
             {
-
             }
         }
 
