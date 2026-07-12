@@ -40,6 +40,11 @@ namespace RedLine.Web
                     Response.Redirect("Catalogo.aspx");
                     return;
                 }
+                if(resultado == LoginResult.InconsistencyDVWebMaster)
+                {
+                    Response.Redirect("RecuperacionDV.aspx");
+                    return;
+                }
             }
             catch (LoginException ex)
             {
