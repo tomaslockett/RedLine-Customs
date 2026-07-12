@@ -68,6 +68,7 @@
             var perfilCliente = new Perfil { Nombre = "Cliente" };
 
             context.Perfil.AddOrUpdate(p => p.Nombre, perfilWebmaster, perfilAdmin, perfilCliente);
+
             context.SaveChanges();
 
             context.Usuarios.AddOrUpdate(u => u.Email,

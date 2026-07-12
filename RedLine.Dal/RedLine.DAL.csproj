@@ -106,6 +106,10 @@
     <Compile Include="Migrations\202607111220167_DVCambios2.Designer.cs">
       <DependentUpon>202607111220167_DVCambios2.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202607122230327_MasPerfiles.cs" />
+    <Compile Include="Migrations\202607122230327_MasPerfiles.Designer.cs">
+      <DependentUpon>202607122230327_MasPerfiles.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="ORM\SqlEnsamblador.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -157,6 +161,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202607111220167_DVCambios2.resx">
       <DependentUpon>202607111220167_DVCambios2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202607122230327_MasPerfiles.resx">
+      <DependentUpon>202607122230327_MasPerfiles.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
