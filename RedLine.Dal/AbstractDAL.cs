@@ -14,7 +14,7 @@ namespace RedLine.Dal
     // ⚠️ ATENCIÓN REQUISITO DE BD: 
     // Para que este motor funcione, DEBE existir en la base de datos una tabla 
     // llamada exactamente 'DigitoVerificador' con las columnas: NombreTabla (PK), DVH, DVV.
-    public abstract class AbstractDAL<TKey, entidad> : IRepositorioBasico<TKey, entidad>
+    public abstract class AbstractDAL<TKey, entidad> : IRepositorioBasico<TKey, entidad>, IGestorIntegridad
     {
         protected string cx = "Data Source=.;Initial Catalog=RedLineCustomsDB;Integrated Security=True";
 
@@ -191,6 +191,11 @@ namespace RedLine.Dal
             }
 
             return motor.ObtenerResultadoFinal();
+        }
+
+        public virtual void RecalcularIntegridad()
+        {
+            this.RecalcularMisDigitosVerificadores();
         }
 
         #endregion

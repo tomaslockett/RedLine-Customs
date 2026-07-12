@@ -13,7 +13,7 @@ namespace RedLine.Dal
     {
         protected override string NombreTabla => "DigitoVerificador";
 
-        protected override bool RequiereDigitoVerificador => true;
+        protected override bool RequiereDigitoVerificador => false;
 
         protected override string SqlInsertar =>
             "INSERT INTO DigitoVerificador (NombreTabla, DVH, DVV) VALUES (@Id, @DVH, @DVV)";
