@@ -64,11 +64,24 @@ namespace RedLine.Bll
             user.Intentos = 0;
             user.UltimoIntento = DateTime.Now;
             this.Modificar(user);
+
             SessionManager.Instancia.Login(user);
+            if (blldv.VerificarTodaLaBaseDeDatos() != "OK. La integridad de la base de datos es 100% correcta.")
+            {
+                if (/*SessionManager.Instancia.Usuario.Perfil.Nombre== "WebMaster" ||*/ SessionManager.Instancia.Usuario.Nombre == "admin")
+                {
+                    return LoginResult.InconsistencyDVWebMaster;
+                }
+                else
+                {
+                    SessionManager.Instancia.Logout();
+                    return LoginResult.InconsistencyDVUserNormal;
+                }
+            }
             _bllEvento.Registrar(user.Email, "Seguridad", "Inicio de sesión exitoso", 1);
             return LoginResult.ValidUser;
         }
-
+        BLL_DigitoVerificador blldv = new BLL_DigitoVerificador();
         public override void Insertar(Usuario usuario)
         {
             if (Repo.ObtenerPorDNI(usuario.DNI) != null)

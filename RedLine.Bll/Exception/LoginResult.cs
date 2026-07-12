@@ -13,6 +13,8 @@ namespace RedLine.BLL
         InvalidPassword,
         UserBlocked,
         UserInactive,
-        UserAlreadyLoggedIn
+        UserAlreadyLoggedIn,
+        InconsistencyDVWebMaster,
+        InconsistencyDVUserNormal
     }
 }

@@ -140,6 +140,7 @@
     <Content Include="LogIn.aspx" />
     <Content Include="Logout.aspx" />
     <Content Include="personalizarAuto.aspx" />
+    <Content Include="RecuperacionDV.aspx" />
     <Content Include="RegistroCliente.aspx" />
     <Content Include="Scripts\RegistroCliente.js" />
     <Content Include="Site.Master" />
@@ -246,6 +247,13 @@
       <DependentUpon>personalizarAuto.aspx</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RecuperacionDV.aspx.cs">
+      <DependentUpon>RecuperacionDV.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="RecuperacionDV.aspx.designer.cs">
+      <DependentUpon>RecuperacionDV.aspx</DependentUpon>
+    </Compile>
     <Compile Include="RegistroCliente.aspx.cs">
       <DependentUpon>RegistroCliente.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
