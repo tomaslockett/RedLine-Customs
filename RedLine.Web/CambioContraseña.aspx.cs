@@ -57,7 +57,7 @@ namespace RedLine.Web
                 bllUsuario.CambiarContraseñaDirecto(usuarioActual.ID, nuevaHasheada);
 
                 BLL_Evento bllEvento = new BLL_Evento();
-                bllEvento.Registrar(usuarioActual.Email, "Seguridad", "Cambio de contraseña exitoso", 1);
+                bllEvento.Registrar(usuarioActual.Email, ModulosEventos.Usuarios, "Cambio de contraseña exitoso", 1);
                 bllUsuario.Logout();
                 Response.Redirect("LogIn.aspx");
             }
