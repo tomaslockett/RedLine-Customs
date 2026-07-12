@@ -144,6 +144,19 @@ namespace RedLine.Bll
             _bllEvento.Registrar(ejecutor, ModulosEventos.Usuarios, $"Se eliminó el usuario: {detalle}", 3);
         }
 
+        public override Usuario ObtenerPorId(int id)
+        {
+            Usuario u = base.ObtenerPorId(id);
+
+            if (u != null && u.PerfilId.HasValue)
+            {
+                BLL_Perfil bllPerfil = new BLL_Perfil();
+                u.Perfil = bllPerfil.ObtenerPorId(u.PerfilId.Value);
+            }
+
+            return u;
+        }
+
         public void DesbloquearUsuario(Usuario usuario)
         {
             usuario.Bloqueado = false;

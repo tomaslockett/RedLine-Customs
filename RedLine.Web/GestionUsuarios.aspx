@@ -42,9 +42,7 @@
             <asp:Label ID="lblMensaje" runat="server" style="display: block; margin-bottom: 15px; font-weight: bold; color: #D93416;"></asp:Label>
 
             <div class="contenedor-tabla-scroll">
-                <asp:GridView ID="gvUsuarios" runat="server" AutoGenerateColumns="False" CssClass="grilla-usuarios-oscura" 
-                    DataKeyNames="ID" OnRowDeleting="gvUsuarios_RowDeleting" OnSelectedIndexChanged="gvUsuarios_SelectedIndexChanged" 
-                    OnRowCommand="gvUsuarios_RowCommand" GridLines="None">
+                <asp:GridView ID="gvUsuarios" runat="server" AutoGenerateColumns="False" CssClass="grilla-usuarios-oscura" DataKeyNames="ID" OnRowDeleting="gvUsuarios_RowDeleting" OnSelectedIndexChanged="gvUsuarios_SelectedIndexChanged" OnRowCommand="gvUsuarios_RowCommand" OnRowDataBound="gvUsuarios_RowDataBound"  GridLines="None">
                     <Columns>
                         <asp:BoundField DataField="ID" HeaderText="ID" HeaderStyle-CssClass="columna-oculta" ItemStyle-CssClass="columna-oculta" />
                         <asp:BoundField DataField="DNI" HeaderText="DNI" />
@@ -53,7 +51,7 @@
                         <asp:BoundField DataField="Email" HeaderText="Email" />
                         <asp:TemplateField HeaderText="Perfil">
                             <ItemTemplate>
-                                <%# Eval("Perfil") != null ? Eval("Perfil.Nombre") : "Sin perfil" %>
+                                <asp:Label ID="lblNombrePerfil" runat="server"></asp:Label>
                             </ItemTemplate>
                         </asp:TemplateField>
                         <asp:TemplateField HeaderText="Estado">

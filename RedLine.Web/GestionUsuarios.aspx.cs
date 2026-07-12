@@ -38,7 +38,27 @@ namespace RedLine.Web
             ddlRol.DataValueField = "Id";
             ddlRol.DataBind();
         }
+        protected void gvUsuarios_RowDataBound(object sender, GridViewRowEventArgs e)
+        {
+            if (e.Row.RowType == DataControlRowType.DataRow)
+            {
+                Usuario u = (Usuario)e.Row.DataItem;
 
+                Label lblPerfil = (Label)e.Row.FindControl("lblNombrePerfil");
+
+                if (lblPerfil != null)
+                {
+                    if (u.Perfil != null && !string.IsNullOrEmpty(u.Perfil.Nombre))
+                    {
+                        lblPerfil.Text = u.Perfil.Nombre;
+                    }
+                    else
+                    {
+                        lblPerfil.Text = "Sin perfil";
+                    }
+                }
+            }
+        }
 
         protected void btnAgregar_Click(object sender, EventArgs e)
         {
@@ -106,9 +126,9 @@ namespace RedLine.Web
             txtNombre.Text = u.Nombre;
             txtApellido.Text = u.Apellido;
             txtEmail.Text = u.Email;
-            if (u.Perfil != null)
+            if (u.PerfilId.HasValue)
             {
-                ddlRol.SelectedValue = u.Perfil.Id.ToString();
+                ddlRol.SelectedValue = u.PerfilId.Value.ToString();
             }
             btnAgregar.Text = "Confirmar Cambios";
             txtDNI.Enabled = false;

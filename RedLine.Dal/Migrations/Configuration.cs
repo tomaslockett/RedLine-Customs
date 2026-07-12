@@ -63,9 +63,11 @@
 
             context.SaveChanges();
 
-            var perfilAdmin = new Perfil { Nombre = "WebMaster" };
-            context.Perfil.AddOrUpdate(p => p.Nombre, perfilAdmin);
+            var perfilWebmaster = new Perfil { Nombre = "WebMaster" };
+            var perfilAdmin = new Perfil { Nombre = "Administrador" };
+            var perfilCliente = new Perfil { Nombre = "Cliente" };
 
+            context.Perfil.AddOrUpdate(p => p.Nombre, perfilWebmaster, perfilAdmin, perfilCliente);
             context.SaveChanges();
 
             context.Usuarios.AddOrUpdate(u => u.Email,
@@ -76,7 +78,7 @@
                     Email = "admin", 
                     Contraseña = "8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a918", 
                     DNI = "00000000",
-                    PerfilId = perfilAdmin.Id,
+                    PerfilId = perfilWebmaster.Id,
                     Intentos = 0,
                     Bloqueado = false,
                     Activo = true,
@@ -104,6 +106,38 @@
                 }
             );
 
+            context.Usuarios.AddOrUpdate(u => u.Email,
+                new Usuario
+                {
+                    Nombre = "cliente",
+                    Apellido = "cliente",
+                    Email = "cliente",
+                    Contraseña = "a60b85d409a01d46023f90741e01b79543a3cb1ba048eaefbe5d7a63638043bf",
+                    DNI = "10000000",
+                    PerfilId = perfilCliente.Id,
+                    Intentos = 0,
+                    Bloqueado = false,
+                    Activo = true,
+                    UltimoIntento = DateTime.Now
+                }
+            );
+
+            context.Usuarios.AddOrUpdate(u => u.Email,
+                new Usuario
+                {
+                    Nombre = "Tomas",
+                    Apellido = "Lockett",
+                    Email = "Lockett",
+                    Contraseña = "945235ac7fbf82a4c021b1843cfff6d5c837b7f91e8df60b288f4d5884a6e000",
+                    DNI = "20000000",
+                    PerfilId = perfilAdmin.Id,
+                    Intentos = 0,
+                    Bloqueado = false,
+                    Activo = true,
+                    UltimoIntento = DateTime.Now
+                }
+            );
+
             context.SaveChanges();
 
             var dalAutoBase = new DAL_AutoBase();
@@ -112,8 +146,9 @@
             var dalPermiso = new DAL_Permisos();
             var dalfamilia = new DAL_Familia();
 
-            dalPerfil.GuardarRelacion(perfilAdmin.Id, 10);
-
+            dalPerfil.GuardarRelacion(perfilWebmaster.Id, 10);
+            dalPerfil.GuardarRelacion(perfilAdmin.Id, 11);
+            dalPerfil.GuardarRelacion(perfilCliente.Id, 12);
 
             dalAutoBase.RecalcularMisDigitosVerificadores();
             dalUsuario.RecalcularMisDigitosVerificadores();
