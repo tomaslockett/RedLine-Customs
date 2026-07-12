@@ -37,7 +37,9 @@ namespace RedLine.Dal
             cmd.Parameters.AddWithValue("@Apellido", entidad.Apellido);
             cmd.Parameters.AddWithValue("@Email", entidad.Email);
             cmd.Parameters.AddWithValue("@Contraseña", entidad.Contraseña);
-            cmd.Parameters.AddWithValue("@PerfilId", entidad.Perfil != null ? (object)entidad.Perfil.Id : DBNull.Value);
+            cmd.Parameters.AddWithValue("@PerfilId",
+            entidad.Perfil != null ? (object)entidad.Perfil.Id :
+            (entidad.PerfilId.HasValue ? (object)entidad.PerfilId.Value : DBNull.Value));
             cmd.Parameters.AddWithValue("@Bloqueado", entidad.Bloqueado);
             cmd.Parameters.AddWithValue("@Activo", entidad.Activo);
             cmd.Parameters.AddWithValue("@Intentos", entidad.Intentos);
