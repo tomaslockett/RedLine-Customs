@@ -18,17 +18,19 @@ namespace RedLine.Web
         }
         public void SalirDV(object sender, EventArgs e)
         {
-
+            SessionManager.Instancia.Logout();
+            Response.Redirect("LogIn.aspx");
         }
         public void RecalcularDV(object sender, EventArgs e) 
         {
             blldv.RecalcularTodaLaBaseDeDatos();
             SessionManager.Instancia.Logout();
+            Session["Inconsistencia"] = false;
             Response.Redirect("LogIn.aspx");
         }
         public void RestoreDV(object sender, EventArgs e)
         {
-
+            Response.Redirect("BackupRestore.aspx");
         }
     }
 }

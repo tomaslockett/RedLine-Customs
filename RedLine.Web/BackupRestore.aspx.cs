@@ -1,4 +1,5 @@
 ﻿using RedLine.Bll;
+using RedLine.Servicios;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -76,6 +77,12 @@ namespace RedLine.Web
 
                 lblEstado.Text = "Base de datos restaurada con éxito. El sistema se ha actualizado.";
                 lblEstado.ForeColor = System.Drawing.Color.Green;
+                if (Session["Inconsistencia"] != null && (bool)Session["Inconsistencia"])
+                {
+                    Session["Inconsistencia"] = false;
+                    SessionManager.Instancia.Logout();
+                    Response.Redirect("LogIn.aspx");
+                }
             }
             catch (Exception ex)
             {

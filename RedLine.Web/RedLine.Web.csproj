@@ -123,6 +123,7 @@
     <Content Include="Content\Logout.css" />
     <Content Include="Content\Master.css" />
     <Content Include="Content\PersonalizarAuto.css" />
+    <Content Include="Content\RecuperacionDV.css" />
     <Content Include="Content\RegistroCliente.css" />
     <Content Include="Content\Site.css" />
     <Content Include="Content\CrearAutosEstilo.css" />

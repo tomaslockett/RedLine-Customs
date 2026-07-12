@@ -1,0 +1,112 @@
+﻿* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+    background-color: #030509;
+    color: #E1E6ED;
+}
+
+.contenedor-eventos-main {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    padding: 40px 20px;
+    background-color: #030509;
+}
+
+.panel-bitacora-recuadro {
+    background: #0A0F17;
+    padding: 40px;
+    border-radius: 16px;
+    border: 1px solid #1C2533;
+    width: 95%;
+    max-width: 700px;
+}
+
+.titulo-bitacora {
+    text-align: center;
+    font-size: 32px;
+    color: #FF5722;
+    margin-bottom: 35px;
+    font-weight: 700;
+    letter-spacing: 1px;
+}
+
+.boton-bitacora-accion {
+    padding: 14px 25px;
+    border: none;
+    border-radius: 8px;
+    color: white;
+    font-weight: bold;
+    font-size: 1rem;
+    background: #FF5722;
+    cursor: pointer;
+    transition: transform 0.1s, background 0.2s;
+    width: 100%;
+    text-align: center;
+}
+
+    .boton-bitacora-accion:hover {
+        background: #E64A19;
+        transform: translateY(-2px);
+    }
+
+.grupo-botones-formulario {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    margin-bottom: 35px;
+}
+
+.boton-salir {
+    background: #1C2533;
+    border: 1px solid #2B3647;
+    color: #94A3B8;
+}
+
+    .boton-salir:hover {
+        background: #2B3647;
+        color: #ffffff;
+    }
+
+.contenedor-reporte {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.etiqueta-reporte {
+    color: #94A3B8;
+    font-size: 0.85rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.cuadro-consola-logs {
+    background: #121924;
+    border: 1px solid #2B3647;
+    border-radius: 10px;
+    padding: 20px;
+    min-height: 220px;
+    max-height: 350px;
+    overflow-y: auto;
+    color: #E1E6ED;
+    font-family: 'Consolas', 'Courier New', Courier, monospace;
+    font-size: 0.95rem;
+    line-height: 1.6;
+}
+
+.log-linea-error {
+    color: #EF4444;
+}
+
+.log-vacio {
+    color: #64748B;
+    font-style: italic;
+}

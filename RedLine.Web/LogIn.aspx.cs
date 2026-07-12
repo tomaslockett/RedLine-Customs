@@ -42,8 +42,13 @@ namespace RedLine.Web
                 }
                 if(resultado == LoginResult.InconsistencyDVWebMaster)
                 {
+                    Session.Add("Inconsistencia", true);
                     Response.Redirect("RecuperacionDV.aspx");
                     return;
+                }
+                if(resultado == LoginResult.InconsistencyDVUserNormal)
+                {
+                    MostrarMensaje("El sistema no funciona actualmente.", true);
                 }
             }
             catch (LoginException ex)
