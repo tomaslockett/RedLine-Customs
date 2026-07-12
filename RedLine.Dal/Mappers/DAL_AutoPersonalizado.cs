@@ -83,6 +83,13 @@ namespace RedLine.Dal
                         }
                     }
 
+                    if (this.RequiereDigitoVerificador)
+                    {
+                        this.RecalcularMisDigitosVerificadores(con, tra);
+                    }
+
+                    dalMejora.RecalcularMisDigitosVerificadores(con, tra);
+
                     tra.Commit();
                 }
                 catch (Exception ex)

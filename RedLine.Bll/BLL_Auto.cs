@@ -64,7 +64,7 @@ namespace RedLine.Bll
         public override void Modificar(AutoPersonalizado entidad)
         {
             base.Modificar(entidad);
-            RegistrarEventoBitacora($"Se modificaron los datos del auto personalizado (Decorator) ID: {entidad.Id}", 2);
+            RegistrarEventoBitacora($"Se modificaron los datos del auto personalizado (Decorator) ID: {entidad.ID}", 2);
         }
 
         public override void Eliminar(int id)
