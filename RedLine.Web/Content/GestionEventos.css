@@ -2,14 +2,13 @@
     display: flex;
     justify-content: center;
     padding: 40px 20px;
-    background-color: #030509;
 }
 
 .panel-bitacora-recuadro {
-    background: #0A0F17;
+    background: #0F141C; 
     padding: 40px;
     border-radius: 16px;
-    border: 1px solid #1C2533;
+    border: 2px solid darkgray; 
     width: 95%;
     max-width: 1300px;
 }
@@ -17,7 +16,7 @@
 .titulo-bitacora {
     text-align: center;
     font-size: 32px;
-    color: #FF5722;
+    color: #D93416; 
     margin-bottom: 35px;
     font-weight: 700;
     letter-spacing: 1px;
@@ -33,29 +32,32 @@
 .campo-bitacora {
     display: flex;
     flex-direction: column;
-    gap: 8px; 
+    gap: 8px;
 }
 
+
     .campo-bitacora label {
-        color: #94A3B8;
+        color: darkgray;
         font-size: 0.85rem;
         font-weight: 600;
         text-transform: uppercase;
     }
 
+
 .control-input-eventos {
-    background: #121924;
-    border: 1px solid #2B3647;
-    border-radius: 8px; 
-    padding: 12px 15px; 
-    color: white;
+    background: #161D29;
+    border: 1px solid darkgray; 
+    border-radius: 8px;
+    padding: 12px 15px;
+    color: #D93416; 
     font-size: 0.95rem;
     transition: border 0.3s;
+    outline: none;
 }
 
+
     .control-input-eventos:focus {
-        border-color: #FF5722;
-        outline: none;
+        border-color: #D93416; 
     }
 
 
@@ -65,13 +67,13 @@
     border-radius: 8px;
     color: white;
     font-weight: bold;
-    background: #FF5722;
+    background: red; 
     cursor: pointer;
     transition: transform 0.1s, background 0.2s;
 }
 
     .boton-bitacora-accion:hover {
-        background: #E64A19;
+        background: #D93416; 
         transform: translateY(-2px);
     }
 
@@ -79,31 +81,34 @@
 .contenedor-tabla-scroll {
     overflow-x: auto;
     border-radius: 12px;
-    border: 1px solid #1C2533;
+    border: 1px solid darkgray; 
 }
 
 .tabla-eventos-custom {
-    background: #0B0E14;
-    color: #E1E6ED;
+    background: #0F141C; 
+    color: white; 
     border-collapse: collapse;
     width: 100%;
 }
 
     .tabla-eventos-custom th {
-        background: #161D29;
-        color: #FF5722;
-        padding: 18px; 
+        background: #161D29; 
+        color: #D93416; 
+        padding: 18px;
         text-align: left;
         font-weight: 700;
+        border-bottom: 2px solid darkgray;
     }
 
+ 
     .tabla-eventos-custom td {
         padding: 16px;
-        border-bottom: 1px solid #1C2533;
+        border-bottom: 1px solid #161D29;
         font-size: 0.95rem;
+        color: white; 
     }
 
    
     .tabla-eventos-custom tr:hover {
-        background: #121924;
+        background: #161D29; 
     }

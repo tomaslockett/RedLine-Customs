@@ -1,5 +1,5 @@
 ﻿body {
-    background-color: #030509;
+    background-color: #030509; 
 }
 
 .bloque-administracion-usuarios {
@@ -10,17 +10,15 @@
     padding: 30px;
 }
 
-
 .panel-usuarios-recuadro {
-    background: #0A0F17;
+    background: #0F141C;
     padding: 30px;
     border-radius: 12px;
-    border: 1px solid #1C2533; 
+    border: 2px solid darkgray; 
     box-shadow: 0 4px 15px rgba(0,0,0,0.5);
     width: 95%;
     max-width: 1200px;
 }
-
 
 .titulo-gestion-usuarios {
     text-align: center !important;
@@ -28,7 +26,7 @@
     width: 100% !important;
     margin: 0 0 30px 0 !important;
     font-size: 32px;
-    color: #F8FAFC; 
+    color: #D93416; 
     font-weight: bold;
 }
 
@@ -36,62 +34,90 @@
     display: flex;
     flex-direction: column;
     margin-bottom: 15px;
-    color: #94A3B8; 
+    color: darkgray; 
     text-align: left;
 }
 
 .control-entrada-usuario {
-    background: #121924; 
-    border: 1px solid #2B3647;
-    border-radius: 6px;
+    background: #161D29; 
+    border: 1px solid darkgray; 
+    border-radius: 8px; 
     padding: 10px;
-    color: white;
+    color: #D93416;
     width: 100%;
     box-sizing: border-box;
     font-size: 14px;
+    outline: none;
 }
+
+
+    .control-entrada-usuario:focus {
+        border-color: #D93416; 
+    }
+
 
 .boton-control-usuario {
     padding: 12px;
     border: none;
     border-radius: 6px;
+    background: red; 
     color: white;
     font-weight: bold;
     font-size: 15px;
     cursor: pointer;
+    text-transform: uppercase; 
     transition: background 0.2s;
 }
 
+    .boton-control-usuario:hover {
+        background: #D93416; 
+    }
+
+
 .grilla-usuarios-oscura {
-    background: #0A0F17;
-    color: #E1E6ED;
+    background: #0F141C; 
+    color: white;
     border-collapse: collapse;
     width: 100%;
 }
 
+
     .grilla-usuarios-oscura th {
         background: #161D29;
-        color: #D93416; 
+        color: #D93416;
         padding: 15px;
         text-transform: uppercase;
-        border-bottom: 2px solid #1C2533;
+        border-bottom: 2px solid darkgray; 
     }
+
 
     .grilla-usuarios-oscura td {
         padding: 12px;
-        border-bottom: 1px solid #1C2533;
+        border-bottom: 1px solid #161D29; 
+        color: white;
     }
 
+
 .link-accion-fila {
-    color: #38bdf8;
+    color: darkgray; 
     font-weight: bold;
     text-decoration: none;
     margin-right: 8px;
+    transition: color 0.2s;
 }
 
+    .link-accion-fila:hover {
+        color: white; 
+    }
+
+
 .link-accion-eliminar {
-    color: #f43f5e;
+    color: #D93416;
 }
+
+    .link-accion-eliminar:hover {
+        color: red;
+    }
 
 .columna-oculta {
     display: none;
