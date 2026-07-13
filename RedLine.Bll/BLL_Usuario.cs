@@ -68,7 +68,7 @@ namespace RedLine.Bll
             SessionManager.Instancia.Login(user);
             if (blldv.VerificarTodaLaBaseDeDatos() != "OK. La integridad de la base de datos es 100% correcta.")
             {
-                if (/*SessionManager.Instancia.Usuario.Perfil.Nombre== "WebMaster" ||*/ SessionManager.Instancia.Usuario.Nombre == "admin")
+                if (SessionManager.Instancia.Usuario.Perfil.Nombre== "WebMaster" || SessionManager.Instancia.Usuario.Nombre == "admin")
                 {
                     return LoginResult.InconsistencyDVWebMaster;
                 }
