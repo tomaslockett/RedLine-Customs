@@ -23,23 +23,32 @@ namespace RedLine.Web
         {
             HttpContext context = HttpContext.Current;
 
-
             if (context.Session != null)
             {
+                string rutaActual = context.Request.AppRelativeCurrentExecutionFilePath.ToLower();
 
+
+                bool esPaginaPermitida = rutaActual.Contains("recuperaciondv.aspx") ||
+                                         rutaActual.Contains("backuprestore.aspx") ||
+                                         rutaActual.Contains("login.aspx");
+
+               
                 if (context.Session["Inconsistencia"] != null && (bool)context.Session["Inconsistencia"])
                 {
-                    string rutaActual = context.Request.AppRelativeCurrentExecutionFilePath.ToLower();
-
- 
-                    bool esPaginaPermitida = rutaActual.Contains("recuperaciondv.aspx") ||
-                                            rutaActual.Contains("backuprestore.aspx") ||
-                                            rutaActual.Contains("login.aspx"); 
-
- 
                     if (!esPaginaPermitida)
                     {
                         SessionManager.Instancia.Logout();
+                        context.Response.Redirect("~/LogIn.aspx", false);
+                        context.ApplicationInstance.CompleteRequest();
+                        return; 
+                    }
+                }
+
+                esPaginaPermitida = rutaActual.Contains("login.aspx");
+                if (!SessionManager.Instancia.IsLogged())
+                {
+                    if (!esPaginaPermitida)
+                    {
                         context.Response.Redirect("~/LogIn.aspx", false);
                         context.ApplicationInstance.CompleteRequest();
                     }
