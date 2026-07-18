@@ -74,10 +74,10 @@
             context.Usuarios.AddOrUpdate(u => u.Email,
                 new Usuario
                 {
-                    Nombre = "admin",
-                    Apellido = "admin",
-                    Email = "admin", 
-                    Contraseña = "8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a918", 
+                    Nombre = "webmaster",
+                    Apellido = "webmaster",
+                    Email = "webmaster", 
+                    Contraseña = "f6c56cb3c6832a8264d80a3ec608d4b317495b451d650577909b0b4b8408a27d", 
                     DNI = "00000000",
                     PerfilId = perfilWebmaster.Id,
                     Intentos = 0,
@@ -126,10 +126,10 @@
             context.Usuarios.AddOrUpdate(u => u.Email,
                 new Usuario
                 {
-                    Nombre = "Tomas",
-                    Apellido = "Lockett",
-                    Email = "Lockett",
-                    Contraseña = "945235ac7fbf82a4c021b1843cfff6d5c837b7f91e8df60b288f4d5884a6e000",
+                    Nombre = "admin",
+                    Apellido = "admin",
+                    Email = "admin",
+                    Contraseña = "8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a918",
                     DNI = "20000000",
                     PerfilId = perfilAdmin.Id,
                     Intentos = 0,

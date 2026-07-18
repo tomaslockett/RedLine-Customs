@@ -23,9 +23,11 @@ namespace RedLine.Web
         }
         public void RecalcularDV(object sender, EventArgs e) 
         {
+            string error = blldv.VerificarTodaLaBaseDeDatos();
             blldv.RecalcularTodaLaBaseDeDatos();
             SessionManager.Instancia.Logout();
             Session["Inconsistencia"] = false;
+            blldv.RegistrarEventoIntegridadComprometida(error);
             Response.Redirect("LogIn.aspx");
         }
         public void RestoreDV(object sender, EventArgs e)
