@@ -22,12 +22,15 @@ namespace RedLine.Bll
         public void RecalcularTodaLaBaseDeDatos()
         {
             var listaBLLs = ObtenerBLLsVerificables();
-
             foreach (var bll in listaBLLs)
             {
                 bll.RecalcularIntegridad();
             }
             RegistrarEventoBitacora("Se forzó el recálculo masivo de los dígitos verificadores (DVH/DVV) de toda la base de datos.", 3);
+        }
+        public void RegistrarEventoIntegridadComprometida(string error)
+        {
+            RegistrarEventoBitacora($"Alerta de Integridad:\n{error}", 3);
         }
 
         public string VerificarTodaLaBaseDeDatos()
@@ -62,7 +65,7 @@ namespace RedLine.Bll
                 return "OK. La integridad de la base de datos es 100% correcta.";
             }
 
-            RegistrarEventoBitacora($"Alerta de Integridad:\n{reporteErrores.ToString()}", 3);
+            
 
             return reporteErrores.ToString();
         }

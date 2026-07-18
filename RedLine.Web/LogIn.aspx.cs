@@ -25,6 +25,7 @@ namespace RedLine.Web
             string email = txtEmail.Text.Trim();
             string password = txtPassword.Text;
 
+
             if (string.IsNullOrEmpty(email) || string.IsNullOrEmpty(password))
             {
                 MostrarMensaje("Ingresa tus credenciales.", true);
