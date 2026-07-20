@@ -1,5 +1,7 @@
 ﻿using RedLine.Be.Interfaces;
 using RedLine.Dal.ORM;
+using RedLine.Entidades;
+using RedLine.Servicios;
 using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
@@ -110,7 +112,7 @@ namespace RedLine.Dal
 
         public virtual void RecalcularMisDigitosVerificadores(SqlConnection con, SqlTransaction tra)
         {
-            var (dvh, dvv) = CalcularIntegridadActual(con, tra);
+            ReporteIntegridad reporte = CalcularIntegridadActual(con, tra);
 
             string queryCheck = "SELECT COUNT(*) FROM DigitoVerificador WHERE NombreTabla = @nombre";
             int existe;
@@ -126,8 +128,8 @@ namespace RedLine.Dal
 
             using (var cmdUpsert = new SqlCommand(queryUpsert, con, tra))
             {
-                cmdUpsert.Parameters.AddWithValue("@dvh", dvh);
-                cmdUpsert.Parameters.AddWithValue("@dvv", dvv);
+                cmdUpsert.Parameters.AddWithValue("@dvh", reporte.DVH_Actual);
+                cmdUpsert.Parameters.AddWithValue("@dvv", reporte.DVV_Actual);
                 cmdUpsert.Parameters.AddWithValue("@nombre", this.NombreTabla);
                 cmdUpsert.ExecuteNonQuery();
             }
@@ -143,9 +145,10 @@ namespace RedLine.Dal
                 this.RecalcularMisDigitosVerificadores(con, null);
             }
         }
-        public virtual (string DVH, string DVV) CalcularIntegridadActual()
+
+        public virtual ReporteIntegridad CalcularIntegridadActual()
         {
-            if (!RequiereDigitoVerificador) return ("N/A", "N/A");
+            if (!RequiereDigitoVerificador) return new ReporteIntegridad();
 
             using (var con = new SqlConnection(cx))
             {
@@ -154,26 +157,39 @@ namespace RedLine.Dal
             }
         }
 
-        private (string DVH, string DVV) CalcularIntegridadActual(SqlConnection con, SqlTransaction tra)
+        private ReporteIntegridad CalcularIntegridadActual(SqlConnection con, SqlTransaction tra)
         {
-            if (!RequiereDigitoVerificador) return ("N/A", "N/A");
+            var reporte = new ReporteIntegridad();
+            if (!RequiereDigitoVerificador) return reporte;
 
-            var columnas = new List<string>();
+            var columnasDatos = new List<string>();
+            bool tablaTieneDVH = false;
+
+            // 1. Buscamos las columnas. ¡Excluimos el DVH del cálculo para no hacer un hash de un hash!
             string queryMeta = "SELECT COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = @Tabla AND DATA_TYPE NOT IN ('timestamp', 'rowversion') ORDER BY COLUMN_NAME ASC";
-
             using (var cmdMeta = new SqlCommand(queryMeta, con, tra))
             {
                 cmdMeta.Parameters.AddWithValue("@Tabla", this.NombreTabla);
                 using (var rdrMeta = cmdMeta.ExecuteReader())
                 {
-                    while (rdrMeta.Read()) columnas.Add(rdrMeta["COLUMN_NAME"].ToString());
+                    while (rdrMeta.Read())
+                    {
+                        string col = rdrMeta["COLUMN_NAME"].ToString();
+                        if (col.ToUpper() == "DVH") tablaTieneDVH = true;
+                        else columnasDatos.Add(col);
+                    }
                 }
             }
 
-            if (columnas.Count == 0) return ("0", "0");
+            if (columnasDatos.Count == 0) return reporte;
 
-            var motor = new RedLine.Servicios.MotorDigitoVerificador(columnas.Count);
-            string columnasQuery = string.Join(", ", columnas.Select(c => $"[{c}]"));
+            var motor = new RedLine.Servicios.MotorDigitoVerificador(columnasDatos.Count);
+
+            // 2. Armamos la query. Leemos los datos y, al final, leemos el DVH guardado si existe.
+            string columnasQuery = string.Join(", ", columnasDatos.Select(c => $"[{c}]"));
+            string idColumna = columnasDatos.First(); // Asumimos que la primera es la PK (ID)
+            if (tablaTieneDVH) columnasQuery += ", [DVH]";
+
             string queryData = $"SELECT {columnasQuery} FROM [{this.NombreTabla}]";
 
             using (var cmdData = new SqlCommand(queryData, con, tra))
@@ -181,16 +197,33 @@ namespace RedLine.Dal
             {
                 while (rdrData.Read())
                 {
-                    string[] filaTexto = new string[columnas.Count];
-                    for (int i = 0; i < columnas.Count; i++)
+                    string[] filaTexto = new string[columnasDatos.Count];
+                    for (int i = 0; i < columnasDatos.Count; i++)
                     {
                         filaTexto[i] = rdrData[i]?.ToString() ?? "";
                     }
-                    motor.ProcesarFila(filaTexto);
+
+                    // 3. Procesamos la fila y obtenemos su Hash matemático
+                    string hashCalculado = motor.ProcesarFila(filaTexto);
+
+                    // 4. Si la tabla tiene columna DVH, comparamos para encontrar la fila corrupta
+                    if (tablaTieneDVH)
+                    {
+                        string hashGuardado = rdrData["DVH"]?.ToString();
+                        if (hashCalculado != hashGuardado)
+                        {
+                            string idFila = rdrData[idColumna]?.ToString();
+                            reporte.ErroresDetallados.Add($"- FILA CORRUPTA en '{this.NombreTabla}': El registro con {idColumna} = {idFila} fue alterado.");
+                        }
+                    }
                 }
             }
 
-            return motor.ObtenerResultadoFinal();
+            var (dvh, dvv) = motor.ObtenerResultadoFinal();
+            reporte.DVH_Actual = dvh;
+            reporte.DVV_Actual = dvv;
+
+            return reporte;
         }
 
         public virtual void RecalcularIntegridad()

@@ -39,25 +39,48 @@
             var pClientes = new Permiso(6, "GestionClientes");
             var pEventos = new Permiso(7, "BitacoraEventos");
             var pUsuarios = new Permiso(8, "GestionUsuarios");
-            var pSeguridad = new Permiso(9, "GestionSeguridad"); 
+            var pSeguridad = new Permiso(9, "GestionSeguridad");
+            var pBackupRestore = new Permiso(10, "BackupRestore");
+            var pCambioContraseña = new Permiso(11, "CambioContraseña");
+            var pCheckout = new Permiso(12, "Checkout");
+            var pGestionPerfiles = new Permiso(13, "GestionPerfiles");
+            var pHistorialVentas = new Permiso(14, "HistorialVentas");
+            var pPagoExitoso = new Permiso(15, "PagoExitoso");
+            var pPersonalizarAuto = new Permiso(16, "PersonalizarAuto");
+            var pRecuperarDV = new Permiso(17, "RecuperarDV");
+            var pRegistroClientes = new Permiso(18, "RegistroClientes");
+            var pVacio2 = new Permiso(19, "Vacio2");
+            var pVacio3 = new Permiso(20, "Vacio3");
 
-            context.Componentes.AddOrUpdate(c => c.Id, pLogin, pLogout, pCatalogo, pCompra,
-                                             pInventario, pClientes, pEventos, pUsuarios, pSeguridad);
+
+            context.Componentes.AddOrUpdate(c => c.Id,
+                                            pLogin, pLogout, pCatalogo, pCompra, pInventario, pClientes, pEventos, pUsuarios, pSeguridad,
+                                            pBackupRestore, pCambioContraseña, pCheckout, pGestionPerfiles, pHistorialVentas, pPagoExitoso,
+                                            pPersonalizarAuto, pRecuperarDV, pRegistroClientes, pVacio2, pVacio3
+                                            );
 
             context.SaveChanges();
 
-            var famWebMaster = new Familia(10, "WebMaster");
-            var famAdmin = new Familia(11, "Administrador");
-            var famCliente = new Familia(12, "Cliente");
+            var famWebMaster = new Familia(21, "WebMaster");
+            var famAdmin = new Familia(22, "Administrador");
+            var famCliente = new Familia(23, "Cliente");
 
             famWebMaster.Agregar(pLogin); famWebMaster.Agregar(pLogout); famWebMaster.Agregar(pCatalogo);
             famWebMaster.Agregar(pCompra); famWebMaster.Agregar(pInventario); famWebMaster.Agregar(pClientes);
             famWebMaster.Agregar(pEventos); famWebMaster.Agregar(pUsuarios); famWebMaster.Agregar(pSeguridad);
+            famWebMaster.Agregar(pBackupRestore); famWebMaster.Agregar(pCambioContraseña); famWebMaster.Agregar(pCheckout);
+            famWebMaster.Agregar(pGestionPerfiles); famWebMaster.Agregar(pHistorialVentas); famWebMaster.Agregar(pPagoExitoso);
+            famWebMaster.Agregar(pPersonalizarAuto); famWebMaster.Agregar(pRecuperarDV);
+            famWebMaster.Agregar(pRegistroClientes); famWebMaster.Agregar(pVacio2); famWebMaster.Agregar(pVacio3);
 
             famAdmin.Agregar(pLogin); famAdmin.Agregar(pLogout); famAdmin.Agregar(pCatalogo);
-            famAdmin.Agregar(pInventario); famAdmin.Agregar(pClientes); famAdmin.Agregar(pEventos); famAdmin.Agregar(pUsuarios);
+            famAdmin.Agregar(pInventario); famAdmin.Agregar(pClientes); famAdmin.Agregar(pEventos);
+            famAdmin.Agregar(pUsuarios); famAdmin.Agregar(pCambioContraseña); 
+            famAdmin.Agregar(pHistorialVentas);
 
-            famCliente.Agregar(pLogin); famCliente.Agregar(pLogout); famCliente.Agregar(pCatalogo); famCliente.Agregar(pCompra);
+            famCliente.Agregar(pLogin); famCliente.Agregar(pLogout); famCliente.Agregar(pCatalogo);
+            famCliente.Agregar(pCompra); famCliente.Agregar(pCambioContraseña); famCliente.Agregar(pCheckout);
+            famCliente.Agregar(pPagoExitoso); famCliente.Agregar(pPersonalizarAuto); famCliente.Agregar(pRegistroClientes);
 
             context.Familias.AddOrUpdate(f => f.Id, famWebMaster, famAdmin, famCliente);
 
@@ -74,10 +97,10 @@
             context.Usuarios.AddOrUpdate(u => u.Email,
                 new Usuario
                 {
-                    Nombre = "admin",
-                    Apellido = "admin",
-                    Email = "admin", 
-                    Contraseña = "8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a918", 
+                    Nombre = "webmaster",
+                    Apellido = "webmaster",
+                    Email = "webmaster", 
+                    Contraseña = "8294547e9fe9367f291a22598513d897928d1a0eeb713ca2b41f31977192c5d1", 
                     DNI = "00000000",
                     PerfilId = perfilWebmaster.Id,
                     Intentos = 0,
@@ -126,10 +149,10 @@
             context.Usuarios.AddOrUpdate(u => u.Email,
                 new Usuario
                 {
-                    Nombre = "Tomas",
-                    Apellido = "Lockett",
-                    Email = "Lockett",
-                    Contraseña = "945235ac7fbf82a4c021b1843cfff6d5c837b7f91e8df60b288f4d5884a6e000",
+                    Nombre = "admin",
+                    Apellido = "admin",
+                    Email = "admin",
+                    Contraseña = "8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a918",
                     DNI = "20000000",
                     PerfilId = perfilAdmin.Id,
                     Intentos = 0,
@@ -147,15 +170,17 @@
             var dalPermiso = new DAL_Permisos();
             var dalfamilia = new DAL_Familia();
 
-            dalPerfil.GuardarRelacion(perfilWebmaster.Id, 10);
-            dalPerfil.GuardarRelacion(perfilAdmin.Id, 11);
-            dalPerfil.GuardarRelacion(perfilCliente.Id, 12);
+            dalPerfil.GuardarRelacion(perfilWebmaster.Id, 21);
+            dalPerfil.GuardarRelacion(perfilAdmin.Id, 22);
+            dalPerfil.GuardarRelacion(perfilCliente.Id, 23);
 
             dalAutoBase.RecalcularMisDigitosVerificadores();
             dalUsuario.RecalcularMisDigitosVerificadores();
             dalPerfil.RecalcularMisDigitosVerificadores();
             dalPermiso.RecalcularMisDigitosVerificadores();
             dalfamilia.RecalcularMisDigitosVerificadores();
+
+          
         }
     }
 }

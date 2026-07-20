@@ -1,9 +1,10 @@
-﻿using System;
+﻿using RedLine.Be.Interfaces;
+using RedLine.Entidades;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using RedLine.Be.Interfaces;
 
 namespace RedLine.Bll
 {
@@ -48,7 +49,6 @@ namespace RedLine.Bll
 
         #region Digitos Verificadores
 
-        //Gatilla el recálculo de los códigos de integridad en la base de datos.
 
         public virtual void RecalcularIntegridad()
         {
@@ -60,13 +60,18 @@ namespace RedLine.Bll
         }
 
         // Calcula los códigos actuales de la tabla para comparar contra los guardados.
-        public virtual (string DVH, string DVV) CalcularIntegridadActual()
+        public virtual ReporteIntegridad CalcularIntegridadActual()
         {
             if (_repositorio is IGestorIntegridad repoSeguro)
             {
                 return repoSeguro.CalcularIntegridadActual();
             }
-            return ("N/A", "N/A");
+
+            return new ReporteIntegridad
+            {
+                DVH_Actual = "N/A",
+                DVV_Actual = "N/A"
+            };
         }
 
 

@@ -24,7 +24,7 @@ namespace RedLine.Servicios
 
         // Este método recibe solo un array de textos (la fila de la BD ya leída)
         // Se llama una vez por cada fila que exista en la tabla.
-        public void ProcesarFila(string[] valoresFila)
+        public string ProcesarFila(string[] valoresFila)
         {
             BigInteger sumaParcialFila = 0;
 
@@ -34,11 +34,13 @@ namespace RedLine.Servicios
                 BigInteger valor = BigInteger.Parse("00" + hex, NumberStyles.HexNumber);
 
                 sumaParcialFila += valor;
-                _sumasVerticalesParciales[col] += valor; // Vamos acumulando el vertical
+                _sumasVerticalesParciales[col] += valor;
             }
 
             string hexFila = Hashing.Sha256(sumaParcialFila.ToString());
             _sumaTotalHorizontal += BigInteger.Parse("00" + hexFila, NumberStyles.HexNumber);
+
+            return hexFila;
         }
 
         // Una vez que le pasaste todas las filas, le pedís el resultado final

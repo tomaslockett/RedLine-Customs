@@ -11,6 +11,7 @@ namespace RedLine.Bll
     {
         public BLL_Usuario() : base(new DAL_Usuario()) { }
         private BLL_Evento _bllEvento = new BLL_Evento();
+        BLL_DigitoVerificador blldv = new BLL_DigitoVerificador();
 
         private DAL_Usuario Repo => (DAL_Usuario)_repositorio;
 
@@ -20,12 +21,31 @@ namespace RedLine.Bll
 
             Usuario user = Repo.ObtenerPorEmail(email);
 
+            BLL_DigitoVerificador blldv = new BLL_DigitoVerificador();
+            string estadoIntegridad = blldv.VerificarTodaLaBaseDeDatos();
+
+            if (estadoIntegridad != "OK. La integridad de la base de datos es 100% correcta.")
+            {
+                if (user != null)
+                {
+                    string passHasheadaAdmin = Hashing.Sha256(contraseña);
+                    if (user.Contraseña.Equals(passHasheadaAdmin) &&
+                       (user.Perfil?.Nombre == "WebMaster" || user.Nombre == "admin"))
+                    {
+                        SessionManager.Instancia.Login(user);
+                        return LoginResult.InconsistencyDVWebMaster;
+                    }
+                }
+
+                return LoginResult.InconsistencyDVUserNormal;
+            }
+
+
             if (user == null)
             {
                 _bllEvento.Registrar(email, ModulosEventos.Seguridad, "Intento de login con email inexistente", 2);
                 throw new LoginException(LoginResult.InvalidUsername);
             }
-                
 
             if (user.Bloqueado)
             {
@@ -47,6 +67,7 @@ namespace RedLine.Bll
             {
                 user.Intentos++;
                 user.UltimoIntento = DateTime.Now;
+
                 if (user.Intentos >= 3)
                 {
                     user.Bloqueado = true;
@@ -57,31 +78,20 @@ namespace RedLine.Bll
                     _bllEvento.Registrar(email, ModulosEventos.Seguridad, $"Intento de login fallido ({user.Intentos}/3)", 2);
                 }
 
-                this.Modificar(user);
+                this.Modificar(user); 
                 throw new LoginException(LoginResult.InvalidPassword);
             }
 
             user.Intentos = 0;
             user.UltimoIntento = DateTime.Now;
-            this.Modificar(user);
+            this.Modificar(user); 
 
             SessionManager.Instancia.Login(user);
-            if (blldv.VerificarTodaLaBaseDeDatos() != "OK. La integridad de la base de datos es 100% correcta.")
-            {
-                if (SessionManager.Instancia.Usuario.Perfil.Nombre== "WebMaster" || SessionManager.Instancia.Usuario.Nombre == "admin")
-                {
-                    return LoginResult.InconsistencyDVWebMaster;
-                }
-                else
-                {
-                    SessionManager.Instancia.Logout();
-                    return LoginResult.InconsistencyDVUserNormal;
-                }
-            }
             _bllEvento.Registrar(user.Email, ModulosEventos.Seguridad, "Inicio de sesión exitoso", 1);
+
             return LoginResult.ValidUser;
         }
-        BLL_DigitoVerificador blldv = new BLL_DigitoVerificador();
+
         public override void Insertar(Usuario usuario)
         {
             if (Repo.ObtenerPorDNI(usuario.DNI) != null)
