@@ -19,35 +19,14 @@ namespace RedLine.Bll
         {
             if (SessionManager.Instancia.IsLogged()) throw new LoginException(LoginResult.UserAlreadyLoggedIn);
 
-
-
-            bool baseDeDatosCorrecta = blldv.VerificarTodaLaBaseDeDatos() == "OK. La integridad de la base de datos es 100% correcta.";
-
-            if (!baseDeDatosCorrecta)
-            {
-                return LoginInconsistente(email, contraseña);
-            }
-            Usuario user = Repo.ObtenerPorEmail(email);
-
-            BLL_DigitoVerificador blldv = new BLL_DigitoVerificador();
             string estadoIntegridad = blldv.VerificarTodaLaBaseDeDatos();
 
             if (estadoIntegridad != "OK. La integridad de la base de datos es 100% correcta.")
             {
-                if (user != null)
-                {
-                    string passHasheadaAdmin = Hashing.Sha256(contraseña);
-                    if (user.Contraseña.Equals(passHasheadaAdmin) &&
-                       (user.Perfil?.Nombre == "WebMaster" || user.Nombre == "admin"))
-                    {
-                        SessionManager.Instancia.Login(user);
-                        return LoginResult.InconsistencyDVWebMaster;
-                    }
-                }
-
-                return LoginResult.InconsistencyDVUserNormal;
+                return LoginInconsistente(email, contraseña);
             }
 
+            Usuario user = Repo.ObtenerPorEmail(email);
 
             if (user == null)
             {
@@ -92,7 +71,13 @@ namespace RedLine.Bll
 
             user.Intentos = 0;
             user.UltimoIntento = DateTime.Now;
-            this.Modificar(user); 
+            this.Modificar(user);
+
+            if (user.PerfilId.HasValue)
+            {
+                BLL_Perfil bllPerfil = new BLL_Perfil();
+                user.Perfil = bllPerfil.ObtenerPorId(user.PerfilId.Value);
+            }
 
             SessionManager.Instancia.Login(user);
             _bllEvento.Registrar(user.Email, ModulosEventos.Seguridad, "Inicio de sesión exitoso", 1);
@@ -100,24 +85,29 @@ namespace RedLine.Bll
         }
         private LoginResult LoginInconsistente(string email, string contraseña)
         {
-
             Usuario user = Repo.ObtenerPorEmail(email);
             if (user == null) throw new LoginException(LoginResult.InvalidUsername);
             if (user.Bloqueado || !user.Activo) throw new LoginException(LoginResult.UserBlocked, "Tu usuario esta inactivo o bloqueado.");
-
 
             string passHasheada = Hashing.Sha256(contraseña);
             if (!user.Contraseña.Equals(passHasheada)) throw new LoginException(LoginResult.InvalidPassword);
 
 
-            if (user.Perfil?.Id == 1)
+            if (user.PerfilId.HasValue)
+            {
+                BLL_Perfil bllPerfil = new BLL_Perfil();
+                user.Perfil = bllPerfil.ObtenerPorId(user.PerfilId.Value);
+            }
+
+            if ((user.Perfil != null && user.Perfil.Nombre == "WebMaster") || user.Nombre == "Administrador")
             {
                 SessionManager.Instancia.Login(user);
                 return LoginResult.InconsistencyDVWebMaster;
             }
+
             return LoginResult.InconsistencyDVUserNormal;
         }
-        BLL_DigitoVerificador blldv = new BLL_DigitoVerificador();
+
         public override void Insertar(Usuario usuario)
         {
             if (Repo.ObtenerPorDNI(usuario.DNI) != null)
