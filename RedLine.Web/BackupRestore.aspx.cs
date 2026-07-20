@@ -50,7 +50,7 @@ namespace RedLine.Web
                 lblEstado.ForeColor = System.Drawing.Color.Red;
             }
         }
-
+        BLL_DigitoVerificador blldv = new BLL_DigitoVerificador();
         protected void btnRestaurar_Click(object sender, EventArgs e)
         {
             try
@@ -61,6 +61,7 @@ namespace RedLine.Web
                     lblEstado.ForeColor = System.Drawing.Color.Red;
                     return;
                 }
+                string Errores = blldv.VerificarTodaLaBaseDeDatos();
                 string carpetaTemporal = Server.MapPath("~/App_Data/Backups/");
 
                 if (!Directory.Exists(carpetaTemporal))
@@ -80,6 +81,7 @@ namespace RedLine.Web
                 if (Session["Inconsistencia"] != null && (bool)Session["Inconsistencia"])
                 {
                     Session["Inconsistencia"] = false;
+                    blldv.RegistrarEventoIntegridadComprometida(Errores);
                     SessionManager.Instancia.Logout();
                     Response.Redirect("LogIn.aspx");
                 }
