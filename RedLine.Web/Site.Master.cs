@@ -86,23 +86,32 @@ namespace RedLine.Web
                     return;
                 }
 
-                bool tieneAccesoTaller = permisosUsuario.Any(p => p.Nombre == "RealizarCompra" || p.Nombre == "GestionInventario" || p.Nombre == "Catalogo");
-                menuTallerVentas.Visible = tieneAccesoTaller;
-                lnkInventario.Visible = permisosUsuario.Any(p => p.Nombre == "GestionInventario");
+                // --- TALLER Y VENTAS ---
+                // Se muestra el menú principal si tiene al menos una de las opciones internas
+                bool tieneTaller = permisosUsuario.Any(p => p.Nombre == "GestionInventario" || p.Nombre == "PersonalizarAuto" || p.Nombre == "HistorialVentas");
+                menuTallerVentas.Visible = tieneTaller;
 
-                bool tieneAccesoABM = permisosUsuario.Any(p => p.Nombre == "GestionUsuarios" || p.Nombre == "GestionClientes" || p.Nombre == "BitacoraEventos");
-                menuGestionABM.Visible = tieneAccesoABM;
+                // (Asumiendo que a los <a> del MasterPage les pusiste un ID runat="server")
+                // lnkCrearAuto.Visible = permisosUsuario.Any(p => p.Nombre == "GestionInventario");
+                // lnkPersonalizarAuto.Visible = permisosUsuario.Any(p => p.Nombre == "PersonalizarAuto");
+                lnkInventario.Visible = permisosUsuario.Any(p => p.Nombre == "GestionInventario");
+                //lnkHistorialVentas.Visible = permisosUsuario.Any(p => p.Nombre == "HistorialVentas");
+
+                // --- GESTIÓN ABM ---
+                bool tieneABM = permisosUsuario.Any(p => p.Nombre == "GestionUsuarios" || p.Nombre == "GestionClientes" || p.Nombre == "BitacoraEventos");
+                menuGestionABM.Visible = tieneABM;
 
                 lnkGestionUsuarios.Visible = permisosUsuario.Any(p => p.Nombre == "GestionUsuarios");
                 lnkGestionClientes.Visible = permisosUsuario.Any(p => p.Nombre == "GestionClientes");
                 lnkGestionEventos.Visible = permisosUsuario.Any(p => p.Nombre == "BitacoraEventos");
 
-                bool tieneAccesoSistema = permisosUsuario.Any(p => p.Nombre == "GestionSeguridad");
-                menuSistema.Visible = tieneAccesoSistema;
+                // --- SISTEMA ---
+                bool tieneSistema = permisosUsuario.Any(p => p.Nombre == "GestionPerfiles" || p.Nombre == "BackupRestore" || p.Nombre == "RecuperarDV");
+                menuSistema.Visible = tieneSistema;
 
-                lnkGestionPermisos.Visible = permisosUsuario.Any(p => p.Nombre == "GestionSeguridad");
-                lnkBackupRestore.Visible = permisosUsuario.Any(p => p.Nombre == "GestionSeguridad");
-                lnkDigitoVerificador.Visible = permisosUsuario.Any(p => p.Nombre == "GestionSeguridad");
+                lnkGestionPermisos.Visible = permisosUsuario.Any(p => p.Nombre == "GestionPerfiles");
+                lnkBackupRestore.Visible = permisosUsuario.Any(p => p.Nombre == "BackupRestore");
+                lnkDigitoVerificador.Visible = permisosUsuario.Any(p => p.Nombre == "RecuperarDV");
             }
             catch (Exception ex)
             {

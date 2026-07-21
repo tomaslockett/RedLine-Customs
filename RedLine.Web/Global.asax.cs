@@ -32,7 +32,8 @@ namespace RedLine.Web
 
                 bool esPermitidaEnInconsistencia = rutaActual.Contains("recuperaciondv.aspx") ||
                                                    rutaActual.Contains("backuprestore.aspx") ||
-                                                   rutaActual.Contains("login.aspx");
+                                                   rutaActual.Contains("login.aspx") ||
+                                                   rutaActual.Contains("logout.aspx");
 
                 if (context.Session["Inconsistencia"] != null && (bool)context.Session["Inconsistencia"])
                 {
@@ -74,8 +75,7 @@ namespace RedLine.Web
                 }
 
 
-                bool esPaginaPublica = rutaActual.Contains("login.aspx") ||
-                                       rutaActual.Contains("registrocliente.aspx");
+                bool esPaginaPublica = rutaActual.Contains("login.aspx") || rutaActual.Contains("registrocliente.aspx");
 
                 if (!SessionManager.Instancia.IsLogged())
                 {
@@ -110,32 +110,37 @@ namespace RedLine.Web
             }
         }
 
-        private string ObtenerPermisoRequeridoPorPagina(string ruta)
+        private string ObtenerPermisoRequeridoPorPagina(string rutaActual)
         {
-            if (ruta.Contains("logout.aspx") || ruta.Contains("cambiocontraseña.aspx") || ruta.Contains("login.aspx") || ruta.Contains("registrocliente.aspx"))
+            if (rutaActual.Contains("login.aspx") ||
+                  rutaActual.Contains("registrocliente.aspx") ||
+                  rutaActual.Contains("logout.aspx"))
                 return "libre";
 
-            if (ruta.Contains("catalogo.aspx") || ruta.Contains("personalizarauto.aspx"))
-                return "Catalogo";
 
-            if (ruta.Contains("checkout.aspx") || ruta.Contains("pagoexitoso.aspx"))
-                return "RealizarCompra";
+            // Taller y Ventas
+            if (rutaActual.Contains("catalogo.aspx")) return "Catalogo";
+            if (rutaActual.Contains("crearauto.aspx")) return "GestionInventario";
+            if (rutaActual.Contains("personalizarauto.aspx")) return "PersonalizarAuto";
+            if (rutaActual.Contains("inventario.aspx")) return "GestionInventario";
+            if (rutaActual.Contains("historialventas.aspx")) return "HistorialVentas";
 
-            if (ruta.Contains("inventario.aspx") || ruta.Contains("historialventas.aspx") || ruta.Contains("crearauto.aspx"))
-                return "GestionInventario";
+            // Flujo de Compras
+            if (rutaActual.Contains("checkout.aspx")) return "Checkout";
+            if (rutaActual.Contains("pagoexitoso.aspx")) return "PagoExitoso";
 
-            if (ruta.Contains("gestionclientes.aspx"))
-                return "GestionClientes";
+            // Gestión ABM
+            if (rutaActual.Contains("gestionusuarios.aspx")) return "GestionUsuarios";
+            if (rutaActual.Contains("gestionclientes.aspx")) return "GestionClientes";
+            if (rutaActual.Contains("gestioneventos.aspx")) return "BitacoraEventos";
 
-            if (ruta.Contains("gestioneventos.aspx"))
-                return "BitacoraEventos";
+            // Sistema
+            if (rutaActual.Contains("gestion_perfiles_permisos.aspx")) return "GestionPerfiles";
+            if (rutaActual.Contains("backuprestore.aspx")) return "BackupRestore";
+            if (rutaActual.Contains("recuperaciondv.aspx") || rutaActual.Contains("digitoverificador.aspx")) return "RecuperarDV";
+            if (rutaActual.Contains("cambiocontraseña.aspx")) return "CambioContraseña";
 
-            if (ruta.Contains("gestionusuarios.aspx"))
-                return "GestionUsuarios";
-
-            if (ruta.Contains("gestion_perfiles_permisos.aspx") || ruta.Contains("backuprestore.aspx") || ruta.Contains("recuperaciondv.aspx"))
-                return "GestionSeguridad";
-
+            // Cierre por defecto
             return "bloqueado_por_defecto";
         }
 

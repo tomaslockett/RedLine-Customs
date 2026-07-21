@@ -77,6 +77,11 @@ namespace RedLine.Bll
             {
                 BLL_Perfil bllPerfil = new BLL_Perfil();
                 user.Perfil = bllPerfil.ObtenerPorId(user.PerfilId.Value);
+                var permisosDelUsuario = bllPerfil.ObtenerPermisosDePerfil(user.PerfilId.Value);
+                foreach (var permiso in permisosDelUsuario)
+                {
+                    user.Perfil.AsignarPermiso(permiso);
+                }
             }
 
             SessionManager.Instancia.Login(user);
