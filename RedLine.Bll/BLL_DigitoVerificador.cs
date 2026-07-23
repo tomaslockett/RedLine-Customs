@@ -17,6 +17,7 @@ namespace RedLine.Bll
     public class BLL_DigitoVerificador : AbstractBLL<string, DigitoVerificador>
     {
         private BLL_Evento _bllEvento;
+
         public BLL_DigitoVerificador() : base(new DAL_DigitoVerificador())
         {
             _bllEvento = new BLL_Evento();
@@ -25,11 +26,10 @@ namespace RedLine.Bll
         public void RecalcularUnaTabla(string nombreTabla)
         {
             var bll = ObtenerBLLsVerificables().FirstOrDefault(b => b.ObtenerNombreTabla().Equals(nombreTabla, StringComparison.OrdinalIgnoreCase));
-
             if (bll == null) throw new Exception($"La tabla '{nombreTabla}' no existe o no tiene Digitos Verificadores.");
 
             bll.RecalcularIntegridad();
-            RegistrarEventoBitacora($"Se forzó el recálculo de los dígitos verificadores SOLO para la tabla: {nombreTabla}", 2);
+            RegistrarEventoBitacora($"Recálculo forzado de la tabla: {nombreTabla}", 2);
         }
 
         public void RecalcularTodaLaBaseDeDatos()
@@ -39,11 +39,11 @@ namespace RedLine.Bll
             {
                 bll.RecalcularIntegridad();
             }
-            RegistrarEventoBitacora("Se forzó el recálculo masivo de los dígitos verificadores (DVH/DVV) de toda la base de datos.", 3);
         }
+
         public void RegistrarEventoIntegridadComprometida(string error)
         {
-            RegistrarEventoBitacora($"Alerta de Integridad:\n{error}", 3);
+            RegistrarEventoBitacora($"Alerta de Integridad Histórica:\n{error}", 3);
         }
 
         public string VerificarTodaLaBaseDeDatos()
@@ -57,68 +57,79 @@ namespace RedLine.Bll
                 string nombreTabla = bll.ObtenerNombreTabla();
                 ReporteIntegridad reporteActual = bll.CalcularIntegridadActual();
 
-                if (reporteActual.DVH_Actual == "0") continue;
-
                 var dvMaestroGuardado = dvGuardados.FirstOrDefault(dv => dv.NombreTabla == nombreTabla);
+                if (dvMaestroGuardado == null) continue;
 
-                if (dvMaestroGuardado == null)
+                var dicDvvGuardado = ParsearMatriz(dvMaestroGuardado.DVV);
+                var dicDvvActual = ParsearMatriz(reporteActual.DVV_Actual);
+
+                var dicDvhGuardado = ParsearMatriz(dvMaestroGuardado.DVH);
+                var dicDvhActual = ParsearMatriz(reporteActual.DVH_Actual);
+
+                // 2. BUSCAMOS QUÉ COLUMNAS CAMBIARON (DVV)
+                List<string> colsCambiadas = dicDvvActual.Keys.Where(k => dicDvvGuardado.ContainsKey(k) && dicDvvGuardado[k] != dicDvvActual[k]).ToList();
+                string colStrings = colsCambiadas.Count > 0 ? string.Join(", ", colsCambiadas) : "Ninguna";
+
+                // 3. BUSCAMOS QUÉ FILAS FALTAN, SOBRAN O CAMBIARON (DVH)
+                List<string> filasBorradas = dicDvhGuardado.Keys.Where(k => !dicDvhActual.ContainsKey(k)).ToList();
+                List<string> filasInsertadas = dicDvhActual.Keys.Where(k => !dicDvhGuardado.ContainsKey(k)).ToList();
+                List<string> filasModificadas = dicDvhActual.Keys.Where(k => dicDvhGuardado.ContainsKey(k) && dicDvhGuardado[k] != dicDvhActual[k]).ToList();
+
+                // 4. LÓGICA DE TELEMETRÍA EXACTA
+                bool huboCorrupcion = false;
+
+                if (filasModificadas.Count > 0)
                 {
-                    reporteErrores.AppendLine($"ERROR CRÍTICO: La tabla '{nombreTabla}' no tiene DV guardados en el sistema.");
-                    continue;
+                    reporteErrores.AppendLine($"MODIFICACIÓN en '{nombreTabla}': Se alteró la FILA [ID: {string.Join(", ", filasModificadas)}] en las COLUMNAS [{colStrings}].");
+                    huboCorrupcion = true;
                 }
 
-                // Si la DAL detectó filas alteradas internamente, las volcamos al reporte.
-                foreach (var errorFila in reporteActual.ErroresDetallados)
+                if (filasBorradas.Count > 0)
                 {
-                    reporteErrores.AppendLine(errorFila);
+                    reporteErrores.AppendLine($" ELIMINACIÓN en '{nombreTabla}': Se borró por completo la FILA [ID: {string.Join(", ", filasBorradas)}].");
+                    huboCorrupcion = true;
                 }
 
-                // MATEMÁTICA FORENSE: Detección de registros borrados o insertados fantasma
-                if (dvMaestroGuardado.DVH != reporteActual.DVH_Actual && reporteActual.EsValido)
+                if (filasInsertadas.Count > 0)
                 {
-                    // Entra acá si el Total no coincide, pero NINGUNA fila existente está corrupta.
-                    try
-                    {
-                        BigInteger guardadoNum = BigInteger.Parse("00" + dvMaestroGuardado.DVH, NumberStyles.HexNumber);
-                        BigInteger actualNum = BigInteger.Parse("00" + reporteActual.DVH_Actual, NumberStyles.HexNumber);
+                    reporteErrores.AppendLine($" INSERCIÓN en '{nombreTabla}': Se agregó sin permiso la FILA [ID: {string.Join(", ", filasInsertadas)}].");
+                    huboCorrupcion = true;
+                }
 
-                        if (guardadoNum > actualNum)
-                        {
-                            BigInteger diferencia = guardadoNum - actualNum;
-                            reporteErrores.AppendLine($"- REGISTRO BORRADO en '{nombreTabla}': Se eliminó una fila por fuera del sistema. El Hash exacto del registro eliminado era: {diferencia.ToString("X")}");
-                        }
-                        else
-                        {
-                            reporteErrores.AppendLine($"- REGISTRO INYECTADO en '{nombreTabla}': Se insertó un registro directamente en SQL. Corrupción detectada.");
-                        }
-                    }
-                    catch { }
+                // 5. DETECCIÓN DE ATAQUE AL MAESTRO (Si nadie tocó las filas, pero los DVs globales no dan)
+                if (!huboCorrupcion && (colsCambiadas.Count > 0 || dvMaestroGuardado.DVH != reporteActual.DVH_Actual))
+                {
+                    reporteErrores.AppendLine($"CORRUPCIÓN en '{nombreTabla}': Discrepancia en las firmas. Posible manipulación directa de la tabla DigitoVerificador.");
                 }
             }
 
-            if (reporteErrores.Length == 0)
+            if (reporteErrores.Length == 0) return "OK. La integridad de la base de datos es 100% correcta.";
+
+            return $"Alerta de Integridad Detallada:\n{reporteErrores.ToString()}";
+        }
+
+        private Dictionary<string, string> ParsearMatriz(string cadenaMatricial)
+        {
+            var dic = new Dictionary<string, string>();
+            if (string.IsNullOrEmpty(cadenaMatricial)) return dic;
+
+            foreach (var par in cadenaMatricial.Split('|'))
             {
-                return "OK. La integridad de la base de datos es 100% correcta.";
+                var partes = par.Split(':');
+                if (partes.Length == 2) dic[partes[0]] = partes[1];
             }
-
-            string logError = $"Alerta de Integridad Detallada:\n{reporteErrores.ToString()}";
-            RegistrarEventoBitacora(logError, 3);
-
-            return logError;
+            return dic;
         }
 
         private List<IGestorIntegridad> ObtenerBLLsVerificables()
         {
             var listaInstancias = new List<IGestorIntegridad>();
-
-            var tiposVerificables = Assembly.GetExecutingAssembly().GetTypes().Where(tipo => typeof(IGestorIntegridad).IsAssignableFrom(tipo) && !tipo.IsInterface && !tipo.IsAbstract && tipo != typeof(BLL_DigitoVerificador)); 
+            var tiposVerificables = Assembly.GetExecutingAssembly().GetTypes().Where(tipo => typeof(IGestorIntegridad).IsAssignableFrom(tipo) && !tipo.IsInterface && !tipo.IsAbstract && tipo != typeof(BLL_DigitoVerificador));
 
             foreach (var tipo in tiposVerificables)
             {
-                var instancia = (IGestorIntegridad)Activator.CreateInstance(tipo);
-                listaInstancias.Add(instancia);
+                listaInstancias.Add((IGestorIntegridad)Activator.CreateInstance(tipo));
             }
-
             return listaInstancias;
         }
 
@@ -129,10 +140,7 @@ namespace RedLine.Bll
                 string usuario = SessionManager.Instancia.IsLogged() ? SessionManager.Instancia.Usuario.Email : "Sistema";
                 _bllEvento.Registrar(usuario, ModulosEventos.BaseDeDatos, mensaje, criticidad);
             }
-            catch
-            {
-            }
+            catch { }
         }
-
     }
 }

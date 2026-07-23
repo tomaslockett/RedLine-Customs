@@ -11,24 +11,23 @@ namespace RedLine.Servicios
 {
     public class MotorDigitoVerificador
     {
-        private BigInteger _sumaTotalHorizontal = 0;
         private BigInteger[] _sumasVerticalesParciales;
-        private int _cantidadColumnas;
+        private List<string> _nombresColumnas;
 
-        // Al instanciar el motor, le decimos cuántas columnas tiene la tabla
-        public MotorDigitoVerificador(int cantidadColumnas)
+        private List<string> _dvhMatrizFilas;
+
+        public MotorDigitoVerificador(List<string> columnas)
         {
-            _cantidadColumnas = cantidadColumnas;
-            _sumasVerticalesParciales = new BigInteger[cantidadColumnas];
+            _nombresColumnas = columnas;
+            _sumasVerticalesParciales = new BigInteger[columnas.Count];
+            _dvhMatrizFilas = new List<string>();
         }
 
-        // Este método recibe solo un array de textos (la fila de la BD ya leída)
-        // Se llama una vez por cada fila que exista en la tabla.
-        public string ProcesarFila(string[] valoresFila)
+        public string ProcesarFila(string idFila, string[] valoresFila)
         {
             BigInteger sumaParcialFila = 0;
 
-            for (int col = 0; col < _cantidadColumnas; col++)
+            for (int col = 0; col < _nombresColumnas.Count; col++)
             {
                 string hex = Hashing.Sha256(valoresFila[col] ?? "");
                 BigInteger valor = BigInteger.Parse("00" + hex, NumberStyles.HexNumber);
@@ -38,23 +37,23 @@ namespace RedLine.Servicios
             }
 
             string hexFila = Hashing.Sha256(sumaParcialFila.ToString());
-            _sumaTotalHorizontal += BigInteger.Parse("00" + hexFila, NumberStyles.HexNumber);
+
+            _dvhMatrizFilas.Add($"{idFila}:{hexFila}");
 
             return hexFila;
         }
 
-        // Una vez que le pasaste todas las filas, le pedís el resultado final
         public (string DVH, string DVV) ObtenerResultadoFinal()
         {
-            BigInteger sumaTotalVertical = 0;
+            List<string> dvvPartes = new List<string>();
 
-            for (int col = 0; col < _cantidadColumnas; col++)
+            for (int col = 0; col < _nombresColumnas.Count; col++)
             {
                 string hexCol = Hashing.Sha256(_sumasVerticalesParciales[col].ToString());
-                sumaTotalVertical += BigInteger.Parse("00" + hexCol, NumberStyles.HexNumber);
+                dvvPartes.Add($"{_nombresColumnas[col]}:{hexCol}");
             }
 
-            return (_sumaTotalHorizontal.ToString("X"), sumaTotalVertical.ToString("X"));
+            return (string.Join("|", _dvhMatrizFilas), string.Join("|", dvvPartes));
         }
     }
 }

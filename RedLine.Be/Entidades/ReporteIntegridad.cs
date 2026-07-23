@@ -10,7 +10,8 @@ namespace RedLine.Entidades
     {
         public string DVH_Actual { get; set; } = "0";
         public string DVV_Actual { get; set; } = "0";
-        public List<string> ErroresDetallados { get; set; } = new List<string>();
-        public bool EsValido => ErroresDetallados.Count == 0;
+        public List<string> FilasCorruptasIDs { get; set; } = new List<string>();
+        public string NombreColumnaID { get; set; } = "ID";
+        public bool EsValido => FilasCorruptasIDs.Count == 0;
     }
 }

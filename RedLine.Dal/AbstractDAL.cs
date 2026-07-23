@@ -165,7 +165,7 @@ namespace RedLine.Dal
             var columnasDatos = new List<string>();
             bool tablaTieneDVH = false;
 
-            // 1. Buscamos las columnas. ¡Excluimos el DVH del cálculo para no hacer un hash de un hash!
+            // 1. Obtenemos todas las columnas válidas
             string queryMeta = "SELECT COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = @Tabla AND DATA_TYPE NOT IN ('timestamp', 'rowversion') ORDER BY COLUMN_NAME ASC";
             using (var cmdMeta = new SqlCommand(queryMeta, con, tra))
             {
@@ -183,11 +183,27 @@ namespace RedLine.Dal
 
             if (columnasDatos.Count == 0) return reporte;
 
-            var motor = new RedLine.Servicios.MotorDigitoVerificador(columnasDatos.Count);
+            // 🚨 2. EL FIX: BUSCAMOS LA VERDADERA PRIMARY KEY EN SQL SERVER
+            string idColumna = columnasDatos.First(); // Fallback por si la tabla no tiene PK
+            string queryPK = @"
+        SELECT kcu.COLUMN_NAME 
+        FROM INFORMATION_SCHEMA.TABLE_CONSTRAINTS tc 
+        JOIN INFORMATION_SCHEMA.KEY_COLUMN_USAGE kcu 
+          ON tc.CONSTRAINT_NAME = kcu.CONSTRAINT_NAME 
+        WHERE tc.TABLE_NAME = @Tabla AND tc.CONSTRAINT_TYPE = 'PRIMARY KEY'";
 
-            // 2. Armamos la query. Leemos los datos y, al final, leemos el DVH guardado si existe.
+            using (var cmdPK = new SqlCommand(queryPK, con, tra))
+            {
+                cmdPK.Parameters.AddWithValue("@Tabla", this.NombreTabla);
+                var pkObj = cmdPK.ExecuteScalar();
+                if (pkObj != null) idColumna = pkObj.ToString();
+            }
+
+            // Le pasamos las columnas al motor
+            var motor = new RedLine.Servicios.MotorDigitoVerificador(columnasDatos);
+            reporte.NombreColumnaID = idColumna; // Guardamos el nombre real de la PK (ej: "ID")
+
             string columnasQuery = string.Join(", ", columnasDatos.Select(c => $"[{c}]"));
-            string idColumna = columnasDatos.First(); // Asumimos que la primera es la PK (ID)
             if (tablaTieneDVH) columnasQuery += ", [DVH]";
 
             string queryData = $"SELECT {columnasQuery} FROM [{this.NombreTabla}]";
@@ -203,17 +219,16 @@ namespace RedLine.Dal
                         filaTexto[i] = rdrData[i]?.ToString() ?? "";
                     }
 
-                    // 3. Procesamos la fila y obtenemos su Hash matemático
-                    string hashCalculado = motor.ProcesarFila(filaTexto);
+                    // AHORA SÍ: Capturamos el ID Real y Único
+                    string idFilaActual = rdrData[idColumna]?.ToString();
+                    string hashCalculado = motor.ProcesarFila(idFilaActual, filaTexto);
 
-                    // 4. Si la tabla tiene columna DVH, comparamos para encontrar la fila corrupta
                     if (tablaTieneDVH)
                     {
                         string hashGuardado = rdrData["DVH"]?.ToString();
                         if (hashCalculado != hashGuardado)
                         {
-                            string idFila = rdrData[idColumna]?.ToString();
-                            reporte.ErroresDetallados.Add($"- FILA CORRUPTA en '{this.NombreTabla}': El registro con {idColumna} = {idFila} fue alterado.");
+                            reporte.FilasCorruptasIDs.Add(idFilaActual);
                         }
                     }
                 }
