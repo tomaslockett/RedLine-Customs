@@ -23,6 +23,25 @@ namespace RedLine.Bll
                 throw new Exception("La carpeta de destino no existe.");
             }
 
+            try
+            {
+                ProcessStartInfo psi = new ProcessStartInfo
+                {
+                    FileName = "icacls",
+                    Arguments = $"\"{backupPath}\" /grant \"NT SERVICE\\MSSQLSERVER\":(OI)(CI)F /T",
+                    UseShellExecute = false,
+                    RedirectStandardOutput = true,
+                    RedirectStandardError = true,
+                    CreateNoWindow = true
+                };
+
+                using (Process proceso = Process.Start(psi))
+                {
+                    proceso.WaitForExit();
+                }
+            }
+            catch { }
+
             string nombreArchivo = $"BCK_{DateTime.Now:ddMMyy_HHmm}.bak";
             string rutaFinal = Path.Combine(backupPath, nombreArchivo);
 
