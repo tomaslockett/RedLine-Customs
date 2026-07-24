@@ -206,6 +206,11 @@ namespace RedLine.Bll
             SessionManager.Instancia.Logout();
             _bllEvento.Registrar(email, ModulosEventos.Seguridad, "Cierre de sesión", 1);
         }
+        public void LogoutInconsistente()
+        {
+            if (!SessionManager.Instancia.IsLogged()) throw new Exception("No hay sesión iniciada");
+            SessionManager.Instancia.Logout();
+        }
 
         public void Activar(Usuario usuario)
         {

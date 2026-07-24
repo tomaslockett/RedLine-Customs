@@ -20,7 +20,14 @@ namespace RedLine.Web
         {
             try
             {
-                _bllUsuario.Logout();
+                if (Session["Inconsistencia"] != null && (bool)Session["Inconsistencia"])
+                {
+                    _bllUsuario.LogoutInconsistente();                   
+                }
+                else
+                {
+                    _bllUsuario.Logout();
+                }
                 Response.Redirect("~/Login.aspx");
             }
             catch (Exception ex)
