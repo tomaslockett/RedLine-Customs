@@ -28,20 +28,25 @@ namespace RedLine.Web
         {
             try
             {
-                if (string.IsNullOrWhiteSpace(txtRutaBackup.Text))
+                string entradaUsuario = txtRutaBackup.Text.Trim();
+
+                if (string.IsNullOrWhiteSpace(entradaUsuario) || entradaUsuario.Equals(@"C:\", StringComparison.OrdinalIgnoreCase) || entradaUsuario.Equals("C:", StringComparison.OrdinalIgnoreCase))
                 {
-                    lblEstado.Text = "Error: Debe ingresar o pegar una ubicación en el cuadro de texto antes de generar la copia de seguridad.";
-                    lblEstado.ForeColor = System.Drawing.Color.Red;
-                    return;
+                    entradaUsuario = @"C:\RedlineBackups\";
+                }
+                else if (!entradaUsuario.EndsWith(@"\"))
+                {
+                    entradaUsuario += @"\";
                 }
 
-                string carpetaDestino = txtRutaBackup.Text.Trim();
-                if (!carpetaDestino.EndsWith(@"\"))
-                    carpetaDestino += @"\";
+                if (!Directory.Exists(entradaUsuario))
+                {
+                    Directory.CreateDirectory(entradaUsuario);
+                }
 
-                _bllBackupRestore.RealizarBackup(carpetaDestino);
+                _bllBackupRestore.RealizarBackup(entradaUsuario);
 
-                lblEstado.Text = "Copia de seguridad generada con éxito.";
+                lblEstado.Text = $"Copia de seguridad generada con éxito en: {entradaUsuario}";
                 lblEstado.ForeColor = System.Drawing.Color.Green;
             }
             catch (Exception ex)
@@ -53,31 +58,34 @@ namespace RedLine.Web
         BLL_DigitoVerificador blldv = new BLL_DigitoVerificador();
         protected void btnRestaurar_Click(object sender, EventArgs e)
         {
+            string rutaArchivoCompleta = string.Empty;
+
             try
             {
-                if (!fileUploadRestore.HasFile)
+                if (!fileUploadRestore.HasFile || !Path.GetExtension(fileUploadRestore.FileName).Equals(".bak", StringComparison.OrdinalIgnoreCase))
                 {
-                    lblEstado.Text = "Error: Debe seleccionar un archivo .bak para poder restaurar.";
+                    lblEstado.Text = "Error: Debe seleccionar un archivo .bak válido para poder restaurar.";
                     lblEstado.ForeColor = System.Drawing.Color.Red;
                     return;
                 }
-                string Errores = blldv.VerificarTodaLaBaseDeDatos();
-                string carpetaTemporal = Server.MapPath("~/App_Data/Backups/");
+
+                string carpetaTemporal = @"C:\RedlineBackups\";
 
                 if (!Directory.Exists(carpetaTemporal))
                     Directory.CreateDirectory(carpetaTemporal);
 
                 string nombreArchivo = fileUploadRestore.FileName;
-                string rutaArchivoCompleta = Path.Combine(carpetaTemporal, nombreArchivo);
+                rutaArchivoCompleta = Path.Combine(carpetaTemporal, nombreArchivo);
 
                 fileUploadRestore.SaveAs(rutaArchivoCompleta);
+
                 _bllBackupRestore.RealizarRestore(rutaArchivoCompleta);
 
-                if (File.Exists(rutaArchivoCompleta))
-                    File.Delete(rutaArchivoCompleta);
+                string Errores = blldv.VerificarTodaLaBaseDeDatos();
 
                 lblEstado.Text = "Base de datos restaurada con éxito. El sistema se ha actualizado.";
                 lblEstado.ForeColor = System.Drawing.Color.Green;
+
                 if (Session["Inconsistencia"] != null && (bool)Session["Inconsistencia"])
                 {
                     Session["Inconsistencia"] = false;
@@ -90,6 +98,20 @@ namespace RedLine.Web
             {
                 lblEstado.Text = "Error al restaurar: " + ex.Message;
                 lblEstado.ForeColor = System.Drawing.Color.Red;
+            }
+            finally
+            {
+                if (!string.IsNullOrEmpty(rutaArchivoCompleta) && File.Exists(rutaArchivoCompleta))
+                {
+                    try
+                    {
+                        File.Delete(rutaArchivoCompleta);
+                    }
+                    catch
+                    {
+
+                    }
+                }
             }
         }
     }
