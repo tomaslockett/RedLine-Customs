@@ -65,22 +65,73 @@
             var famAdmin = new Familia(22, "Administrador");
             var famCliente = new Familia(23, "Cliente");
 
-            famWebMaster.Agregar(pLogin); famWebMaster.Agregar(pLogout); famWebMaster.Agregar(pCatalogo);
-            famWebMaster.Agregar(pCompra); famWebMaster.Agregar(pInventario); famWebMaster.Agregar(pClientes);
-            famWebMaster.Agregar(pEventos); famWebMaster.Agregar(pUsuarios); famWebMaster.Agregar(pSeguridad);
-            famWebMaster.Agregar(pBackupRestore); famWebMaster.Agregar(pCambioContraseña); famWebMaster.Agregar(pCheckout);
-            famWebMaster.Agregar(pGestionPerfiles); famWebMaster.Agregar(pHistorialVentas); famWebMaster.Agregar(pPagoExitoso);
-            famWebMaster.Agregar(pPersonalizarAuto); famWebMaster.Agregar(pRecuperarDV);
-            famWebMaster.Agregar(pRegistroClientes); famWebMaster.Agregar(pVacio2); famWebMaster.Agregar(pVacio3);
+            // ==========================================
+            // ASIGNACIÓN DE PERMISOS A: WEBMASTER
+            // ==========================================
 
-            famAdmin.Agregar(pLogin); famAdmin.Agregar(pLogout); famAdmin.Agregar(pCatalogo);
-            famAdmin.Agregar(pInventario); famAdmin.Agregar(pClientes); famAdmin.Agregar(pEventos);
-            famAdmin.Agregar(pUsuarios); famAdmin.Agregar(pCambioContraseña); 
+            // -- Accesos Básicos
+            famWebMaster.Agregar(pLogin);
+            famWebMaster.Agregar(pLogout);
+            famWebMaster.Agregar(pCambioContraseña);
+
+            // -- Negocio y Comercial
+            famWebMaster.Agregar(pCatalogo);
+            famWebMaster.Agregar(pPersonalizarAuto);
+            famWebMaster.Agregar(pCompra);
+            famWebMaster.Agregar(pCheckout);
+            famWebMaster.Agregar(pPagoExitoso);
+            famWebMaster.Agregar(pHistorialVentas);
+
+            // -- Gestión y Administración
+            famWebMaster.Agregar(pInventario);
+            famWebMaster.Agregar(pClientes);
+            famWebMaster.Agregar(pRegistroClientes);
+            famWebMaster.Agregar(pUsuarios);
+            famWebMaster.Agregar(pGestionPerfiles);
+
+            // -- Seguridad y Sistema
+            famWebMaster.Agregar(pEventos);
+            famWebMaster.Agregar(pSeguridad);
+            famWebMaster.Agregar(pBackupRestore);
+            famWebMaster.Agregar(pRecuperarDV);
+            famWebMaster.Agregar(pVacio2);
+            famWebMaster.Agregar(pVacio3);
+
+            // ==========================================
+            // ASIGNACIÓN DE PERMISOS A: ADMINISTRADOR
+            // ==========================================
+
+            // -- Accesos Básicos
+            famAdmin.Agregar(pLogin);
+            famAdmin.Agregar(pLogout);
+            famAdmin.Agregar(pCambioContraseña);
+
+            // -- Gestión y Administración
+            famAdmin.Agregar(pCatalogo);
+            famAdmin.Agregar(pInventario);
+            famAdmin.Agregar(pClientes);
+            famAdmin.Agregar(pUsuarios);
             famAdmin.Agregar(pHistorialVentas);
 
-            famCliente.Agregar(pLogin); famCliente.Agregar(pLogout); famCliente.Agregar(pCatalogo);
-            famCliente.Agregar(pCompra); famCliente.Agregar(pCambioContraseña); famCliente.Agregar(pCheckout);
-            famCliente.Agregar(pPagoExitoso); famCliente.Agregar(pPersonalizarAuto); famCliente.Agregar(pRegistroClientes);
+            // -- Monitoreo
+            famAdmin.Agregar(pEventos);
+
+            // ==========================================
+            // ASIGNACIÓN DE PERMISOS A: CLIENTE
+            // ==========================================
+
+            // -- Accesos Básicos
+            famCliente.Agregar(pLogin);
+            famCliente.Agregar(pLogout);
+            famCliente.Agregar(pRegistroClientes);
+            famCliente.Agregar(pCambioContraseña);
+
+            // -- Comercial (Su experiencia de usuario)
+            famCliente.Agregar(pCatalogo);
+            famCliente.Agregar(pPersonalizarAuto);
+            famCliente.Agregar(pCompra);
+            famCliente.Agregar(pCheckout);
+            famCliente.Agregar(pPagoExitoso);
 
             context.Familias.AddOrUpdate(f => f.Id, famWebMaster, famAdmin, famCliente);
 
