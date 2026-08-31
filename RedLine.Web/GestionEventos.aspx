@@ -40,6 +40,7 @@
 
                     <div class="botonera-bitacora">
                         <asp:Button ID="btnLimpiar" runat="server" Text="Limpiar Filtros" CssClass="boton-bitacora-accion boton-bitacora-secundario" OnClick="btnLimpiar_Click" />
+                        <asp:Button ID="btnExportar" runat="server" Text="Exportar a XML" CssClass="boton-bitacora-accion" OnClick="ExportarXML" />
                     </div>
 
                     <div class="contenedor-tabla-scroll">

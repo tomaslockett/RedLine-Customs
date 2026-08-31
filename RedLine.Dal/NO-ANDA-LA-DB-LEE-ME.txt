@@ -5,8 +5,7 @@ Basicamente me pudri de los scripts de Sql y como en un proyecto Use el EF pense
 porque como somos varios tocando cosas 
 es mas facil poder hacer actualizaciones de la base de datos 
 basicamente comodida 
-yo seguro les voy a pasar audios de esto que voy a hacer o hice pero aca hay un txt que explica un poco todo
-si lo hizo Gpt no me juzgen
+
 
 ===========================================================
 🏎️  REDLINE CUSTOMS - SISTEMA DE BASE DE DATOS AUTOMÁTICA 🏎️
