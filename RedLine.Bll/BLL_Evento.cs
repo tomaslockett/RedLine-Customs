@@ -27,49 +27,7 @@ namespace RedLine.Bll
         {
             return this.Listar();
         }
-        public string ExportarBitacoraXml(string directorioDestino = null)
-        {
-            
-            List<Evento> eventos = this.ListarTodo();
-
-            
-            XElement xmlRoot = new XElement("Bitacora");
-
-            foreach (var item in eventos)
-            {
-                XElement eventoXml = new XElement("Evento",
-                    new XElement("ID", item.ID),
-                    new XElement("Usuario", item.Usuario ?? string.Empty),
-                    new XElement("Fecha", item.Fecha.ToString("yyyy-MM-dd HH:mm:ss")),
-                    new XElement("Modulo", item.Modulo ?? string.Empty),
-                    new XElement("Actividad", item.Actividad ?? string.Empty),
-                    new XElement("Criticidad", item.Criticidad)
-                );
-
-                xmlRoot.Add(eventoXml);
-            }
-
-            XDocument doc = new XDocument(
-                new XDeclaration("1.0", "utf-8", "yes"),
-                xmlRoot
-            );
-
-
-            string nombreArchivo = $"reporteBitacora_{DateTime.Now:dd-MM-yyyy_HHmmss}.xml";
-
-
-            if (string.IsNullOrWhiteSpace(directorioDestino))
-            {
-                directorioDestino = AppDomain.CurrentDomain.BaseDirectory;
-            }
-
-            string rutaCompleta = Path.Combine(directorioDestino, nombreArchivo);
-
-
-            doc.Save(rutaCompleta);
-
-            return rutaCompleta;
-        }
+    
         public byte[] ExportarBitacoraXmlBytes()
         {
             List<Evento> eventos = this.ListarTodo();
