@@ -66,16 +66,16 @@ namespace RedLine.Bll
                 var dicDvhGuardado = ParsearMatriz(dvMaestroGuardado.DVH);
                 var dicDvhActual = ParsearMatriz(reporteActual.DVH_Actual);
 
-                // 2. BUSCAMOS QUÉ COLUMNAS CAMBIARON (DVV)
+
                 List<string> colsCambiadas = dicDvvActual.Keys.Where(k => dicDvvGuardado.ContainsKey(k) && dicDvvGuardado[k] != dicDvvActual[k]).ToList();
                 string colStrings = colsCambiadas.Count > 0 ? string.Join(", ", colsCambiadas) : "Ninguna";
 
-                // 3. BUSCAMOS QUÉ FILAS FALTAN, SOBRAN O CAMBIARON (DVH)
+
                 List<string> filasBorradas = dicDvhGuardado.Keys.Where(k => !dicDvhActual.ContainsKey(k)).ToList();
                 List<string> filasInsertadas = dicDvhActual.Keys.Where(k => !dicDvhGuardado.ContainsKey(k)).ToList();
                 List<string> filasModificadas = dicDvhActual.Keys.Where(k => dicDvhGuardado.ContainsKey(k) && dicDvhGuardado[k] != dicDvhActual[k]).ToList();
 
-                // 4. LÓGICA DE TELEMETRÍA EXACTA
+
                 bool huboCorrupcion = false;
 
                 if (filasModificadas.Count > 0)
