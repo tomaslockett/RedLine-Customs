@@ -23,7 +23,18 @@
                 <asp:Label ID="lblNuevosMes" runat="server" CssClass="kpi-valor">0</asp:Label>
             </div>
         </div>
+        <div class="tarjeta-chasis panel-importacion" style="margin-bottom: 20px; padding: 15px;">
+    <h3>Importación Masiva de Clientes</h3>
+    <p>Seleccione un archivo formato XML para incorporar nuevos registros.</p>
+    
+    <div style="display: flex; gap: 10px; align-items: center; margin-top: 10px;">
+        <asp:FileUpload ID="fuClientesXml" runat="server" CssClass="form-control" />
+        <asp:Button ID="btnImportarXml" runat="server" Text="Cargar XML" CssClass="btn-link-ver" OnClick="btnImportarXml_Click" style="padding: 8px 15px; cursor: pointer;" />
+    </div>
 
+
+    <asp:Label ID="lblMensajeImportacion" runat="server" Visible="false" Style="display: block; margin-top: 10px; font-weight: bold;"></asp:Label>
+</div>
         <div class="tarjeta-chasis panel-tabla">
             <div class="tabla-contenedor">
                 <asp:GridView ID="dgvClientes" runat="server" AutoGenerateColumns="False" CssClass="gridview-custom" OnRowCommand="dgvClientes_RowCommand" OnSelectedIndexChanged="dgvClientes_SelectedIndexChanged">

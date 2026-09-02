@@ -3,6 +3,9 @@ using RedLine.Dal;
 using RedLine.Servicios;
 using System;
 using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Xml.Linq;
 
 namespace RedLine.Bll
 {
@@ -54,6 +57,80 @@ namespace RedLine.Bll
 
         #region Métodos de Negocio
 
+        public int ImportarClientesXML(Stream xmlStream)
+        {
+            if (xmlStream == null || xmlStream.Length == 0)
+                throw new ArgumentException("El archivo XML está vacío.");
+
+            XDocument doc;
+            try
+            {
+                doc = XDocument.Load(xmlStream);
+            }
+            catch (Exception ex)
+            {
+                throw new InvalidOperationException("El archivo no tiene un formato XML válido.", ex);
+            }
+
+            List<Cliente> clientesExistentes = ObtenerClientes();
+
+
+            HashSet<int> idsExistentes = new HashSet<int>(clientesExistentes.Select(c => c.ID));
+            HashSet<string> emailsExistentes = new HashSet<string>(
+                clientesExistentes.Select(c => c.Email),
+                StringComparer.OrdinalIgnoreCase
+            );
+
+            List<Cliente> nuevosClientes = new List<Cliente>();
+            var elementosCliente = doc.Descendants("Cliente");
+
+            if (!elementosCliente.Any())
+                throw new Exception("El XML no contiene nodos <Cliente>.");
+
+            foreach (var elem in elementosCliente)
+            {
+
+                if (elem.Element("ID") == null || elem.Element("Email") == null)
+                    continue;
+
+                if (!int.TryParse(elem.Element("ID").Value, out int id))
+                    continue;
+
+                string email = elem.Element("Email").Value.Trim();
+
+
+                if (idsExistentes.Contains(id) || emailsExistentes.Contains(email))
+                    continue;
+
+                Cliente nuevoCliente = new Cliente
+                {
+                    ID = id,
+                    DNI = elem.Element("DNI")?.Value ?? string.Empty,
+                    Nombre = elem.Element("Nombre")?.Value ?? string.Empty,
+                    Apellido = elem.Element("Apellido")?.Value ?? string.Empty,
+                    Email = email,
+                    Contraseña = elem.Element("Contraseña")?.Value ?? string.Empty,
+                    Telefono = elem.Element("Telefono")?.Value ?? string.Empty,
+                    Direccion = elem.Element("Direccion")?.Value ?? string.Empty
+                };
+
+                nuevosClientes.Add(nuevoCliente);
+
+                idsExistentes.Add(id);
+                emailsExistentes.Add(email);
+            }
+
+
+            int guardados = 0;
+            foreach (var cliente in nuevosClientes)
+            {
+
+                this.Insertar(cliente);
+                guardados++;
+            }
+
+            return guardados;
+        }
         public List<Cliente> ObtenerClientes()
         {
             List<Cliente> lista = this.Listar();

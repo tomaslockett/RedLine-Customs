@@ -42,6 +42,33 @@ namespace RedLine.Web
         protected global::System.Web.UI.WebControls.Label lblNuevosMes;
 
         /// <summary>
+        /// Control fuClientesXml.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.FileUpload fuClientesXml;
+
+        /// <summary>
+        /// Control btnImportarXml.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnImportarXml;
+
+        /// <summary>
+        /// Control lblMensajeImportacion.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblMensajeImportacion;
+
+        /// <summary>
         /// Control dgvClientes.
         /// </summary>
         /// <remarks>
