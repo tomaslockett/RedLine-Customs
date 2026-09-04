@@ -5,15 +5,15 @@
 
     <main class="login-contenedor">
         <section class="login-caja">
-            <h1 class="login-titulo">Iniciar sesión</h1>
+            <h1 class="login-titulo"><asp:Label ID="lblTitulo" runat="server" Text="Iniciar sesión" /></h1>
 
             <div class="login-campo">
-                <label>Email</label>
+                <label><asp:Label ID="lblEmail" runat="server" Text="Email" /></label>
                 <asp:TextBox ID="txtEmail" runat="server" CssClass="login-input" />
             </div>
 
             <div class="login-campo">
-                <label>Contraseña</label>
+                <label><asp:Label ID="lblPassword" runat="server" Text="Contraseña" /></label>
                 <div class="login-pass-wrapper">
                     <asp:TextBox ID="txtPassword" runat="server" TextMode="Password" CssClass="login-input" />
                     <i class="fa-solid fa-eye-slash login-toggle-icon" id="togglePass"></i>
@@ -28,7 +28,8 @@
 
             <div style="text-align: center; margin-top: 25px;">
                 <p style="color: darkgray; font-size: 0.9rem; margin: 0;">
-                    ¿No tienes cuenta? <a href="RegistroCliente.aspx" style="color: #D93416; text-decoration: none; font-weight: bold;">Regístrate aquí</a>
+                    <asp:Label ID="lblNoTienesCuenta" runat="server" Text="¿No tienes cuenta?" />
+                    <asp:HyperLink ID="linkRegistro" runat="server" NavigateUrl="RegistroCliente.aspx" Style="color: #D93416; text-decoration: none; font-weight: bold;" Text="Regístrate aquí" />
                 </p>
             </div>
         </section>

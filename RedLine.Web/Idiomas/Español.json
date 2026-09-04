@@ -1,0 +1,16 @@
+//Login
+{
+  "lblTitulo": "Iniciar sesión",
+  "lblEmail": "Email",
+  "lblPassword": "Contraseña",
+  "btnLogin": "Ingresar",
+  "lblNoTienesCuenta": "¿No tienes cuenta?",
+  "linkRegistro": "Regístrate aquí",
+  "msgIngresaCredenciales": "Ingresa tus credenciales.",
+  "msgSistemaNoFunciona": "El sistema no funciona actualmente.",
+  "msgUsuarioNoExiste": "El usuario o email no existe.",
+  "msgPasswordIncorrecta": "Contraseña incorrecta.",
+  "msgUsuarioBloqueado": "Usuario bloqueado.",
+  "msgErrorLogin": "Error al iniciar sesión.",
+  "msgErrorTecnico": "Error técnico"
+}

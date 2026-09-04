@@ -8,16 +8,38 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using RedLine.Servicios;
+using RedLine.Be.Interfaces;
 
 namespace RedLine.Web
 {
-    public partial class LogIn : System.Web.UI.Page
+    public partial class LogIn : System.Web.UI.Page, IObserver
     {
         BLL_Cliente gestorCliente = new BLL_Cliente();
         BLL_Usuario gestorUsuario = new BLL_Usuario();
+
         protected void Page_Load(object sender, EventArgs e)
         {
+            SubjectIdioma.Instancia.AgregarObserver(this);
 
+            if (!IsPostBack)
+            {
+                ActualizarIdioma(SubjectIdioma.Instancia.IdiomaActual);
+            }
+        }
+
+        protected void Page_Unload(object sender, EventArgs e)
+        {
+            SubjectIdioma.Instancia.QuitarObserver(this);
+        }
+
+        public void ActualizarIdioma(string nuevoIdioma)
+        {
+            lblTitulo.Text = SubjectIdioma.Instancia.Traducir("lblTitulo");
+            lblEmail.Text = SubjectIdioma.Instancia.Traducir("lblEmail");
+            lblPassword.Text = SubjectIdioma.Instancia.Traducir("lblPassword");
+            btnLogin.Text = SubjectIdioma.Instancia.Traducir("btnLogin");
+            lblNoTienesCuenta.Text = SubjectIdioma.Instancia.Traducir("lblNoTienesCuenta");
+            linkRegistro.Text = SubjectIdioma.Instancia.Traducir("linkRegistro");
         }
 
         protected void BtnLogin_Click(object sender, EventArgs e)
@@ -25,10 +47,9 @@ namespace RedLine.Web
             string email = txtEmail.Text.Trim();
             string password = txtPassword.Text;
 
-
             if (string.IsNullOrEmpty(email) || string.IsNullOrEmpty(password))
             {
-                MostrarMensaje("Ingresa tus credenciales.", true);
+                MostrarMensaje(SubjectIdioma.Instancia.Traducir("msgIngresaCredenciales"), true);
                 return;
             }
 
@@ -41,15 +62,15 @@ namespace RedLine.Web
                     Response.Redirect("Catalogo.aspx");
                     return;
                 }
-                if(resultado == LoginResult.InconsistencyDVWebMaster)
+                if (resultado == LoginResult.InconsistencyDVWebMaster)
                 {
                     Session.Add("Inconsistencia", true);
                     Response.Redirect("RecuperacionDV.aspx");
                     return;
                 }
-                if(resultado == LoginResult.InconsistencyDVUserNormal)
+                if (resultado == LoginResult.InconsistencyDVUserNormal)
                 {
-                    MostrarMensaje("El sistema no funciona actualmente.", true);
+                    MostrarMensaje(SubjectIdioma.Instancia.Traducir("msgSistemaNoFunciona"), true);
                 }
             }
             catch (LoginException ex)
@@ -79,7 +100,8 @@ namespace RedLine.Web
             }
             catch (Exception ex)
             {
-                MostrarMensaje($"Error técnico: {ex.Message}", true);
+                string textoError = SubjectIdioma.Instancia.Traducir("msgErrorTecnico");
+                MostrarMensaje($"{textoError}: {ex.Message}", true);
             }
         }
 
@@ -88,10 +110,18 @@ namespace RedLine.Web
             string mensajeError = "";
             switch (resultado)
             {
-                case LoginResult.InvalidUsername: mensajeError = "El usuario o email no existe."; break; 
-                case LoginResult.InvalidPassword: mensajeError = "Contraseña incorrecta."; break; 
-                case LoginResult.UserBlocked: mensajeError = "Usuario bloqueado."; break; 
-                default: mensajeError = "Error al iniciar sesión."; break; 
+                case LoginResult.InvalidUsername:
+                    mensajeError = SubjectIdioma.Instancia.Traducir("msgUsuarioNoExiste");
+                    break;
+                case LoginResult.InvalidPassword:
+                    mensajeError = SubjectIdioma.Instancia.Traducir("msgPasswordIncorrecta");
+                    break;
+                case LoginResult.UserBlocked:
+                    mensajeError = SubjectIdioma.Instancia.Traducir("msgUsuarioBloqueado");
+                    break;
+                default:
+                    mensajeError = SubjectIdioma.Instancia.Traducir("msgErrorLogin");
+                    break;
             }
             MostrarMensaje(mensajeError, true);
         }

@@ -1,0 +1,16 @@
+//Login
+{
+  "lblTitulo": "Log In",
+  "lblEmail": "Email",
+  "lblPassword": "Password",
+  "btnLogin": "Sign In",
+  "lblNoTienesCuenta": "Don't have an account?",
+  "linkRegistro": "Register here",
+  "msgIngresaCredenciales": "Please enter your credentials.",
+  "msgSistemaNoFunciona": "The system is currently unavailable.",
+  "msgUsuarioNoExiste": "User or email does not exist.",
+  "msgPasswordIncorrecta": "Incorrect password.",
+  "msgUsuarioBloqueado": "User blocked.",
+  "msgErrorLogin": "Login error.",
+  "msgErrorTecnico": "Technical error"
+}
