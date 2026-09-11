@@ -1,4 +1,5 @@
-﻿using RedLine.Bll;
+﻿using RedLine.Be.Interfaces;
+using RedLine.Bll;
 using RedLine.Servicios;
 using System;
 using System.Collections.Generic;
@@ -11,16 +12,42 @@ using System.Web.UI.WebControls;
 
 namespace RedLine.Web
 {
-    public partial class BackupRestore : System.Web.UI.Page
+    public partial class BackupRestore : System.Web.UI.Page, IObserver
     {
         private BLL_BackupRestore _bllBackupRestore = new BLL_BackupRestore();
+        private BLL_DigitoVerificador blldv = new BLL_DigitoVerificador();
 
         protected void Page_Load(object sender, EventArgs e)
         {
+            SubjectIdioma.Instancia.AgregarObserver(this);
+
             if (!IsPostBack)
             {
-                lblEstado.Text = "No se realizó ninguna operación.";
+                ActualizarIdioma(SubjectIdioma.Instancia.IdiomaActual);
+                lblEstado.Text = SubjectIdioma.Instancia.Traducir("msgSinOperacion");
                 lblEstado.ForeColor = System.Drawing.Color.Black;
+            }
+        }
+
+        protected void Page_Unload(object sender, EventArgs e)
+        {
+            SubjectIdioma.Instancia.QuitarObserver(this);
+        }
+
+        public void ActualizarIdioma(string nuevoIdioma)
+        {
+            lblTitulo.Text = SubjectIdioma.Instancia.Traducir("lblTituloBackup");
+            lblSubtituloBackup.Text = SubjectIdioma.Instancia.Traducir("lblSubtituloBackup");
+            btnGenerar.Text = SubjectIdioma.Instancia.Traducir("btnGenerarBackup");
+            lblSubtituloRestore.Text = SubjectIdioma.Instancia.Traducir("lblSubtituloRestore");
+            btnRestaurar.Text = SubjectIdioma.Instancia.Traducir("btnRestaurarBackup");
+            lblBotonSeleccionar.Text = SubjectIdioma.Instancia.Traducir("lblBotonSeleccionar");
+            lblSinArchivo.Text = SubjectIdioma.Instancia.Traducir("lblSinArchivo");
+
+            if (string.IsNullOrWhiteSpace(lblEstado.Text) ||
+                lblEstado.Text == SubjectIdioma.Instancia.Traducir("msgSinOperacion"))
+            {
+                lblEstado.Text = SubjectIdioma.Instancia.Traducir("msgSinOperacion");
             }
         }
 
@@ -46,16 +73,16 @@ namespace RedLine.Web
 
                 _bllBackupRestore.RealizarBackup(entradaUsuario);
 
-                lblEstado.Text = $"Copia de seguridad generada con éxito en: {entradaUsuario}";
+                lblEstado.Text = SubjectIdioma.Instancia.Traducir("msgBackupExito") + entradaUsuario;
                 lblEstado.ForeColor = System.Drawing.Color.Green;
             }
             catch (Exception ex)
             {
-                lblEstado.Text = "Error al generar backup: " + ex.Message;
+                lblEstado.Text = SubjectIdioma.Instancia.Traducir("msgBackupError") + ex.Message;
                 lblEstado.ForeColor = System.Drawing.Color.Red;
             }
         }
-        BLL_DigitoVerificador blldv = new BLL_DigitoVerificador();
+
         protected void btnRestaurar_Click(object sender, EventArgs e)
         {
             string rutaArchivoCompleta = string.Empty;
@@ -64,7 +91,7 @@ namespace RedLine.Web
             {
                 if (!fileUploadRestore.HasFile || !Path.GetExtension(fileUploadRestore.FileName).Equals(".bak", StringComparison.OrdinalIgnoreCase))
                 {
-                    lblEstado.Text = "Error: Debe seleccionar un archivo .bak válido para poder restaurar.";
+                    lblEstado.Text = SubjectIdioma.Instancia.Traducir("msgArchivoInvalido");
                     lblEstado.ForeColor = System.Drawing.Color.Red;
                     return;
                 }
@@ -83,7 +110,7 @@ namespace RedLine.Web
 
                 string Errores = blldv.VerificarTodaLaBaseDeDatos();
 
-                lblEstado.Text = "Base de datos restaurada con éxito. El sistema se ha actualizado.";
+                lblEstado.Text = SubjectIdioma.Instancia.Traducir("msgRestoreExito");
                 lblEstado.ForeColor = System.Drawing.Color.Green;
 
                 if (Session["Inconsistencia"] != null && (bool)Session["Inconsistencia"])
@@ -96,7 +123,7 @@ namespace RedLine.Web
             }
             catch (Exception ex)
             {
-                lblEstado.Text = "Error al restaurar: " + ex.Message;
+                lblEstado.Text = SubjectIdioma.Instancia.Traducir("msgRestoreError") + ex.Message;
                 lblEstado.ForeColor = System.Drawing.Color.Red;
             }
             finally

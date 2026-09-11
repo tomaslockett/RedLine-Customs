@@ -1,0 +1,80 @@
+﻿.gestion-idiomas-container {
+    padding: 20px;
+    color: #ffffff;
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+.seccion-card {
+    background-color: #1a1a1a;
+    border: 1px solid #333333;
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 25px;
+}
+
+    .seccion-card h2 {
+        margin-top: 0;
+        color: #D93416;
+        font-size: 1.4rem;
+        border-bottom: 1px solid #333333;
+        padding-bottom: 10px;
+    }
+
+.form-inline {
+    display: flex;
+    gap: 15px;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.input-text {
+    background-color: #2a2a2a;
+    border: 1px solid #444444;
+    color: #ffffff;
+    padding: 8px 12px;
+    border-radius: 4px;
+    font-size: 0.95rem;
+}
+
+.btn-rojo {
+    background-color: #D93416;
+    color: #ffffff;
+    border: none;
+    padding: 8px 18px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background-color 0.2s;
+}
+
+    .btn-rojo:hover {
+        background-color: #b52b12;
+    }
+
+.grid-traducciones {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 15px;
+}
+
+    .grid-traducciones th,
+    .grid-traducciones td {
+        border: 1px solid #333333;
+        padding: 10px;
+        text-align: left;
+    }
+
+    .grid-traducciones th {
+        background-color: #252525;
+        color: #D93416;
+    }
+
+    .grid-traducciones tr:nth-child(even) {
+        background-color: #1f1f1f;
+    }
+
+    .grid-traducciones input[type="text"] {
+        width: 100%;
+        box-sizing: border-box;
+    }

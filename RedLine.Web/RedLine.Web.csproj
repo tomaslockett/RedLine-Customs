@@ -116,6 +116,7 @@
     <Content Include="Content\estilos.css" />
     <Content Include="Content\GestionClientes.css" />
     <Content Include="Content\GestionEventos.css" />
+    <Content Include="Content\GestionIdiomas.css" />
     <Content Include="Content\GestionPermisos.css" />
     <Content Include="Content\GestionUsuarios.css" />
     <Content Include="Content\HistorialVentas.css" />
@@ -133,6 +134,7 @@
     <Content Include="Catalogo.aspx" />
     <Content Include="favicon.ico" />
     <Content Include="CrearAuto.aspx" />
+    <Content Include="GestionIdiomas.aspx" />
     <Content Include="Gestion_Perfiles_Permisos.aspx" />
     <Content Include="Inventario.aspx" />
     <Content Include="GestionClientes.aspx" />
@@ -191,6 +193,13 @@
     </Compile>
     <Compile Include="CrearAuto.aspx.designer.cs">
       <DependentUpon>CrearAuto.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="GestionIdiomas.aspx.cs">
+      <DependentUpon>GestionIdiomas.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="GestionIdiomas.aspx.designer.cs">
+      <DependentUpon>GestionIdiomas.aspx</DependentUpon>
     </Compile>
     <Compile Include="Gestion_Perfiles_Permisos.aspx.cs">
       <DependentUpon>Gestion_Perfiles_Permisos.aspx</DependentUpon>
@@ -306,8 +315,6 @@
     <Folder Include="App_Data\" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Idiomas\Español.json" />
-    <Content Include="Idiomas\Ingles.json" />
     <None Include="packages.config" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>

@@ -61,6 +61,7 @@
     <Compile Include="Mappers\DAL_Cliente.cs" />
     <Compile Include="Mappers\DAL_Evento.cs" />
     <Compile Include="Mappers\DAL_Familia.cs" />
+    <Compile Include="Mappers\DAL_Idioma.cs" />
     <Compile Include="Mappers\DAL_Mejora.cs" />
     <Compile Include="Mappers\DAL_Perfil.cs" />
     <Compile Include="Mappers\DAL_Permisos.cs" />

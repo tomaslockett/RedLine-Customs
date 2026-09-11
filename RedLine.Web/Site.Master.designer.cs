@@ -96,6 +96,15 @@ namespace RedLine.Web
         protected global::System.Web.UI.HtmlControls.HtmlAnchor lnkGestionPermisos;
 
         /// <summary>
+        /// Control lnkGestionIdiomas.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlAnchor lnkGestionIdiomas;
+
+        /// <summary>
         /// Control lnkBackupRestore.
         /// </summary>
         /// <remarks>
@@ -112,6 +121,15 @@ namespace RedLine.Web
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlAnchor lnkDigitoVerificador;
+
+        /// <summary>
+        /// Control ddlIdioma.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList ddlIdioma;
 
         /// <summary>
         /// Control litNombreUsuario.

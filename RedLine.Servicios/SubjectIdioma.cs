@@ -1,11 +1,11 @@
-﻿using RedLine.Be.Interfaces;
+﻿using RedLine.Be.Entidades;
+using RedLine.Be.Interfaces;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Newtonsoft.Json;
-using System.IO;
 using System.Web;
 
 
@@ -15,13 +15,11 @@ namespace RedLine.Servicios
     {
         private static SubjectIdioma _instancia;
         private List<IObserver> _observers = new List<IObserver>();
-        private Dictionary<string, string> _traducciones;
+        private Dictionary<string, string> _traducciones = new Dictionary<string, string>();
+
         public string IdiomaActual { get; private set; } = "Español";
 
-        private SubjectIdioma()
-        {
-            CargarIdioma(IdiomaActual);
-        }
+        private SubjectIdioma() { }
 
         public static SubjectIdioma Instancia
         {
@@ -32,23 +30,11 @@ namespace RedLine.Servicios
             }
         }
 
-        public void CargarIdioma(string idioma)
+        public void CargarTraducciones(string nombreIdioma, Dictionary<string, string> nuevasTraducciones)
         {
-            try
-            {
-                string ruta = HttpContext.Current.Server.MapPath($"~/Idiomas/{idioma}.json");
-                if (File.Exists(ruta))
-                {
-                    string json = File.ReadAllText(ruta);
-                    _traducciones = JsonConvert.DeserializeObject<Dictionary<string, string>>(json);
-                    IdiomaActual = idioma;
-                    Notificar();
-                }
-            }
-            catch (Exception)
-            {
-                _traducciones = new Dictionary<string, string>();
-            }
+            IdiomaActual = nombreIdioma;
+            _traducciones = nuevasTraducciones ?? new Dictionary<string, string>();
+            Notificar();
         }
 
         public string Traducir(string clave)
@@ -67,7 +53,7 @@ namespace RedLine.Servicios
 
         public void QuitarObserver(IObserver observer)
         {
-            if (_observers.Contains(observer)) _observers.Remove(observer);
+            if (!_observers.Contains(observer)) _observers.Remove(observer);
         }
 
         public void Notificar()

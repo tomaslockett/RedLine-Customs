@@ -55,9 +55,15 @@
         </button>
         <div class="dropdown-content">
             <a id="lnkGestionPermisos" runat="server" href="~/Gestion_Perfiles_Permisos.aspx">Gestión de Permisos</a>
+            <a id="lnkGestionIdiomas" runat="server" href="~/GestionIdiomas.aspx">Gestión de Idiomas</a>
             <a id="lnkBackupRestore" runat="server" href="~/BackupRestore.aspx">Backup & Restore</a>
             <a id="lnkDigitoVerificador" runat="server" href="#!">Dígito Verificador</a>
         </div>
+    </div>
+
+    <div class="dropdown-menu-container">
+        <asp:DropDownList ID="ddlIdioma" runat="server" AutoPostBack="true" OnSelectedIndexChanged="DdlIdioma_SelectedIndexChanged" CssClass="selector-idioma">
+        </asp:DropDownList>
     </div>
 
     <div class="dropdown-menu-container alinear-derecha">
