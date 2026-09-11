@@ -19,6 +19,11 @@ namespace RedLine.Bll
             return Repo.ObtenerTraduccionesPorIdioma(idIdioma);
         }
 
+        public Dictionary<string, string> ObtenerTraduccionesConFallback(int idIdioma)
+        {
+            return Repo.ObtenerTraduccionesConFallback(idIdioma);
+        }
+
         public Idioma ObtenerDefault()
         {
             return Repo.ObtenerDefault();

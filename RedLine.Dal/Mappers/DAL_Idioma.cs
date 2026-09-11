@@ -54,7 +54,38 @@ namespace RedLine.Dal.Mappers
             using (var con = new SqlConnection(cx))
             {
                 con.Open();
-                string query = "SELECT Clave, Texto FROM Traduccion WHERE IdIdioma = @IdIdioma";
+                string query = @"
+            SELECT E.Clave, COALESCE(T.Texto, '') AS Texto
+            FROM (SELECT DISTINCT Clave FROM Traduccion) E
+            LEFT JOIN Traduccion T ON E.Clave = T.Clave AND T.IdIdioma = @IdIdioma";
+
+                using (var cmd = new SqlCommand(query, con))
+                {
+                    cmd.Parameters.AddWithValue("@IdIdioma", idIdioma);
+                    using (var reader = cmd.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            traducciones[reader["Clave"].ToString()] = reader["Texto"].ToString();
+                        }
+                    }
+                }
+            }
+            return traducciones;
+        }
+
+        public Dictionary<string, string> ObtenerTraduccionesConFallback(int idIdioma)
+        {
+            var traducciones = new Dictionary<string, string>();
+            using (var con = new SqlConnection(cx))
+            {
+                con.Open();
+                string query = @"
+            SELECT E.Clave, 
+                   COALESCE(NULLIF(T.Texto, ''), '[' + E.Clave + ']') AS Texto
+            FROM (SELECT DISTINCT Clave FROM Traduccion) E
+            LEFT JOIN Traduccion T ON E.Clave = T.Clave AND T.IdIdioma = @IdIdioma";
+
                 using (var cmd = new SqlCommand(query, con))
                 {
                     cmd.Parameters.AddWithValue("@IdIdioma", idIdioma);

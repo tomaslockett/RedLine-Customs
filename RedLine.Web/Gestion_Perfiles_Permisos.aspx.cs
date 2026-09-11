@@ -48,6 +48,7 @@ namespace RedLine.Web
                     case 7: // BitacoraEventos
                     case 8: // GestionUsuarios
                     case 9: // GestionSeguridad
+                    case 24: //GestionIdiomas
                         cblPermisosAuditoria.Items.Add(item);
                         break;
                 }

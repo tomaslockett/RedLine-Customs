@@ -21,7 +21,6 @@ namespace RedLine.Web
 
             if (!IsPostBack)
             {
-                ActualizarIdioma(SubjectIdioma.Instancia.IdiomaActual);
                 CargarComboIdiomas();
                 CargarGrillaTraducciones();
             }
@@ -34,13 +33,7 @@ namespace RedLine.Web
 
         public void ActualizarIdioma(string nuevoIdioma)
         {
-            lblTituloPagina.Text = SubjectIdioma.Instancia.Traducir("lblTituloGestionIdiomas");
-            lblSubtituloNuevoIdioma.Text = SubjectIdioma.Instancia.Traducir("lblSubtituloNuevoIdioma");
-            btnCrearIdioma.Text = SubjectIdioma.Instancia.Traducir("btnCrearIdioma");
-            lblSubtituloTraducciones.Text = SubjectIdioma.Instancia.Traducir("lblSubtituloTraducciones");
-            lblSeleccionarIdioma.Text = SubjectIdioma.Instancia.Traducir("lblSeleccionarIdioma");
-            lblBuscar.Text = SubjectIdioma.Instancia.Traducir("lblBuscarEtiqueta");
-            btnGuardarTraducciones.Text = SubjectIdioma.Instancia.Traducir("btnGuardarTraducciones");
+
         }
 
         private void CargarComboIdiomas()
@@ -61,14 +54,21 @@ namespace RedLine.Web
             Dictionary<string, string> traducciones = _bllIdioma.ObtenerTraduccionesPorIdioma(idIdioma);
 
             string filtro = txtFiltro.Text.Trim().ToLower();
+            bool soloSinTraducir = chkSoloSinTraducir.Checked;
 
             var datosGrilla = traducciones
-                .Where(t => string.IsNullOrEmpty(filtro) || t.Key.ToLower().Contains(filtro))
+                .Where(t => (string.IsNullOrEmpty(filtro) || t.Key.ToLower().Contains(filtro)) &&
+                            (!soloSinTraducir || string.IsNullOrWhiteSpace(t.Value)))
                 .Select(t => new { EtiquetaKey = t.Key, Texto = t.Value })
                 .ToList();
 
             gvTraducciones.DataSource = datosGrilla;
             gvTraducciones.DataBind();
+        }
+
+        protected void ChkSoloSinTraducir_CheckedChanged(object sender, EventArgs e)
+        {
+            CargarGrillaTraducciones();
         }
 
         protected void DdlIdiomaDestino_SelectedIndexChanged(object sender, EventArgs e)
@@ -96,6 +96,13 @@ namespace RedLine.Web
                 _bllIdioma.GuardarNuevoIdioma(nombre);
                 txtNombreIdioma.Text = string.Empty;
                 CargarComboIdiomas();
+
+                ListItem itemNuevo = ddlIdiomaDestino.Items.FindByText(nombre);
+                if (itemNuevo != null)
+                {
+                    ddlIdiomaDestino.SelectedValue = itemNuevo.Value;
+                }
+
                 CargarGrillaTraducciones();
                 MostrarMensaje("Idioma creado exitosamente.", false);
             }

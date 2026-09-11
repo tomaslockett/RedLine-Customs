@@ -39,9 +39,11 @@ namespace RedLine.Servicios
 
         public string Traducir(string clave)
         {
-            if (_traducciones != null && _traducciones.ContainsKey(clave))
+            if (_traducciones != null &&
+                _traducciones.TryGetValue(clave, out string texto) &&
+                !string.IsNullOrWhiteSpace(texto))
             {
-                return _traducciones[clave];
+                return texto;
             }
             return $"[{clave}]";
         }

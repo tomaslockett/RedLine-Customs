@@ -27,6 +27,7 @@
                 
                 <label style="margin-left: 20px;"><asp:Label ID="lblBuscar" runat="server" Text="Buscar etiqueta:" /></label>
                 <asp:TextBox ID="txtFiltro" runat="server" CssClass="input-text" AutoPostBack="true" OnTextChanged="TxtFiltro_TextChanged" Placeholder="Filtrar por clave..." />
+                <asp:CheckBox ID="chkSoloSinTraducir" runat="server" Text=" Solo sin traducir" AutoPostBack="true" OnCheckedChanged="ChkSoloSinTraducir_CheckedChanged" Style="margin-left: 20px; color: #ffffff;" />
             </div>
 
             <asp:GridView ID="gvTraducciones" runat="server" AutoGenerateColumns="false" CssClass="grid-traducciones" DataKeyNames="EtiquetaKey">
