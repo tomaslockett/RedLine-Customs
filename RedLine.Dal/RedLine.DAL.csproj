@@ -59,12 +59,14 @@
     <Compile Include="Mappers\DAL_AutoBase.cs" />
     <Compile Include="Mappers\DAL_AutoPersonalizado.cs" />
     <Compile Include="Mappers\DAL_Cliente.cs" />
+    <Compile Include="Mappers\DAL_Etiqueta.cs" />
     <Compile Include="Mappers\DAL_Evento.cs" />
     <Compile Include="Mappers\DAL_Familia.cs" />
     <Compile Include="Mappers\DAL_Idioma.cs" />
     <Compile Include="Mappers\DAL_Mejora.cs" />
     <Compile Include="Mappers\DAL_Perfil.cs" />
     <Compile Include="Mappers\DAL_Permisos.cs" />
+    <Compile Include="Mappers\DAL_Traduccion.cs" />
     <Compile Include="Mappers\DAL_Usuario.cs" />
     <Compile Include="Mappers\DAL_DigitoVerificador.cs" />
     <Compile Include="Migrations\202605312145560_InitialCreate.cs" />
@@ -110,6 +112,10 @@
     <Compile Include="Migrations\202607122230327_MasPerfiles.cs" />
     <Compile Include="Migrations\202607122230327_MasPerfiles.Designer.cs">
       <DependentUpon>202607122230327_MasPerfiles.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202609121547446_AgregarTablasTraducciones.cs" />
+    <Compile Include="Migrations\202609121547446_AgregarTablasTraducciones.Designer.cs">
+      <DependentUpon>202609121547446_AgregarTablasTraducciones.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="ORM\SqlEnsamblador.cs" />
@@ -165,6 +171,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202607122230327_MasPerfiles.resx">
       <DependentUpon>202607122230327_MasPerfiles.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202609121547446_AgregarTablasTraducciones.resx">
+      <DependentUpon>202609121547446_AgregarTablasTraducciones.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

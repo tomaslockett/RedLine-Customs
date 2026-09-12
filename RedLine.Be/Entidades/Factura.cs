@@ -1,4 +1,5 @@
-﻿using System;
+﻿using RedLine.Be.Interfaces;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace RedLine.Be.Entidades
 {
-    public class Factura
+    public class Factura : IEntidad
     {
         public int ID { get; set; }
         public string NumeroFactura { get; set; }

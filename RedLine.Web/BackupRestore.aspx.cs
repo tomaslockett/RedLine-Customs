@@ -12,44 +12,22 @@ using System.Web.UI.WebControls;
 
 namespace RedLine.Web
 {
-    public partial class BackupRestore : System.Web.UI.Page, IObserver
+    public partial class BackupRestore : BasePage
     {
         private BLL_BackupRestore _bllBackupRestore = new BLL_BackupRestore();
         private BLL_DigitoVerificador blldv = new BLL_DigitoVerificador();
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            SubjectIdioma.Instancia.AgregarObserver(this);
-
             if (!IsPostBack)
             {
-                ActualizarIdioma(SubjectIdioma.Instancia.IdiomaActual);
-                lblEstado.Text = SubjectIdioma.Instancia.Traducir("msgSinOperacion");
+                lblEstado.Text = Traducir("msgSinOperacion");
                 lblEstado.ForeColor = System.Drawing.Color.Black;
             }
         }
 
-        protected void Page_Unload(object sender, EventArgs e)
-        {
-            SubjectIdioma.Instancia.QuitarObserver(this);
-        }
 
-        public void ActualizarIdioma(string nuevoIdioma)
-        {
-            lblTitulo.Text = SubjectIdioma.Instancia.Traducir("lblTituloBackup");
-            lblSubtituloBackup.Text = SubjectIdioma.Instancia.Traducir("lblSubtituloBackup");
-            btnGenerar.Text = SubjectIdioma.Instancia.Traducir("btnGenerarBackup");
-            lblSubtituloRestore.Text = SubjectIdioma.Instancia.Traducir("lblSubtituloRestore");
-            btnRestaurar.Text = SubjectIdioma.Instancia.Traducir("btnRestaurarBackup");
-            lblBotonSeleccionar.Text = SubjectIdioma.Instancia.Traducir("lblBotonSeleccionar");
-            lblSinArchivo.Text = SubjectIdioma.Instancia.Traducir("lblSinArchivo");
 
-            if (string.IsNullOrWhiteSpace(lblEstado.Text) ||
-                lblEstado.Text == SubjectIdioma.Instancia.Traducir("msgSinOperacion"))
-            {
-                lblEstado.Text = SubjectIdioma.Instancia.Traducir("msgSinOperacion");
-            }
-        }
 
         protected void btnGenerar_Click(object sender, EventArgs e)
         {
@@ -73,12 +51,12 @@ namespace RedLine.Web
 
                 _bllBackupRestore.RealizarBackup(entradaUsuario);
 
-                lblEstado.Text = SubjectIdioma.Instancia.Traducir("msgBackupExito") + entradaUsuario;
+                lblEstado.Text = Traducir("msgBackupExito") + entradaUsuario;
                 lblEstado.ForeColor = System.Drawing.Color.Green;
             }
             catch (Exception ex)
             {
-                lblEstado.Text = SubjectIdioma.Instancia.Traducir("msgBackupError") + ex.Message;
+                lblEstado.Text = Traducir("msgBackupError") + ex.Message;
                 lblEstado.ForeColor = System.Drawing.Color.Red;
             }
         }
@@ -91,7 +69,7 @@ namespace RedLine.Web
             {
                 if (!fileUploadRestore.HasFile || !Path.GetExtension(fileUploadRestore.FileName).Equals(".bak", StringComparison.OrdinalIgnoreCase))
                 {
-                    lblEstado.Text = SubjectIdioma.Instancia.Traducir("msgArchivoInvalido");
+                    lblEstado.Text = Traducir("msgArchivoInvalido");
                     lblEstado.ForeColor = System.Drawing.Color.Red;
                     return;
                 }
@@ -108,36 +86,29 @@ namespace RedLine.Web
 
                 _bllBackupRestore.RealizarRestore(rutaArchivoCompleta);
 
-                string Errores = blldv.VerificarTodaLaBaseDeDatos();
+                string errores = blldv.VerificarTodaLaBaseDeDatos();
 
-                lblEstado.Text = SubjectIdioma.Instancia.Traducir("msgRestoreExito");
+                lblEstado.Text = Traducir("msgRestoreExito");
                 lblEstado.ForeColor = System.Drawing.Color.Green;
 
                 if (Session["Inconsistencia"] != null && (bool)Session["Inconsistencia"])
                 {
                     Session["Inconsistencia"] = false;
-                    blldv.RegistrarEventoIntegridadComprometida(Errores);
+                    blldv.RegistrarEventoIntegridadComprometida(errores);
                     SessionManager.Instancia.Logout();
                     Response.Redirect("LogIn.aspx");
                 }
             }
             catch (Exception ex)
             {
-                lblEstado.Text = SubjectIdioma.Instancia.Traducir("msgRestoreError") + ex.Message;
+                lblEstado.Text = Traducir("msgRestoreError") + ex.Message;
                 lblEstado.ForeColor = System.Drawing.Color.Red;
             }
             finally
             {
                 if (!string.IsNullOrEmpty(rutaArchivoCompleta) && File.Exists(rutaArchivoCompleta))
                 {
-                    try
-                    {
-                        File.Delete(rutaArchivoCompleta);
-                    }
-                    catch
-                    {
-
-                    }
+                    try { File.Delete(rutaArchivoCompleta); } catch { }
                 }
             }
         }

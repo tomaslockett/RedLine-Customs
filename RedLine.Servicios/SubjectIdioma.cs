@@ -14,10 +14,10 @@ namespace RedLine.Servicios
     public class SubjectIdioma : ISubject
     {
         private static SubjectIdioma _instancia;
-        private List<IObserver> _observers = new List<IObserver>();
-        private Dictionary<string, string> _traducciones = new Dictionary<string, string>();
+        private readonly List<IObserver> _observers = new List<IObserver>();
 
-        public string IdiomaActual { get; private set; } = "Español";
+        private const string SESSION_KEY_IDIOMA = "IdiomaActual_Nombre";
+        private const string SESSION_KEY_TRADUCCIONES = "IdiomaActual_Diccionario";
 
         private SubjectIdioma() { }
 
@@ -30,21 +30,61 @@ namespace RedLine.Servicios
             }
         }
 
+        public string IdiomaActual
+        {
+            get
+            {
+                if (HttpContext.Current?.Session != null && HttpContext.Current.Session[SESSION_KEY_IDIOMA] != null)
+                {
+                    return HttpContext.Current.Session[SESSION_KEY_IDIOMA].ToString();
+                }
+                return "Español";
+            }
+            private set
+            {
+                if (HttpContext.Current?.Session != null)
+                {
+                    HttpContext.Current.Session[SESSION_KEY_IDIOMA] = value;
+                }
+            }
+        }
+
+        private Dictionary<string, string> Traducciones
+        {
+            get
+            {
+                if (HttpContext.Current?.Session != null && HttpContext.Current.Session[SESSION_KEY_TRADUCCIONES] is Dictionary<string, string> dict)
+                {
+                    return dict;
+                }
+                return new Dictionary<string, string>();
+            }
+            set
+            {
+                if (HttpContext.Current?.Session != null)
+                {
+                    HttpContext.Current.Session[SESSION_KEY_TRADUCCIONES] = value;
+                }
+            }
+        }
+
         public void CargarTraducciones(string nombreIdioma, Dictionary<string, string> nuevasTraducciones)
         {
             IdiomaActual = nombreIdioma;
-            _traducciones = nuevasTraducciones ?? new Dictionary<string, string>();
+            Traducciones = nuevasTraducciones ?? new Dictionary<string, string>();
             Notificar();
         }
 
         public string Traducir(string clave)
         {
-            if (_traducciones != null &&
-                _traducciones.TryGetValue(clave, out string texto) &&
-                !string.IsNullOrWhiteSpace(texto))
+            if (string.IsNullOrWhiteSpace(clave)) return string.Empty;
+
+            var dicc = Traducciones;
+            if (dicc != null && dicc.TryGetValue(clave, out string texto) && !string.IsNullOrWhiteSpace(texto))
             {
                 return texto;
             }
+
             return $"[{clave}]";
         }
 
@@ -55,12 +95,13 @@ namespace RedLine.Servicios
 
         public void QuitarObserver(IObserver observer)
         {
-            if (!_observers.Contains(observer)) _observers.Remove(observer);
+            if (_observers.Contains(observer)) _observers.Remove(observer);
         }
 
         public void Notificar()
         {
-            foreach (var observer in _observers)
+            var listaActual = new List<IObserver>(_observers);
+            foreach (var observer in listaActual)
             {
                 observer.ActualizarIdioma(IdiomaActual);
             }

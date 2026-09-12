@@ -6,7 +6,7 @@ using System.Web.UI.WebControls;
 
 namespace RedLine.Web
 {
-    public partial class GestionUsuarios : System.Web.UI.Page
+    public partial class GestionUsuarios : BasePage
     {
         private BLL_Usuario bllUsuario = new BLL_Usuario();
 
@@ -45,17 +45,18 @@ namespace RedLine.Web
                 Usuario u = (Usuario)e.Row.DataItem;
 
                 Label lblPerfil = (Label)e.Row.FindControl("lblNombrePerfil");
-
                 if (lblPerfil != null)
                 {
-                    if (u.Perfil != null && !string.IsNullOrEmpty(u.Perfil.Nombre))
-                    {
-                        lblPerfil.Text = u.Perfil.Nombre;
-                    }
-                    else
-                    {
-                        lblPerfil.Text = "Sin perfil";
-                    }
+                    lblPerfil.Text = (u.Perfil != null && !string.IsNullOrEmpty(u.Perfil.Nombre))
+                        ? u.Perfil.Nombre
+                        : Traducir("texto_sin_perfil");
+                }
+
+                LinkButton btnBorrar = (LinkButton)e.Row.FindControl("btnBorrarUsuario");
+                if (btnBorrar != null)
+                {
+                    string confirmacion = Traducir("msg_confirmar_eliminar_usuario");
+                    btnBorrar.OnClientClick = $"return confirm('{confirmacion.Replace("'", "\\'")}');";
                 }
             }
         }
@@ -64,9 +65,19 @@ namespace RedLine.Web
         {
             try
             {
+                if (string.IsNullOrWhiteSpace(txtDNI.Text) ||
+                    string.IsNullOrWhiteSpace(txtNombre.Text) ||
+                    string.IsNullOrWhiteSpace(txtApellido.Text) ||
+                    string.IsNullOrWhiteSpace(txtEmail.Text))
+                {
+                    MostrarMensaje(Traducir("msg_campos_obligatorios_usuario"), true);
+                    return;
+                }
+
                 if (string.IsNullOrEmpty(ddlRol.SelectedValue))
                 {
-                    throw new Exception("Debes seleccionar un perfil.");
+                    MostrarMensaje(Traducir("msg_seleccionar_perfil_requerido"), true);
+                    return;
                 }
 
                 BLL_Perfil bllPerfil = new BLL_Perfil();
@@ -81,10 +92,11 @@ namespace RedLine.Web
                     actual.Apellido = txtApellido.Text.Trim();
                     actual.Email = txtEmail.Text.Trim();
                     actual.Perfil = perfilSeleccionado;
+                    actual.PerfilId = perfilSeleccionado.Id;
                     actual.DNI = txtDNI.Text.Trim();
 
                     bllUsuario.Modificar(actual);
-                    lblMensaje.Text = "Usuario actualizado correctamente.";
+                    MostrarMensaje(Traducir("msg_usuario_actualizado_exito"), false);
                 }
                 else
                 {
@@ -94,7 +106,9 @@ namespace RedLine.Web
                         Nombre = txtNombre.Text.Trim(),
                         Apellido = txtApellido.Text.Trim(),
                         Email = txtEmail.Text.Trim(),
+                        Contraseña = RedLine.Servicios.Hashing.Sha256("123456"),
                         Perfil = perfilSeleccionado,
+                        PerfilId = perfilSeleccionado.Id,
                         Activo = true,
                         Bloqueado = false,
                         Intentos = 0,
@@ -102,17 +116,15 @@ namespace RedLine.Web
                     };
 
                     bllUsuario.Insertar(nuevo);
-                    lblMensaje.Text = "Usuario creado";
+                    MostrarMensaje(Traducir("msg_usuario_creado_exito"), false);
                 }
 
                 CargarGrilla();
                 LimpiarCampos();
-                lblMensaje.ForeColor = System.Drawing.Color.LightGreen;
             }
             catch (Exception ex)
             {
-                lblMensaje.Text = "Error: " + ex.Message;
-                lblMensaje.ForeColor = System.Drawing.Color.OrangeRed;
+                MostrarMensaje($"{Traducir("msg_error_usuario_prefijo")} {ex.Message}", true);
             }
         }
 
@@ -126,11 +138,13 @@ namespace RedLine.Web
             txtNombre.Text = u.Nombre;
             txtApellido.Text = u.Apellido;
             txtEmail.Text = u.Email;
+
             if (u.PerfilId.HasValue)
             {
                 ddlRol.SelectedValue = u.PerfilId.Value.ToString();
             }
-            btnAgregar.Text = "Confirmar Cambios";
+
+            btnAgregar.Text = Traducir("btn_confirmar_cambios_usuario");
             txtDNI.Enabled = false;
         }
 
@@ -169,11 +183,15 @@ namespace RedLine.Web
 
         private void LimpiarCampos()
         {
-            txtDNI.Text = txtNombre.Text = txtApellido.Text = txtEmail.Text = "";
+            txtDNI.Text = txtNombre.Text = txtApellido.Text = txtEmail.Text = string.Empty;
             txtDNI.Enabled = true;
             ViewState["ID_EDIT"] = null;
-            btnAgregar.Text = "Guardar Usuario";
-            lblMensaje.Text = "";
+            btnAgregar.Text = Traducir("btnAgregar");
+        }
+        private void MostrarMensaje(string texto, bool esError)
+        {
+            lblMensaje.Text = texto;
+            lblMensaje.ForeColor = esError ? System.Drawing.Color.FromName("#D93416") : System.Drawing.Color.Green;
         }
     }
 }

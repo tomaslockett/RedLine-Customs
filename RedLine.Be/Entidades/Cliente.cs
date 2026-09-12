@@ -1,9 +1,10 @@
-﻿using System;
+﻿using RedLine.Be.Interfaces;
+using System;
 using System.Collections.Generic;
 
 namespace Redline.Be
 {
-    public class Cliente
+    public class Cliente : IEntidad
     {
         public int ID { get; set; }
         public string DNI { get; set; }

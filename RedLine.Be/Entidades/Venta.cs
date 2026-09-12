@@ -4,10 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Redline.Be;
+using RedLine.Be.Interfaces;
 
-namespace RedLine.Be.Entidades
+namespace RedLine.Be.Entidades 
 {
-    public class Venta
+    public class Venta : IEntidad
     {
         public int ID { get; set; }
         public string NumeroVenta { get; set; }

@@ -11,14 +11,13 @@ using System.Web.UI.WebControls;
 
 namespace RedLine.Web
 {
-    public partial class GestionIdiomas : Page, IObserver
+    public partial class GestionIdiomas : BasePage
     {
-        private BLL_Idioma _bllIdioma = new BLL_Idioma();
+        private readonly BLL_Idioma _bllIdioma = new BLL_Idioma();
+        private readonly BLL_Traduccion _bllTraduccion = new BLL_Traduccion();
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            SubjectIdioma.Instancia.AgregarObserver(this);
-
             if (!IsPostBack)
             {
                 CargarComboIdiomas();
@@ -26,52 +25,44 @@ namespace RedLine.Web
             }
         }
 
-        protected void Page_Unload(object sender, EventArgs e)
-        {
-            SubjectIdioma.Instancia.QuitarObserver(this);
-        }
-
-        public void ActualizarIdioma(string nuevoIdioma)
-        {
-
-        }
-
         private void CargarComboIdiomas()
         {
             List<Idioma> idiomas = _bllIdioma.Listar();
             ddlIdiomaDestino.DataSource = idiomas;
             ddlIdiomaDestino.DataTextField = "Nombre";
-            ddlIdiomaDestino.DataValueField = "Id";
+            ddlIdiomaDestino.DataValueField = "ID";
             ddlIdiomaDestino.DataBind();
         }
 
         private void CargarGrillaTraducciones()
         {
-            if (ddlIdiomaDestino.SelectedValue == null || string.IsNullOrEmpty(ddlIdiomaDestino.SelectedValue))
-                return;
+            if (string.IsNullOrEmpty(ddlIdiomaDestino.SelectedValue)) return;
 
             int idIdioma = Convert.ToInt32(ddlIdiomaDestino.SelectedValue);
-            Dictionary<string, string> traducciones = _bllIdioma.ObtenerTraduccionesPorIdioma(idIdioma);
+            string paginaFiltro = string.IsNullOrEmpty(ddlFiltroPagina.SelectedValue) ? null : ddlFiltroPagina.SelectedValue;
 
-            string filtro = txtFiltro.Text.Trim().ToLower();
+            List<Traduccion> traducciones = _bllTraduccion.ListarPorIdiomaYPagina(idIdioma, paginaFiltro);
+
+            string filtroTexto = txtFiltro.Text.Trim().ToLower();
             bool soloSinTraducir = chkSoloSinTraducir.Checked;
 
-            var datosGrilla = traducciones
-                .Where(t => (string.IsNullOrEmpty(filtro) || t.Key.ToLower().Contains(filtro)) &&
-                            (!soloSinTraducir || string.IsNullOrWhiteSpace(t.Value)))
-                .Select(t => new { EtiquetaKey = t.Key, Texto = t.Value })
-                .ToList();
+            var datosFiltrados = traducciones.Where(t =>
+                (string.IsNullOrEmpty(filtroTexto) ||
+                 t.Etiqueta.Clave.ToLower().Contains(filtroTexto) ||
+                 (t.Etiqueta.Descripcion != null && t.Etiqueta.Descripcion.ToLower().Contains(filtroTexto))) &&
+                (!soloSinTraducir || string.IsNullOrWhiteSpace(t.Texto))
+            ).ToList();
 
-            gvTraducciones.DataSource = datosGrilla;
+            gvTraducciones.DataSource = datosFiltrados;
             gvTraducciones.DataBind();
         }
 
-        protected void ChkSoloSinTraducir_CheckedChanged(object sender, EventArgs e)
+        protected void DdlIdiomaDestino_SelectedIndexChanged(object sender, EventArgs e)
         {
             CargarGrillaTraducciones();
         }
 
-        protected void DdlIdiomaDestino_SelectedIndexChanged(object sender, EventArgs e)
+        protected void DdlFiltroPagina_SelectedIndexChanged(object sender, EventArgs e)
         {
             CargarGrillaTraducciones();
         }
@@ -81,13 +72,18 @@ namespace RedLine.Web
             CargarGrillaTraducciones();
         }
 
+        protected void ChkSoloSinTraducir_CheckedChanged(object sender, EventArgs e)
+        {
+            CargarGrillaTraducciones();
+        }
+
         protected void BtnCrearIdioma_Click(object sender, EventArgs e)
         {
             string nombre = txtNombreIdioma.Text.Trim();
 
-            if (string.IsNullOrEmpty(nombre))
+            if (string.IsNullOrWhiteSpace(nombre))
             {
-                MostrarMensaje("Ingrese un nombre válido para el idioma.", true);
+                MostrarMensaje(Traducir("msg_idioma_nombre_vacio"), true);
                 return;
             }
 
@@ -104,47 +100,54 @@ namespace RedLine.Web
                 }
 
                 CargarGrillaTraducciones();
-                MostrarMensaje("Idioma creado exitosamente.", false);
+                MostrarMensaje(Traducir("msg_idioma_creado_exito"), false);
             }
             catch (Exception ex)
             {
-                MostrarMensaje("Error al crear el idioma: " + ex.Message, true);
+                MostrarMensaje($"{Traducir("msg_error_crear_idioma")} {ex.Message}", true);
             }
         }
 
         protected void BtnGuardarTraducciones_Click(object sender, EventArgs e)
         {
-            if (ddlIdiomaDestino.SelectedValue == null) return;
+            if (string.IsNullOrEmpty(ddlIdiomaDestino.SelectedValue)) return;
 
             int idIdioma = Convert.ToInt32(ddlIdiomaDestino.SelectedValue);
-            Dictionary<string, string> traduccionesNuevas = new Dictionary<string, string>();
+            var traduccionesAGuardar = new List<Traduccion>();
 
             foreach (GridViewRow fila in gvTraducciones.Rows)
             {
                 if (fila.RowType == DataControlRowType.DataRow)
                 {
-                    string key = gvTraducciones.DataKeys[fila.RowIndex].Value.ToString();
+                    int idEtiqueta = Convert.ToInt32(gvTraducciones.DataKeys[fila.RowIndex].Value);
                     TextBox txtTexto = (TextBox)fila.FindControl("txtTextoTraducido");
-                    string texto = txtTexto != null ? txtTexto.Text : string.Empty;
+                    string texto = txtTexto != null ? txtTexto.Text.Trim() : string.Empty;
 
-                    traduccionesNuevas[key] = texto;
+                    traduccionesAGuardar.Add(new Traduccion
+                    {
+                        IdIdioma = idIdioma,
+                        IdEtiqueta = idEtiqueta,
+                        Texto = texto
+                    });
                 }
             }
 
             try
             {
-                _bllIdioma.GuardarTraducciones(idIdioma, traduccionesNuevas);
+                _bllTraduccion.GuardarTraducciones(idIdioma, traduccionesAGuardar);
 
-                if (Session["IdiomaSeleccionado"] != null && (int)Session["IdiomaSeleccionado"] == idIdioma)
+                if (SubjectIdioma.Instancia.IdiomaActual == ddlIdiomaDestino.SelectedItem.Text)
                 {
-                    SubjectIdioma.Instancia.CargarTraducciones(ddlIdiomaDestino.SelectedItem.Text, traduccionesNuevas);
+                    Dictionary<string, string> diccionarioActualizado = _bllIdioma.ObtenerTraduccionesPorIdioma(idIdioma);
+                    SubjectIdioma.Instancia.CargarTraducciones(ddlIdiomaDestino.SelectedItem.Text, diccionarioActualizado);
                 }
 
-                MostrarMensaje("Traducciones guardadas correctamente.", false);
+                CargarGrillaTraducciones();
+                MostrarMensaje(Traducir("msg_traducciones_guardadas"), false);
             }
             catch (Exception ex)
             {
-                MostrarMensaje("Error al guardar traducciones: " + ex.Message, true);
+                MostrarMensaje($"{Traducir("msg_error_guardar_traduccion")} {ex.Message}", true);
             }
         }
 

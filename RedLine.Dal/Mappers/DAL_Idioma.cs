@@ -14,16 +14,16 @@ namespace RedLine.Dal.Mappers
         protected override bool RequiereDigitoVerificador => false;
 
         protected override string SqlInsertar => @"INSERT INTO Idioma (Nombre, EsDefault) VALUES (@Nombre, @EsDefault)";
-        protected override string SqlModificar => @"UPDATE Idioma SET Nombre = @Nombre, EsDefault = @EsDefault WHERE Id = @Id";
-        protected override string SqlEliminar => @"DELETE FROM Idioma WHERE Id = @Id";
-        protected override string SqlListar => @"SELECT * FROM Idioma";
-        protected override string SqlObtenerPorId => @"SELECT * FROM Idioma WHERE Id = @Id";
+        protected override string SqlModificar => @"UPDATE Idioma SET Nombre = @Nombre, EsDefault = @EsDefault WHERE ID = @ID";
+        protected override string SqlEliminar => @"DELETE FROM Idioma WHERE ID = @ID";
+        protected override string SqlListar => @"SELECT ID, Nombre, EsDefault FROM Idioma ORDER BY Nombre";
+        protected override string SqlObtenerPorId => @"SELECT ID, Nombre, EsDefault FROM Idioma WHERE ID = @ID";
 
         protected override void ConfigurarParametros(SqlCommand cmd, Idioma entidad)
         {
-            if (cmd.CommandText.Contains("@Id"))
+            if (cmd.CommandText.Contains("@ID"))
             {
-                cmd.Parameters.AddWithValue("@Id", entidad.Id);
+                cmd.Parameters.AddWithValue("@ID", entidad.ID);
             }
             cmd.Parameters.AddWithValue("@Nombre", entidad.Nombre);
             cmd.Parameters.AddWithValue("@EsDefault", entidad.EsDefault);
@@ -31,13 +31,13 @@ namespace RedLine.Dal.Mappers
 
         protected override void ConfigurarParametrosId(SqlCommand cmd, int id)
         {
-            cmd.Parameters.AddWithValue("@Id", id);
+            cmd.Parameters.AddWithValue("@ID", id);
         }
 
         protected override Idioma Mapear(SqlDataReader lector)
         {
             return new Idioma(
-                Convert.ToInt32(lector["Id"]),
+                Convert.ToInt32(lector["ID"]),
                 lector["Nombre"].ToString(),
                 Convert.ToBoolean(lector["EsDefault"])
             );
@@ -45,7 +45,22 @@ namespace RedLine.Dal.Mappers
 
         public override Idioma ObtenerPorEntidad(Idioma entidad)
         {
-            return ObtenerPorId(entidad.Id);
+            return ObtenerPorId(entidad.ID);
+        }
+
+        public Idioma ObtenerDefault()
+        {
+            using (var con = new SqlConnection(cx))
+            {
+                con.Open();
+                string query = "SELECT TOP 1 ID, Nombre, EsDefault FROM Idioma WHERE EsDefault = 1";
+                using (var cmd = new SqlCommand(query, con))
+                using (var reader = cmd.ExecuteReader())
+                {
+                    if (reader.Read()) return Mapear(reader);
+                }
+            }
+            return null;
         }
 
         public Dictionary<string, string> ObtenerTraduccionesPorIdioma(int idIdioma)
@@ -55,9 +70,22 @@ namespace RedLine.Dal.Mappers
             {
                 con.Open();
                 string query = @"
-            SELECT E.Clave, COALESCE(T.Texto, '') AS Texto
-            FROM (SELECT DISTINCT Clave FROM Traduccion) E
-            LEFT JOIN Traduccion T ON E.Clave = T.Clave AND T.IdIdioma = @IdIdioma";
+            -- 1. Buscamos el ID del idioma por defecto (Base / Español)
+            DECLARE @IdDefault INT = (SELECT TOP 1 ID FROM Idioma WHERE EsDefault = 1);
+
+            -- 2. Traemos la traducción seleccionada; si está vacía o es NULL, caemos al idioma base
+            SELECT 
+                E.Clave,
+                COALESCE(
+                    NULLIF(T_Elegido.Texto, ''),   -- 1º Opción: El texto en Francés
+                    NULLIF(T_Default.Texto, ''),   -- 2º Opción: Fallback al Español (Base)
+                    '[' + E.Clave + ']'            -- 3º Opción: Clave cruda si nadie la tradujo jamás
+                ) AS Texto
+            FROM Etiqueta E
+            LEFT JOIN Traduccion T_Elegido 
+                ON E.ID = T_Elegido.IdEtiqueta AND T_Elegido.IdIdioma = @IdIdioma
+            LEFT JOIN Traduccion T_Default 
+                ON E.ID = T_Default.IdEtiqueta AND T_Default.IdIdioma = @IdDefault";
 
                 using (var cmd = new SqlCommand(query, con))
                 {
@@ -74,67 +102,6 @@ namespace RedLine.Dal.Mappers
             return traducciones;
         }
 
-        public Dictionary<string, string> ObtenerTraduccionesConFallback(int idIdioma)
-        {
-            var traducciones = new Dictionary<string, string>();
-            using (var con = new SqlConnection(cx))
-            {
-                con.Open();
-                string query = @"
-            SELECT E.Clave, 
-                   COALESCE(NULLIF(T.Texto, ''), '[' + E.Clave + ']') AS Texto
-            FROM (SELECT DISTINCT Clave FROM Traduccion) E
-            LEFT JOIN Traduccion T ON E.Clave = T.Clave AND T.IdIdioma = @IdIdioma";
-
-                using (var cmd = new SqlCommand(query, con))
-                {
-                    cmd.Parameters.AddWithValue("@IdIdioma", idIdioma);
-                    using (var reader = cmd.ExecuteReader())
-                    {
-                        while (reader.Read())
-                        {
-                            traducciones[reader["Clave"].ToString()] = reader["Texto"].ToString();
-                        }
-                    }
-                }
-            }
-            return traducciones;
-        }
-
-        public Idioma ObtenerDefault()
-        {
-            using (var con = new SqlConnection(cx))
-            {
-                con.Open();
-                string query = "SELECT TOP 1 * FROM Idioma WHERE EsDefault = 1";
-                using (var cmd = new SqlCommand(query, con))
-                {
-                    using (var reader = cmd.ExecuteReader())
-                    {
-                        if (reader.Read()) return Mapear(reader);
-                    }
-                }
-            }
-            return null;
-        }
-
-        public void GuardarTraduccion(int idIdioma, string clave, string texto)
-        {
-            using (var con = new SqlConnection(cx))
-            {
-                con.Open();
-                string query = @"IF EXISTS (SELECT 1 FROM Traduccion WHERE IdIdioma = @IdIdioma AND Clave = @Clave)
-                                    UPDATE Traduccion SET Texto = @Texto WHERE IdIdioma = @IdIdioma AND Clave = @Clave
-                                 ELSE
-                                    INSERT INTO Traduccion (IdIdioma, Clave, Texto) VALUES (@IdIdioma, @Clave, @Texto)";
-                using (var cmd = new SqlCommand(query, con))
-                {
-                    cmd.Parameters.AddWithValue("@IdIdioma", idIdioma);
-                    cmd.Parameters.AddWithValue("@Clave", clave);
-                    cmd.Parameters.AddWithValue("@Texto", texto);
-                    cmd.ExecuteNonQuery();
-                }
-            }
-        }
+        
     }
 }

@@ -16,12 +16,13 @@ namespace RedLine.Bll
 
         public Dictionary<string, string> ObtenerTraduccionesPorIdioma(int idIdioma)
         {
+            if (idIdioma <= 0) return new Dictionary<string, string>();
             return Repo.ObtenerTraduccionesPorIdioma(idIdioma);
         }
 
         public Dictionary<string, string> ObtenerTraduccionesConFallback(int idIdioma)
         {
-            return Repo.ObtenerTraduccionesConFallback(idIdioma);
+            return ObtenerTraduccionesPorIdioma(idIdioma);
         }
 
         public Idioma ObtenerDefault()
@@ -31,26 +32,19 @@ namespace RedLine.Bll
 
         public void GuardarNuevoIdioma(string nombre)
         {
-            if (string.IsNullOrWhiteSpace(nombre)) throw new Exception("El nombre del idioma no puede estar vacío.");
+            if (string.IsNullOrWhiteSpace(nombre))
+                throw new Exception("El nombre del idioma no puede estar vacío.");
 
-            Idioma nuevoIdioma = new Idioma(0, nombre.Trim(), false);
-            Insertar(nuevoIdioma);
-        }
+            string nombreLimpio = nombre.Trim();
 
-        public void GuardarTraduccion(int idIdioma, string clave, string texto)
-        {
-            if (string.IsNullOrWhiteSpace(clave)) throw new Exception("La clave de traducción no puede estar vacía.");
-            Repo.GuardarTraduccion(idIdioma, clave, texto);
-        }
-
-        public void GuardarTraducciones(int idIdioma, Dictionary<string, string> traducciones)
-        {
-            if (traducciones == null) return;
-
-            foreach (var kvp in traducciones)
+            var idiomasExistentes = Listar();
+            if (idiomasExistentes != null && idiomasExistentes.Any(i => i.Nombre.Equals(nombreLimpio, StringComparison.OrdinalIgnoreCase)))
             {
-                GuardarTraduccion(idIdioma, kvp.Key, kvp.Value);
+                throw new Exception($"Ya existe un idioma registrado con el nombre '{nombreLimpio}'.");
             }
+
+            Idioma nuevoIdioma = new Idioma(0, nombreLimpio, false);
+            Insertar(nuevoIdioma);
         }
     }
 }

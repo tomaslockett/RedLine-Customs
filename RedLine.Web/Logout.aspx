@@ -5,8 +5,8 @@
 
     <div class="logout-container">
         <div class="logout-card">
-            <h1>Cerrar Sesión</h1>
-            <p>¿Está seguro de que desea cerrar su sesión?</p>
+            <h1><asp:Label ID="lblTituloLogout" runat="server" Text="Cerrar Sesión" /></h1>
+            <p><asp:Label ID="lblPreguntaLogout" runat="server" Text="¿Está seguro de que desea cerrar su sesión?" /></p>
             <div class="logout-actions">
                 <asp:Button ID="btnConfirmar" runat="server" Text="Sí, salir" OnClick="btnConfirmar_Click" CssClass="btn-danger" />
                 <asp:Button ID="btnCancelar" runat="server" Text="No, volver" OnClick="btnCancelar_Click" CssClass="btn-secondary" />

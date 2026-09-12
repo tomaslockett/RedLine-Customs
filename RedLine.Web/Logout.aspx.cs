@@ -8,9 +8,9 @@ using System.Web.UI.WebControls;
 
 namespace RedLine.Web
 {
-    public partial class Logout : System.Web.UI.Page
+    public partial class Logout : BasePage
     {
-        private BLL_Usuario _bllUsuario = new BLL_Usuario();
+        private readonly BLL_Usuario _bllUsuario = new BLL_Usuario();
 
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -22,24 +22,26 @@ namespace RedLine.Web
             {
                 if (Session["Inconsistencia"] != null && (bool)Session["Inconsistencia"])
                 {
-                    _bllUsuario.LogoutInconsistente();                   
+                    _bllUsuario.LogoutInconsistente();
                 }
                 else
                 {
                     _bllUsuario.Logout();
                 }
-                Response.Redirect("~/Login.aspx");
+                Response.Redirect("~/Login.aspx", false);
+                Context.ApplicationInstance.CompleteRequest();
             }
             catch (Exception ex)
             {
-                lblError.Text = ex.Message;
+                lblError.Text = $"{Traducir("msg_error_logout_prefijo")} {ex.Message}";
                 lblError.Visible = true;
             }
         }
 
         protected void btnCancelar_Click(object sender, EventArgs e)
         {
-            Response.Redirect("~/Catalogo.aspx");
+            Response.Redirect("~/Catalogo.aspx", false);
+            Context.ApplicationInstance.CompleteRequest();
         }
     }
 }

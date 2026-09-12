@@ -12,9 +12,26 @@ using System.Web.UI.WebControls;
 
 namespace RedLine.Web
 {
-    public partial class SiteMaster : MasterPage
+    public partial class SiteMaster : MasterPage //IObserver
     {
         private BLL_Idioma _bllIdioma = new BLL_Idioma();
+
+        //protected override void OnInit(EventArgs e)
+        //{
+        //    base.OnInit(e);
+        //    SubjectIdioma.Instancia.AgregarObserver(this);
+        //}
+
+        //protected override void OnUnload(EventArgs e)
+        //{
+        //    SubjectIdioma.Instancia.QuitarObserver(this);
+        //    base.OnUnload(e);
+        //}
+
+        //public void ActualizarIdioma(string nuevoIdioma)
+        //{
+        //    // Opcional: acciones puntuales si necesitás refrescar literales fijos del master
+        //}
 
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -58,7 +75,7 @@ namespace RedLine.Web
             List<Idioma> idiomas = _bllIdioma.Listar();
             ddlIdioma.DataSource = idiomas;
             ddlIdioma.DataTextField = "Nombre";
-            ddlIdioma.DataValueField = "Id";
+            ddlIdioma.DataValueField = "ID";
             ddlIdioma.DataBind();
 
             Idioma seleccionado = null;
@@ -66,7 +83,7 @@ namespace RedLine.Web
             if (Session["IdiomaSeleccionado"] != null)
             {
                 int idSesion = (int)Session["IdiomaSeleccionado"];
-                seleccionado = idiomas.FirstOrDefault(i => i.Id == idSesion);
+                seleccionado = idiomas.FirstOrDefault(i => i.ID == idSesion);
             }
 
             if (seleccionado == null)
@@ -76,7 +93,8 @@ namespace RedLine.Web
 
             if (seleccionado != null)
             {
-                ddlIdioma.SelectedValue = seleccionado.Id.ToString();
+                ddlIdioma.SelectedValue = seleccionado.ID.ToString(); 
+                Session["IdiomaSeleccionado"] = seleccionado.ID;
                 ActualizarSubjectIdioma(seleccionado);
             }
         }
@@ -88,14 +106,15 @@ namespace RedLine.Web
 
             if (idiomaSeleccionado != null)
             {
-                Session["IdiomaSeleccionado"] = idiomaSeleccionado.Id;
+                Session["IdiomaSeleccionado"] = idiomaSeleccionado.ID;
                 ActualizarSubjectIdioma(idiomaSeleccionado);
+                Response.Redirect(Request.RawUrl);
             }
         }
 
         private void ActualizarSubjectIdioma(Idioma idioma)
         {
-            var traducciones = _bllIdioma.ObtenerTraduccionesPorIdioma(idioma.Id);
+            var traducciones = _bllIdioma.ObtenerTraduccionesPorIdioma(idioma.ID);
             SubjectIdioma.Instancia.CargarTraducciones(idioma.Nombre, traducciones);
         }
 

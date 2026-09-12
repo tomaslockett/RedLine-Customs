@@ -6,10 +6,10 @@
 
     <div class="loginContainer">
         <section class="loginBox">
-            <h1 class="loginTitulo">Cambiar Contraseña</h1>
+            <h1 class="loginTitulo"><asp:Label ID="lblTituloCambioPass" runat="server" Text="Cambiar Contraseña" /></h1>
 
             <div class="campo">
-                <label>Contraseña Actual</label>
+                <label><asp:Label ID="lblPassActual" runat="server" Text="Contraseña Actual" /></label>
                 <div class="password-wrapper">
                     <asp:TextBox ID="txtPassActual" runat="server" TextMode="Password" CssClass="inputLogin" />
                     <i class="fa-solid fa-eye-slash toggle-icon" id="toggleActual"></i>
@@ -17,7 +17,7 @@
             </div>
 
             <div class="campo">
-                <label>Nueva Contraseña</label>
+                <label><asp:Label ID="lblPassNueva" runat="server" Text="Nueva Contraseña" /></label>
                 <div class="password-wrapper">
                     <asp:TextBox ID="txtPassNueva" runat="server" TextMode="Password" CssClass="inputLogin" />
                     <i class="fa-solid fa-eye-slash toggle-icon" id="toggleNueva"></i>
@@ -25,7 +25,7 @@
             </div>
 
             <div class="campo">
-                <label>Confirmar Nueva Contraseña</label>
+                <label><asp:Label ID="lblPassConfirm" runat="server" Text="Confirmar Nueva Contraseña" /></label>
                 <div class="password-wrapper">
                     <asp:TextBox ID="txtPassConfirm" runat="server" TextMode="Password" CssClass="inputLogin" />
                     <i class="fa-solid fa-eye-slash toggle-icon" id="toggleConfirm"></i>

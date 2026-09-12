@@ -1,35 +1,37 @@
-﻿<%@ Page Title="Home Page" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="Catalogo.aspx.cs" Inherits="RedLine.Web._Default" %>
+﻿<%@ Page Title="Catálogo" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="Catalogo.aspx.cs" Inherits="RedLine.Web._Default" %>
 
 <asp:Content ID="BodyContent" ContentPlaceHolderID="MainContent" runat="server">
     <link href="Content/Catalogo.css" rel="stylesheet" type="text/css" />
     
-    <div class ="divsRojosGradiente">
-        <h1 class = "titulo">Catalogo de autos deportivos</h1>
-        <h2 class="subTitulo">Descubra nuestra seleccion de autos de alta gamma</h2>
+    <div class="divsRojosGradiente">
+        <h1 class="titulo"><asp:Label ID="lblTituloCatalogo" runat="server" Text="Catálogo de autos deportivos" /></h1>
+        <h2 class="subTitulo"><asp:Label ID="lblSubTituloCatalogo" runat="server" Text="Descubra nuestra selección de autos de alta gama" /></h2>
     </div>
 
     <div class="contenedor-busqueda">
         <div class="buscador">
             <img class="icono" src="Content/img/lupita.png"/>
-            <input type="text" placeholder="Buscar por modelo o marca..." class="inputBarraBusqueda"/>
+            <asp:TextBox ID="txtBuscarCatalogo" runat="server" placeholder="Buscar por modelo o marca..." CssClass="inputBarraBusqueda" />
         </div>
 
         <div class="filtros">
-            <select class="filtro">
-                <option>Marca</option>
-            </select>
+            <asp:DropDownList ID="ddlFiltroMarca" runat="server" CssClass="filtro">
+                <asp:ListItem Value="" Text="Marca" />
+            </asp:DropDownList>
 
-            <select class="filtro">
-                <option>Precio</option>
-            </select>
+            <asp:DropDownList ID="ddlFiltroPrecio" runat="server" CssClass="filtro">
+                <asp:ListItem Value="" Text="Precio" />
+            </asp:DropDownList>
 
-            <button class="btnFiltro">Aplicar</button>
+            <asp:Button ID="btnAplicarFiltros" runat="server" Text="Aplicar" CssClass="btnFiltro" OnClick="btnAplicarFiltros_Click" />
         </div>
     </div>
 
     <br />
     <div>
-        <h2 id="lblAutosEncontrados" class ="textoEncontrados">Se encontraron x autos</h2>
+        <h2 class="textoEncontrados">
+            <asp:Label ID="lblTextoEncontrados" runat="server" Text="Autos disponibles en catálogo" />
+        </h2>
     </div>
     <br />
 
@@ -45,21 +47,23 @@
 
                         <div class="datos">
                             <div class="datosAuto">
-                                <p class="lblDatosAuto">Vel. max</p>
-                                <%# Eval("VelocidadMaxima") %>Km/h
+                                <p class="lblDatosAuto"><%# Traducir("lblVelMax") %></p>
+                                <%# Eval("VelocidadMaxima") %> Km/h
                             </div>
                             <div class="datosAuto">
-                                <p class="lblDatosAuto">Potencia</p>
-                                <%# Eval("Potencia") %>HP
+                                <p class="lblDatosAuto"><%# Traducir("lblPotencia") %></p>
+                                <%# Eval("Potencia") %> HP
                             </div>
                             <div class="datosAuto">
-                                <p class="lblDatosAuto">0-100km/h</p> 
-                                <%# Eval("Aceleracion0a100") %>s
+                                <p class="lblDatosAuto"><%# Traducir("lblAceleracion") %></p> 
+                                <%# Eval("Aceleracion0a100") %> s
                             </div>
                         </div>
 
                         <h2 class="precio">$ <%# Eval("PrecioBase") %></h2>
-                        <a class="botonBajo" href='personalizarAuto.aspx?id=<%# Eval("ID") %>'>  Personalizar </a>
+                        <a class="botonBajo" href='personalizarAuto.aspx?id=<%# Eval("ID") %>'>
+                            <%# Traducir("btnPersonalizar") %>
+                        </a>
                     </div>
                 </div>
             </ItemTemplate>

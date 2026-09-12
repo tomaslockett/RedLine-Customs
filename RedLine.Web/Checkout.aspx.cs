@@ -9,7 +9,7 @@ using System.Web.UI.WebControls;
 
 namespace RedLine.Web
 {
-    public partial class Checkout : System.Web.UI.Page
+    public partial class Checkout : BasePage
     {
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -43,8 +43,8 @@ namespace RedLine.Web
                     }
 
                     decimal subtotal = auto.PrecioBase;
-                    string extrasHtml = "";
-                    string extrasSeleccionados = Session["Checkout_Extras"]?.ToString() ?? "";
+                    string extrasHtml = string.Empty;
+                    string extrasSeleccionados = Session["Checkout_Extras"]?.ToString() ?? string.Empty;
 
                     var preciosExtras = new Dictionary<string, decimal>
                     {
@@ -54,13 +54,14 @@ namespace RedLine.Web
                         { "suspension", 3000 },
                         { "pintura", 1800 }
                     };
-                    var nombresExtras = new Dictionary<string, string>
+
+                    var clavesExtras = new Dictionary<string, string>
                     {
-                        { "aleron", "Alerón deportivo" },
-                        { "kitCarroceria", "Kit de carrocería" },
-                        { "llantas", "Llantas personalizadas" },
-                        { "suspension", "Suspensión ajustable" },
-                        { "pintura", "Pintura personalizada" }
+                        { "aleron", "extra_aleron" },
+                        { "kitCarroceria", "extra_kitCarroceria" },
+                        { "llantas", "extra_llantas" },
+                        { "suspension", "extra_suspension" },
+                        { "pintura", "extra_pintura" }
                     };
 
                     if (!string.IsNullOrEmpty(extrasSeleccionados))
@@ -71,9 +72,11 @@ namespace RedLine.Web
                             if (preciosExtras.ContainsKey(extra))
                             {
                                 subtotal += preciosExtras[extra];
+                                string nombreTraducido = Traducir(clavesExtras[extra]);
+
                                 extrasHtml += $@"
                                     <div class='price-row'>
-                                        <span>{nombresExtras[extra]}</span>
+                                        <span>{nombreTraducido}</span>
                                         <span>+${preciosExtras[extra]:N0}</span>
                                     </div>";
                             }

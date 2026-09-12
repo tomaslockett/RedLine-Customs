@@ -56,10 +56,13 @@
     <Compile Include="Entidades\AutoPersonalizado.cs" />
     <Compile Include="Entidades\Cliente.cs" />
     <Compile Include="Entidades\DigitoVerificador.cs" />
+    <Compile Include="Entidades\Etiqueta.cs" />
     <Compile Include="Entidades\Factura.cs" />
     <Compile Include="Entidades\Idioma.cs" />
     <Compile Include="Entidades\ReporteIntegridad.cs" />
+    <Compile Include="Entidades\Traduccion.cs" />
     <Compile Include="Entidades\Venta.cs" />
+    <Compile Include="Interfaces\IEntidad.cs" />
     <Compile Include="Interfaces\IGestorIntegridad.cs" />
     <Compile Include="Interfaces\IObserver.cs" />
     <Compile Include="Interfaces\IRepositorioBasico.cs" />

@@ -10,28 +10,35 @@ using System.Web.UI.WebControls;
 
 namespace RedLine.Web
 {
-    public partial class CrearAuto : System.Web.UI.Page
+    public partial class CrearAuto : BasePage
     {
-        private BLL_Auto bllAuto = new BLL_Auto();
+        private readonly BLL_Auto _bllAuto = new BLL_Auto();
 
         protected void Page_Load(object sender, EventArgs e)
         {
-
         }
 
         protected void Agregar(object sender, EventArgs e)
         {
             try
             {
-                if (string.IsNullOrWhiteSpace(TextBoxID.Text) || string.IsNullOrWhiteSpace(DropDownListMarca.SelectedValue) || string.IsNullOrWhiteSpace(TextBoxModelo.Text) || string.IsNullOrWhiteSpace(TextBoxAño.Text) || string.IsNullOrWhiteSpace(TextBoxPrecio.Text) || string.IsNullOrWhiteSpace(TextBoxTipo.Text))
+                if (string.IsNullOrWhiteSpace(TextBoxID.Text) ||
+                    string.IsNullOrWhiteSpace(DropDownListMarca.SelectedValue) ||
+                    string.IsNullOrWhiteSpace(TextBoxModelo.Text) ||
+                    string.IsNullOrWhiteSpace(TextBoxAño.Text) ||
+                    string.IsNullOrWhiteSpace(TextBoxPrecio.Text) ||
+                    string.IsNullOrWhiteSpace(TextBoxTipo.Text))
                 {
-                    throw new Exception("Por favor, complete todos los campos obligatorios (*).");
+                    MostrarAlertaTraducida("msg_campos_requeridos_auto");
+                    return;
                 }
 
                 if (!FileUploadSubirFoto.HasFile)
                 {
-                    throw new Exception("Debe cargar una imagen representativa para el vehículo.");
+                    MostrarAlertaTraducida("msg_foto_requerida_auto");
+                    return;
                 }
+
                 byte[] imagenData = FileUploadSubirFoto.FileBytes;
                 AutoBase auto = new AutoBase
                 {
@@ -42,7 +49,7 @@ namespace RedLine.Web
                     PrecioBase = Convert.ToDecimal(TextBoxPrecio.Text),
                     Tipo = TextBoxTipo.Text.Trim(),
                     Stock = 1,
-                    ImagenBinaria = imagenData, 
+                    ImagenBinaria = imagenData,
                     DescripcionGeneral = TextBoxDescripcionGeneral.Text.Trim()
                 };
 
@@ -61,13 +68,12 @@ namespace RedLine.Web
                     auto.Aceleracion0a100 = Convert.ToDecimal(TextBoxAceleracion.Text);
                 }
 
-                bllAuto.GuardarAuto(auto);
-
+                _bllAuto.GuardarAuto(auto);
                 Response.Redirect("Inventario.aspx");
             }
             catch (Exception ex)
             {
-                Response.Write("<script>alert('" + ex.Message.Replace("'", "\\'") + "');</script>");
+                MostrarAlertaTraducida(ex.Message);
             }
         }
 

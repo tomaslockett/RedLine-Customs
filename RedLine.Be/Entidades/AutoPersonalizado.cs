@@ -1,10 +1,11 @@
-﻿using System;
+﻿using RedLine.Be.Interfaces;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
 namespace Redline.Be
 {
-    public class AutoPersonalizado
+    public class AutoPersonalizado : IEntidad
     {
         public int ID { get; set; }
         public string DNI_Cliente { get; set; }

@@ -9,7 +9,7 @@ using System.Web.UI.WebControls;
 
 namespace RedLine.Web
 {
-    public partial class Gestion_Perfiles_Permisos : System.Web.UI.Page
+    public partial class Gestion_Perfiles_Permisos : BasePage
     {
         BLL_Perfil bllPerfil = new BLL_Perfil();
         BLL_Permisos bllPermisos = new BLL_Permisos();
@@ -24,22 +24,30 @@ namespace RedLine.Web
 
         private void CargarPermisos()
         {
+            cblPermisosCatalogo.Items.Clear();
+            cblPermisosVentas.Items.Clear();
+            cblPermisosAuditoria.Items.Clear();
+
             var todosLosPermisos = bllPermisos.Listar().Where(p => p is Permiso).ToList();
 
             foreach (var permiso in todosLosPermisos)
             {
                 ListItem item = new ListItem(permiso.Nombre, permiso.Id.ToString());
 
-
                 switch (permiso.Id)
                 {
                     case 3: // Catalogo
                     case 5: // GestionInventario
+                    case 16: // PersonalizarAuto
                         cblPermisosCatalogo.Items.Add(item);
                         break;
 
                     case 4: // RealizarCompra
                     case 6: // GestionClientes
+                    case 12: // Checkout
+                    case 14: // HistorialVentas
+                    case 15: // PagoExitoso
+                    case 18: // RegistroClientes
                         cblPermisosVentas.Items.Add(item);
                         break;
 
@@ -48,12 +56,17 @@ namespace RedLine.Web
                     case 7: // BitacoraEventos
                     case 8: // GestionUsuarios
                     case 9: // GestionSeguridad
-                    case 24: //GestionIdiomas
+                    case 10: // BackupRestore
+                    case 11: // CambioContraseña
+                    case 13: // GestionPerfiles
+                    case 17: // RecuperarDV
+                    case 19: // GestionIdiomas
                         cblPermisosAuditoria.Items.Add(item);
                         break;
                 }
             }
         }
+        
 
         private void CargarPerfiles()
         {
@@ -66,35 +79,35 @@ namespace RedLine.Web
 
         protected void btnCrearPerfil_Click(object sender, EventArgs e)
         {
-            try
+           try
             {
                 string nuevoPerfil = txtNuevoPerfil.Text.Trim();
 
                 if (string.IsNullOrEmpty(nuevoPerfil))
                 {
-                    ScriptManager.RegisterStartupScript(this, GetType(), "alert", "alert('Che, ingresá un nombre para el perfil.');", true);
+                    MostrarAlertaTraducida("msg_ingrese_nombre_perfil");
                     return;
                 }
 
                 Perfil p = new Perfil { Nombre = nuevoPerfil };
-
                 bllPerfil.Insertar(p);
-
                 bllPerfil.RecalcularIntegridad();
 
-                txtNuevoPerfil.Text = "";
+                txtNuevoPerfil.Text = string.Empty;
                 CargarPerfiles();
 
-                ScriptManager.RegisterStartupScript(this, GetType(), "alert", "alert('¡Perfil creado con éxito!');", true);
+                MostrarAlertaTraducida("msg_perfil_creado_exito");
             }
             catch (Exception ex)
             {
-                ScriptManager.RegisterStartupScript(this, GetType(), "alert", $"alert('Error al crear perfil: {ex.Message}');", true);
+                MostrarAlertaTraducida("msg_error_crear_perfil", ex.Message);
             }
         }
 
         protected void lstPerfiles_SelectedIndexChanged(object sender, EventArgs e)
         {
+            if (string.IsNullOrEmpty(lstPerfiles.SelectedValue)) return;
+
             int idPerfil = int.Parse(lstPerfiles.SelectedValue);
             lblPerfilSeleccionado.Text = lstPerfiles.SelectedItem.Text;
 
@@ -134,6 +147,8 @@ namespace RedLine.Web
 
         protected void btnGuardarCambios_Click(object sender, EventArgs e)
         {
+            if (string.IsNullOrEmpty(lstPerfiles.SelectedValue)) return;
+
             try
             {
                 int idPerfil = int.Parse(lstPerfiles.SelectedValue);
@@ -144,14 +159,13 @@ namespace RedLine.Web
                 RecolectarSeleccionados(cblPermisosAuditoria, idsSeleccionados);
 
                 bllPerfil.SincronizarPermisos(idPerfil, idsSeleccionados);
-
                 bllPerfil.RecalcularIntegridad();
 
-                ScriptManager.RegisterStartupScript(this, GetType(), "alert", "alert('Cambios guardados con éxito');", true);
+                MostrarAlertaTraducida("msg_cambios_guardados_exito");
             }
             catch (Exception ex)
             {
-                ScriptManager.RegisterStartupScript(this, GetType(), "alert", $"alert('Error: {ex.Message}');", true);
+                MostrarAlertaTraducida("msg_error_general", ex.Message);
             }
         }
 

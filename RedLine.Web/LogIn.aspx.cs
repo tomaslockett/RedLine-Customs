@@ -12,34 +12,13 @@ using RedLine.Be.Interfaces;
 
 namespace RedLine.Web
 {
-    public partial class LogIn : System.Web.UI.Page, IObserver
+    public partial class LogIn : BasePage
     {
-        BLL_Cliente gestorCliente = new BLL_Cliente();
-        BLL_Usuario gestorUsuario = new BLL_Usuario();
+        private readonly BLL_Cliente gestorCliente = new BLL_Cliente();
+        private readonly BLL_Usuario gestorUsuario = new BLL_Usuario();
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            SubjectIdioma.Instancia.AgregarObserver(this);
-
-            if (!IsPostBack)
-            {
-                ActualizarIdioma(SubjectIdioma.Instancia.IdiomaActual);
-            }
-        }
-
-        protected void Page_Unload(object sender, EventArgs e)
-        {
-            SubjectIdioma.Instancia.QuitarObserver(this);
-        }
-
-        public void ActualizarIdioma(string nuevoIdioma)
-        {
-            lblTitulo.Text = SubjectIdioma.Instancia.Traducir("lblTitulo");
-            lblEmail.Text = SubjectIdioma.Instancia.Traducir("lblEmail");
-            lblPassword.Text = SubjectIdioma.Instancia.Traducir("lblPassword");
-            btnLogin.Text = SubjectIdioma.Instancia.Traducir("btnLogin");
-            lblNoTienesCuenta.Text = SubjectIdioma.Instancia.Traducir("lblNoTienesCuenta");
-            linkRegistro.Text = SubjectIdioma.Instancia.Traducir("linkRegistro");
         }
 
         protected void BtnLogin_Click(object sender, EventArgs e)
@@ -49,7 +28,7 @@ namespace RedLine.Web
 
             if (string.IsNullOrEmpty(email) || string.IsNullOrEmpty(password))
             {
-                MostrarMensaje(SubjectIdioma.Instancia.Traducir("msgIngresaCredenciales"), true);
+                MostrarMensaje(Traducir("msgIngresaCredenciales"), true);
                 return;
             }
 
@@ -70,7 +49,7 @@ namespace RedLine.Web
                 }
                 if (resultado == LoginResult.InconsistencyDVUserNormal)
                 {
-                    MostrarMensaje(SubjectIdioma.Instancia.Traducir("msgSistemaNoFunciona"), true);
+                    MostrarMensaje(Traducir("msgSistemaNoFunciona"), true);
                 }
             }
             catch (LoginException ex)
@@ -100,27 +79,27 @@ namespace RedLine.Web
             }
             catch (Exception ex)
             {
-                string textoError = SubjectIdioma.Instancia.Traducir("msgErrorTecnico");
+                string textoError = Traducir("msgErrorTecnico");
                 MostrarMensaje($"{textoError}: {ex.Message}", true);
             }
         }
 
         private void ManejarErrorLogin(LoginResult resultado)
         {
-            string mensajeError = "";
+            string mensajeError;
             switch (resultado)
             {
                 case LoginResult.InvalidUsername:
-                    mensajeError = SubjectIdioma.Instancia.Traducir("msgUsuarioNoExiste");
+                    mensajeError = Traducir("msgUsuarioNoExiste");
                     break;
                 case LoginResult.InvalidPassword:
-                    mensajeError = SubjectIdioma.Instancia.Traducir("msgPasswordIncorrecta");
+                    mensajeError = Traducir("msgPasswordIncorrecta");
                     break;
                 case LoginResult.UserBlocked:
-                    mensajeError = SubjectIdioma.Instancia.Traducir("msgUsuarioBloqueado");
+                    mensajeError = Traducir("msgUsuarioBloqueado");
                     break;
                 default:
-                    mensajeError = SubjectIdioma.Instancia.Traducir("msgErrorLogin");
+                    mensajeError = Traducir("msgErrorLogin");
                     break;
             }
             MostrarMensaje(mensajeError, true);

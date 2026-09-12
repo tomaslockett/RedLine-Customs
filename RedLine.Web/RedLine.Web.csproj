@@ -166,6 +166,9 @@
     <Compile Include="BackupRestore.aspx.designer.cs">
       <DependentUpon>BackupRestore.aspx</DependentUpon>
     </Compile>
+    <Compile Include="BasePage.cs">
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
     <Compile Include="CambioContraseña.aspx.cs">
       <DependentUpon>CambioContraseña.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>

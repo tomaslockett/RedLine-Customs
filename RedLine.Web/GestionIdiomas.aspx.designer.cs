@@ -87,6 +87,24 @@ namespace RedLine.Web
         protected global::System.Web.UI.WebControls.DropDownList ddlIdiomaDestino;
 
         /// <summary>
+        /// Control lblFiltroPagina.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblFiltroPagina;
+
+        /// <summary>
+        /// Control ddlFiltroPagina.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList ddlFiltroPagina;
+
+        /// <summary>
         /// Control lblBuscar.
         /// </summary>
         /// <remarks>
