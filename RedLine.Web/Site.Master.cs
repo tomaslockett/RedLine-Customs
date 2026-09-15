@@ -1,5 +1,6 @@
 ﻿using Redline.Be;
 using RedLine.Be.Entidades;
+using RedLine.Be.Interfaces;
 using RedLine.Bll;
 using RedLine.Servicios;
 using RedLine.Servicios.Composite;
@@ -12,26 +13,60 @@ using System.Web.UI.WebControls;
 
 namespace RedLine.Web
 {
-    public partial class SiteMaster : MasterPage //IObserver
+    public partial class SiteMaster : MasterPage, IObserver
     {
-        private BLL_Idioma _bllIdioma = new BLL_Idioma();
+        private readonly BLL_Idioma _bllIdioma = new BLL_Idioma();
 
-        //protected override void OnInit(EventArgs e)
-        //{
-        //    base.OnInit(e);
-        //    SubjectIdioma.Instancia.AgregarObserver(this);
-        //}
+        protected override void OnInit(EventArgs e)
+        {
+            base.OnInit(e);
+            SubjectIdioma.Instancia.AgregarObserver(this);
+        }
 
-        //protected override void OnUnload(EventArgs e)
-        //{
-        //    SubjectIdioma.Instancia.QuitarObserver(this);
-        //    base.OnUnload(e);
-        //}
+        protected override void OnUnload(EventArgs e)
+        {
+            SubjectIdioma.Instancia.QuitarObserver(this);
+            base.OnUnload(e);
+        }
 
-        //public void ActualizarIdioma(string nuevoIdioma)
-        //{
-        //    // Opcional: acciones puntuales si necesitás refrescar literales fijos del master
-        //}
+        public void ActualizarIdioma(string nuevoIdioma)
+        {
+            TraducirControles(this);
+        }
+
+        protected override void OnPreRender(EventArgs e)
+        {
+            base.OnPreRender(e);
+            TraducirControles(this);
+        }
+
+        private void TraducirControles(Control controlPadre)
+        {
+            foreach (Control c in controlPadre.Controls)
+            {
+                if (c is Label lbl && !string.IsNullOrEmpty(lbl.ID))
+                {
+                    string texto = SubjectIdioma.Instancia.Traducir(lbl.ID);
+                    if (!texto.StartsWith("[") || !texto.EndsWith("]"))
+                    {
+                        lbl.Text = texto;
+                    }
+                }
+                else if (c is Button btn && !string.IsNullOrEmpty(btn.ID))
+                {
+                    string texto = SubjectIdioma.Instancia.Traducir(btn.ID);
+                    if (!texto.StartsWith("[") || !texto.EndsWith("]"))
+                    {
+                        btn.Text = texto;
+                    }
+                }
+
+                if (c.HasControls())
+                {
+                    TraducirControles(c);
+                }
+            }
+        }
 
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -60,7 +95,8 @@ namespace RedLine.Web
             }
             else
             {
-                litNombreUsuario.Text = "Mi Cuenta";
+                string textoMiCuenta = SubjectIdioma.Instancia.Traducir("litNombreUsuario_Default");
+                litNombreUsuario.Text = textoMiCuenta.StartsWith("[") ? "Mi Cuenta" : textoMiCuenta;
 
                 lnkLogin.Visible = true;
                 lnkRegistrarse.Visible = true;
@@ -93,7 +129,7 @@ namespace RedLine.Web
 
             if (seleccionado != null)
             {
-                ddlIdioma.SelectedValue = seleccionado.ID.ToString(); 
+                ddlIdioma.SelectedValue = seleccionado.ID.ToString();
                 Session["IdiomaSeleccionado"] = seleccionado.ID;
                 ActualizarSubjectIdioma(seleccionado);
             }
@@ -101,6 +137,8 @@ namespace RedLine.Web
 
         protected void DdlIdioma_SelectedIndexChanged(object sender, EventArgs e)
         {
+            if (string.IsNullOrEmpty(ddlIdioma.SelectedValue)) return;
+
             int idIdioma = Convert.ToInt32(ddlIdioma.SelectedValue);
             Idioma idiomaSeleccionado = _bllIdioma.ObtenerPorId(idIdioma);
 

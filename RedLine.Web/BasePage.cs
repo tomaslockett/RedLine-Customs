@@ -119,6 +119,29 @@ namespace RedLine.Web
                                 txt.Attributes["placeholder"] = traduccion;
                                 break;
 
+                            case DropDownList ddl:
+                                // 1. Ítem por defecto (cuando Value es vacío)
+                                if (ddl.Items.Count > 0 && string.IsNullOrEmpty(ddl.Items[0].Value))
+                                {
+                                    ddl.Items[0].Text = traduccion;
+                                }
+
+                                // 2. Traducir ítems específicos si tienen clave en el diccionario (ej: ddlFiltroPagina_Catalogo.aspx)
+                                foreach (ListItem item in ddl.Items)
+                                {
+                                    if (!string.IsNullOrEmpty(item.Value))
+                                    {
+                                        string claveItem = $"{ddl.ID}_{item.Value}";
+                                        string itemTrad = SubjectIdioma.Instancia.Traducir(claveItem);
+                                        if (EsTraduccionValida(itemTrad))
+                                        {
+                                            item.Text = itemTrad;
+                                        }
+                                    }
+                                }
+                                break;
+
+
                             // Grillas: traduce los HeaderText de las columnas
                             case GridView gv:
                                 foreach (DataControlField col in gv.Columns)

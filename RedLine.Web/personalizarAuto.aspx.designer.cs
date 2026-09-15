@@ -60,6 +60,51 @@ namespace RedLine.Web
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl lblPrecio;
 
         /// <summary>
+        /// Control lblExtraAleron.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblExtraAleron;
+
+        /// <summary>
+        /// Control lblExtraKit.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblExtraKit;
+
+        /// <summary>
+        /// Control lblExtraLlantas.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblExtraLlantas;
+
+        /// <summary>
+        /// Control lblExtraSuspension.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblExtraSuspension;
+
+        /// <summary>
+        /// Control lblExtraPintura.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblExtraPintura;
+
+        /// <summary>
         /// Control btnConfirmar.
         /// </summary>
         /// <remarks>

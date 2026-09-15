@@ -30,16 +30,26 @@
                 <div>
                     <label><asp:Label ID="lblFiltroPagina" runat="server" Text="Filtrar por Pantalla:" /></label>
                     <asp:DropDownList ID="ddlFiltroPagina" runat="server" CssClass="input-text" AutoPostBack="true" OnSelectedIndexChanged="DdlFiltroPagina_SelectedIndexChanged">
-                        <asp:ListItem Value="" Text="-- Todas las pantallas --" />
-                        <asp:ListItem Value="Global" Text="Global / Alertas del Sistema" />
-                        <asp:ListItem Value="Inventario.aspx" Text="Inventario" />
-                        <asp:ListItem Value="Catalogo.aspx" Text="Catálogo" />
-                        <asp:ListItem Value="GestionClientes.aspx" Text="Gestión Clientes" />
-                        <asp:ListItem Value="GestionUsuarios.aspx" Text="Gestión Usuarios" />
-                        <asp:ListItem Value="GestionEventos.aspx" Text="Gestión Eventos" />
-                        <asp:ListItem Value="CrearAuto.aspx" Text="Crear Auto" />
-                        <asp:ListItem Value="BackupRestore.aspx" Text="Backup & Restore" />
-                        <asp:ListItem Value="Site.Master" Text="Menú Master" />
+                      <asp:ListItem Value="" Text="-- Todas las pantallas --" />
+                            <asp:ListItem Value="Global" Text="Global / Alertas del Sistema" />
+                            <asp:ListItem Value="Site.Master" Text="Menú Master / Navegación" />
+                            <asp:ListItem Value="Login.aspx" Text="Login" />
+                            <asp:ListItem Value="RegistroClientes.aspx" Text="Registro de Clientes" />
+                            <asp:ListItem Value="CambioContraseña.aspx" Text="Cambio de Contraseña" />
+                            <asp:ListItem Value="Catalogo.aspx" Text="Catálogo" />
+                            <asp:ListItem Value="PersonalizarAuto.aspx" Text="Personalizar Auto" />
+                            <asp:ListItem Value="CrearAuto.aspx" Text="Crear Auto" />
+                            <asp:ListItem Value="Checkout.aspx" Text="Checkout / Compra" />
+                            <asp:ListItem Value="PagoExitoso.aspx" Text="Confirmación de Pago" />
+                            <asp:ListItem Value="HistorialVentas.aspx" Text="Historial de Ventas" />
+                            <asp:ListItem Value="Inventario.aspx" Text="Gestión de Inventario" />
+                            <asp:ListItem Value="GestionClientes.aspx" Text="Gestión de Clientes" />
+                            <asp:ListItem Value="GestionUsuarios.aspx" Text="Gestión de Usuarios" />
+                            <asp:ListItem Value="GestionPerfiles.aspx" Text="Gestión de Perfiles / Familias" />
+                            <asp:ListItem Value="GestionIdiomas.aspx" Text="Gestión de Idiomas" />
+                            <asp:ListItem Value="GestionEventos.aspx" Text="Bitácora de Eventos" />
+                            <asp:ListItem Value="BackupRestore.aspx" Text="Backup & Restore" />
+                            <asp:ListItem Value="RecuperarDV.aspx" Text="Dígito Verificador / Integridad" />
                     </asp:DropDownList>
                 </div>
 

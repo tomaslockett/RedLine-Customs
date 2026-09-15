@@ -5,35 +5,36 @@
 <head runat="server">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <title>Recuperación de Dígito Verificador</title>
-
     <link href="/Content/RecuperacionDV.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
-
     <form id="form1" runat="server">
-
         <div class="contenedor-eventos-main">
             <div class="panel-bitacora-recuadro panel-inconsistencias">
                 
-                <h2 class="titulo-bitacora">Panel de Inconsistencias</h2>
+                <h2 class="titulo-bitacora">
+                    <asp:Label ID="lblTituloPanelInconsistencias" runat="server" Text="Panel de Inconsistencias" />
+                </h2>
                 
                 <div class="grupo-acciones-inconsistencias">
-
-                    <button class="boton-bitacora-accion" id="recalcular" runat="server" OnServerClick="RecalcularDV">Recalcular el DV</button>
-                    <button class="boton-bitacora-accion" id="restore" runat="server" OnServerClick="RestoreDV">Restore de BD</button>
-                    <button class="boton-bitacora-accion boton-salir" id="salir" runat="server" OnServerClick="SalirDV">Salir</button>
+                    <asp:Button ID="btnRecalcular" runat="server" Text="Recalcular el DV" CssClass="boton-bitacora-accion" OnClick="RecalcularDV" />
+                    <asp:Button ID="btnRestore" runat="server" Text="Restore de BD" CssClass="boton-bitacora-accion" OnClick="RestoreDV" />
+                    <asp:Button ID="btnSalir" runat="server" Text="Salir" CssClass="boton-bitacora-accion boton-salir" OnClick="SalirDV" />
                 </div>
 
                 <div class="seccion-reporte">
-                    <span class="etiqueta-reporte">Inconsistencias en las tablas:</span>
+                    <span class="etiqueta-reporte">
+                        <asp:Label ID="lblEtiquetaReporte" runat="server" Text="Inconsistencias en las tablas:" />
+                    </span>
                     <div class="cuadro-log-inconsistencias">
-                        <p class="log-vacio" id="log" runat="server">No se detectaron inconsistencias actuales.</p>
+                        <p class="log-vacio" id="log" runat="server">
+                            <asp:Label ID="lblLogVacio" runat="server" Text="No se detectaron inconsistencias actuales." />
+                        </p>
                     </div>
                 </div>
 
             </div>
         </div>
-
     </form>
 </body>
 </html>
