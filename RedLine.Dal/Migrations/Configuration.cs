@@ -221,6 +221,20 @@
             context.Idiomas.AddOrUpdate(i => i.Nombre, idiomaEspanol, idiomaIngles);
             context.SaveChanges();
 
+            var eIdiomaEs = new Etiqueta { Clave = "idioma_espanol", Pagina = "Global", Descripcion = "Nombre idioma Español", EsMensajeAlerta = false };
+var eIdiomaEn = new Etiqueta { Clave = "idioma_ingles", Pagina = "Global", Descripcion = "Nombre idioma Inglés", EsMensajeAlerta = false };
+
+context.Etiquetas.AddOrUpdate(e => e.Clave, eIdiomaEs, eIdiomaEn);
+context.SaveChanges();
+
+context.Traducciones.AddOrUpdate(t => new { t.IdIdioma, t.IdEtiqueta },
+    new Traduccion { IdIdioma = idiomaEspanol.ID, IdEtiqueta = eIdiomaEs.ID, Texto = "Español" },
+    new Traduccion { IdIdioma = idiomaEspanol.ID, IdEtiqueta = eIdiomaEn.ID, Texto = "Inglés" },
+    new Traduccion { IdIdioma = idiomaIngles.ID, IdEtiqueta = eIdiomaEs.ID, Texto = "Spanish" },
+    new Traduccion { IdIdioma = idiomaIngles.ID, IdEtiqueta = eIdiomaEn.ID, Texto = "English" }
+);
+context.SaveChanges();
+
             // =========================================================================
             // --- SEED ETIQUETAS Y TRADUCCIONES: GestionIdiomas.aspx -------------------
             // =========================================================================
@@ -832,6 +846,7 @@
             var eMsgUsuarioCreado = new Etiqueta { Clave = "msg_usuario_creado_exito", Pagina = "GestionUsuarios.aspx", Descripcion = "Confirmación creación usuario", EsMensajeAlerta = true };
             var eMsgConfirmarEliminar = new Etiqueta { Clave = "msg_confirmar_eliminar_usuario", Pagina = "GestionUsuarios.aspx", Descripcion = "Confirmación JavaScript para eliminar", EsMensajeAlerta = true };
             var eMsgErrorPref = new Etiqueta { Clave = "msg_error_usuario_prefijo", Pagina = "GestionUsuarios.aspx", Descripcion = "Prefijo mensaje de error", EsMensajeAlerta = true };
+            var eMsgDniInvalido = new Etiqueta { Clave = "msg_dni_invalido_formato", Pagina = "GestionUsuarios.aspx", Descripcion = "DNI invalido", EsMensajeAlerta = true };
 
             context.Etiquetas.AddOrUpdate(e => e.Clave,
                 eTitPersonal, eLblDniU, eLblNomU, eLblApeU, eLblEmailU, eLblRolU,
@@ -841,7 +856,7 @@
                 eBtnGridDesact, eBtnGridAct, eBtnGridDesbloq, eSinPerfil,
                 eBtnConfirmarCambios, eMsgSelPerfil, eMsgCamposOblig,
                 eMsgUsuarioActualizado, eMsgUsuarioCreado, eMsgConfirmarEliminar,
-                eMsgErrorPref
+                eMsgErrorPref, eMsgDniInvalido
             );
             context.SaveChanges();
 
@@ -879,7 +894,8 @@
                 new Traduccion { IdIdioma = idiomaEspanol.ID, IdEtiqueta = eMsgUsuarioActualizado.ID, Texto = "Usuario actualizado correctamente." },
                 new Traduccion { IdIdioma = idiomaEspanol.ID, IdEtiqueta = eMsgUsuarioCreado.ID, Texto = "Usuario creado correctamente." },
                 new Traduccion { IdIdioma = idiomaEspanol.ID, IdEtiqueta = eMsgConfirmarEliminar.ID, Texto = "¿Está seguro de que desea eliminar este usuario?" },
-                new Traduccion { IdIdioma = idiomaEspanol.ID, IdEtiqueta = eMsgErrorPref.ID, Texto = "Error: " }
+                new Traduccion { IdIdioma = idiomaEspanol.ID, IdEtiqueta = eMsgErrorPref.ID, Texto = "Error: " },
+                new Traduccion { IdIdioma = idiomaEspanol.ID, IdEtiqueta = eMsgDniInvalido.ID, Texto = "El DNI es invalido." }
             );
             context.SaveChanges();
 
@@ -997,8 +1013,8 @@
             var eEmailLogin = new Etiqueta { Clave = "lblEmail", Pagina = "LogIn.aspx", Descripcion = "Etiqueta campo Email", EsMensajeAlerta = false };
             var ePassLogin = new Etiqueta { Clave = "lblPassword", Pagina = "LogIn.aspx", Descripcion = "Etiqueta campo Contraseña", EsMensajeAlerta = false };
             var eBtnLogin = new Etiqueta { Clave = "btnLogin", Pagina = "LogIn.aspx", Descripcion = "Botón para ingresar", EsMensajeAlerta = false };
-            var eNoCuenta = new Etiqueta { Clave = "lblNoTienesCuenta", Pagina = "LogIn.aspx", Descripcion = "Pregunta pie de login", EsMensajeAlerta = false };
-            var eLinkReg = new Etiqueta { Clave = "linkRegistro", Pagina = "LogIn.aspx", Descripcion = "Enlace hacia la pantalla de registro", EsMensajeAlerta = false };
+            var eLblNoTienesCuenta = new Etiqueta { Clave = "lblNoTienesCuenta", Pagina = "LogIn.aspx", Descripcion = "Texto previo al enlace de registro", EsMensajeAlerta = false };
+            var eLnkIrRegistro = new Etiqueta { Clave = "lnkIrRegistro", Pagina = "LogIn.aspx", Descripcion = "Enlace para ir al formulario de registro", EsMensajeAlerta = false };
 
             // Mensajes y Alertas del Backend
             var eMsgCredenciales = new Etiqueta { Clave = "msgIngresaCredenciales", Pagina = "LogIn.aspx", Descripcion = "Validación campos vacíos", EsMensajeAlerta = true };
@@ -1008,11 +1024,12 @@
             var eMsgBloqueado = new Etiqueta { Clave = "msgUsuarioBloqueado", Pagina = "LogIn.aspx", Descripcion = "Aviso cuenta bloqueada por intentos", EsMensajeAlerta = true };
             var eMsgErrorLogin = new Etiqueta { Clave = "msgErrorLogin", Pagina = "LogIn.aspx", Descripcion = "Error genérico de inicio de sesión", EsMensajeAlerta = true };
             var eMsgSistemaFalla = new Etiqueta { Clave = "msgSistemaNoFunciona", Pagina = "LogIn.aspx", Descripcion = "Alerta inconsistencia de base de datos", EsMensajeAlerta = true };
+            var eMsgInactivo = new Etiqueta { Clave = "msgUsuarioInactivo", Pagina = "LogIn.aspx", Descripcion = "Aviso de usuario inactivo / deshabilitado", EsMensajeAlerta = true };
 
             context.Etiquetas.AddOrUpdate(e => e.Clave,
-                eTitLogin, eEmailLogin, ePassLogin, eBtnLogin, eNoCuenta, eLinkReg,
+                eTitLogin, eEmailLogin, ePassLogin, eBtnLogin, eLblNoTienesCuenta, eLnkIrRegistro,
                 eMsgCredenciales, eMsgErrorTecnico, eMsgNoExiste, eMsgPassInvalida,
-                eMsgBloqueado, eMsgErrorLogin, eMsgSistemaFalla
+                eMsgBloqueado, eMsgErrorLogin, eMsgSistemaFalla, eMsgInactivo
             );
             context.SaveChanges();
 
@@ -1022,15 +1039,16 @@
                 new Traduccion { IdIdioma = idiomaEspanol.ID, IdEtiqueta = eEmailLogin.ID, Texto = "Email" },
                 new Traduccion { IdIdioma = idiomaEspanol.ID, IdEtiqueta = ePassLogin.ID, Texto = "Contraseña" },
                 new Traduccion { IdIdioma = idiomaEspanol.ID, IdEtiqueta = eBtnLogin.ID, Texto = "Ingresar" },
-                new Traduccion { IdIdioma = idiomaEspanol.ID, IdEtiqueta = eNoCuenta.ID, Texto = "¿No tienes cuenta?" },
-                new Traduccion { IdIdioma = idiomaEspanol.ID, IdEtiqueta = eLinkReg.ID, Texto = "Regístrate aquí" },
+                new Traduccion { IdIdioma = idiomaEspanol.ID, IdEtiqueta = eLblNoTienesCuenta.ID, Texto = "¿No tienes cuenta?" },
+                new Traduccion { IdIdioma = idiomaEspanol.ID, IdEtiqueta = eLnkIrRegistro.ID, Texto = "Regístrate aquí" },
                 new Traduccion { IdIdioma = idiomaEspanol.ID, IdEtiqueta = eMsgCredenciales.ID, Texto = "Por favor, ingresa tu email y contraseña." },
                 new Traduccion { IdIdioma = idiomaEspanol.ID, IdEtiqueta = eMsgErrorTecnico.ID, Texto = "Error técnico" },
                 new Traduccion { IdIdioma = idiomaEspanol.ID, IdEtiqueta = eMsgNoExiste.ID, Texto = "El usuario ingresado no existe." },
                 new Traduccion { IdIdioma = idiomaEspanol.ID, IdEtiqueta = eMsgPassInvalida.ID, Texto = "Contraseña incorrecta." },
                 new Traduccion { IdIdioma = idiomaEspanol.ID, IdEtiqueta = eMsgBloqueado.ID, Texto = "La cuenta se encuentra bloqueada por exceso de intentos." },
                 new Traduccion { IdIdioma = idiomaEspanol.ID, IdEtiqueta = eMsgErrorLogin.ID, Texto = "Error al intentar iniciar sesión." },
-                new Traduccion { IdIdioma = idiomaEspanol.ID, IdEtiqueta = eMsgSistemaFalla.ID, Texto = "El sistema se encuentra temporalmente suspendido por verificación de seguridad." }
+                new Traduccion { IdIdioma = idiomaEspanol.ID, IdEtiqueta = eMsgSistemaFalla.ID, Texto = "El sistema se encuentra temporalmente suspendido por verificación de seguridad." },
+                new Traduccion { IdIdioma = idiomaEspanol.ID, IdEtiqueta = eMsgInactivo.ID, Texto = "El usuario se encuentra inactivo." }
             );
             context.SaveChanges();
 
@@ -1273,6 +1291,78 @@
                 new Traduccion { IdIdioma = idiomaEspanol.ID, IdEtiqueta = eMenuPass.ID, Texto = "Cambiar Contraseña" },
                 new Traduccion { IdIdioma = idiomaEspanol.ID, IdEtiqueta = eMenuOut.ID, Texto = "Cerrar Sesión" },
                 new Traduccion { IdIdioma = idiomaEspanol.ID, IdEtiqueta = eMenuCuenta.ID, Texto = "Mi Cuenta" }
+            );
+            context.SaveChanges();
+
+            // =========================================================================
+            // --- SEED ETIQUETAS Y TRADUCCIONES: GestionEventos.aspx ------------------
+            // =========================================================================
+
+            // 1. Catálogo Maestro de Etiquetas para GestionEventos.aspx
+            var eTitGestionEv = new Etiqueta { Clave = "lblTituloGestionEventos", Pagina = "GestionEventos.aspx", Descripcion = "Título de la vista Bitácora de Eventos", EsMensajeAlerta = false };
+            var eFiltroUsuario = new Etiqueta { Clave = "lblFiltroUsuario", Pagina = "GestionEventos.aspx", Descripcion = "Filtro por usuario", EsMensajeAlerta = false };
+            var eFiltroModulo = new Etiqueta { Clave = "lblFiltroModulo", Pagina = "GestionEventos.aspx", Descripcion = "Filtro por módulo", EsMensajeAlerta = false };
+            var eFiltroActividad = new Etiqueta { Clave = "lblFiltroActividad", Pagina = "GestionEventos.aspx", Descripcion = "Filtro por actividad", EsMensajeAlerta = false };
+            var eFiltroCriticidad = new Etiqueta { Clave = "lblFiltroCriticidad", Pagina = "GestionEventos.aspx", Descripcion = "Filtro por nivel de criticidad", EsMensajeAlerta = false };
+            var eFiltroFechaDesde = new Etiqueta { Clave = "lblFiltroFechaDesde", Pagina = "GestionEventos.aspx", Descripcion = "Filtro fecha desde", EsMensajeAlerta = false };
+            var eFiltroFechaHasta = new Etiqueta { Clave = "lblFiltroFechaHasta", Pagina = "GestionEventos.aspx", Descripcion = "Filtro fecha hasta", EsMensajeAlerta = false };
+            var eBtnFiltrarEv = new Etiqueta { Clave = "btnFiltrarEventos", Pagina = "GestionEventos.aspx", Descripcion = "Botón para aplicar filtros", EsMensajeAlerta = false };
+            var eBtnLimpiarEv = new Etiqueta { Clave = "btnLimpiarFiltros", Pagina = "GestionEventos.aspx", Descripcion = "Botón para limpiar filtros", EsMensajeAlerta = false };
+
+            var eColFecha = new Etiqueta { Clave = "colFecha", Pagina = "GestionEventos.aspx", Descripcion = "Columna Fecha y Hora", EsMensajeAlerta = false };
+            var eColUsuario = new Etiqueta { Clave = "colUsuario", Pagina = "GestionEventos.aspx", Descripcion = "Columna Usuario", EsMensajeAlerta = false };
+            var eColModulo = new Etiqueta { Clave = "colModulo", Pagina = "GestionEventos.aspx", Descripcion = "Columna Módulo", EsMensajeAlerta = false };
+            var eColCriticidad = new Etiqueta { Clave = "colCriticidad", Pagina = "GestionEventos.aspx", Descripcion = "Columna Criticidad", EsMensajeAlerta = false };
+            var eColDescripcion = new Etiqueta { Clave = "colDescripcion", Pagina = "GestionEventos.aspx", Descripcion = "Columna Descripción del evento", EsMensajeAlerta = false };
+
+            var eMsgSinResultados = new Etiqueta { Clave = "msg_eventos_sin_resultados", Pagina = "GestionEventos.aspx", Descripcion = "Mensaje cuando no se encuentran eventos", EsMensajeAlerta = true };
+            var eMsgErrorFechas = new Etiqueta { Clave = "msg_eventos_error_fechas", Pagina = "GestionEventos.aspx", Descripcion = "Error cuando la fecha desde es mayor a hasta", EsMensajeAlerta = true };
+
+            context.Etiquetas.AddOrUpdate(e => e.Clave,
+                eTitGestionEv, eFiltroUsuario, eFiltroModulo, eFiltroActividad, eFiltroCriticidad,
+                eFiltroFechaDesde, eFiltroFechaHasta, eBtnFiltrarEv, eBtnLimpiarEv,
+                eColFecha, eColUsuario, eColModulo, eColCriticidad, eColDescripcion,
+                eMsgSinResultados, eMsgErrorFechas
+            );
+            context.SaveChanges();
+
+            context.Traducciones.AddOrUpdate(t => new { t.IdIdioma, t.IdEtiqueta },
+                new Traduccion { IdIdioma = idiomaEspanol.ID, IdEtiqueta = eTitGestionEv.ID, Texto = "Bitácora de Eventos" },
+                new Traduccion { IdIdioma = idiomaEspanol.ID, IdEtiqueta = eFiltroUsuario.ID, Texto = "Usuario" },
+                new Traduccion { IdIdioma = idiomaEspanol.ID, IdEtiqueta = eFiltroModulo.ID, Texto = "Módulo" },
+                new Traduccion { IdIdioma = idiomaEspanol.ID, IdEtiqueta = eFiltroActividad.ID, Texto = "Actividad" },
+                new Traduccion { IdIdioma = idiomaEspanol.ID, IdEtiqueta = eFiltroCriticidad.ID, Texto = "Criticidad" },
+                new Traduccion { IdIdioma = idiomaEspanol.ID, IdEtiqueta = eFiltroFechaDesde.ID, Texto = "Fecha" },
+                new Traduccion { IdIdioma = idiomaEspanol.ID, IdEtiqueta = eFiltroFechaHasta.ID, Texto = "Fecha Hasta" },
+                new Traduccion { IdIdioma = idiomaEspanol.ID, IdEtiqueta = eBtnFiltrarEv.ID, Texto = "Filtrar" },
+                new Traduccion { IdIdioma = idiomaEspanol.ID, IdEtiqueta = eBtnLimpiarEv.ID, Texto = "Limpiar Filtros" },
+                new Traduccion { IdIdioma = idiomaEspanol.ID, IdEtiqueta = eColFecha.ID, Texto = "Fecha / Hora" },
+                new Traduccion { IdIdioma = idiomaEspanol.ID, IdEtiqueta = eColUsuario.ID, Texto = "Usuario" },
+                new Traduccion { IdIdioma = idiomaEspanol.ID, IdEtiqueta = eColModulo.ID, Texto = "Módulo" },
+                new Traduccion { IdIdioma = idiomaEspanol.ID, IdEtiqueta = eColCriticidad.ID, Texto = "Criticidad" },
+                new Traduccion { IdIdioma = idiomaEspanol.ID, IdEtiqueta = eColDescripcion.ID, Texto = "Descripción" },
+                new Traduccion { IdIdioma = idiomaEspanol.ID, IdEtiqueta = eMsgSinResultados.ID, Texto = "No se encontraron eventos registrados con los criterios seleccionados." },
+                new Traduccion { IdIdioma = idiomaEspanol.ID, IdEtiqueta = eMsgErrorFechas.ID, Texto = "La fecha desde no puede ser mayor a la fecha hasta." }
+            );
+            context.SaveChanges();
+
+            // 2. Traducciones asignadas al idioma Español
+            context.Traducciones.AddOrUpdate(t => new { t.IdIdioma, t.IdEtiqueta },
+                new Traduccion { IdIdioma = idiomaEspanol.ID, IdEtiqueta = eTitGestionEv.ID, Texto = "Bitácora de Eventos" },
+                new Traduccion { IdIdioma = idiomaEspanol.ID, IdEtiqueta = eFiltroUsuario.ID, Texto = "Usuario" },
+                new Traduccion { IdIdioma = idiomaEspanol.ID, IdEtiqueta = eFiltroModulo.ID, Texto = "Módulo" },
+                new Traduccion { IdIdioma = idiomaEspanol.ID, IdEtiqueta = eFiltroCriticidad.ID, Texto = "Criticidad" },
+                new Traduccion { IdIdioma = idiomaEspanol.ID, IdEtiqueta = eFiltroFechaDesde.ID, Texto = "Fecha Desde" },
+                new Traduccion { IdIdioma = idiomaEspanol.ID, IdEtiqueta = eFiltroFechaHasta.ID, Texto = "Fecha Hasta" },
+                new Traduccion { IdIdioma = idiomaEspanol.ID, IdEtiqueta = eBtnFiltrarEv.ID, Texto = "Filtrar" },
+                new Traduccion { IdIdioma = idiomaEspanol.ID, IdEtiqueta = eBtnLimpiarEv.ID, Texto = "Limpiar Filtros" },
+                new Traduccion { IdIdioma = idiomaEspanol.ID, IdEtiqueta = eColFecha.ID, Texto = "Fecha / Hora" },
+                new Traduccion { IdIdioma = idiomaEspanol.ID, IdEtiqueta = eColUsuario.ID, Texto = "Usuario" },
+                new Traduccion { IdIdioma = idiomaEspanol.ID, IdEtiqueta = eColModulo.ID, Texto = "Módulo" },
+                new Traduccion { IdIdioma = idiomaEspanol.ID, IdEtiqueta = eColCriticidad.ID, Texto = "Criticidad" },
+                new Traduccion { IdIdioma = idiomaEspanol.ID, IdEtiqueta = eColDescripcion.ID, Texto = "Descripción" },
+                new Traduccion { IdIdioma = idiomaEspanol.ID, IdEtiqueta = eMsgSinResultados.ID, Texto = "No se encontraron eventos registrados con los criterios seleccionados." },
+                new Traduccion { IdIdioma = idiomaEspanol.ID, IdEtiqueta = eMsgErrorFechas.ID, Texto = "La fecha desde no puede ser mayor a la fecha hasta." }
             );
             context.SaveChanges();
 
@@ -1557,7 +1647,8 @@
                     new Traduccion { IdIdioma = idiomaIngles.ID, IdEtiqueta = eMsgUsuarioActualizado.ID, Texto = "User updated successfully." },
                     new Traduccion { IdIdioma = idiomaIngles.ID, IdEtiqueta = eMsgUsuarioCreado.ID, Texto = "User created successfully." },
                     new Traduccion { IdIdioma = idiomaIngles.ID, IdEtiqueta = eMsgConfirmarEliminar.ID, Texto = "Are you sure you want to delete this user?" },
-                    new Traduccion { IdIdioma = idiomaIngles.ID, IdEtiqueta = eMsgErrorPref.ID, Texto = "Error: " }
+                    new Traduccion { IdIdioma = idiomaIngles.ID, IdEtiqueta = eMsgErrorPref.ID, Texto = "Error: " },
+                    new Traduccion { IdIdioma = idiomaIngles.ID, IdEtiqueta = eMsgDniInvalido.ID, Texto = "The ID  number is invalid." }
                 );
                 context.SaveChanges();
 
@@ -1612,15 +1703,16 @@
                     new Traduccion { IdIdioma = idiomaIngles.ID, IdEtiqueta = eEmailLogin.ID, Texto = "Email" },
                     new Traduccion { IdIdioma = idiomaIngles.ID, IdEtiqueta = ePassLogin.ID, Texto = "Password" },
                     new Traduccion { IdIdioma = idiomaIngles.ID, IdEtiqueta = eBtnLogin.ID, Texto = "Sign In" },
-                    new Traduccion { IdIdioma = idiomaIngles.ID, IdEtiqueta = eNoCuenta.ID, Texto = "Don't have an account?" },
-                    new Traduccion { IdIdioma = idiomaIngles.ID, IdEtiqueta = eLinkReg.ID, Texto = "Register here" },
+                    new Traduccion { IdIdioma = idiomaIngles.ID, IdEtiqueta = eLblNoTienesCuenta.ID, Texto = "Don't have an account?" },
+                    new Traduccion { IdIdioma = idiomaIngles.ID, IdEtiqueta = eLnkIrRegistro.ID, Texto = "Register here" },
                     new Traduccion { IdIdioma = idiomaIngles.ID, IdEtiqueta = eMsgCredenciales.ID, Texto = "Please enter your email and password." },
                     new Traduccion { IdIdioma = idiomaIngles.ID, IdEtiqueta = eMsgErrorTecnico.ID, Texto = "Technical error" },
                     new Traduccion { IdIdioma = idiomaIngles.ID, IdEtiqueta = eMsgNoExiste.ID, Texto = "The entered user does not exist." },
                     new Traduccion { IdIdioma = idiomaIngles.ID, IdEtiqueta = eMsgPassInvalida.ID, Texto = "Incorrect password." },
                     new Traduccion { IdIdioma = idiomaIngles.ID, IdEtiqueta = eMsgBloqueado.ID, Texto = "Account is locked due to too many failed attempts." },
                     new Traduccion { IdIdioma = idiomaIngles.ID, IdEtiqueta = eMsgErrorLogin.ID, Texto = "Error attempting to sign in." },
-                    new Traduccion { IdIdioma = idiomaIngles.ID, IdEtiqueta = eMsgSistemaFalla.ID, Texto = "System temporarily suspended due to security verification." }
+                    new Traduccion { IdIdioma = idiomaIngles.ID, IdEtiqueta = eMsgSistemaFalla.ID, Texto = "System temporarily suspended due to security verification." },
+                    new Traduccion { IdIdioma = idiomaIngles.ID, IdEtiqueta = eMsgInactivo.ID, Texto = "User account is inactive." }
                 );
                 context.SaveChanges();
 
@@ -1727,6 +1819,29 @@
                     new Traduccion { IdIdioma = idiomaIngles.ID, IdEtiqueta = eMenuPass.ID, Texto = "Change Password" },
                     new Traduccion { IdIdioma = idiomaIngles.ID, IdEtiqueta = eMenuOut.ID, Texto = "Log Out" },
                     new Traduccion { IdIdioma = idiomaIngles.ID, IdEtiqueta = eMenuCuenta.ID, Texto = "My Account" }
+                );
+                context.SaveChanges();
+
+                // -------------------------------------------------------------------------
+                // 19. GestionEventos.aspx
+                // -------------------------------------------------------------------------
+                context.Traducciones.AddOrUpdate(t => new { t.IdIdioma, t.IdEtiqueta },
+                    new Traduccion { IdIdioma = idiomaIngles.ID, IdEtiqueta = eTitGestionEv.ID, Texto = "Event Log" },
+                    new Traduccion { IdIdioma = idiomaIngles.ID, IdEtiqueta = eFiltroUsuario.ID, Texto = "User" },
+                    new Traduccion { IdIdioma = idiomaIngles.ID, IdEtiqueta = eFiltroModulo.ID, Texto = "Module" },
+                    new Traduccion { IdIdioma = idiomaIngles.ID, IdEtiqueta = eFiltroActividad.ID, Texto = "Activity" },
+                    new Traduccion { IdIdioma = idiomaIngles.ID, IdEtiqueta = eFiltroCriticidad.ID, Texto = "Severity Level" },
+                    new Traduccion { IdIdioma = idiomaIngles.ID, IdEtiqueta = eFiltroFechaDesde.ID, Texto = "Date" },
+                    new Traduccion { IdIdioma = idiomaIngles.ID, IdEtiqueta = eFiltroFechaHasta.ID, Texto = "To Date" },
+                    new Traduccion { IdIdioma = idiomaIngles.ID, IdEtiqueta = eBtnFiltrarEv.ID, Texto = "Filter" },
+                    new Traduccion { IdIdioma = idiomaIngles.ID, IdEtiqueta = eBtnLimpiarEv.ID, Texto = "Clear Filters" },
+                    new Traduccion { IdIdioma = idiomaIngles.ID, IdEtiqueta = eColFecha.ID, Texto = "Date / Time" },
+                    new Traduccion { IdIdioma = idiomaIngles.ID, IdEtiqueta = eColUsuario.ID, Texto = "User" },
+                    new Traduccion { IdIdioma = idiomaIngles.ID, IdEtiqueta = eColModulo.ID, Texto = "Module" },
+                    new Traduccion { IdIdioma = idiomaIngles.ID, IdEtiqueta = eColCriticidad.ID, Texto = "Severity" },
+                    new Traduccion { IdIdioma = idiomaIngles.ID, IdEtiqueta = eColDescripcion.ID, Texto = "Description" },
+                    new Traduccion { IdIdioma = idiomaIngles.ID, IdEtiqueta = eMsgSinResultados.ID, Texto = "No logged events were found matching the selected criteria." },
+                    new Traduccion { IdIdioma = idiomaIngles.ID, IdEtiqueta = eMsgErrorFechas.ID, Texto = "The 'From' date cannot be greater than the 'To' date." }
                 );
                 context.SaveChanges();
             }

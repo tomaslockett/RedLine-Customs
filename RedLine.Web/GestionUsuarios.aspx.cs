@@ -40,6 +40,18 @@ namespace RedLine.Web
         }
         protected void gvUsuarios_RowDataBound(object sender, GridViewRowEventArgs e)
         {
+            // Traducir Encabezados de la Grilla
+            if (e.Row.RowType == DataControlRowType.Header)
+            {
+                e.Row.Cells[1].Text = Traducir("col_UsuarioDNI");
+                e.Row.Cells[2].Text = Traducir("col_UsuarioNombre");
+                e.Row.Cells[3].Text = Traducir("col_UsuarioApellido");
+                e.Row.Cells[4].Text = Traducir("col_UsuarioEmail");
+                e.Row.Cells[5].Text = Traducir("col_UsuarioPerfil");
+                e.Row.Cells[6].Text = Traducir("col_UsuarioEstado");
+                e.Row.Cells[7].Text = Traducir("col_UsuarioAcciones");
+            }
+
             if (e.Row.RowType == DataControlRowType.DataRow)
             {
                 Usuario u = (Usuario)e.Row.DataItem;
@@ -71,6 +83,13 @@ namespace RedLine.Web
                     string.IsNullOrWhiteSpace(txtEmail.Text))
                 {
                     MostrarMensaje(Traducir("msg_campos_obligatorios_usuario"), true);
+                    return;
+                }
+
+                string dniLimpio = txtDNI.Text.Trim();
+                if (!System.Text.RegularExpressions.Regex.IsMatch(dniLimpio, @"^\d{8}$"))
+                {
+                    MostrarMensaje(Traducir("msg_dni_invalido_formato"), true);
                     return;
                 }
 

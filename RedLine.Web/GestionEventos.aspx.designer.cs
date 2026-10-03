@@ -15,6 +15,15 @@ namespace RedLine.Web
     {
 
         /// <summary>
+        /// Control lblTituloGestionEventos.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblTituloGestionEventos;
+
+        /// <summary>
         /// Control upBitacora.
         /// </summary>
         /// <remarks>
@@ -22,6 +31,15 @@ namespace RedLine.Web
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.UpdatePanel upBitacora;
+
+        /// <summary>
+        /// Control lblFiltroUsuario.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblFiltroUsuario;
 
         /// <summary>
         /// Control txtFiltroUsuario.
@@ -33,6 +51,15 @@ namespace RedLine.Web
         protected global::System.Web.UI.WebControls.TextBox txtFiltroUsuario;
 
         /// <summary>
+        /// Control lblFiltroFechaDesde.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblFiltroFechaDesde;
+
+        /// <summary>
         /// Control txtFiltroFecha.
         /// </summary>
         /// <remarks>
@@ -40,6 +67,15 @@ namespace RedLine.Web
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txtFiltroFecha;
+
+        /// <summary>
+        /// Control lblFiltroModulo.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblFiltroModulo;
 
         /// <summary>
         /// Control txtFiltroModulo.
@@ -51,6 +87,15 @@ namespace RedLine.Web
         protected global::System.Web.UI.WebControls.TextBox txtFiltroModulo;
 
         /// <summary>
+        /// Control lblFiltroActividad.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblFiltroActividad;
+
+        /// <summary>
         /// Control txtFiltroActividad.
         /// </summary>
         /// <remarks>
@@ -58,6 +103,15 @@ namespace RedLine.Web
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txtFiltroActividad;
+
+        /// <summary>
+        /// Control lblFiltroCriticidad.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblFiltroCriticidad;
 
         /// <summary>
         /// Control ddlFiltroCri.
@@ -69,13 +123,13 @@ namespace RedLine.Web
         protected global::System.Web.UI.WebControls.DropDownList ddlFiltroCri;
 
         /// <summary>
-        /// Control btnLimpiar.
+        /// Control btnLimpiarFiltros.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnLimpiar;
+        protected global::System.Web.UI.WebControls.Button btnLimpiarFiltros;
 
         /// <summary>
         /// Control btnExportar.

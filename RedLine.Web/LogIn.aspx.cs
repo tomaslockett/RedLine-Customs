@@ -19,6 +19,7 @@ namespace RedLine.Web
 
         protected void Page_Load(object sender, EventArgs e)
         {
+            
         }
 
         protected void BtnLogin_Click(object sender, EventArgs e)
@@ -97,6 +98,9 @@ namespace RedLine.Web
                     break;
                 case LoginResult.UserBlocked:
                     mensajeError = Traducir("msgUsuarioBloqueado");
+                    break;
+                case LoginResult.UserInactive: 
+                    mensajeError = Traducir("msgUsuarioInactivo");
                     break;
                 default:
                     mensajeError = Traducir("msgErrorLogin");

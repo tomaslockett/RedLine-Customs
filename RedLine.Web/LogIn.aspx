@@ -29,7 +29,9 @@
             <div style="text-align: center; margin-top: 25px;">
                 <p style="color: darkgray; font-size: 0.9rem; margin: 0;">
                     <asp:Label ID="lblNoTienesCuenta" runat="server" Text="¿No tienes cuenta?" />
-                    <asp:HyperLink ID="linkRegistro" runat="server" NavigateUrl="RegistroCliente.aspx" Style="color: #D93416; text-decoration: none; font-weight: bold;" Text="Regístrate aquí" />
+                    <a href="RegistroCliente.aspx" style="color: #D93416; text-decoration: none; font-weight: bold;">
+                        <asp:Label ID="lnkIrRegistro" runat="server" Text="Regístrate aquí" />
+                    </a>
                 </p>
             </div>
         </section>

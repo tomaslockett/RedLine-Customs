@@ -15,10 +15,12 @@
         
         <div style="display: inline-flex; align-items: center; gap: 10px;">
             <asp:FileUpload ID="fileUploadRestore" runat="server" Style="display: none;" onchange="actualizarNombreArchivo(this)" />
-            <label for="<%= fileUploadRestore.ClientID %>" class="login-boton" style="cursor: pointer; padding: 8px 15px; margin: 0; display: inline-block;">
+    
+            <label for="<%= fileUploadRestore.ClientID %>" style="cursor: pointer; padding: 8px 15px; margin: 0; display: inline-block; background-color: #D93416; color: white; border-radius: 4px; font-weight: bold;">
                 <asp:Label ID="lblBotonSeleccionar" runat="server" Text="Seleccionar archivo" />
             </label>
-            <span id="lblNombreArchivo" style="color: white; font-size: 0.9rem;">
+    
+            <span id="lblNombreArchivoText" style="color: white; font-size: 0.9rem;">
                 <asp:Label ID="lblSinArchivo" runat="server" Text="Sin archivos seleccionados" />
             </span>
         </div>
@@ -31,9 +33,9 @@
 
     <script>
         function actualizarNombreArchivo(input) {
-            var lbl = document.getElementById('lblNombreArchivo');
+            var lbl = document.getElementById('lblNombreArchivoText');
             if (input.files && input.files.length > 0) {
-                lbl.innerText = input.files[0].name;
+                lbl.textContent = input.files[0].name;
             }
         }
     </script>

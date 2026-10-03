@@ -10,7 +10,7 @@ using System.Web.UI.WebControls;
 
 namespace RedLine.Web
 {
-    public partial class GestionEventos : System.Web.UI.Page
+    public partial class GestionEventos : BasePage
     {
         private BLL_Evento bllEvento = new BLL_Evento();
 
@@ -71,6 +71,7 @@ namespace RedLine.Web
             if (c == 2) return "color: #ffc107;";
             return "color: #28a745;";
         }
+
         protected void ExportarXML(object sender, EventArgs e)
         {
             try
@@ -80,7 +81,6 @@ namespace RedLine.Web
 
                 string nombreArchivo = $"reporteBitacora_{DateTime.Now:dd-MM-yyyy_HHmmss}.xml";
 
-            
                 Response.Clear();
                 Response.Buffer = true;
                 Response.ContentType = "text/xml";
@@ -89,28 +89,20 @@ namespace RedLine.Web
 
                 Response.BinaryWrite(archivoBytes);
                 Response.Flush();
-                Response.End(); 
+                Response.End();
             }
             catch (System.Threading.ThreadAbortException)
             {
-              
+                
             }
             catch (UnauthorizedAccessException ex)
             {
-                
-                MostrarMensajeError("Error de acceso o permisos en el servidor: " + ex.Message);
+                MostrarAlertaTraducida("msg_error_exportar_permisos", ex.Message);
             }
             catch (Exception ex)
             {
-                MostrarMensajeError("Ocurrió un error al exportar la bitácora: " + ex.Message);
+                MostrarAlertaTraducida("msg_error_exportar_bitacora", ex.Message);
             }
-        }
-
-        private void MostrarMensajeError(string mensaje)
-        {
-
-            ScriptManager.RegisterStartupScript(this, GetType(), "alertError",
-                $"alert('{mensaje.Replace("'", "\\'")}');", true);
         }
     }
 }

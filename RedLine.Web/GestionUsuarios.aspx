@@ -40,20 +40,20 @@
 
             <asp:Label ID="lblMensaje" runat="server" style="display: block; margin-bottom: 15px; font-weight: bold; color: #D93416;"></asp:Label>
 
-            <div class="contenedor-tabla-scroll">
-                <asp:GridView ID="gvUsuarios" runat="server" AutoGenerateColumns="False" CssClass="grilla-usuarios-oscura" DataKeyNames="ID" OnRowDeleting="gvUsuarios_RowDeleting" OnSelectedIndexChanged="gvUsuarios_SelectedIndexChanged" OnRowCommand="gvUsuarios_RowCommand" OnRowDataBound="gvUsuarios_RowDataBound" GridLines="None">
+            <div class="contenedor-tabla-scroll" style="width: 100%; overflow-x: auto;">
+                <asp:GridView ID="gvUsuarios" runat="server" AutoGenerateColumns="False" CssClass="grilla-usuarios-oscura" DataKeyNames="ID" OnRowDeleting="gvUsuarios_RowDeleting" OnSelectedIndexChanged="gvUsuarios_SelectedIndexChanged" OnRowCommand="gvUsuarios_RowCommand" OnRowDataBound="gvUsuarios_RowDataBound" GridLines="None" style="width: 100%; table-layout: fixed; word-wrap: break-word;">
                     <Columns>
                         <asp:BoundField DataField="ID" HeaderText="col_UsuarioID" HeaderStyle-CssClass="columna-oculta" ItemStyle-CssClass="columna-oculta" />
-                        <asp:BoundField DataField="DNI" HeaderText="col_UsuarioDNI" />
-                        <asp:BoundField DataField="Nombre" HeaderText="col_UsuarioNombre" />
-                        <asp:BoundField DataField="Apellido" HeaderText="col_UsuarioApellido" />
-                        <asp:BoundField DataField="Email" HeaderText="col_UsuarioEmail" />
-                        <asp:TemplateField HeaderText="col_UsuarioPerfil">
+                        <asp:BoundField DataField="DNI" HeaderText="DNI" HeaderStyle-Width="12%" />
+                        <asp:BoundField DataField="Nombre" HeaderText="Nombre" HeaderStyle-Width="15%" />
+                        <asp:BoundField DataField="Apellido" HeaderText="Apellido" HeaderStyle-Width="15%" />
+                        <asp:BoundField DataField="Email" HeaderText="Email" HeaderStyle-Width="22%" />
+                        <asp:TemplateField HeaderText="Perfil" HeaderStyle-Width="12%">
                             <ItemTemplate>
                                 <asp:Label ID="lblNombrePerfil" runat="server"></asp:Label>
                             </ItemTemplate>
                         </asp:TemplateField>
-                        <asp:TemplateField HeaderText="col_UsuarioEstado">
+                        <asp:TemplateField HeaderText="Estado" HeaderStyle-Width="12%">
                             <ItemTemplate>
                                 <span style='<%# (bool)Eval("Activo") ? "color: #28a745;" : "color: #dc3545;" %>'>
                                     <%# (bool)Eval("Activo") ? Traducir("estado_usuario_activo") : Traducir("estado_usuario_inactivo") %>
@@ -64,7 +64,7 @@
                                 </span>
                             </ItemTemplate>
                         </asp:TemplateField>
-                        <asp:TemplateField HeaderText="col_UsuarioAcciones">
+                        <asp:TemplateField HeaderText="Acciones" HeaderStyle-Width="12%">
                             <ItemTemplate>
                                 <asp:LinkButton runat="server" CommandName="Select" Text='<%# Traducir("btn_grid_editar") %>' CssClass="link-accion-fila" />
                                 <asp:LinkButton ID="btnBorrarUsuario" runat="server" CommandName="Delete" Text='<%# Traducir("btn_grid_borrar") %>' CssClass="link-accion-fila link-accion-eliminar" />

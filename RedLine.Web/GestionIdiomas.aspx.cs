@@ -28,7 +28,13 @@ namespace RedLine.Web
         private void CargarComboIdiomas()
         {
             List<Idioma> idiomas = _bllIdioma.Listar();
-            ddlIdiomaDestino.DataSource = idiomas;
+            var idiomasTraducidos = idiomas.Select(i => new
+            {
+                i.ID,
+                Nombre = Traducir($"idioma_{i.Nombre.ToLower().Replace("á", "a").Replace("é", "e").Replace("í", "i").Replace("ó", "o").Replace("ú", "u")}")
+            }).ToList();
+
+            ddlIdiomaDestino.DataSource = idiomasTraducidos;
             ddlIdiomaDestino.DataTextField = "Nombre";
             ddlIdiomaDestino.DataValueField = "ID";
             ddlIdiomaDestino.DataBind();

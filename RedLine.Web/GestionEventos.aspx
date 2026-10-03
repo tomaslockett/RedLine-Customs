@@ -6,29 +6,31 @@
 
     <div class="contenedor-eventos-main">
         <section class="panel-bitacora-recuadro">
-            <h1 class="titulo-bitacora">Bitácora de Eventos</h1>
+            <h1 class="titulo-bitacora">
+                <asp:Label ID="lblTituloGestionEventos" runat="server" Text="Bitácora de Eventos" />
+            </h1>
 
             <asp:UpdatePanel ID="upBitacora" runat="server">
                 <ContentTemplate>
                     <div class="grid-filtros">
                         <div class="campo-bitacora">
-                            <label>Usuario (Email)</label>
+                            <label><asp:Label ID="lblFiltroUsuario" runat="server" Text="Usuario (Email)" /></label>
                             <asp:TextBox ID="txtFiltroUsuario" runat="server" CssClass="control-input-eventos" AutoPostBack="true" OnTextChanged="Filtro_Changed"></asp:TextBox>
                         </div>
                         <div class="campo-bitacora">
-                            <label>Fecha (dd/mm/aaaa)</label>
+                            <label><asp:Label ID="lblFiltroFechaDesde" runat="server" Text="Fecha (dd/mm/aaaa)" /></label>
                             <asp:TextBox ID="txtFiltroFecha" runat="server" CssClass="control-input-eventos" AutoPostBack="true" OnTextChanged="Filtro_Changed"></asp:TextBox>
                         </div>
                         <div class="campo-bitacora">
-                            <label>Módulo</label>
+                            <label><asp:Label ID="lblFiltroModulo" runat="server" Text="Módulo" /></label>
                             <asp:TextBox ID="txtFiltroModulo" runat="server" CssClass="control-input-eventos" AutoPostBack="true" OnTextChanged="Filtro_Changed"></asp:TextBox>
                         </div>
                         <div class="campo-bitacora">
-                            <label>Actividad</label>
+                            <label><asp:Label ID="lblFiltroActividad" runat="server" Text="Actividad" /></label>
                             <asp:TextBox ID="txtFiltroActividad" runat="server" CssClass="control-input-eventos" AutoPostBack="true" OnTextChanged="Filtro_Changed"></asp:TextBox>
                         </div>
                         <div class="campo-bitacora">
-                            <label>Criticidad</label>
+                            <label><asp:Label ID="lblFiltroCriticidad" runat="server" Text="Criticidad" /></label>
                             <asp:DropDownList ID="ddlFiltroCri" runat="server" CssClass="control-input-eventos" AutoPostBack="true" OnSelectedIndexChanged="Filtro_Changed">
                                 <asp:ListItem Text="Todas" Value="0"></asp:ListItem>
                                 <asp:ListItem Text="1 - Baja" Value="1"></asp:ListItem>
@@ -39,18 +41,53 @@
                     </div>
 
                     <div class="botonera-bitacora">
-                        <asp:Button ID="btnLimpiar" runat="server" Text="Limpiar Filtros" CssClass="boton-bitacora-accion boton-bitacora-secundario" OnClick="btnLimpiar_Click" />
+                        <asp:Button ID="btnLimpiarFiltros" runat="server" Text="Limpiar Filtros" CssClass="boton-bitacora-accion boton-bitacora-secundario" OnClick="btnLimpiar_Click" />
                         <asp:Button ID="btnExportar" runat="server" Text="Exportar a XML" CssClass="boton-bitacora-accion" OnClick="ExportarXML" />
                     </div>
 
                     <div class="contenedor-tabla-scroll">
                         <asp:GridView ID="gvEventos" runat="server" AutoGenerateColumns="False" CssClass="tabla-eventos-custom" GridLines="None">
                             <Columns>
-                                <asp:BoundField DataField="Fecha" HeaderText="Fecha" DataFormatString="{0:dd/MM/yyyy HH:mm}" />
-                                <asp:BoundField DataField="Usuario" HeaderText="Usuario" />
-                                <asp:BoundField DataField="Modulo" HeaderText="Módulo" />
-                                <asp:BoundField DataField="Actividad" HeaderText="Actividad" />
-                                <asp:TemplateField HeaderText="Criticidad">
+                                <asp:TemplateField>
+                                    <HeaderTemplate>
+                                        <asp:Label ID="colFecha" runat="server" Text="Fecha / Hora" />
+                                    </HeaderTemplate>
+                                    <ItemTemplate>
+                                        <%# Eval("Fecha", "{0:dd/MM/yyyy HH:mm}") %>
+                                    </ItemTemplate>
+                                </asp:TemplateField>
+
+                                <asp:TemplateField>
+                                    <HeaderTemplate>
+                                        <asp:Label ID="colUsuario" runat="server" Text="Usuario" />
+                                    </HeaderTemplate>
+                                    <ItemTemplate>
+                                        <%# Eval("Usuario") %>
+                                    </ItemTemplate>
+                                </asp:TemplateField>
+
+                                <asp:TemplateField>
+                                    <HeaderTemplate>
+                                        <asp:Label ID="colModulo" runat="server" Text="Módulo" />
+                                    </HeaderTemplate>
+                                    <ItemTemplate>
+                                        <%# Eval("Modulo") %>
+                                    </ItemTemplate>
+                                </asp:TemplateField>
+
+                                <asp:TemplateField>
+                                    <HeaderTemplate>
+                                        <asp:Label ID="colDescripcion" runat="server" Text="Descripción" />
+                                    </HeaderTemplate>
+                                    <ItemTemplate>
+                                        <%# Eval("Actividad") %>
+                                    </ItemTemplate>
+                                </asp:TemplateField>
+
+                                <asp:TemplateField>
+                                    <HeaderTemplate>
+                                        <asp:Label ID="colCriticidad" runat="server" Text="Criticidad" />
+                                    </HeaderTemplate>
                                     <ItemTemplate>
                                         <span class="etiqueta-criticidad" style="<%# GetCriColor(Eval("Criticidad")) %>">
                                             <%# Eval("Criticidad") %>
