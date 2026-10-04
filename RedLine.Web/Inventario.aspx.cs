@@ -10,7 +10,7 @@ using System.Web.UI.WebControls;
 
 namespace RedLine.Web
 {
-    public partial class Inventario : System.Web.UI.Page
+    public partial class Inventario :  BasePage
     {
         BLL_Auto BLL_Auto = new BLL_Auto();
         protected void Page_Load(object sender, EventArgs e)

@@ -1,9 +1,10 @@
-﻿using System;
+﻿using RedLine.Be.Interfaces;
 using RedLine.Servicios.Composite;
+using System;
 
 namespace Redline.Be
 {
-    public class Usuario
+    public class Usuario : IEntidad
     {
         public int ID { get; set; }
         public string DNI { get; set; }

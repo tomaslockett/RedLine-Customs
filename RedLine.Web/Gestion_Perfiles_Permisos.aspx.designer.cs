@@ -24,6 +24,51 @@ namespace RedLine.Web
         protected global::System.Web.UI.WebControls.LinkButton btnVolverDashboard;
 
         /// <summary>
+        /// Control lblVolverDashboard.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblVolverDashboard;
+
+        /// <summary>
+        /// Control lblTituloSeguridad.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblTituloSeguridad;
+
+        /// <summary>
+        /// Control lblSubtituloSeguridad.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblSubtituloSeguridad;
+
+        /// <summary>
+        /// Control lblPerfilesSistema.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblPerfilesSistema;
+
+        /// <summary>
+        /// Control lblDescPerfiles.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblDescPerfiles;
+
+        /// <summary>
         /// Control txtNuevoPerfil.
         /// </summary>
         /// <remarks>
@@ -69,6 +114,15 @@ namespace RedLine.Web
         protected global::System.Web.UI.WebControls.Button btnEliminarPerfil;
 
         /// <summary>
+        /// Control lblTextoPermisosAsignados.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblTextoPermisosAsignados;
+
+        /// <summary>
         /// Control lblPerfilSeleccionado.
         /// </summary>
         /// <remarks>
@@ -76,6 +130,24 @@ namespace RedLine.Web
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lblPerfilSeleccionado;
+
+        /// <summary>
+        /// Control lblAdvertenciaInmutable.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblAdvertenciaInmutable;
+
+        /// <summary>
+        /// Control lblModCatalogoInv.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblModCatalogoInv;
 
         /// <summary>
         /// Control cblPermisosCatalogo.
@@ -87,6 +159,15 @@ namespace RedLine.Web
         protected global::System.Web.UI.WebControls.CheckBoxList cblPermisosCatalogo;
 
         /// <summary>
+        /// Control lblModComercialVentas.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblModComercialVentas;
+
+        /// <summary>
         /// Control cblPermisosVentas.
         /// </summary>
         /// <remarks>
@@ -94,6 +175,15 @@ namespace RedLine.Web
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.CheckBoxList cblPermisosVentas;
+
+        /// <summary>
+        /// Control lblModAuditoriaSeg.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblModAuditoriaSeg;
 
         /// <summary>
         /// Control cblPermisosAuditoria.

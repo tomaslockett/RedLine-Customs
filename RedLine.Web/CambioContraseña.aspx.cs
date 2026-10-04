@@ -12,7 +12,7 @@ using System.Web.UI.WebControls;
 
 namespace RedLine.Web
 {
-    public partial class CambioContraseña : System.Web.UI.Page
+    public partial class CambioContraseña : BasePage
     {
         private BLL_Usuario bllUsuario = new BLL_Usuario();
         protected void Page_Load(object sender, EventArgs e)
@@ -33,13 +33,13 @@ namespace RedLine.Web
 
                 if (string.IsNullOrEmpty(actual) || string.IsNullOrEmpty(nueva) || string.IsNullOrEmpty(confirmar))
                 {
-                    MostrarMensaje("Todos los campos son obligatorios.", true);
+                    MostrarMensaje(Traducir("msg_campos_obligatorios"), true);
                     return;
                 }
 
                 if (nueva != confirmar)
                 {
-                    MostrarMensaje("Las nuevas contraseñas no coinciden.", true);
+                    MostrarMensaje(Traducir("msg_pass_no_coinciden"), true);
                     return;
                 }
 
@@ -48,7 +48,7 @@ namespace RedLine.Web
                 string actualHasheada = Hashing.Sha256(actual);
                 if (usuarioActual.Contraseña != actualHasheada)
                 {
-                    MostrarMensaje("La contraseña actual es incorrecta.", true);
+                    MostrarMensaje(Traducir("msg_pass_actual_incorrecta"), true);
                     return;
                 }
 
@@ -58,12 +58,13 @@ namespace RedLine.Web
 
                 BLL_Evento bllEvento = new BLL_Evento();
                 bllEvento.Registrar(usuarioActual.Email, ModulosEventos.Usuarios, "Cambio de contraseña exitoso", 1);
+
                 bllUsuario.Logout();
                 Response.Redirect("LogIn.aspx");
             }
             catch (Exception ex)
             {
-                MostrarMensaje("Error: " + ex.Message, true);
+                MostrarMensaje($"{Traducir("msg_error_prefijo")} {ex.Message}", true);
             }
         }
 

@@ -15,6 +15,24 @@ namespace RedLine.Web
     {
 
         /// <summary>
+        /// Control lblTituloInventario.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblTituloInventario;
+
+        /// <summary>
+        /// Control lblSubtituloInventario.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblSubtituloInventario;
+
+        /// <summary>
         /// Control ButtonAgregarVehiculo.
         /// </summary>
         /// <remarks>
@@ -31,6 +49,24 @@ namespace RedLine.Web
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.PlaceHolder phInventarioVacio;
+
+        /// <summary>
+        /// Control lblSinVehiculosTit.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblSinVehiculosTit;
+
+        /// <summary>
+        /// Control lblSinVehiculosSub.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblSinVehiculosSub;
 
         /// <summary>
         /// Control ButtonAgregarPrimerVehiculo.

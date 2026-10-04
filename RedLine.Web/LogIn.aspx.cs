@@ -8,16 +8,18 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using RedLine.Servicios;
+using RedLine.Be.Interfaces;
 
 namespace RedLine.Web
 {
-    public partial class LogIn : System.Web.UI.Page
+    public partial class LogIn : BasePage
     {
-        BLL_Cliente gestorCliente = new BLL_Cliente();
-        BLL_Usuario gestorUsuario = new BLL_Usuario();
+        private readonly BLL_Cliente gestorCliente = new BLL_Cliente();
+        private readonly BLL_Usuario gestorUsuario = new BLL_Usuario();
+
         protected void Page_Load(object sender, EventArgs e)
         {
-
+            
         }
 
         protected void BtnLogin_Click(object sender, EventArgs e)
@@ -25,10 +27,9 @@ namespace RedLine.Web
             string email = txtEmail.Text.Trim();
             string password = txtPassword.Text;
 
-
             if (string.IsNullOrEmpty(email) || string.IsNullOrEmpty(password))
             {
-                MostrarMensaje("Ingresa tus credenciales.", true);
+                MostrarMensaje(Traducir("msgIngresaCredenciales"), true);
                 return;
             }
 
@@ -41,15 +42,15 @@ namespace RedLine.Web
                     Response.Redirect("Catalogo.aspx");
                     return;
                 }
-                if(resultado == LoginResult.InconsistencyDVWebMaster)
+                if (resultado == LoginResult.InconsistencyDVWebMaster)
                 {
                     Session.Add("Inconsistencia", true);
                     Response.Redirect("RecuperacionDV.aspx");
                     return;
                 }
-                if(resultado == LoginResult.InconsistencyDVUserNormal)
+                if (resultado == LoginResult.InconsistencyDVUserNormal)
                 {
-                    MostrarMensaje("El sistema no funciona actualmente.", true);
+                    MostrarMensaje(Traducir("msgSistemaNoFunciona"), true);
                 }
             }
             catch (LoginException ex)
@@ -79,19 +80,31 @@ namespace RedLine.Web
             }
             catch (Exception ex)
             {
-                MostrarMensaje($"Error técnico: {ex.Message}", true);
+                string textoError = Traducir("msgErrorTecnico");
+                MostrarMensaje($"{textoError}: {ex.Message}", true);
             }
         }
 
         private void ManejarErrorLogin(LoginResult resultado)
         {
-            string mensajeError = "";
+            string mensajeError;
             switch (resultado)
             {
-                case LoginResult.InvalidUsername: mensajeError = "El usuario o email no existe."; break; 
-                case LoginResult.InvalidPassword: mensajeError = "Contraseña incorrecta."; break; 
-                case LoginResult.UserBlocked: mensajeError = "Usuario bloqueado."; break; 
-                default: mensajeError = "Error al iniciar sesión."; break; 
+                case LoginResult.InvalidUsername:
+                    mensajeError = Traducir("msgUsuarioNoExiste");
+                    break;
+                case LoginResult.InvalidPassword:
+                    mensajeError = Traducir("msgPasswordIncorrecta");
+                    break;
+                case LoginResult.UserBlocked:
+                    mensajeError = Traducir("msgUsuarioBloqueado");
+                    break;
+                case LoginResult.UserInactive: 
+                    mensajeError = Traducir("msgUsuarioInactivo");
+                    break;
+                default:
+                    mensajeError = Traducir("msgErrorLogin");
+                    break;
             }
             MostrarMensaje(mensajeError, true);
         }

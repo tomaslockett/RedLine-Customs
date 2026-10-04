@@ -1,41 +1,40 @@
-﻿<%@ Page Title="Creacion de Auto" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="CrearAuto.aspx.cs" Inherits="RedLine.Web.CrearAuto" %>
-<asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
+﻿<%@ Page Title="Creación de Auto" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="CrearAuto.aspx.cs" Inherits="RedLine.Web.CrearAuto" %>
 
+<asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
     <link href="Content/CrearAutosEstilo.css" rel="stylesheet" type="text/css" />
 
     <div class="contenedor-principal">
-        
         <div class="volver-inventario">
-            <a href="Inventario.aspx">← Volver al Inventario</a>
+            <a href="Inventario.aspx">← <asp:Label ID="lblVolverInventario" runat="server" Text="Volver al Inventario" /></a>
         </div>
 
         <div class="encabezado-pagina">
-            <h1 class="titulo">Agregar Nuevo Vehículo al Stock</h1>
-            <p class="subTitulo">Complete el formulario para añadir un vehículo al inventario</p>
+            <h1 class="titulo"><asp:Label ID="lblTituloCrearAuto" runat="server" Text="Agregar Nuevo Vehículo al Stock" /></h1>
+            <p class="subTitulo"><asp:Label ID="lblSubtituloCrearAuto" runat="server" Text="Complete el formulario para añadir un vehículo al inventario" /></p>
         </div>
 
         <div class="tarjeta">
-            <h2 class="tarjeta-titulo">Imagen del Vehículo</h2>
+            <h2 class="tarjeta-titulo"><asp:Label ID="lblSecImagenVehiculo" runat="server" Text="Imagen del Vehículo" /></h2>
             <div class="zona-subida">
-                <p>Seleccione la imagen oficial del vehículo</p>
+                <p><asp:Label ID="lblInstruccionFoto" runat="server" Text="Seleccione la imagen oficial del vehículo" /></p>
                 <div class="contenedor-file">
                     <asp:FileUpload ID="FileUploadSubirFoto" runat="server" accept="image/*" CssClass="file-upload" />
                 </div>
-                <p class="formato-texto">Formatos admitidos: JPG, PNG, WEBP</p>
+                <p class="formato-texto"><asp:Label ID="lblFormatosFoto" runat="server" Text="Formatos admitidos: JPG, PNG, WEBP" /></p>
             </div>
         </div>
 
         <div class="tarjeta">
-            <h2 class="tarjeta-titulo">Datos Base del Vehículo</h2>
+            <h2 class="tarjeta-titulo"><asp:Label ID="lblSecDatosBase" runat="server" Text="Datos Base del Vehículo" /></h2>
             
             <div class="grid-formulario">
                 <div class="grupo-form">
-                    <label>ID del Auto *</label>
+                    <label><asp:Label ID="lblIdAuto" runat="server" Text="ID del Auto *" /></label>
                     <asp:TextBox ID="TextBoxID" runat="server" CssClass="input-control" placeholder="ej: VEH-2026-001"></asp:TextBox>
                 </div>
 
                 <div class="grupo-form">
-                    <label>Marca *</label>
+                    <label><asp:Label ID="lblMarca" runat="server" Text="Marca *" /></label>
                     <asp:DropDownList ID="DropDownListMarca" runat="server" CssClass="input-control">
                         <asp:ListItem Text="Seleccione una marca" Value=""></asp:ListItem>
                         <asp:ListItem Text="Alfa Romeo" Value="Alfa Romeo"></asp:ListItem>
@@ -78,42 +77,42 @@
                 </div>
 
                 <div class="grupo-form">
-                    <label>Modelo *</label>
+                    <label><asp:Label ID="lblModelo" runat="server" Text="Modelo *" /></label>
                     <asp:TextBox ID="TextBoxModelo" runat="server" CssClass="input-control" placeholder="ej: 911 GT3 RS"></asp:TextBox>
                 </div>
 
                 <div class="grupo-form">
-                    <label>Año *</label>
+                    <label><asp:Label ID="lblAnio" runat="server" Text="Año *" /></label>
                     <asp:TextBox ID="TextBoxAño" runat="server" CssClass="input-control" placeholder="ej: 2026"></asp:TextBox>
                 </div>
 
                 <div class="grupo-form">
-                    <label>Precio Base (USD) *</label>
+                    <label><asp:Label ID="lblPrecioBase" runat="server" Text="Precio Base (USD) *" /></label>
                     <asp:TextBox ID="TextBoxPrecio" runat="server" CssClass="input-control" TextMode="Number" placeholder="ej: 225000"></asp:TextBox>
                 </div>
 
                 <div class="grupo-form">
-                    <label>Tipo *</label>
+                    <label><asp:Label ID="lblTipo" runat="server" Text="Tipo *" /></label>
                     <asp:TextBox ID="TextBoxTipo" runat="server" CssClass="input-control" placeholder="ej: Deportivo / Coupé"></asp:TextBox>
                 </div>
 
                 <div class="grupo-form">
-                    <label>Potencia (CV)</label>
+                    <label><asp:Label ID="lblPotencia" runat="server" Text="Potencia (CV)" /></label>
                     <asp:TextBox ID="TextBoxPotencia" runat="server" CssClass="input-control" placeholder="ej: 525"></asp:TextBox>
                 </div>
 
                 <div class="grupo-form">
-                    <label>Velocidad Máxima (Km/h)</label>
+                    <label><asp:Label ID="lblVelocidadMaxima" runat="server" Text="Velocidad Máxima (Km/h)" /></label>
                     <asp:TextBox ID="TextBoxVelocidadMaxima" runat="server" CssClass="input-control" placeholder="ej: 296"></asp:TextBox>
                 </div>
                 
                 <div class="grupo-form ancho-completo">
-                    <label>Aceleración 0-100 Km/h (Segundos)</label>
+                    <label><asp:Label ID="lblAceleracion" runat="server" Text="Aceleración 0-100 Km/h (Segundos)" /></label>
                     <asp:TextBox ID="TextBoxAceleracion" runat="server" CssClass="input-control" placeholder="ej: 3.2"></asp:TextBox>
                 </div>
 
                 <div class="grupo-form ancho-completo">
-                    <label>Descripción General</label>
+                    <label><asp:Label ID="lblDescripcionGeneral" runat="server" Text="Descripción General" /></label>
                     <asp:TextBox ID="TextBoxDescripcionGeneral" runat="server" CssClass="input-control" TextMode="MultiLine" Rows="4" placeholder="Detalles de ingeniería o equipamiento de fábrica..."></asp:TextBox>
                 </div>
             </div>
@@ -123,8 +122,5 @@
                 <asp:Button ID="ButtonGuarda" runat="server" Text="Guardar Vehículo" CssClass="btn btn-primario" OnClick="Agregar"/>
             </div>
         </div>
-
     </div>
-
-
 </asp:Content>

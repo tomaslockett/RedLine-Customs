@@ -9,23 +9,28 @@ using System.Web.UI.WebControls;
 
 namespace RedLine.Web
 {
-    public partial class _Default : Page
+    public partial class _Default : BasePage
     {
-        BLL_Auto BLL_Auto = new BLL_Auto();
+        private readonly BLL_Auto _bllAuto = new BLL_Auto();
+
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack)
             {
-                List<AutoBase> lista = BLL_Auto.MostrarAutosBase();
-
-                repAutos.DataSource = lista;
-
-                repAutos.DataBind();
+                CargarCatalogo();
             }
         }
-        protected void Personalizar(object sender, EventArgs e)
-        {
 
+        private void CargarCatalogo()
+        {
+            List<AutoBase> lista = _bllAuto.MostrarAutosBase();
+            repAutos.DataSource = lista;
+            repAutos.DataBind();
+        }
+
+        protected void btnAplicarFiltros_Click(object sender, EventArgs e)
+        {
+            CargarCatalogo();
         }
     }
 }

@@ -181,12 +181,29 @@
     text-transform: uppercase;
 }
 
-    .texto-logo-nav span {
-        color: #ff0000;
-        font-weight: 400; 
-        margin-left: 5px;
-    }
+.texto-logo-nav span {
+    color: #ff0000;
+    font-weight: 400; 
+    margin-left: 5px;
+}
 
-    .texto-logo-nav:hover {
-        opacity: 0.85;
+.texto-logo-nav:hover {
+    opacity: 0.85;
+}
+
+.selector-idioma {
+    background: #111111;
+    border: 1px solid rgba(255,255,255,0.2);
+    color: #ffffff;
+    padding: 6px 12px;
+    border-radius: 4px;
+    cursor: pointer;
+    outline: none;
+    font-size: 0.9rem;
+}
+
+    .selector-idioma option {
+        background-color: #1a1a1a;
+        color: #ffffff;
+        padding: 8px;
     }

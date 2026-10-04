@@ -72,7 +72,7 @@ C) SI SOS NUEVO Y QUERÉS LA BD DESDE CERO:
    (Esto crea la DB, las tablas y carga los permisos iniciales).
 
    otra opcion si no anda el tema de predeterminar el proyecto
-   Update-Database -ProjectName RedLine.DAL -StartUpProjectName RedLine.Web -TargetMigration:0
+   Update-Database -ProjectName RedLine.DAL -StartUpProjectName RedLine.Web 
 
 -----------------------------------------------------------
 3. DATOS DE FÁBRICA (Seed)

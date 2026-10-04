@@ -1,4 +1,5 @@
-﻿using RedLine.Bll;
+﻿using RedLine.Be.Interfaces;
+using RedLine.Bll;
 using RedLine.Servicios;
 using System;
 using System.Collections.Generic;
@@ -11,18 +12,22 @@ using System.Web.UI.WebControls;
 
 namespace RedLine.Web
 {
-    public partial class BackupRestore : System.Web.UI.Page
+    public partial class BackupRestore : BasePage
     {
         private BLL_BackupRestore _bllBackupRestore = new BLL_BackupRestore();
+        private BLL_DigitoVerificador blldv = new BLL_DigitoVerificador();
 
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack)
             {
-                lblEstado.Text = "No se realizó ninguna operación.";
+                lblEstado.Text = Traducir("msgSinOperacion");
                 lblEstado.ForeColor = System.Drawing.Color.Black;
             }
         }
+
+
+
 
         protected void btnGenerar_Click(object sender, EventArgs e)
         {
@@ -46,16 +51,16 @@ namespace RedLine.Web
 
                 _bllBackupRestore.RealizarBackup(entradaUsuario);
 
-                lblEstado.Text = $"Copia de seguridad generada con éxito en: {entradaUsuario}";
+                lblEstado.Text = Traducir("msgBackupExito") + entradaUsuario;
                 lblEstado.ForeColor = System.Drawing.Color.Green;
             }
             catch (Exception ex)
             {
-                lblEstado.Text = "Error al generar backup: " + ex.Message;
+                lblEstado.Text = Traducir("msgBackupError") + ex.Message;
                 lblEstado.ForeColor = System.Drawing.Color.Red;
             }
         }
-        BLL_DigitoVerificador blldv = new BLL_DigitoVerificador();
+
         protected void btnRestaurar_Click(object sender, EventArgs e)
         {
             string rutaArchivoCompleta = string.Empty;
@@ -64,7 +69,7 @@ namespace RedLine.Web
             {
                 if (!fileUploadRestore.HasFile || !Path.GetExtension(fileUploadRestore.FileName).Equals(".bak", StringComparison.OrdinalIgnoreCase))
                 {
-                    lblEstado.Text = "Error: Debe seleccionar un archivo .bak válido para poder restaurar.";
+                    lblEstado.Text = Traducir("msgArchivoInvalido");
                     lblEstado.ForeColor = System.Drawing.Color.Red;
                     return;
                 }
@@ -81,36 +86,29 @@ namespace RedLine.Web
 
                 _bllBackupRestore.RealizarRestore(rutaArchivoCompleta);
 
-                string Errores = blldv.VerificarTodaLaBaseDeDatos();
+                string errores = blldv.VerificarTodaLaBaseDeDatos();
 
-                lblEstado.Text = "Base de datos restaurada con éxito. El sistema se ha actualizado.";
+                lblEstado.Text = Traducir("msgRestoreExito");
                 lblEstado.ForeColor = System.Drawing.Color.Green;
 
                 if (Session["Inconsistencia"] != null && (bool)Session["Inconsistencia"])
                 {
                     Session["Inconsistencia"] = false;
-                    blldv.RegistrarEventoIntegridadComprometida(Errores);
+                    blldv.RegistrarEventoIntegridadComprometida(errores);
                     SessionManager.Instancia.Logout();
                     Response.Redirect("LogIn.aspx");
                 }
             }
             catch (Exception ex)
             {
-                lblEstado.Text = "Error al restaurar: " + ex.Message;
+                lblEstado.Text = Traducir("msgRestoreError") + ex.Message;
                 lblEstado.ForeColor = System.Drawing.Color.Red;
             }
             finally
             {
                 if (!string.IsNullOrEmpty(rutaArchivoCompleta) && File.Exists(rutaArchivoCompleta))
                 {
-                    try
-                    {
-                        File.Delete(rutaArchivoCompleta);
-                    }
-                    catch
-                    {
-
-                    }
+                    try { File.Delete(rutaArchivoCompleta); } catch { }
                 }
             }
         }

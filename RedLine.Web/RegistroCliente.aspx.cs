@@ -1,5 +1,6 @@
 ﻿using Redline.Be;
 using RedLine.Bll;
+using RedLine.Servicios;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,13 +10,17 @@ using System.Web.UI.WebControls;
 
 namespace RedLine.Web
 {
-    public partial class RegistroCliente : System.Web.UI.Page
+    public partial class RegistroCliente : BasePage
     {
-        BLL_Usuario gestorUsuario = new BLL_Usuario();
-        BLL_Cliente gestorCliente = new BLL_Cliente();
+        private readonly BLL_Usuario gestorUsuario = new BLL_Usuario();
+        private readonly BLL_Cliente gestorCliente = new BLL_Cliente();
+
         protected void Page_Load(object sender, EventArgs e)
         {
-            lblMensaje.Text = "";
+            if (!IsPostBack)
+            {
+                lblMensaje.Text = string.Empty;
+            }
         }
 
         protected void btnRegistrar_Click(object sender, EventArgs e)
@@ -32,13 +37,13 @@ namespace RedLine.Web
             if (string.IsNullOrEmpty(dni) || string.IsNullOrEmpty(nombre) || string.IsNullOrEmpty(apellido) ||
                 string.IsNullOrEmpty(email) || string.IsNullOrEmpty(pass))
             {
-                lblMensaje.Text = "Los campos principales son obligatorios."; 
+                lblMensaje.Text = Traducir("msg_registro_campos_obligatorios");
                 return;
             }
 
             if (pass != passConfirm)
             {
-                lblMensaje.Text = "Las contraseñas no coinciden."; 
+                lblMensaje.Text = Traducir("msg_registro_pass_no_coinciden");
                 return;
             }
 
@@ -49,40 +54,47 @@ namespace RedLine.Web
 
                 if (existeEnUsuarios || existeEnClientes)
                 {
-                    lblMensaje.Text = "El correo electrónico ya se encuentra registrado.";
+                    lblMensaje.Text = Traducir("msg_registro_email_duplicado");
                     return;
                 }
 
-                Cliente nuevoCliente = new Cliente();
-                nuevoCliente.DNI = dni;
-                nuevoCliente.Nombre = nombre;
-                nuevoCliente.Apellido = apellido;
-                nuevoCliente.Email = email;
-                nuevoCliente.Contraseña = pass;
-                nuevoCliente.Telefono = telefono;
-                nuevoCliente.Direccion = direccion;
+                Cliente nuevoCliente = new Cliente
+                {
+                    DNI = dni,
+                    Nombre = nombre,
+                    Apellido = apellido,
+                    Email = email,
+                    Contraseña = Hashing.Sha256(pass),
+                    Telefono = telefono,
+                    Direccion = direccion
+                };
 
                 gestorCliente.Insertar(nuevoCliente);
 
-                string script = @"
-                Swal.fire({
-                    title: '¡Bienvenido!',
-                    text: 'Tu cuenta de cliente fue creada con éxito.',
+                string swalTitulo = Traducir("swal_registro_exito_titulo").Replace("'", "\\'");
+                string swalTexto = Traducir("swal_registro_exito_texto").Replace("'", "\\'");
+                string swalBtn = Traducir("swal_registro_exito_btn").Replace("'", "\\'");
+
+                string script = $@"
+                Swal.fire({{
+                    title: '{swalTitulo}',
+                    text: '{swalTexto}',
                     icon: 'success',
                     background: '#0F141C',
                     color: '#fff',
                     confirmButtonColor: '#D93416',
-                    confirmButtonText: 'Ir al Login'
-                }).then((result) => {
-                    if (result.isConfirmed) {
+                    confirmButtonText: '{swalBtn}'
+                }}).then((result) => {{
+                    if (result.isConfirmed) {{
                         window.location.href = 'LogIn.aspx';
-                    }
-                });";
-                ScriptManager.RegisterStartupScript(this, GetType(), "Popup", script, true); 
+                    }}
+                }});";
+
+                ScriptManager.RegisterStartupScript(this, GetType(), "Popup", script, true);
             }
             catch (Exception ex)
             {
-                lblMensaje.Text = "Error al procesar el registro: " + ex.Message; 
+                lblMensaje.Text = $"{Traducir("msg_registro_error_procesar")} {ex.Message}";
             }
         }
     }

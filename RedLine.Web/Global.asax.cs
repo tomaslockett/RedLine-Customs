@@ -139,6 +139,7 @@ namespace RedLine.Web
             if (rutaActual.Contains("backuprestore.aspx")) return "BackupRestore";
             if (rutaActual.Contains("recuperaciondv.aspx") || rutaActual.Contains("digitoverificador.aspx")) return "RecuperarDV";
             if (rutaActual.Contains("cambiocontraseña.aspx")) return "CambioContraseña";
+            if (rutaActual.Contains("gestionidiomas.aspx")) return "GestionIdiomas";
 
             // Cierre por defecto
             return "bloqueado_por_defecto";

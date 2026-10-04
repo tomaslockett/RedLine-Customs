@@ -4,9 +4,10 @@ using System;
 
 namespace RedLine.Web
 {
-    public partial class personalizarAuto : System.Web.UI.Page
+    public partial class personalizarAuto : BasePage
     {
-        BLL_Auto bllAut = new BLL_Auto();
+        private readonly BLL_Auto _bllAut = new BLL_Auto();
+
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack)
@@ -20,15 +21,14 @@ namespace RedLine.Web
                     }
 
                     int id = int.Parse(Request.QueryString["id"]);
-
-                    AutoBase auto = bllAut.DevolverAuto(id);
+                    AutoBase auto = _bllAut.DevolverAuto(id);
 
                     if (auto != null)
                     {
                         lblMarca.InnerText = auto.Marca;
                         lblModelo.InnerText = auto.Modelo;
                         lblAnio.InnerText = auto.Anio.ToString();
-                        lblPrecio.InnerText = "$ " + auto.PrecioBase.ToString("N2"); 
+                        lblPrecio.InnerText = "$ " + auto.PrecioBase.ToString("N2");
 
                         if (auto.ImagenBinaria != null && auto.ImagenBinaria.Length > 0)
                         {
@@ -42,7 +42,7 @@ namespace RedLine.Web
                     }
                     else
                     {
-                        throw new Exception("El vehículo solicitado no se encuentra en el stock.");
+                        throw new Exception(Traducir("msg_auto_no_encontrado_stock"));
                     }
                 }
                 catch (Exception ex)

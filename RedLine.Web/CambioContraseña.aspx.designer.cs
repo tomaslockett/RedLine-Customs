@@ -15,6 +15,24 @@ namespace RedLine.Web
     {
 
         /// <summary>
+        /// Control lblTituloCambioPass.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblTituloCambioPass;
+
+        /// <summary>
+        /// Control lblPassActual.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblPassActual;
+
+        /// <summary>
         /// Control txtPassActual.
         /// </summary>
         /// <remarks>
@@ -24,6 +42,15 @@ namespace RedLine.Web
         protected global::System.Web.UI.WebControls.TextBox txtPassActual;
 
         /// <summary>
+        /// Control lblPassNueva.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblPassNueva;
+
+        /// <summary>
         /// Control txtPassNueva.
         /// </summary>
         /// <remarks>
@@ -31,6 +58,15 @@ namespace RedLine.Web
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txtPassNueva;
+
+        /// <summary>
+        /// Control lblPassConfirm.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblPassConfirm;
 
         /// <summary>
         /// Control txtPassConfirm.

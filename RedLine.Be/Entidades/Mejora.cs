@@ -1,8 +1,9 @@
-﻿using System;
+﻿using RedLine.Be.Interfaces;
+using System;
 
 namespace Redline.Be
 {
-    public abstract class Mejora
+    public abstract class Mejora : IEntidad
     {
         public int ID { get; set; }
         public string Nombre { get; set; }

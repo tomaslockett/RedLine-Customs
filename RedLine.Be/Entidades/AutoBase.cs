@@ -1,8 +1,9 @@
-﻿using System;
+﻿using RedLine.Be.Interfaces;
+using System;
 
 namespace Redline.Be
 {
-    public class AutoBase
+    public class AutoBase : IEntidad
     {
         public int ID { get; set; }
 
