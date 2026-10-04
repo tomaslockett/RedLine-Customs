@@ -18,24 +18,24 @@ namespace RedLine.Web
 
         //private readonly BLL_Venta _bllVenta = new BLL_Venta();
 
-        //protected void Page_Load(object sender, EventArgs e)
-        //{
-        //    if (!IsPostBack)
-        //    {
-        //        CargarGrillaEIndicadores();
-        //    }
-        //}
+        protected void Page_Load(object sender, EventArgs e)
+        {
+            if (!IsPostBack)
+            {
+                //CargarGrillaEIndicadores();
+            }
+        }
 
-        //protected void btnFiltrar_Click(object sender, EventArgs e)
-        //{
-        //    CargarGrillaEIndicadores();
-        //}
+        protected void btnFiltrar_Click(object sender, EventArgs e)
+        {
+            //CargarGrillaEIndicadores();
+        }
 
         //private void CargarGrillaEIndicadores()
         //{
         //    try
         //    {
-        //        List<Venta> listaVentas = _bllVenta.Listar();
+        //        //List<Venta> listaVentas = _bllVenta.Listar();
 
         //        string busqueda = txtBuscar.Text.Trim().ToLower();
         //        if (!string.IsNullOrEmpty(busqueda))
