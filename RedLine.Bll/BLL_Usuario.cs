@@ -233,6 +233,16 @@ namespace RedLine.Bll
             Repo.ActualizarContraseña(idUsuario, nuevaPasswordHasheada);
         }
 
-       
+        public void ActualizarIdiomaUsuario(int idUsuario, string nuevoIdioma)
+        {
+            if (string.IsNullOrEmpty(nuevoIdioma)) return;
+
+            var usuario = ObtenerPorId(idUsuario);
+            if (usuario != null)
+            {
+                usuario.Idioma = nuevoIdioma;
+                this.Modificar(usuario); 
+            }
+        }
     }
 }

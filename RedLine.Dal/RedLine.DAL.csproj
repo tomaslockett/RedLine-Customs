@@ -121,6 +121,10 @@
     <Compile Include="Migrations\202610032056000_ActualizacionTraduccionesEtiquetas.Designer.cs">
       <DependentUpon>202610032056000_ActualizacionTraduccionesEtiquetas.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202610292204296_AgregadoCampoIdiomaUsuario.cs" />
+    <Compile Include="Migrations\202610292204296_AgregadoCampoIdiomaUsuario.Designer.cs">
+      <DependentUpon>202610292204296_AgregadoCampoIdiomaUsuario.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="ORM\SqlEnsamblador.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -181,6 +185,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202610032056000_ActualizacionTraduccionesEtiquetas.resx">
       <DependentUpon>202610032056000_ActualizacionTraduccionesEtiquetas.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202610292204296_AgregadoCampoIdiomaUsuario.resx">
+      <DependentUpon>202610292204296_AgregadoCampoIdiomaUsuario.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
