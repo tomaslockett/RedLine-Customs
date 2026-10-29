@@ -39,6 +39,22 @@ namespace RedLine.Web
 
                 if (resultado == LoginResult.ValidUser)
                 {
+                    string idiomaUsuario = SessionManager.Instancia.Usuario.Idioma;
+
+                    BLL_Idioma bllIdioma = new BLL_Idioma();
+                    var idiomasDb = bllIdioma.Listar();
+
+                    var idiomaSeleccionado = idiomasDb.FirstOrDefault(i => i.Nombre == idiomaUsuario)
+                                             ?? bllIdioma.ObtenerDefault()
+                                             ?? idiomasDb.FirstOrDefault();
+
+                    if (idiomaSeleccionado != null)
+                    {
+                        Session["IdiomaSeleccionado"] = idiomaSeleccionado.ID;
+                        var traducciones = bllIdioma.ObtenerTraduccionesPorIdioma(idiomaSeleccionado.ID);
+                        SubjectIdioma.Instancia.CargarTraducciones(idiomaSeleccionado.Nombre, traducciones);
+                    }
+
                     Response.Redirect("Catalogo.aspx");
                     return;
                 }
