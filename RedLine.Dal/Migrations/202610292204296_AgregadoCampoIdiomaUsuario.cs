@@ -7,7 +7,7 @@
     {
         public override void Up()
         {
-            //AddColumn("dbo.Usuario", "Idioma", c => c.String());
+            AddColumn("dbo.Usuario", "Idioma", c => c.String());
         }
         
         public override void Down()
