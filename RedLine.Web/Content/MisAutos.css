@@ -1,0 +1,336 @@
+/* Estilos para el Garage de Autos Comprados del Cliente (MisAutos.aspx) */
+:root {
+    --bg-main: #060913;
+    --card-bg: #0b111e;
+    --card-border: #141f35;
+    --brand-red: #cf2a1d;
+    --brand-red-hover: #b52015;
+    --text-primary: #ffffff;
+    --text-muted: #64748b;
+}
+
+.misautos-container {
+    max-width: 1250px;
+    margin: 0 auto;
+    padding: 30px 20px 60px 20px;
+}
+
+.misautos-header {
+    margin-bottom: 30px;
+    border-bottom: 1px solid var(--card-border);
+    padding-bottom: 20px;
+}
+
+.misautos-header h1 {
+    font-size: 2.2rem;
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    color: #ffffff;
+    margin-bottom: 6px;
+}
+
+.misautos-header h1 span {
+    color: var(--brand-red);
+}
+
+.misautos-header p {
+    color: var(--text-muted);
+    font-size: 1rem;
+}
+
+.cliente-badge-bar {
+    background: #0d1527;
+    border: 1px solid #1e293b;
+    border-radius: 8px;
+    padding: 12px 20px;
+    margin-bottom: 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 15px;
+}
+
+.cliente-badge-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.92rem;
+    color: #cbd5e1;
+}
+
+.cliente-badge-item i {
+    color: var(--brand-red);
+}
+
+.cliente-badge-item strong {
+    color: #ffffff;
+}
+
+/* Empty State */
+.garage-vacio {
+    background: var(--card-bg);
+    border: 2px dashed var(--card-border);
+    border-radius: 14px;
+    padding: 60px 20px;
+    text-align: center;
+    margin: 40px auto;
+    max-width: 650px;
+}
+
+.garage-vacio-icon {
+    font-size: 4rem;
+    color: #334155;
+    margin-bottom: 20px;
+}
+
+.garage-vacio h2 {
+    font-size: 1.5rem;
+    color: #ffffff;
+    margin-bottom: 12px;
+}
+
+.garage-vacio p {
+    color: var(--text-muted);
+    font-size: 0.98rem;
+    margin-bottom: 25px;
+    line-height: 1.6;
+}
+
+/* Grid de Autos Comprados */
+.grid-autos-comprados {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
+    gap: 28px;
+}
+
+.auto-comprado-card {
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: 12px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
+    transition: transform 0.2s, border-color 0.2s, box-shadow 0.2s;
+}
+
+.auto-comprado-card:hover {
+    transform: translateY(-4px);
+    border-color: #cf2a1d;
+    box-shadow: 0 14px 35px rgba(207, 42, 29, 0.15);
+}
+
+.card-imagen-wrapper {
+    position: relative;
+    width: 100%;
+    height: 210px;
+    background: #000;
+    overflow: hidden;
+}
+
+.card-imagen-wrapper img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.3s;
+}
+
+.auto-comprado-card:hover .card-imagen-wrapper img {
+    transform: scale(1.04);
+}
+
+.badge-marca-flotante {
+    position: absolute;
+    top: 14px;
+    left: 14px;
+    background: rgba(6, 9, 19, 0.85);
+    backdrop-filter: blur(4px);
+    color: #ffffff;
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 5px 12px;
+    border-radius: 20px;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+.badge-propietario {
+    position: absolute;
+    bottom: 14px;
+    right: 14px;
+    background: #10b981;
+    color: #ffffff;
+    font-size: 0.75rem;
+    font-weight: 700;
+    padding: 4px 10px;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.card-cuerpo {
+    padding: 22px;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+}
+
+.card-titulo-seccion {
+    margin-bottom: 16px;
+}
+
+.card-titulo-seccion h2 {
+    font-size: 1.35rem;
+    font-weight: 700;
+    color: #ffffff;
+    margin-bottom: 4px;
+}
+
+.card-specs-fila {
+    display: flex;
+    gap: 15px;
+    background: #040711;
+    border: 1px solid #121c2e;
+    border-radius: 6px;
+    padding: 10px 14px;
+    margin-bottom: 18px;
+    font-size: 0.82rem;
+    color: #94a3b8;
+}
+
+.spec-item {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.spec-item strong {
+    color: #f1f5f9;
+}
+
+.card-mejoras-seccion {
+    margin-bottom: 20px;
+    flex: 1;
+}
+
+.card-mejoras-seccion h4 {
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: #64748b;
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.lista-tags-mejoras {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+}
+
+.tag-mejora {
+    background: rgba(207, 42, 29, 0.12);
+    border: 1px solid rgba(207, 42, 29, 0.35);
+    color: #ff8a80;
+    font-size: 0.78rem;
+    padding: 3px 9px;
+    border-radius: 4px;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.card-datos-factura {
+    background: #060913;
+    border-top: 1px solid var(--card-border);
+    padding: 14px 0 16px 0;
+    margin-top: auto;
+    font-size: 0.82rem;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.factura-row {
+    display: flex;
+    justify-content: space-between;
+    color: #94a3b8;
+}
+
+.factura-row strong {
+    color: #f8fafc;
+    font-family: 'Consolas', monospace;
+}
+
+.factura-total-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 6px;
+    padding-top: 8px;
+    border-top: 1px dashed #1e293b;
+    font-size: 0.92rem;
+    font-weight: 700;
+}
+
+.factura-total-row span:last-child {
+    color: var(--brand-red);
+    font-size: 1.25rem;
+}
+
+.card-acciones {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin-top: 14px;
+}
+
+.btn-descargar-pdf {
+    background: var(--brand-red);
+    color: #ffffff;
+    border: none;
+    padding: 10px;
+    border-radius: 6px;
+    font-size: 0.88rem;
+    font-weight: 600;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    text-decoration: none;
+    transition: background 0.2s;
+}
+
+.btn-descargar-pdf:hover {
+    background: var(--brand-red-hover);
+    color: #ffffff;
+}
+
+.btn-ver-factura {
+    background: #1e293b;
+    color: #ffffff;
+    border: 1px solid #334155;
+    padding: 10px;
+    border-radius: 6px;
+    font-size: 0.88rem;
+    font-weight: 600;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    text-decoration: none;
+    transition: background 0.2s;
+}
+
+.btn-ver-factura:hover {
+    background: #334155;
+    color: #ffffff;
+}

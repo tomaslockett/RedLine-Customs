@@ -68,6 +68,8 @@
     <Compile Include="Mappers\DAL_Permisos.cs" />
     <Compile Include="Mappers\DAL_Traduccion.cs" />
     <Compile Include="Mappers\DAL_Usuario.cs" />
+    <Compile Include="Mappers\DAL_Venta.cs" />
+    <Compile Include="Mappers\DAL_Factura.cs" />
     <Compile Include="Mappers\DAL_DigitoVerificador.cs" />
     <Compile Include="Migrations\202605312145560_InitialCreate.cs" />
     <Compile Include="Migrations\202605312145560_InitialCreate.Designer.cs">

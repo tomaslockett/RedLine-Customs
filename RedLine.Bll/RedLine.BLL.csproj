@@ -57,6 +57,8 @@
     <Compile Include="BLL_Traduccion.cs" />
     <Compile Include="BLL_Usuario.cs" />
     <Compile Include="BLL_DigitoVerificador.cs" />
+    <Compile Include="BLL_Venta.cs" />
+    <Compile Include="BLL_Factura.cs" />
     <Compile Include="ModulosEventos.cs" />
     <Compile Include="Exception\LoginException.cs" />
     <Compile Include="Exception\LoginResult.cs" />

@@ -1,4 +1,4 @@
-﻿//------------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 // <generado automáticamente>
 //     Este código fue generado por una herramienta.
 //
@@ -60,6 +60,15 @@ namespace RedLine.Web
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl lblPrecio;
 
         /// <summary>
+        /// Control lblPrecioBaseHidden.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl lblPrecioBaseHidden;
+
+        /// <summary>
         /// Control lblExtraAleron.
         /// </summary>
         /// <remarks>
@@ -103,6 +112,15 @@ namespace RedLine.Web
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lblExtraPintura;
+
+        /// <summary>
+        /// Control hfAutoId.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HiddenField hfAutoId;
 
         /// <summary>
         /// Control btnConfirmar.

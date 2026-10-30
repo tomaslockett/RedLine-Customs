@@ -1,4 +1,4 @@
-﻿using RedLine.Bll;
+using RedLine.Bll;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -28,7 +28,14 @@ namespace RedLine.Web
                 {
                     _bllUsuario.Logout();
                 }
-                Response.Redirect("~/Login.aspx", false);
+
+                Session.Remove("ClienteSession");
+                Session.Remove("UserEmail");
+                Session.Remove("UltimaVenta");
+                Session.Remove("UltimaFactura");
+                Session.Clear();
+
+                Response.Redirect("~/LogIn.aspx", false);
                 Context.ApplicationInstance.CompleteRequest();
             }
             catch (Exception ex)

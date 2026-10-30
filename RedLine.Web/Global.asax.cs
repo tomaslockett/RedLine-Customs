@@ -1,4 +1,4 @@
-﻿using RedLine.Bll;
+using RedLine.Bll;
 using RedLine.Servicios;
 using RedLine.Servicios.Composite;
 using System;
@@ -27,9 +27,18 @@ namespace RedLine.Web
 
             if (context.Session != null)
             {
-                string rutaActual = context.Request.AppRelativeCurrentExecutionFilePath.ToLower();
+                string rutaActual = (context.Request.AppRelativeCurrentExecutionFilePath ?? string.Empty).ToLower();
 
+                // 1. Permitir archivos estáticos, recursos y bundles sin validación de sesión
+                if (rutaActual.EndsWith(".css") || rutaActual.EndsWith(".js") || rutaActual.EndsWith(".png") ||
+                    rutaActual.EndsWith(".jpg") || rutaActual.EndsWith(".jpeg") || rutaActual.EndsWith(".jfif") ||
+                    rutaActual.EndsWith(".ico") || rutaActual.EndsWith(".axd") || rutaActual.EndsWith(".woff") ||
+                    rutaActual.EndsWith(".woff2") || rutaActual.Contains("/bundles/"))
+                {
+                    return;
+                }
 
+                // 2. Control de Inconsistencia de Dígito Verificador (DV)
                 bool esPermitidaEnInconsistencia = rutaActual.Contains("recuperaciondv.aspx") ||
                                                    rutaActual.Contains("backuprestore.aspx") ||
                                                    rutaActual.Contains("login.aspx") ||
@@ -37,7 +46,6 @@ namespace RedLine.Web
 
                 if (context.Session["Inconsistencia"] != null && (bool)context.Session["Inconsistencia"])
                 {
-
                     if (!esPermitidaEnInconsistencia)
                     {
                         SessionManager.Instancia.Logout();
@@ -46,21 +54,23 @@ namespace RedLine.Web
                         return;
                     }
 
-
                     if (rutaActual.Contains("recuperaciondv.aspx") || rutaActual.Contains("backuprestore.aspx"))
                     {
                         bool tienePermisoSeguridad = false;
 
-                        if (SessionManager.Instancia.IsLogged())
+                        if (SessionManager.Instancia.IsLogged() && SessionManager.Instancia.Usuario?.PerfilId != null)
                         {
-                            int idPerfilUsuario = (int)SessionManager.Instancia.Usuario.PerfilId;
-                            var gestorPerfil = new BLL_Perfil();
-                            List<ComponentePermiso> permisosUsuario = gestorPerfil.ObtenerPermisosDePerfil(idPerfilUsuario);
+                            try
+                            {
+                                int idPerfilUsuario = SessionManager.Instancia.Usuario.PerfilId.Value;
+                                var gestorPerfil = new BLL_Perfil();
+                                List<ComponentePermiso> permisosUsuario = gestorPerfil.ObtenerPermisosDePerfil(idPerfilUsuario);
 
-
-                            tienePermisoSeguridad = permisosUsuario.Any(p => p.Nombre.ToLower() == "gestionseguridad");
+                                tienePermisoSeguridad = permisosUsuario != null &&
+                                    permisosUsuario.Any(p => p.Nombre.ToLower() == "gestionseguridad");
+                            }
+                            catch { }
                         }
-
 
                         if (!tienePermisoSeguridad)
                         {
@@ -71,15 +81,31 @@ namespace RedLine.Web
                         }
                     }
 
-                    return; 
+                    return;
                 }
 
+                // 3. Estado de autenticación
+                bool esUsuarioLogueado = SessionManager.Instancia.IsLogged();
+                bool esClienteLogueado = context.Session["ClienteSession"] != null;
 
-                bool esPaginaPublica = rutaActual.Contains("login.aspx") || rutaActual.Contains("registrocliente.aspx");
+                // Páginas públicas y operativas accesibles tanto para visitantes como para clientes
+                bool esPaginaPublicaOCliente = rutaActual.Contains("login") ||
+                                               rutaActual.Contains("registrocliente") ||
+                                               rutaActual.Contains("logout") ||
+                                               rutaActual.Contains("catalogo") ||
+                                               rutaActual.Contains("personalizarauto") ||
+                                               rutaActual.Contains("misautos") ||
+                                               rutaActual.Contains("facturacion") ||
+                                               rutaActual.Contains("checkout") ||
+                                               rutaActual.Contains("pagoexitoso") ||
+                                               rutaActual.Contains("cambiocontrase") ||
+                                               rutaActual == "~/" ||
+                                               rutaActual == "~/default.aspx";
 
-                if (!SessionManager.Instancia.IsLogged())
+                // Si no hay ninguna sesión iniciada (visitante anónimo)
+                if (!esUsuarioLogueado && !esClienteLogueado)
                 {
-                    if (!esPaginaPublica)
+                    if (!esPaginaPublicaOCliente)
                     {
                         context.Response.Redirect("~/LogIn.aspx", false);
                         context.ApplicationInstance.CompleteRequest();
@@ -87,23 +113,59 @@ namespace RedLine.Web
                     return;
                 }
 
+                // Si es un cliente autenticado (sin rol interno de gestión administrativa)
+                if (esClienteLogueado && !esUsuarioLogueado)
+                {
+                    if (!esPaginaPublicaOCliente)
+                    {
+                        context.Response.Redirect("~/Catalogo.aspx", false);
+                        context.ApplicationInstance.CompleteRequest();
+                    }
+                    return;
+                }
 
-                if (SessionManager.Instancia.IsLogged())
+                // Si es un usuario interno / backoffice (WebMaster, Administrador, etc.)
+                if (esUsuarioLogueado)
                 {
                     string permisoRequerido = ObtenerPermisoRequeridoPorPagina(rutaActual);
 
                     if (permisoRequerido != "libre")
                     {
-                        int idPerfilUsuario = (int)SessionManager.Instancia.Usuario.PerfilId;
-                        var gestorPerfil = new BLL_Perfil();
-                        List<ComponentePermiso> permisosUsuario = gestorPerfil.ObtenerPermisosDePerfil(idPerfilUsuario);
-
-                        bool tienePermiso = permisosUsuario.Any(p => p.Nombre.ToLower() == permisoRequerido.ToLower());
-
-                        if (!tienePermiso)
+                        var usuario = SessionManager.Instancia.Usuario;
+                        if (usuario?.PerfilId == null)
                         {
-                            context.Response.Redirect("~/Catalogo.aspx", false);
-                            context.ApplicationInstance.CompleteRequest();
+                            if (!rutaActual.Contains("catalogo"))
+                            {
+                                context.Response.Redirect("~/Catalogo.aspx", false);
+                                context.ApplicationInstance.CompleteRequest();
+                            }
+                            return;
+                        }
+
+                        try
+                        {
+                            var gestorPerfil = new BLL_Perfil();
+                            List<ComponentePermiso> permisosUsuario = gestorPerfil.ObtenerPermisosDePerfil(usuario.PerfilId.Value);
+
+                            bool tienePermiso = permisosUsuario != null &&
+                                permisosUsuario.Any(p => p.Nombre.Equals(permisoRequerido, StringComparison.OrdinalIgnoreCase));
+
+                            if (!tienePermiso)
+                            {
+                                if (!rutaActual.Contains("catalogo"))
+                                {
+                                    context.Response.Redirect("~/Catalogo.aspx", false);
+                                    context.ApplicationInstance.CompleteRequest();
+                                }
+                            }
+                        }
+                        catch
+                        {
+                            if (!rutaActual.Contains("catalogo"))
+                            {
+                                context.Response.Redirect("~/Catalogo.aspx", false);
+                                context.ApplicationInstance.CompleteRequest();
+                            }
                         }
                     }
                 }
@@ -112,38 +174,40 @@ namespace RedLine.Web
 
         private string ObtenerPermisoRequeridoPorPagina(string rutaActual)
         {
-            if (rutaActual.Contains("login.aspx") ||
-                  rutaActual.Contains("registrocliente.aspx") ||
-                  rutaActual.Contains("logout.aspx"))
+            if (rutaActual.Contains("login") ||
+                rutaActual.Contains("registrocliente") ||
+                rutaActual.Contains("logout") ||
+                rutaActual.Contains("catalogo") ||
+                rutaActual.Contains("personalizarauto") ||
+                rutaActual.Contains("misautos") ||
+                rutaActual.Contains("facturacion") ||
+                rutaActual.Contains("checkout") ||
+                rutaActual.Contains("pagoexitoso") ||
+                rutaActual.Contains("cambiocontrase") ||
+                rutaActual == "~/" ||
+                rutaActual == "~/default.aspx")
+            {
                 return "libre";
+            }
 
-
-            // Taller y Ventas
-            if (rutaActual.Contains("catalogo.aspx")) return "Catalogo";
-            if (rutaActual.Contains("crearauto.aspx")) return "GestionInventario";
-            if (rutaActual.Contains("personalizarauto.aspx")) return "PersonalizarAuto";
-            if (rutaActual.Contains("inventario.aspx")) return "GestionInventario";
-            if (rutaActual.Contains("historialventas.aspx")) return "HistorialVentas";
-
-            // Flujo de Compras
-            if (rutaActual.Contains("checkout.aspx")) return "Checkout";
-            if (rutaActual.Contains("pagoexitoso.aspx")) return "PagoExitoso";
+            // Taller y Ventas - Backoffice
+            if (rutaActual.Contains("crearauto")) return "GestionInventario";
+            if (rutaActual.Contains("inventario")) return "GestionInventario";
+            if (rutaActual.Contains("historialventas")) return "HistorialVentas";
 
             // Gestión ABM
-            if (rutaActual.Contains("gestionusuarios.aspx")) return "GestionUsuarios";
-            if (rutaActual.Contains("gestionclientes.aspx")) return "GestionClientes";
-            if (rutaActual.Contains("gestioneventos.aspx")) return "BitacoraEventos";
+            if (rutaActual.Contains("gestionusuarios")) return "GestionUsuarios";
+            if (rutaActual.Contains("gestionclientes")) return "GestionClientes";
+            if (rutaActual.Contains("gestioneventos")) return "BitacoraEventos";
 
             // Sistema
-            if (rutaActual.Contains("gestion_perfiles_permisos.aspx")) return "GestionPerfiles";
-            if (rutaActual.Contains("backuprestore.aspx")) return "BackupRestore";
-            if (rutaActual.Contains("recuperaciondv.aspx") || rutaActual.Contains("digitoverificador.aspx")) return "RecuperarDV";
-            if (rutaActual.Contains("cambiocontraseña.aspx")) return "CambioContraseña";
-            if (rutaActual.Contains("gestionidiomas.aspx")) return "GestionIdiomas";
+            if (rutaActual.Contains("gestion_perfiles_permisos")) return "GestionPerfiles";
+            if (rutaActual.Contains("backuprestore")) return "BackupRestore";
+            if (rutaActual.Contains("recuperaciondv") || rutaActual.Contains("digitoverificador")) return "RecuperarDV";
+            if (rutaActual.Contains("gestionidiomas")) return "GestionIdiomas";
 
             // Cierre por defecto
             return "bloqueado_por_defecto";
         }
-
     }
 }

@@ -1,6 +1,7 @@
-﻿using Redline.Be;
+using Redline.Be;
 using RedLine.Bll;
 using System;
+using System.Linq;
 
 namespace RedLine.Web
 {
@@ -14,21 +15,39 @@ namespace RedLine.Web
             {
                 try
                 {
-                    if (Request.QueryString["id"] == null)
+                    int id = 0;
+                    if (Request.QueryString["id"] != null && int.TryParse(Request.QueryString["id"], out int parsedId))
                     {
-                        Response.Redirect("Inventario.aspx");
-                        return;
+                        id = parsedId;
+                    }
+                    else if (Session["Checkout_AutoId"] != null && int.TryParse(Session["Checkout_AutoId"].ToString(), out int sesId))
+                    {
+                        id = sesId;
+                    }
+                    else
+                    {
+                        var autosDisponibles = _bllAut.MostrarAutosBase();
+                        if (autosDisponibles != null && autosDisponibles.Count > 0)
+                        {
+                            id = autosDisponibles.First().ID;
+                        }
+                        else
+                        {
+                            Response.Redirect("Catalogo.aspx");
+                            return;
+                        }
                     }
 
-                    int id = int.Parse(Request.QueryString["id"]);
                     AutoBase auto = _bllAut.DevolverAuto(id);
 
                     if (auto != null)
                     {
+                        hfAutoId.Value = auto.ID.ToString();
                         lblMarca.InnerText = auto.Marca;
                         lblModelo.InnerText = auto.Modelo;
                         lblAnio.InnerText = auto.Anio.ToString();
                         lblPrecio.InnerText = "$ " + auto.PrecioBase.ToString("N2");
+                        lblPrecioBaseHidden.InnerText = auto.PrecioBase.ToString(System.Globalization.CultureInfo.InvariantCulture);
 
                         if (auto.ImagenBinaria != null && auto.ImagenBinaria.Length > 0)
                         {
@@ -37,7 +56,7 @@ namespace RedLine.Web
                         }
                         else
                         {
-                            img.Src = "Content/img/auto-reemplazo.png";
+                            img.Src = "Content/img/porsche.jfif";
                         }
                     }
                     else
@@ -47,14 +66,15 @@ namespace RedLine.Web
                 }
                 catch (Exception ex)
                 {
-                    Response.Write("<script>alert('" + ex.Message.Replace("'", "\\'") + "'); window.location='Inventario.aspx';</script>");
+                    Response.Write("<script>alert('" + ex.Message.Replace("'", "\\'") + "'); window.location='Catalogo.aspx';</script>");
                 }
             }
         }
 
         protected void btnConfirmar_Click(object sender, EventArgs e)
         {
-            Session["Checkout_AutoId"] = Request.QueryString["id"];
+            string idAuto = !string.IsNullOrEmpty(hfAutoId.Value) ? hfAutoId.Value : Request.QueryString["id"];
+            Session["Checkout_AutoId"] = idAuto;
             Session["Checkout_Extras"] = Request.Form["extras"];
             Response.Redirect("Checkout.aspx");
         }

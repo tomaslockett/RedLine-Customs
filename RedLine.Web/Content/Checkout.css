@@ -1,4 +1,4 @@
-﻿:root {
+:root {
     --bg-main: #060913;
     --bg-gradient: radial-gradient(circle at top, #0f172a 0%, #060913 100%);
     --card-bg: #0b111e;
@@ -456,4 +456,105 @@ h2 {
     .checkout-container {
         grid-template-columns: 1fr;
     }
+}
+
+/* Additional Checkout Enhancements */
+.option-panel.open {
+    max-height: 1500px !important;
+}
+
+.checkout-alert {
+    background: #2a0a0a;
+    border: 1px solid #cf2a1d;
+    border-radius: 8px;
+    color: #ff9999;
+    padding: 14px 18px;
+    margin-bottom: 24px;
+    font-size: 0.92rem;
+    line-height: 1.5;
+    box-shadow: 0 4px 12px rgba(207, 42, 29, 0.2);
+}
+
+.checkout-alert strong {
+    color: #ffffff;
+    display: block;
+    margin-bottom: 6px;
+    font-size: 0.98rem;
+}
+
+.checkout-alert ul {
+    margin-left: 20px;
+    margin-top: 6px;
+}
+
+.bank-info-box {
+    background: #020408;
+    border: 1px solid #1a2942;
+    border-left: 4px solid #cf2a1d;
+    border-radius: 8px;
+    padding: 16px;
+    margin: 16px 0 20px 0;
+}
+
+.bank-info-box h4 {
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: #ffffff;
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.bank-info-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    font-size: 0.85rem;
+}
+
+.bank-info-item span:first-child {
+    color: #64748b;
+    display: block;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+}
+
+.bank-info-item span:last-child {
+    color: #ffffff;
+    font-weight: 600;
+    font-family: 'Consolas', monospace;
+}
+
+.badge-proximamente {
+    background-color: #334155;
+    color: #94a3b8;
+    font-size: 0.75rem;
+    padding: 3px 8px;
+    border-radius: 12px;
+    margin-left: 10px;
+    text-transform: uppercase;
+    font-weight: 600;
+}
+
+.input-error {
+    border-color: #cf2a1d !important;
+    background-color: #1a0505 !important;
+    box-shadow: 0 0 0 1px #cf2a1d !important;
+}
+
+.btn-secundario-outline {
+    background: transparent;
+    color: #ffffff;
+    border: 1px solid #1a2942;
+    padding: 12px 16px;
+    border-radius: 6px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.btn-secundario-outline:hover {
+    border-color: #cf2a1d;
+    color: #cf2a1d;
 }

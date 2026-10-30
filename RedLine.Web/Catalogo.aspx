@@ -39,7 +39,7 @@
         <asp:Repeater runat="server" ID="repAutos">
             <ItemTemplate>
                 <div class="auto">
-                    <img class="fotoAuto" src='<%# "data:image/jpeg;base64," + Convert.ToBase64String((byte[])Eval("ImagenBinaria")) %>' />
+                    <img class="fotoAuto" src='<%# ObtenerImagen(Eval("ImagenBinaria")) %>' alt="Auto" />
                     <div class="contenidoAuto">
                         <h4 class="marca"><%# Eval("Marca") %></h4>
                         <h2 class="modelo"><%# Eval("Modelo") %></h2>

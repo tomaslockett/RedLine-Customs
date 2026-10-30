@@ -1,4 +1,4 @@
-﻿using Redline.Be;
+using Redline.Be;
 using RedLine.Bll;
 using System;
 using System.Collections.Generic;
@@ -23,14 +23,31 @@ namespace RedLine.Web
 
         private void CargarCatalogo()
         {
-            List<AutoBase> lista = _bllAuto.MostrarAutosBase();
-            repAutos.DataSource = lista;
-            repAutos.DataBind();
+            try
+            {
+                List<AutoBase> lista = _bllAuto.MostrarAutosBase();
+                repAutos.DataSource = lista ?? new List<AutoBase>();
+                repAutos.DataBind();
+            }
+            catch
+            {
+                repAutos.DataSource = new List<AutoBase>();
+                repAutos.DataBind();
+            }
         }
 
         protected void btnAplicarFiltros_Click(object sender, EventArgs e)
         {
             CargarCatalogo();
+        }
+
+        public string ObtenerImagen(object imgObj)
+        {
+            if (imgObj is byte[] bytes && bytes.Length > 0)
+            {
+                return "data:image/jpeg;base64," + Convert.ToBase64String(bytes);
+            }
+            return ResolveUrl("~/Content/img/porsche.jfif");
         }
     }
 }

@@ -1,4 +1,4 @@
-﻿//------------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 // <generado automáticamente>
 //     Este código fue generado por una herramienta.
 //
@@ -17,64 +17,46 @@ namespace RedLine.Web
         /// <summary>
         /// Control lblTituloPagoExitoso.
         /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
         protected global::System.Web.UI.WebControls.Label lblTituloPagoExitoso;
 
         /// <summary>
         /// Control lblSubtituloPagoExitoso.
         /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
         protected global::System.Web.UI.WebControls.Label lblSubtituloPagoExitoso;
 
         /// <summary>
         /// Control lblEtiquetaTransaccion.
         /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
         protected global::System.Web.UI.WebControls.Label lblEtiquetaTransaccion;
 
         /// <summary>
         /// Control lblNumeroTransaccion.
         /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
         protected global::System.Web.UI.WebControls.Label lblNumeroTransaccion;
-
-        /// <summary>
-        /// Control btnHome.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnHome;
 
         /// <summary>
         /// Control btnGarage.
         /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
         protected global::System.Web.UI.WebControls.Button btnGarage;
+
+        /// <summary>
+        /// Control btnVerFactura.
+        /// </summary>
+        protected global::System.Web.UI.WebControls.Button btnVerFactura;
+
+        /// <summary>
+        /// Control btnDescargarPdf.
+        /// </summary>
+        protected global::System.Web.UI.WebControls.Button btnDescargarPdf;
+
+        /// <summary>
+        /// Control btnHome.
+        /// </summary>
+        protected global::System.Web.UI.WebControls.Button btnHome;
 
         /// <summary>
         /// Control lblEmailConfirmacion.
         /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
         protected global::System.Web.UI.WebControls.Label lblEmailConfirmacion;
     }
 }

@@ -1,4 +1,4 @@
-﻿using Redline.Be;
+using Redline.Be;
 using RedLine.Be.Entidades;
 using RedLine.Be.Interfaces;
 using RedLine.Bll;
@@ -91,7 +91,15 @@ namespace RedLine.Web
                 litNombreUsuario.Text = $"{clienteLogueado.Nombre} {clienteLogueado.Apellido}";
 
                 EstablecerMenuLogueado();
+
+                // Cliente tiene acceso al menú Taller y Ventas (Personalizar Auto, Mis Vehículos y Facturación)
                 menuTallerVentas.Visible = true;
+                if (lnkCrearAuto != null) lnkCrearAuto.Visible = false;
+                if (lnkInventario != null) lnkInventario.Visible = false;
+                if (lnkHistorialVentas != null) lnkHistorialVentas.Visible = false;
+                if (lnkPersonalizarAuto != null) lnkPersonalizarAuto.Visible = true;
+                if (lnkTallerMisAutos != null) lnkTallerMisAutos.Visible = true;
+                if (lnkTallerFacturacion != null) lnkTallerFacturacion.Visible = true;
             }
             else
             {
@@ -100,9 +108,17 @@ namespace RedLine.Web
 
                 lnkLogin.Visible = true;
                 lnkRegistrarse.Visible = true;
-
                 lnkCambioPass.Visible = false;
                 lnkLogout.Visible = false;
+
+                // Acceso para clientes exploradores y visitantes a Taller y Ventas
+                menuTallerVentas.Visible = true;
+                if (lnkCrearAuto != null) lnkCrearAuto.Visible = false;
+                if (lnkInventario != null) lnkInventario.Visible = false;
+                if (lnkHistorialVentas != null) lnkHistorialVentas.Visible = false;
+                if (lnkPersonalizarAuto != null) lnkPersonalizarAuto.Visible = true;
+                if (lnkTallerMisAutos != null) lnkTallerMisAutos.Visible = true;
+                if (lnkTallerFacturacion != null) lnkTallerFacturacion.Visible = true;
             }
         }
 
@@ -172,8 +188,7 @@ namespace RedLine.Web
         {
             lnkLogin.Visible = false;
             lnkRegistrarse.Visible = false;
-
-            lnkCambioPass.Visible = true;
+            lnkCambioPass.Visible = SessionManager.Instancia.IsLogged();
             lnkLogout.Visible = true;
         }
 
@@ -188,6 +203,13 @@ namespace RedLine.Web
             if (!usuario.PerfilId.HasValue || usuario.PerfilId.Value <= 0)
             {
                 litNombreUsuario.Text = $"{usuario.Nombre} (Sin Perfil ID asignado)";
+                menuTallerVentas.Visible = true;
+                if (lnkCrearAuto != null) lnkCrearAuto.Visible = false;
+                if (lnkInventario != null) lnkInventario.Visible = false;
+                if (lnkHistorialVentas != null) lnkHistorialVentas.Visible = false;
+                if (lnkPersonalizarAuto != null) lnkPersonalizarAuto.Visible = true;
+                if (lnkTallerMisAutos != null) lnkTallerMisAutos.Visible = true;
+                if (lnkTallerFacturacion != null) lnkTallerFacturacion.Visible = true;
                 return;
             }
 
@@ -199,13 +221,29 @@ namespace RedLine.Web
                 if (permisosUsuario == null || permisosUsuario.Count == 0)
                 {
                     litNombreUsuario.Text = $"{usuario.Nombre} (Perfil ID: {usuario.PerfilId} sin permisos en BD)";
+                    menuTallerVentas.Visible = true;
+                    if (lnkCrearAuto != null) lnkCrearAuto.Visible = false;
+                    if (lnkInventario != null) lnkInventario.Visible = false;
+                    if (lnkHistorialVentas != null) lnkHistorialVentas.Visible = false;
+                    if (lnkPersonalizarAuto != null) lnkPersonalizarAuto.Visible = true;
+                    if (lnkTallerMisAutos != null) lnkTallerMisAutos.Visible = true;
+                    if (lnkTallerFacturacion != null) lnkTallerFacturacion.Visible = true;
                     return;
                 }
 
-                bool tieneTaller = permisosUsuario.Any(p => p.Nombre == "GestionInventario" || p.Nombre == "PersonalizarAuto" || p.Nombre == "HistorialVentas");
-                menuTallerVentas.Visible = tieneTaller;
+                // Taller y Ventas siempre habilitado para el usuario
+                menuTallerVentas.Visible = true;
 
-                lnkInventario.Visible = permisosUsuario.Any(p => p.Nombre == "GestionInventario");
+                bool tieneInventario = permisosUsuario.Any(p => p.Nombre == "GestionInventario");
+                if (lnkCrearAuto != null) lnkCrearAuto.Visible = tieneInventario;
+                if (lnkInventario != null) lnkInventario.Visible = tieneInventario;
+
+                bool tieneHistorial = permisosUsuario.Any(p => p.Nombre == "HistorialVentas");
+                if (lnkHistorialVentas != null) lnkHistorialVentas.Visible = tieneHistorial;
+
+                if (lnkPersonalizarAuto != null) lnkPersonalizarAuto.Visible = true;
+                if (lnkTallerMisAutos != null) lnkTallerMisAutos.Visible = true;
+                if (lnkTallerFacturacion != null) lnkTallerFacturacion.Visible = true;
 
                 bool tieneABM = permisosUsuario.Any(p => p.Nombre == "GestionUsuarios" || p.Nombre == "GestionClientes" || p.Nombre == "BitacoraEventos");
                 menuGestionABM.Visible = tieneABM;
@@ -225,6 +263,10 @@ namespace RedLine.Web
             catch (Exception ex)
             {
                 litNombreUsuario.Text = "Error BD: " + ex.Message;
+                menuTallerVentas.Visible = true;
+                if (lnkPersonalizarAuto != null) lnkPersonalizarAuto.Visible = true;
+                if (lnkTallerMisAutos != null) lnkTallerMisAutos.Visible = true;
+                if (lnkTallerFacturacion != null) lnkTallerFacturacion.Visible = true;
             }
         }
     }
