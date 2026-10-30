@@ -157,7 +157,8 @@
                     Intentos = 0,
                     Bloqueado = false,
                     Activo = true,
-                    UltimoIntento = DateTime.Now
+                    UltimoIntento = DateTime.Now,
+                    Idioma = "Español"
                 }
             );
 
@@ -193,7 +194,8 @@
                     Intentos = 0,
                     Bloqueado = false,
                     Activo = true,
-                    UltimoIntento = DateTime.Now
+                    UltimoIntento = DateTime.Now,
+                    Idioma = "Español"
                 }
             );
 
@@ -209,7 +211,8 @@
                     Intentos = 0,
                     Bloqueado = false,
                     Activo = true,
-                    UltimoIntento = DateTime.Now
+                    UltimoIntento = DateTime.Now,
+                    Idioma = "Español"
                 }
             );
 
