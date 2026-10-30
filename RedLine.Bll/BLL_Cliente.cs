@@ -138,7 +138,8 @@ namespace RedLine.Bll
             {
                 c.Nombre = Hashing.DesencriptarAES(c.Nombre);
                 c.Apellido = Hashing.DesencriptarAES(c.Apellido);
-                c.DNI = Hashing.DesencriptarAES(c.DNI);
+                //c.DNI = Hashing.DesencriptarAES(c.DNI);
+                c.DNI = c.DNI;
                 c.Telefono = Hashing.DesencriptarAES(c.Telefono);
                 c.Direccion = Hashing.DesencriptarAES(c.Direccion);
             }

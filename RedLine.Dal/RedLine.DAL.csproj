@@ -138,6 +138,10 @@
     <Compile Include="Migrations\202610301542426_vuelvoAUsarCliente.Designer.cs">
       <DependentUpon>202610301542426_vuelvoAUsarCliente.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202610302149465_AutoMejoraMuchosAMuchos.cs" />
+    <Compile Include="Migrations\202610302149465_AutoMejoraMuchosAMuchos.Designer.cs">
+      <DependentUpon>202610302149465_AutoMejoraMuchosAMuchos.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="ORM\SqlEnsamblador.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -210,6 +214,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202610301542426_vuelvoAUsarCliente.resx">
       <DependentUpon>202610301542426_vuelvoAUsarCliente.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202610302149465_AutoMejoraMuchosAMuchos.resx">
+      <DependentUpon>202610302149465_AutoMejoraMuchosAMuchos.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

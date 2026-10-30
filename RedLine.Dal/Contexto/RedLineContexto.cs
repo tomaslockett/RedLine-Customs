@@ -53,7 +53,15 @@ namespace RedLine.Dal.Contexto
                 .HasOptional(v => v.Factura)
                 .WithRequired(f => f.Venta);
 
-
+            modelBuilder.Entity<AutoPersonalizado>()
+       .HasMany(a => a.Mejoras)
+       .WithMany()   // Mejora no tiene colección de autos
+       .Map(x =>
+       {
+           x.ToTable("Auto_Mejora");
+           x.MapLeftKey("ID_Auto");
+           x.MapRightKey("ID_Mejora");
+       });
             // PERFILES, PERMISOS Y FAMILIAS
             modelBuilder.Entity<ComponentePermiso>()
                 .HasMany(c => c.ComponentesHijos)

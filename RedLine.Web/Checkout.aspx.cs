@@ -123,11 +123,7 @@ namespace RedLine.Web
                     return;
                 }
 
-                if (!SessionManager.Instancia.IsLogged())
-                {
-                    Response.Redirect("Login.aspx");
-                    return;
-                }
+
 
 
                 var usuarioLogueado = new BLL_Cliente().BuscarPorEmail(SessionManager.Instancia.Usuario.Email);
@@ -169,6 +165,7 @@ namespace RedLine.Web
                     autoPersonalizado = new AutoPersonalizado
                     {
                         AuBase = autoBase,
+                        Cliente = usuarioLogueado,
                         DNI_Cliente = usuarioLogueado.DNI,
                         Mejoras = listaMejoras
                     };
@@ -187,7 +184,7 @@ namespace RedLine.Web
                     IVA = 21,
                     Total = totalFinal,
                     Cliente = usuarioLogueado,
-                    AutoBase = autoPersonalizado == null ? autoBase : null,
+                    AutoBase = autoBase,
                     AutoPersonalizado = autoPersonalizado
                 };
 

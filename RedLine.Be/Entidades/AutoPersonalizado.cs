@@ -9,6 +9,7 @@ namespace Redline.Be
     {
         public int ID { get; set; }
         public string DNI_Cliente { get; set; }
+        public Cliente Cliente { get; set; }
         public AutoBase AuBase { get; set; }
         public List<Mejora> Mejoras { get; set; } = new List<Mejora>();
         public decimal PrecioFinal
