@@ -11,19 +11,26 @@ namespace RedLine.Dal
         protected override string NombreTabla => "AutoPersonalizado";
         protected override bool RequiereDigitoVerificador => true;
 
-        protected override string SqlInsertar => "INSERT INTO AutoPersonalizado (DNI_Cliente, ID_AutoBase) OUTPUT INSERTED.ID VALUES (@DNI, @IDBase)";
-        protected override string SqlModificar => "UPDATE AutoPersonalizado SET DNI_Cliente = @DNI, ID_AutoBase = @IDBase WHERE ID = @ID";
+        protected override string SqlInsertar =>
+     "INSERT INTO AutoPersonalizado (DNI_Cliente, AuBase_ID, Cliente_ID) " +
+     "OUTPUT INSERTED.ID VALUES (@DNI, @AuBaseID, @ClienteID)";
+
+        protected override string SqlModificar =>
+            "UPDATE AutoPersonalizado SET DNI_Cliente = @DNI, AuBase_ID = @AuBaseID, Cliente_ID = @ClienteID WHERE ID = @ID";
+
         protected override string SqlEliminar => "DELETE FROM AutoPersonalizado WHERE ID = @ID";
         protected override string SqlListar => "SELECT * FROM AutoPersonalizado";
         protected override string SqlObtenerPorId => "SELECT * FROM AutoPersonalizado WHERE ID = @ID";
 
         protected override void ConfigurarParametros(SqlCommand cmd, AutoPersonalizado entidad)
         {
-            if (entidad.ID > 0) cmd.Parameters.AddWithValue("@ID", entidad.ID);
-            cmd.Parameters.AddWithValue("@DNI", entidad.DNI_Cliente);
-            cmd.Parameters.AddWithValue("@IDBase", entidad.AuBase.ID);
-        }
+            if (entidad.ID > 0)
+                cmd.Parameters.AddWithValue("@ID", entidad.ID);
 
+            cmd.Parameters.AddWithValue("@DNI", (object)entidad.DNI_Cliente ?? DBNull.Value);
+            cmd.Parameters.AddWithValue("@AuBaseID", entidad.AuBase != null ? (object)entidad.AuBase.ID : DBNull.Value);
+            cmd.Parameters.AddWithValue("@ClienteID", entidad.Cliente != null ? (object)entidad.Cliente.ID : DBNull.Value);
+        }
         protected override void ConfigurarParametrosId(SqlCommand cmd, int id)
         {
             cmd.Parameters.AddWithValue("@ID", id);
