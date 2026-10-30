@@ -69,6 +69,7 @@
     <Compile Include="Mappers\DAL_Traduccion.cs" />
     <Compile Include="Mappers\DAL_Usuario.cs" />
     <Compile Include="Mappers\DAL_DigitoVerificador.cs" />
+    <Compile Include="Mappers\DAL_Venta.cs" />
     <Compile Include="Migrations\202605312145560_InitialCreate.cs" />
     <Compile Include="Migrations\202605312145560_InitialCreate.Designer.cs">
       <DependentUpon>202605312145560_InitialCreate.cs</DependentUpon>
@@ -120,6 +121,22 @@
     <Compile Include="Migrations\202610032056000_ActualizacionTraduccionesEtiquetas.cs" />
     <Compile Include="Migrations\202610032056000_ActualizacionTraduccionesEtiquetas.Designer.cs">
       <DependentUpon>202610032056000_ActualizacionTraduccionesEtiquetas.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202610291944554_eliminoClasesHijaMejorasSimplificoEn1.cs" />
+    <Compile Include="Migrations\202610291944554_eliminoClasesHijaMejorasSimplificoEn1.Designer.cs">
+      <DependentUpon>202610291944554_eliminoClasesHijaMejorasSimplificoEn1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202610291952496_sdf.cs" />
+    <Compile Include="Migrations\202610291952496_sdf.Designer.cs">
+      <DependentUpon>202610291952496_sdf.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202610292126396_CambieCLienteEnVentaXUsuario.cs" />
+    <Compile Include="Migrations\202610292126396_CambieCLienteEnVentaXUsuario.Designer.cs">
+      <DependentUpon>202610292126396_CambieCLienteEnVentaXUsuario.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202610301542426_vuelvoAUsarCliente.cs" />
+    <Compile Include="Migrations\202610301542426_vuelvoAUsarCliente.Designer.cs">
+      <DependentUpon>202610301542426_vuelvoAUsarCliente.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="ORM\SqlEnsamblador.cs" />
@@ -181,6 +198,18 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202610032056000_ActualizacionTraduccionesEtiquetas.resx">
       <DependentUpon>202610032056000_ActualizacionTraduccionesEtiquetas.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202610291944554_eliminoClasesHijaMejorasSimplificoEn1.resx">
+      <DependentUpon>202610291944554_eliminoClasesHijaMejorasSimplificoEn1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202610291952496_sdf.resx">
+      <DependentUpon>202610291952496_sdf.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202610292126396_CambieCLienteEnVentaXUsuario.resx">
+      <DependentUpon>202610292126396_CambieCLienteEnVentaXUsuario.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202610301542426_vuelvoAUsarCliente.resx">
+      <DependentUpon>202610301542426_vuelvoAUsarCliente.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

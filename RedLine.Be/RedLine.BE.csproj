@@ -48,11 +48,6 @@
     <Compile Include="Composite\Perfil.cs" />
     <Compile Include="Composite\Permiso.cs" />
     <Compile Include="Entidades\AutoBase.cs" />
-    <Compile Include="Entidades\AutoPersonalizacion\Aleron.cs" />
-    <Compile Include="Entidades\AutoPersonalizacion\KitCarroceria.cs" />
-    <Compile Include="Entidades\AutoPersonalizacion\Llantas.cs" />
-    <Compile Include="Entidades\AutoPersonalizacion\Pintura.cs" />
-    <Compile Include="Entidades\AutoPersonalizacion\Suspension.cs" />
     <Compile Include="Entidades\AutoPersonalizado.cs" />
     <Compile Include="Entidades\Cliente.cs" />
     <Compile Include="Entidades\DigitoVerificador.cs" />

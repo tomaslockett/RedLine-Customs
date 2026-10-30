@@ -125,7 +125,7 @@ namespace RedLine.Web
                         Nombre = txtNombre.Text.Trim(),
                         Apellido = txtApellido.Text.Trim(),
                         Email = txtEmail.Text.Trim(),
-                        Contraseña = RedLine.Servicios.Hashing.Sha256("123456"),
+                        Contraseña = "123456",
                         Perfil = perfilSeleccionado,
                         PerfilId = perfilSeleccionado.Id,
                         Activo = true,

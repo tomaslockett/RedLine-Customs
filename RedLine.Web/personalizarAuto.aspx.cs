@@ -54,8 +54,10 @@ namespace RedLine.Web
 
         protected void btnConfirmar_Click(object sender, EventArgs e)
         {
+
             Session["Checkout_AutoId"] = Request.QueryString["id"];
             Session["Checkout_Extras"] = Request.Form["extras"];
+
             Response.Redirect("Checkout.aspx");
         }
     }

@@ -26,7 +26,7 @@ namespace RedLine.Dal.Contexto
         public DbSet<DigitoVerificador> DigitoVerificador { get; set; }
         public DbSet<Venta> Ventas { get; set; }
         public DbSet<Factura> Facturas { get; set; }
-
+        public DbSet<Mejora> Mejoras { get; set; }
         public DbSet<Evento> Bitacora { get; set; }
 
         public DbSet<Idioma> Idiomas { get; set; }

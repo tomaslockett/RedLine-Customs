@@ -1844,6 +1844,17 @@ context.SaveChanges();
                     new Traduccion { IdIdioma = idiomaIngles.ID, IdEtiqueta = eMsgErrorFechas.ID, Texto = "The 'From' date cannot be greater than the 'To' date." }
                 );
                 context.SaveChanges();
+                // -------------------------------------------------------------------------
+                // 19. Mejoras
+                // -------------------------------------------------------------------------
+                context.Mejoras.AddOrUpdate(m => m.Nombre,
+                        new Mejora { Nombre = "Alerón Deportivo", Precio = 500.00m, Stock = 50, Categoria = "Aerodinámica" },
+                        new Mejora { Nombre = "Kit de Carrocería", Precio = 1200.00m, Stock = 20, Categoria = "Estética" },
+                        new Mejora { Nombre = "Llantas de Aleación", Precio = 2500.00m, Stock = 30, Categoria = "Ruedas" },
+                        new Mejora { Nombre = "Suspensión Deportiva", Precio = 3000.00m, Stock = 15, Categoria = "Suspensión" },
+                          new Mejora { Nombre = "Pintura Especial", Precio = 1800.00m, Stock = 25, Categoria = "Pintura" }
+    );
+                context.SaveChanges();
             }
 
             var dalAutoBase = new DAL_AutoBase();
