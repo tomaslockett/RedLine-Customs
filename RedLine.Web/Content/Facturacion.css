@@ -1,0 +1,326 @@
+﻿/* Estilos de la Página de Facturación (Facturacion.aspx) */
+:root {
+    --bg-main: #060913;
+    --card-bg: #0b111e;
+    --card-border: #141f35;
+    --brand-red: #cf2a1d;
+    --brand-red-hover: #b52015;
+}
+
+.factura-wrapper {
+    max-width: 950px;
+    margin: 0 auto;
+    padding: 30px 20px 60px 20px;
+}
+
+.factura-toolbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #0d1527;
+    border: 1px solid #1e293b;
+    border-radius: 8px;
+    padding: 14px 22px;
+    margin-bottom: 25px;
+    flex-wrap: wrap;
+    gap: 12px;
+}
+
+.toolbar-info {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 0.95rem;
+    color: #e2e8f0;
+}
+
+    .toolbar-info i {
+        color: var(--brand-red);
+    }
+
+.toolbar-botones {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.btn-factura-pdf {
+    background: var(--brand-red);
+    color: #ffffff;
+    border: none;
+    padding: 10px 18px;
+    border-radius: 6px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    text-decoration: none;
+    transition: background 0.2s;
+}
+
+    .btn-factura-pdf:hover {
+        background: var(--brand-red-hover);
+        color: #ffffff;
+    }
+
+.btn-factura-print {
+    background: #1e293b;
+    color: #ffffff;
+    border: 1px solid #334155;
+    padding: 10px 18px;
+    border-radius: 6px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: background 0.2s;
+}
+
+    .btn-factura-print:hover {
+        background: #334155;
+    }
+
+/* Hoja de Factura Comercial */
+.hoja-factura {
+    background: #ffffff;
+    color: #1a1a1a;
+    border-radius: 8px;
+    padding: 40px;
+    box-shadow: 0 15px 45px rgba(0, 0, 0, 0.6);
+    position: relative;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+}
+
+.factura-encabezado {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    gap: 20px;
+    border-bottom: 2px solid #000000;
+    padding-bottom: 25px;
+    margin-bottom: 25px;
+    position: relative;
+}
+
+.emisor-info h2 {
+    font-size: 1.6rem;
+    font-weight: 900;
+    letter-spacing: -0.03em;
+    color: #cf2a1d;
+    margin-bottom: 4px;
+}
+
+.emisor-sub {
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    font-weight: 700;
+    color: #475569;
+    letter-spacing: 0.05em;
+    margin-bottom: 12px;
+}
+
+.emisor-detalles {
+    font-size: 0.82rem;
+    color: #334155;
+    line-height: 1.5;
+}
+
+.tipo-comprobante-box {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: #ffffff;
+    border: 2px solid #000000;
+    width: 60px;
+    height: 60px;
+    align-self: center;
+}
+
+.tipo-letra {
+    font-size: 1.8rem;
+    font-weight: 900;
+    line-height: 1;
+}
+
+.tipo-codigo {
+    font-size: 0.65rem;
+    font-weight: 700;
+}
+
+.comprobante-info {
+    text-align: right;
+}
+
+    .comprobante-info h3 {
+        font-size: 1.3rem;
+        font-weight: 800;
+        color: #0f172a;
+        margin-bottom: 4px;
+    }
+
+.comprobante-numero {
+    font-size: 1.1rem;
+    font-weight: 800;
+    font-family: 'Consolas', monospace;
+    color: #cf2a1d;
+    margin-bottom: 12px;
+}
+
+.comprobante-detalles {
+    font-size: 0.82rem;
+    color: #334155;
+    line-height: 1.5;
+}
+
+/* Sección Datos del Cliente */
+.factura-cliente-seccion {
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 6px;
+    padding: 16px 20px;
+    margin-bottom: 25px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+    font-size: 0.86rem;
+}
+
+.cliente-dato span:first-child {
+    color: #64748b;
+    display: block;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    margin-bottom: 2px;
+}
+
+.cliente-dato span:last-child {
+    font-weight: 600;
+    color: #0f172a;
+}
+
+/* Tabla de Ítems */
+.tabla-items-factura {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 25px;
+}
+
+    .tabla-items-factura th {
+        background: #0f172a;
+        color: #ffffff;
+        padding: 10px 14px;
+        font-size: 0.82rem;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        text-align: left;
+    }
+
+        .tabla-items-factura th:nth-child(2),
+        .tabla-items-factura th:nth-child(3),
+        .tabla-items-factura th:nth-child(4) {
+            text-align: right;
+        }
+
+    .tabla-items-factura td {
+        padding: 12px 14px;
+        border-bottom: 1px solid #e2e8f0;
+        font-size: 0.88rem;
+        color: #1e293b;
+    }
+
+        .tabla-items-factura td:nth-child(2),
+        .tabla-items-factura td:nth-child(3),
+        .tabla-items-factura td:nth-child(4) {
+            text-align: right;
+            font-variant-numeric: tabular-nums;
+        }
+
+    .tabla-items-factura tr:nth-child(even) td {
+        background: #f8fafc;
+    }
+
+/* Resumen de Totales */
+.factura-totales-wrapper {
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 30px;
+}
+
+.totales-tabla {
+    width: 320px;
+    border-collapse: collapse;
+}
+
+    .totales-tabla td {
+        padding: 8px 12px;
+        font-size: 0.9rem;
+    }
+
+        .totales-tabla td:last-child {
+            text-align: right;
+            font-variant-numeric: tabular-nums;
+        }
+
+.total-destacado-fila td {
+    background: #cf2a1d;
+    color: #ffffff;
+    font-size: 1.15rem;
+    font-weight: 800;
+    border-radius: 4px;
+}
+
+/* Pie Fiscal / CAE */
+.factura-pie-fiscal {
+    border-top: 2px solid #000000;
+    padding-top: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.8rem;
+    color: #475569;
+}
+
+.cae-info strong {
+    color: #0f172a;
+    font-family: 'Consolas', monospace;
+}
+
+.cae-qr-mock {
+    width: 70px;
+    height: 70px;
+    background: #000000;
+    border: 3px solid #ffffff;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #ffffff;
+    font-size: 0.7rem;
+    text-align: center;
+}
+
+
+@media print {
+    body {
+        background: #ffffff !important;
+        padding: 0 !important;
+    }
+
+    .cabecera-principal, .pie-pagina, .factura-toolbar {
+        display: none !important;
+    }
+
+    .factura-wrapper {
+        padding: 0 !important;
+        max-width: 100% !important;
+    }
+
+    .hoja-factura {
+        box-shadow: none !important;
+        padding: 20px !important;
+    }
+}

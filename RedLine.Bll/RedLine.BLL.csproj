@@ -49,6 +49,7 @@
     <Compile Include="BLL_Cliente.cs" />
     <Compile Include="BLL_Etiqueta.cs" />
     <Compile Include="BLL_Evento.cs" />
+    <Compile Include="BLL_Factura.cs" />
     <Compile Include="BLL_Familia.cs" />
     <Compile Include="BLL_Idioma.cs" />
     <Compile Include="BLL_Mejora.cs" />
@@ -57,6 +58,7 @@
     <Compile Include="BLL_Traduccion.cs" />
     <Compile Include="BLL_Usuario.cs" />
     <Compile Include="BLL_DigitoVerificador.cs" />
+    <Compile Include="BLL_Venta.cs" />
     <Compile Include="ModulosEventos.cs" />
     <Compile Include="Exception\LoginException.cs" />
     <Compile Include="Exception\LoginResult.cs" />

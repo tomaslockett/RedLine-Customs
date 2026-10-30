@@ -31,10 +31,12 @@
                         <asp:Label ID="lblMenuTallerVentas" runat="server" Text="Taller y Ventas" />
                     </button>
                     <div class="dropdown-content">
-                        <a runat="server" href="~/CrearAuto.aspx"><asp:Label ID="lblMenuCrearAuto" runat="server" Text="Crear Auto" /></a>
-                        <a runat="server" href="~/personalizarAuto.aspx"><asp:Label ID="lblMenuPersonalizarAuto" runat="server" Text="Personalizar Auto" /></a>
+                       <a id="lnkCrearAuto" runat="server" href="~/CrearAuto.aspx"><asp:Label ID="lblMenuCrearAuto" runat="server" Text="Crear Auto" /></a>
+                        <a id="lnkPersonalizarAuto" runat="server" href="~/personalizarAuto.aspx"><asp:Label ID="lblMenuPersonalizarAuto" runat="server" Text="Personalizar Auto" /></a>
+                        <a id="lnkMiGaraje" runat="server" href="~/MiGaraje.aspx"><asp:Label ID="lblMenuMiGaraje" runat="server" Text="Mi Garage" /></a>
+                        <a id="lnkFacturacion" runat="server" href="~/Facturacion.aspx"><asp:Label ID="lblMenuFacturacion" runat="server" Text="Facturación" /></a>
                         <a id="lnkInventario" runat="server" href="~/Inventario.aspx"><asp:Label ID="lblMenuInventario" runat="server" Text="Inventario" /></a>
-                        <a runat="server" href="~/HistorialVentas.aspx"><asp:Label ID="lblMenuHistorialVentas" runat="server" Text="Historial de Ventas" /></a>
+                        <a id="lnkHistorialVentas" runat="server" href="~/HistorialVentas.aspx"><asp:Label ID="lblMenuHistorialVentas" runat="server" Text="Historial de Ventas" /></a>
                     </div>
                 </div>
 

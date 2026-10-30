@@ -49,20 +49,24 @@
             var pRecuperarDV = new Permiso(17, "RecuperarDV");
             var pRegistroClientes = new Permiso(18, "RegistroClientes");
             var pGestionIdiomas = new Permiso(19, "GestionIdiomas");
-            var pVacio3 = new Permiso(20, "Vacio3");
+            var pMiGaraje = new Permiso(20, "MiGaraje");
+            var pFacturacion = new Permiso(21, "Facturacion");
+            var pVacio1 = new Permiso(22, "Vacio1");
+            var pVacio2 = new Permiso(23, "Vacio2");
+            var pVacio3 = new Permiso(24, "Vacio3");
 
 
             context.Componentes.AddOrUpdate(c => c.Id,
                                             pLogin, pLogout, pCatalogo, pCompra, pInventario, pClientes, pEventos, pUsuarios, pSeguridad,
                                             pBackupRestore, pCambioContraseña, pCheckout, pGestionPerfiles, pHistorialVentas, pPagoExitoso,
-                                            pPersonalizarAuto, pRecuperarDV, pRegistroClientes, pGestionIdiomas, pVacio3
+                                            pPersonalizarAuto, pRecuperarDV, pRegistroClientes, pGestionIdiomas, pMiGaraje,pFacturacion,pVacio1, pVacio2, pVacio3
                                             );
 
             context.SaveChanges();
 
-            var famWebMaster = new Familia(21, "WebMaster");
-            var famAdmin = new Familia(22, "Administrador");
-            var famCliente = new Familia(23, "Cliente");
+            var famWebMaster = new Familia(25, "WebMaster");
+            var famAdmin = new Familia(26, "Administrador");
+            var famCliente = new Familia(27, "Cliente");
 
             // ==========================================
             // ASIGNACIÓN DE PERMISOS A: WEBMASTER
@@ -80,6 +84,8 @@
             famWebMaster.Agregar(pCheckout);
             famWebMaster.Agregar(pPagoExitoso);
             famWebMaster.Agregar(pHistorialVentas);
+            famWebMaster.Agregar(pMiGaraje);
+            famWebMaster.Agregar(pFacturacion);
 
             // -- Gestión y Administración
             famWebMaster.Agregar(pInventario);
@@ -94,6 +100,8 @@
             famWebMaster.Agregar(pSeguridad);
             famWebMaster.Agregar(pBackupRestore);
             famWebMaster.Agregar(pRecuperarDV);
+            famWebMaster.Agregar(pVacio1);
+            famWebMaster.Agregar(pVacio2);
             famWebMaster.Agregar(pVacio3);
 
             // ==========================================
@@ -111,6 +119,7 @@
             famAdmin.Agregar(pClientes);
             famAdmin.Agregar(pUsuarios);
             famAdmin.Agregar(pHistorialVentas);
+            famAdmin.Agregar(pFacturacion);
 
             // -- Monitoreo
             famAdmin.Agregar(pEventos);
@@ -132,6 +141,7 @@
             famCliente.Agregar(pCompra);
             famCliente.Agregar(pCheckout);
             famCliente.Agregar(pPagoExitoso);
+            famCliente.Agregar(pMiGaraje);
 
             context.Familias.AddOrUpdate(f => f.Id, famWebMaster, famAdmin, famCliente);
 

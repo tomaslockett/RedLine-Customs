@@ -61,6 +61,7 @@
     <Compile Include="Mappers\DAL_Cliente.cs" />
     <Compile Include="Mappers\DAL_Etiqueta.cs" />
     <Compile Include="Mappers\DAL_Evento.cs" />
+    <Compile Include="Mappers\DAL_Factura.cs" />
     <Compile Include="Mappers\DAL_Familia.cs" />
     <Compile Include="Mappers\DAL_Idioma.cs" />
     <Compile Include="Mappers\DAL_Mejora.cs" />
@@ -69,6 +70,7 @@
     <Compile Include="Mappers\DAL_Traduccion.cs" />
     <Compile Include="Mappers\DAL_Usuario.cs" />
     <Compile Include="Mappers\DAL_DigitoVerificador.cs" />
+    <Compile Include="Mappers\DAL_Venta.cs" />
     <Compile Include="Migrations\202605312145560_InitialCreate.cs" />
     <Compile Include="Migrations\202605312145560_InitialCreate.Designer.cs">
       <DependentUpon>202605312145560_InitialCreate.cs</DependentUpon>

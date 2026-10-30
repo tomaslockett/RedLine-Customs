@@ -51,6 +51,15 @@ namespace RedLine.Web
         protected global::System.Web.UI.WebControls.Label lblMenuTallerVentas;
 
         /// <summary>
+        /// Control lnkCrearAuto.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlAnchor lnkCrearAuto;
+
+        /// <summary>
         /// Control lblMenuCrearAuto.
         /// </summary>
         /// <remarks>
@@ -60,6 +69,15 @@ namespace RedLine.Web
         protected global::System.Web.UI.WebControls.Label lblMenuCrearAuto;
 
         /// <summary>
+        /// Control lnkPersonalizarAuto.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlAnchor lnkPersonalizarAuto;
+
+        /// <summary>
         /// Control lblMenuPersonalizarAuto.
         /// </summary>
         /// <remarks>
@@ -67,6 +85,42 @@ namespace RedLine.Web
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lblMenuPersonalizarAuto;
+
+        /// <summary>
+        /// Control lnkMiGaraje.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlAnchor lnkMiGaraje;
+
+        /// <summary>
+        /// Control lblMenuMiGaraje.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblMenuMiGaraje;
+
+        /// <summary>
+        /// Control lnkFacturacion.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlAnchor lnkFacturacion;
+
+        /// <summary>
+        /// Control lblMenuFacturacion.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblMenuFacturacion;
 
         /// <summary>
         /// Control lnkInventario.
@@ -85,6 +139,15 @@ namespace RedLine.Web
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lblMenuInventario;
+
+        /// <summary>
+        /// Control lnkHistorialVentas.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlAnchor lnkHistorialVentas;
 
         /// <summary>
         /// Control lblMenuHistorialVentas.
