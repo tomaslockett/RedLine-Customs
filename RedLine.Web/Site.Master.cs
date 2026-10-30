@@ -146,6 +146,11 @@ namespace RedLine.Web
             {
                 Session["IdiomaSeleccionado"] = idiomaSeleccionado.ID;
                 ActualizarSubjectIdioma(idiomaSeleccionado);
+                if (SessionManager.Instancia.IsLogged())
+                {
+                    BLL_Usuario bllUsuario = new BLL_Usuario();
+                    bllUsuario.ActualizarIdiomaUsuario(SessionManager.Instancia.Usuario.ID, idiomaSeleccionado.Nombre);
+                }
                 Response.Redirect(Request.RawUrl);
             }
         }

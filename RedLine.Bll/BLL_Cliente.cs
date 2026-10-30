@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Xml.Linq;
 
 namespace RedLine.Bll
@@ -12,45 +13,125 @@ namespace RedLine.Bll
     public class BLL_Cliente : AbstractBLL<string, Cliente>
     {
         public BLL_Cliente() : base(new DAL_Cliente()) { }
+
         private BLL_Evento _bllEvento = new BLL_Evento();
+        private BLL_Usuario _bllUsuario = new BLL_Usuario();
+        private BLL_Perfil _bllPerfil = new BLL_Perfil();
 
         #region Auditoría de CRUD (Overrides)
 
         public override void Insertar(Cliente cliente)
         {
-            cliente.Nombre = Hashing.EncriptarAES(cliente.Nombre);
-            cliente.Apellido = Hashing.EncriptarAES(cliente.Apellido);
-            cliente.DNI = Hashing.EncriptarAES(cliente.DNI);
-            cliente.Telefono = Hashing.EncriptarAES(cliente.Telefono);
-            cliente.Direccion = Hashing.EncriptarAES(cliente.Direccion);
-            cliente.Contraseña = Hashing.Sha256(cliente.Contraseña);
+
+            string dniPlano = cliente.DNI;
+            string nombrePlano = cliente.Nombre;
+            string apellidoPlano = cliente.Apellido;
+            string emailPlano = cliente.Email;
+            string passPlana = cliente.Contraseña;
+            string passHasheada = AsegurarSha256(passPlana);
+
+
+            cliente.Nombre = Hashing.EncriptarAES(nombrePlano);
+            cliente.Apellido = Hashing.EncriptarAES(apellidoPlano);
+            cliente.DNI = Hashing.EncriptarAES(dniPlano);
+            cliente.Telefono = Hashing.EncriptarAES(cliente.Telefono ?? string.Empty);
+            cliente.Direccion = Hashing.EncriptarAES(cliente.Direccion ?? string.Empty);
+            cliente.Contraseña = passHasheada;
+
 
             base.Insertar(cliente);
 
-            RegistrarEventoBitacora($"Registro de nuevo cliente: {cliente.Email}", 1);
+ 
+            bool existeUsuario = _bllUsuario.Listar().Any(u => u.Email.Equals(emailPlano, StringComparison.OrdinalIgnoreCase));
+            if (!existeUsuario)
+            {
+
+                var perfilCliente = _bllPerfil.Listar().FirstOrDefault(p => p.Nombre.Equals("Cliente", StringComparison.OrdinalIgnoreCase));
+                int idPerfilCliente = perfilCliente != null ? perfilCliente.Id : 23;
+
+                Usuario nuevoUsuario = new Usuario
+                {
+                    DNI = dniPlano,
+                    Nombre = nombrePlano,
+                    Apellido = apellidoPlano,
+                    Email = emailPlano,
+                    Contraseña = passPlana, 
+                    PerfilId = idPerfilCliente,
+                    Intentos = 0,
+                    Bloqueado = false,
+                    Activo = true,
+                    UltimoIntento = DateTime.Now
+                };
+
+                _bllUsuario.Insertar(nuevoUsuario);
+            }
+
+            RegistrarEventoBitacora(emailPlano, $"Registro de nuevo cliente: {emailPlano}", 1);
         }
 
         public override void Modificar(Cliente cliente)
         {
-            cliente.Nombre = Hashing.EncriptarAES(cliente.Nombre);
-            cliente.Apellido = Hashing.EncriptarAES(cliente.Apellido);
-            cliente.DNI = Hashing.EncriptarAES(cliente.DNI);
-            cliente.Telefono = Hashing.EncriptarAES(cliente.Telefono);
-            cliente.Direccion = Hashing.EncriptarAES(cliente.Direccion);
+            string dniPlano = cliente.DNI;
+            string nombrePlano = cliente.Nombre;
+            string apellidoPlano = cliente.Apellido;
+            string emailPlano = cliente.Email;
+
+            cliente.Nombre = Hashing.EncriptarAES(nombrePlano);
+            cliente.Apellido = Hashing.EncriptarAES(apellidoPlano);
+            cliente.DNI = Hashing.EncriptarAES(dniPlano);
+            cliente.Telefono = Hashing.EncriptarAES(cliente.Telefono ?? string.Empty);
+            cliente.Direccion = Hashing.EncriptarAES(cliente.Direccion ?? string.Empty);
+
+            if (!string.IsNullOrEmpty(cliente.Contraseña))
+            {
+                cliente.Contraseña = AsegurarSha256(cliente.Contraseña);
+            }
 
             base.Modificar(cliente);
 
-            RegistrarEventoBitacora($"Modificación de datos sensibles del cliente: {cliente.Email}", 2);
+            var usuarioAsociado = _bllUsuario.Listar().FirstOrDefault(u => u.Email.Equals(emailPlano, StringComparison.OrdinalIgnoreCase));
+            if (usuarioAsociado != null)
+            {
+                usuarioAsociado.DNI = dniPlano;
+                usuarioAsociado.Nombre = nombrePlano;
+                usuarioAsociado.Apellido = apellidoPlano;
+                if (!string.IsNullOrEmpty(cliente.Contraseña))
+                {
+                    usuarioAsociado.Contraseña = cliente.Contraseña;
+                }
+                _bllUsuario.Modificar(usuarioAsociado);
+            }
+
+            RegistrarEventoBitacora(emailPlano, $"Modificación de datos sensibles del cliente: {emailPlano}", 2);
         }
 
-        public override void Eliminar(string email)
+        public override void Eliminar(string emailODni)
         {
-            var clienteAEliminar = BuscarPorEmail(email);
-            string detalle = clienteAEliminar != null ? clienteAEliminar.Email : email;
+            var todosLosClientes = ObtenerClientes();
+            var clienteAEliminar = todosLosClientes.FirstOrDefault(c =>
+                c.Email.Equals(emailODni, StringComparison.OrdinalIgnoreCase) ||
+                c.DNI.Equals(emailODni, StringComparison.OrdinalIgnoreCase));
 
-            base.Eliminar(email);
+            if (clienteAEliminar != null)
+            {
+                string dniEncriptado = Hashing.EncriptarAES(clienteAEliminar.DNI);
+                base.Eliminar(dniEncriptado);
 
-            RegistrarEventoBitacora($"Se eliminó la cuenta del cliente: {detalle}", 3);
+                var usuarioAsociado = _bllUsuario.Listar().FirstOrDefault(u =>
+                    u.Email.Equals(clienteAEliminar.Email, StringComparison.OrdinalIgnoreCase));
+
+                if (usuarioAsociado != null)
+                {
+                    _bllUsuario.Eliminar(usuarioAsociado.ID);
+                }
+
+                RegistrarEventoBitacora(clienteAEliminar.Email, $"Se eliminó la cuenta del cliente: {clienteAEliminar.Email}", 3);
+            }
+            else
+            {
+                base.Eliminar(emailODni);
+                RegistrarEventoBitacora(emailODni, $"Se eliminó la cuenta del cliente: {emailODni}", 3);
+            }
         }
 
         #endregion
@@ -74,7 +155,6 @@ namespace RedLine.Bll
 
             List<Cliente> clientesExistentes = ObtenerClientes();
 
-
             HashSet<int> idsExistentes = new HashSet<int>(clientesExistentes.Select(c => c.ID));
             HashSet<string> emailsExistentes = new HashSet<string>(
                 clientesExistentes.Select(c => c.Email),
@@ -89,7 +169,6 @@ namespace RedLine.Bll
 
             foreach (var elem in elementosCliente)
             {
-
                 if (elem.Element("ID") == null || elem.Element("Email") == null)
                     continue;
 
@@ -97,7 +176,6 @@ namespace RedLine.Bll
                     continue;
 
                 string email = elem.Element("Email").Value.Trim();
-
 
                 if (idsExistentes.Contains(id) || emailsExistentes.Contains(email))
                     continue;
@@ -120,17 +198,16 @@ namespace RedLine.Bll
                 emailsExistentes.Add(email);
             }
 
-
             int guardados = 0;
             foreach (var cliente in nuevosClientes)
             {
-
                 this.Insertar(cliente);
                 guardados++;
             }
 
             return guardados;
         }
+
         public List<Cliente> ObtenerClientes()
         {
             List<Cliente> lista = this.Listar();
@@ -172,12 +249,22 @@ namespace RedLine.Bll
 
         #region Métodos Privados
 
-        private void RegistrarEventoBitacora(string mensaje, int criticidad = 2)
+        private string AsegurarSha256(string input)
+        {
+            if (string.IsNullOrEmpty(input))
+                return string.Empty;
+
+            if (input.Length == 64 && Regex.IsMatch(input, "^[0-9a-fA-F]{64}$"))
+                return input.ToLower();
+
+            return Hashing.Sha256(input);
+        }
+
+        private void RegistrarEventoBitacora(string ejecutante, string mensaje, int criticidad = 2)
         {
             try
             {
-                string usuario = SessionManager.Instancia.IsLogged() ? SessionManager.Instancia.Usuario.Email : "Auto-Registro";
-
+                string usuario = SessionManager.Instancia.IsLogged() ? SessionManager.Instancia.Usuario.Email : ejecutante;
                 _bllEvento.Registrar(usuario, ModulosEventos.Clientes, mensaje, criticidad);
             }
             catch

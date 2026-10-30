@@ -15,12 +15,12 @@ namespace RedLine.Dal
         protected override bool RequiereDigitoVerificador => true;
 
         protected override string SqlInsertar =>
-    @"INSERT INTO Usuario (DNI, Nombre, Apellido, Email, Contraseña, PerfilId, Intentos, Bloqueado, Activo, UltimoIntento) 
-      VALUES (@DNI, @Nombre, @Apellido, @Email, @Contraseña, @PerfilId, 0, 0, 1, @UltimoIntento)";
+    @"INSERT INTO Usuario (DNI, Nombre, Apellido, Email, Contraseña, PerfilId, Intentos, Bloqueado, Activo, UltimoIntento, Idioma) 
+      VALUES (@DNI, @Nombre, @Apellido, @Email, @Contraseña, @PerfilId, 0, 0, 1, @UltimoIntento, @Idioma)";
 
         protected override string SqlModificar =>
     @"UPDATE Usuario SET DNI = @DNI, Nombre = @Nombre, Apellido = @Apellido, Email = @Email, PerfilId = @PerfilId, 
-      Bloqueado = @Bloqueado, Activo = @Activo, Intentos = @Intentos, UltimoIntento = @UltimoIntento 
+      Bloqueado = @Bloqueado, Activo = @Activo, Intentos = @Intentos, UltimoIntento = @UltimoIntento , Idioma = @Idioma
       WHERE ID = @ID";
         protected override string SqlEliminar => "DELETE FROM Usuario WHERE ID = @ID";
         protected override string SqlListar => "SELECT * FROM Usuario";
@@ -44,6 +44,7 @@ namespace RedLine.Dal
             cmd.Parameters.AddWithValue("@Activo", entidad.Activo);
             cmd.Parameters.AddWithValue("@Intentos", entidad.Intentos);
             cmd.Parameters.AddWithValue("@UltimoIntento", entidad.UltimoIntento);
+            cmd.Parameters.AddWithValue("@Idioma", string.IsNullOrEmpty(entidad.Idioma) ? "Español" : entidad.Idioma);
         }
 
         protected override void ConfigurarParametrosId(SqlCommand cmd, int id)
@@ -67,7 +68,8 @@ namespace RedLine.Dal
                 Convert.ToInt32(lector["Intentos"]),
                 Convert.ToBoolean(lector["Bloqueado"]),
                 Convert.ToBoolean(lector["Activo"]),
-                Convert.ToDateTime(lector["UltimoIntento"])
+                Convert.ToDateTime(lector["UltimoIntento"]),
+                lector["Idioma"] != DBNull.Value ? lector["Idioma"].ToString() : "Español"
             );
         }
 

@@ -18,7 +18,8 @@ namespace Redline.Be
         public bool Bloqueado { get; set; }
         public bool Activo { get; set; }
         public DateTime UltimoIntento { get; set; }
-        public Usuario(int id, string dni, string nombre, string apellido, string email, string contraseña, Perfil perfil, int intentos, bool bloqueado, bool activo, DateTime ultimoIntento)
+        public string Idioma {  get; set; }
+        public Usuario(int id, string dni, string nombre, string apellido, string email, string contraseña, Perfil perfil, int intentos, bool bloqueado, bool activo, DateTime ultimoIntento, string idioma = "Español")
         {
             this.ID = id;
             this.Email = email;
@@ -31,8 +32,9 @@ namespace Redline.Be
             this.DNI = dni;
             this.Nombre = nombre;
             this.Apellido = apellido;
+            Idioma = idioma;
         }
-        public Usuario(int id, string dni, string nombre, string apellido, string email, string contraseña, int? perfilId, int intentos, bool bloqueado, bool activo, DateTime ultimoIntento)
+        public Usuario(int id, string dni, string nombre, string apellido, string email, string contraseña, int? perfilId, int intentos, bool bloqueado, bool activo, DateTime ultimoIntento, string idioma = "Español")
         {
             this.ID = id;
             this.Email = email;
@@ -45,6 +47,7 @@ namespace Redline.Be
             this.DNI = dni;
             this.Nombre = nombre;
             this.Apellido = apellido;
+            this.Idioma = idioma;
 
             if (perfilId.HasValue)
             {
@@ -55,6 +58,9 @@ namespace Redline.Be
                 this.Perfil = null;
             }
         }
-        public Usuario() { }
+        public Usuario() 
+        {
+            this.Idioma = "Español";
+        }
     }
 }
