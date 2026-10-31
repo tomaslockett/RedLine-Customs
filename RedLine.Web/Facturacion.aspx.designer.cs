@@ -1,4 +1,4 @@
-﻿//------------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 // <generado automáticamente>
 //     Este código fue generado por una herramienta.
 //
@@ -105,13 +105,38 @@ namespace RedLine.Web
         protected global::System.Web.UI.WebControls.LinkButton btnDescargarPdf;
 
         /// <summary>
-        /// Control lblBtnDescargarPdf.
+        /// Control lblFactBtnDescargarPdf.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblBtnDescargarPdf;
+        protected global::System.Web.UI.WebControls.Label lblFactBtnDescargarPdf;
+
+        /// <summary>
+        /// Control lblSubtituloEmisor.
+        /// </summary>
+        protected global::System.Web.UI.WebControls.Label lblSubtituloEmisor;
+
+        /// <summary>
+        /// Control lblValorIvaEmisor.
+        /// </summary>
+        protected global::System.Web.UI.WebControls.Label lblValorIvaEmisor;
+
+        /// <summary>
+        /// Control lblValorCondicionVenta.
+        /// </summary>
+        protected global::System.Web.UI.WebControls.Label lblValorCondicionVenta;
+
+        /// <summary>
+        /// Control lblValorCondicionIvaCliente.
+        /// </summary>
+        protected global::System.Web.UI.WebControls.Label lblValorCondicionIvaCliente;
+
+        /// <summary>
+        /// Control lblLeyendaPieFactura.
+        /// </summary>
+        protected global::System.Web.UI.WebControls.Label lblLeyendaPieFactura;
 
         /// <summary>
         /// Control lblBtnImprimir.

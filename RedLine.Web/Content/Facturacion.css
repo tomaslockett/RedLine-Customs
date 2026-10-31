@@ -1,4 +1,4 @@
-﻿/* Estilos de la Página de Facturación (Facturacion.aspx) */
+/* Estilos de la Página de Facturación (Facturacion.aspx) */
 :root {
     --bg-main: #060913;
     --card-bg: #0b111e;
@@ -11,6 +11,43 @@
     max-width: 950px;
     margin: 0 auto;
     padding: 30px 20px 60px 20px;
+}
+
+/* Estado vacío cuando aún no hay facturas emitidas */
+.factura-vacia {
+    background: #0f172a;
+    border: 1px solid #1e293b;
+    border-radius: 12px;
+    padding: 60px 30px;
+    text-align: center;
+    max-width: 700px;
+    margin: 40px auto;
+}
+
+.factura-vacia-icon {
+    font-size: 3.5rem;
+    color: #ef4444;
+    margin-bottom: 20px;
+}
+
+.factura-vacia h2 {
+    color: #ffffff;
+    font-size: 1.8rem;
+    margin-bottom: 12px;
+}
+
+.factura-vacia p {
+    color: #94a3b8;
+    font-size: 1rem;
+    margin-bottom: 30px;
+    line-height: 1.6;
+}
+
+.factura-vacia-acciones {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    flex-wrap: wrap;
 }
 
 .factura-toolbar {
@@ -38,10 +75,21 @@
         color: var(--brand-red);
     }
 
+.toolbar-subtitulo {
+    font-size: 0.8rem;
+    color: #94a3b8;
+}
+
 .toolbar-botones {
     display: flex;
     gap: 10px;
     flex-wrap: wrap;
+}
+
+.select-facturas {
+    background: #1e293b;
+    color: #ffffff;
+    cursor: pointer;
 }
 
 .btn-factura-pdf {
@@ -77,11 +125,13 @@
     display: flex;
     align-items: center;
     gap: 8px;
+    text-decoration: none;
     transition: background 0.2s;
 }
 
     .btn-factura-print:hover {
         background: #334155;
+        color: #ffffff;
     }
 
 /* Hoja de Factura Comercial */
@@ -202,12 +252,33 @@
     color: #0f172a;
 }
 
-/* Tabla de Ítems */
+/* Contenedor y Tabla de Ítems */
+.tabla-items-responsive {
+    width: 100%;
+    overflow-x: auto;
+    margin-bottom: 25px;
+}
+
 .tabla-items-factura {
     width: 100%;
     border-collapse: collapse;
-    margin-bottom: 25px;
 }
+
+    .tabla-items-factura .col-concepto {
+        width: 55%;
+    }
+
+    .tabla-items-factura .col-cantidad {
+        width: 10%;
+    }
+
+    .tabla-items-factura .col-precio-unitario {
+        width: 17%;
+    }
+
+    .tabla-items-factura .col-subtotal {
+        width: 18%;
+    }
 
     .tabla-items-factura th {
         background: #0f172a;
@@ -301,8 +372,47 @@
     color: #ffffff;
     font-size: 0.7rem;
     text-align: center;
+    flex-shrink: 0;
 }
 
+/* Ajustes responsivos para pantallas móviles y tablets */
+@media (max-width: 768px) {
+    .hoja-factura {
+        padding: 22px 16px;
+    }
+
+    .factura-encabezado {
+        grid-template-columns: 1fr;
+        gap: 16px;
+    }
+
+    .tipo-comprobante-box {
+        align-self: flex-start;
+    }
+
+    .comprobante-info {
+        text-align: left;
+    }
+
+    .factura-cliente-seccion {
+        grid-template-columns: 1fr;
+        gap: 12px;
+    }
+
+    .tabla-items-factura {
+        min-width: 520px;
+    }
+
+    .totales-tabla {
+        width: 100%;
+    }
+
+    .factura-pie-fiscal {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 16px;
+    }
+}
 
 @media print {
     body {

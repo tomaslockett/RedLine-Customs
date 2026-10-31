@@ -1,4 +1,4 @@
-﻿using RedLine.Bll;
+using RedLine.Bll;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,19 +16,32 @@ namespace RedLine.Web
         {
         }
 
+        /// <summary>
+        /// Cierra la sesión activa (ya sea de un Usuario del sistema o de un Cliente)
+        /// y redirige a la pantalla de inicio de sesión.
+        /// </summary>
         protected void btnConfirmar_Click(object sender, EventArgs e)
         {
             try
             {
-                if (Session["Inconsistencia"] != null && (bool)Session["Inconsistencia"])
+                if (RedLine.Servicios.SessionManager.Instancia.IsLogged())
                 {
-                    _bllUsuario.LogoutInconsistente();
+                    if (Session["Inconsistencia"] != null && (bool)Session["Inconsistencia"])
+                    {
+                        _bllUsuario.LogoutInconsistente();
+                    }
+                    else
+                    {
+                        _bllUsuario.Logout();
+                    }
                 }
-                else
-                {
-                    _bllUsuario.Logout();
-                }
-                Response.Redirect("~/Login.aspx", false);
+
+                // Limpiamos también la sesión de cliente por si ingresó como Cliente
+                Session["ClienteSession"] = null;
+                Session["UserEmail"] = null;
+                Session["Inconsistencia"] = false;
+
+                Response.Redirect("~/LogIn.aspx", false);
                 Context.ApplicationInstance.CompleteRequest();
             }
             catch (Exception ex)

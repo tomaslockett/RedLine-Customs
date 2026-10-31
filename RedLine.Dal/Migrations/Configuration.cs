@@ -1,4 +1,4 @@
-﻿namespace RedLine.Dal.Migrations
+namespace RedLine.Dal.Migrations
 {
     using Redline.Be;
     using RedLine.Be.Entidades;
@@ -278,6 +278,8 @@ context.SaveChanges();
             var eOptCrearAuto = new Etiqueta { Clave = "ddlFiltroPagina_CrearAuto.aspx", Pagina = "GestionIdiomas.aspx", Descripcion = "Opción CrearAuto en filtro", EsMensajeAlerta = false };
             var eOptCheckout = new Etiqueta { Clave = "ddlFiltroPagina_Checkout.aspx", Pagina = "GestionIdiomas.aspx", Descripcion = "Opción Checkout en filtro", EsMensajeAlerta = false };
             var eOptPagoExitoso = new Etiqueta { Clave = "ddlFiltroPagina_PagoExitoso.aspx", Pagina = "GestionIdiomas.aspx", Descripcion = "Opción PagoExitoso en filtro", EsMensajeAlerta = false };
+            var eOptMiGaraje = new Etiqueta { Clave = "ddlFiltroPagina_MiGaraje.aspx", Pagina = "GestionIdiomas.aspx", Descripcion = "Opción MiGaraje en filtro", EsMensajeAlerta = false };
+            var eOptFacturacion = new Etiqueta { Clave = "ddlFiltroPagina_Facturacion.aspx", Pagina = "GestionIdiomas.aspx", Descripcion = "Opción Facturacion en filtro", EsMensajeAlerta = false };
             var eOptHistVentas = new Etiqueta { Clave = "ddlFiltroPagina_HistorialVentas.aspx", Pagina = "GestionIdiomas.aspx", Descripcion = "Opción HistorialVentas en filtro", EsMensajeAlerta = false };
             var eOptInventario = new Etiqueta { Clave = "ddlFiltroPagina_Inventario.aspx", Pagina = "GestionIdiomas.aspx", Descripcion = "Opción Inventario en filtro", EsMensajeAlerta = false };
             var eOptClientes = new Etiqueta { Clave = "ddlFiltroPagina_GestionClientes.aspx", Pagina = "GestionIdiomas.aspx", Descripcion = "Opción GestionClientes en filtro", EsMensajeAlerta = false };
@@ -308,7 +310,7 @@ context.SaveChanges();
                 eLblBuscar, eTxtFiltro, eChkSoloSinTraducir, eBtnGuardarTrad,
                 eOptGlobal, eOptMaster, eOptLogin, eOptRegClientes, eOptCambioPass,
                 eOptCatalogo, eOptPersonalizar, eOptCrearAuto, eOptCheckout, eOptPagoExitoso,
-                eOptHistVentas, eOptInventario, eOptClientes, eOptUsuarios, eOptPerfiles,
+                eOptMiGaraje, eOptFacturacion, eOptHistVentas, eOptInventario, eOptClientes, eOptUsuarios, eOptPerfiles,
                 eOptIdiomas, eOptEventos, eOptBackup, eOptRecuperarDV,
                 eColPantalla, eColClave, eColDesc, eColTipo, eColTrad,
                 eMsgNomVacio, eMsgCreadoExito, eMsgTradGuardadas, eMsgErrCrear, eMsgErrGuardar
@@ -343,6 +345,8 @@ context.SaveChanges();
                 new Traduccion { IdIdioma = idiomaEspanol.ID, IdEtiqueta = eOptCrearAuto.ID, Texto = "Crear Auto" },
                 new Traduccion { IdIdioma = idiomaEspanol.ID, IdEtiqueta = eOptCheckout.ID, Texto = "Checkout / Compra" },
                 new Traduccion { IdIdioma = idiomaEspanol.ID, IdEtiqueta = eOptPagoExitoso.ID, Texto = "Confirmación de Pago" },
+                new Traduccion { IdIdioma = idiomaEspanol.ID, IdEtiqueta = eOptMiGaraje.ID, Texto = "Mi Garage" },
+                new Traduccion { IdIdioma = idiomaEspanol.ID, IdEtiqueta = eOptFacturacion.ID, Texto = "Facturación" },
                 new Traduccion { IdIdioma = idiomaEspanol.ID, IdEtiqueta = eOptHistVentas.ID, Texto = "Historial de Ventas" },
                 new Traduccion { IdIdioma = idiomaEspanol.ID, IdEtiqueta = eOptInventario.ID, Texto = "Gestión de Inventario" },
                 new Traduccion { IdIdioma = idiomaEspanol.ID, IdEtiqueta = eOptClientes.ID, Texto = "Gestión de Clientes" },
@@ -1256,6 +1260,8 @@ context.SaveChanges();
             var eMenuTaller = new Etiqueta { Clave = "lblMenuTallerVentas", Pagina = "Site.Master", Descripcion = "Desplegable taller y ventas", EsMensajeAlerta = false };
             var eMenuCrear = new Etiqueta { Clave = "lblMenuCrearAuto", Pagina = "Site.Master", Descripcion = "Enlace crear vehículo", EsMensajeAlerta = false };
             var eMenuPers = new Etiqueta { Clave = "lblMenuPersonalizarAuto", Pagina = "Site.Master", Descripcion = "Enlace personalizar vehículo", EsMensajeAlerta = false };
+            var eMenuGaraje = new Etiqueta { Clave = "lblMenuMiGaraje", Pagina = "Site.Master", Descripcion = "Enlace mi garage", EsMensajeAlerta = false };
+            var eMenuFact = new Etiqueta { Clave = "lblMenuFacturacion", Pagina = "Site.Master", Descripcion = "Enlace facturación", EsMensajeAlerta = false };
             var eMenuInv = new Etiqueta { Clave = "lblMenuInventario", Pagina = "Site.Master", Descripcion = "Enlace inventario", EsMensajeAlerta = false };
             var eMenuHist = new Etiqueta { Clave = "lblMenuHistorialVentas", Pagina = "Site.Master", Descripcion = "Enlace historial de ventas", EsMensajeAlerta = false };
 
@@ -1277,7 +1283,7 @@ context.SaveChanges();
             var eMenuCuenta = new Etiqueta { Clave = "litNombreUsuario_Default", Pagina = "Site.Master", Descripcion = "Texto por defecto mi cuenta", EsMensajeAlerta = false };
 
             context.Etiquetas.AddOrUpdate(e => e.Clave,
-                eMenuInicio, eMenuTaller, eMenuCrear, eMenuPers, eMenuInv, eMenuHist,
+                eMenuInicio, eMenuTaller, eMenuCrear, eMenuPers, eMenuGaraje, eMenuFact, eMenuInv, eMenuHist,
                 eMenuAbm, eMenuUsu, eMenuCli, eMenuEve, eMenuSis, eMenuPerm, eMenuIdiom,
                 eMenuBack, eMenuDv, eMenuReg, eMenuLog, eMenuPass, eMenuOut, eMenuCuenta
             );
@@ -1289,6 +1295,8 @@ context.SaveChanges();
                 new Traduccion { IdIdioma = idiomaEspanol.ID, IdEtiqueta = eMenuTaller.ID, Texto = "Taller y Ventas" },
                 new Traduccion { IdIdioma = idiomaEspanol.ID, IdEtiqueta = eMenuCrear.ID, Texto = "Crear Auto" },
                 new Traduccion { IdIdioma = idiomaEspanol.ID, IdEtiqueta = eMenuPers.ID, Texto = "Personalizar Auto" },
+                new Traduccion { IdIdioma = idiomaEspanol.ID, IdEtiqueta = eMenuGaraje.ID, Texto = "Mi Garage" },
+                new Traduccion { IdIdioma = idiomaEspanol.ID, IdEtiqueta = eMenuFact.ID, Texto = "Facturación" },
                 new Traduccion { IdIdioma = idiomaEspanol.ID, IdEtiqueta = eMenuInv.ID, Texto = "Inventario" },
                 new Traduccion { IdIdioma = idiomaEspanol.ID, IdEtiqueta = eMenuHist.ID, Texto = "Historial de Ventas" },
                 new Traduccion { IdIdioma = idiomaEspanol.ID, IdEtiqueta = eMenuAbm.ID, Texto = "Gestión ABM" },
@@ -1381,6 +1389,180 @@ context.SaveChanges();
             context.SaveChanges();
 
             // =========================================================================
+            // --- SEED ETIQUETAS Y TRADUCCIONES: MiGaraje.aspx ------------------------
+            // =========================================================================
+
+            // 1. Catálogo Maestro de Etiquetas para MiGaraje.aspx
+            var eTitMiGarage = new Etiqueta { Clave = "lblTituloMiGarage", Pagina = "MiGaraje.aspx", Descripcion = "Título principal de la pantalla Mi Garage", EsMensajeAlerta = false };
+            var eSubMiGarage = new Etiqueta { Clave = "lblSubtituloMiGarage", Pagina = "MiGaraje.aspx", Descripcion = "Subtítulo descriptivo del garage del cliente", EsMensajeAlerta = false };
+            var eTitularBadge = new Etiqueta { Clave = "lblTitularBadge", Pagina = "MiGaraje.aspx", Descripcion = "Etiqueta titular en barra del cliente", EsMensajeAlerta = false };
+            var eDniBadge = new Etiqueta { Clave = "lblDniBadge", Pagina = "MiGaraje.aspx", Descripcion = "Etiqueta DNI/CUIT en barra del cliente", EsMensajeAlerta = false };
+            var eTotalAutosBadge = new Etiqueta { Clave = "lblTotalAutosBadge", Pagina = "MiGaraje.aspx", Descripcion = "Etiqueta total de autos adquiridos", EsMensajeAlerta = false };
+
+            // Estado vacío del garage
+            var eGarageVacioTit = new Etiqueta { Clave = "lblGarageVacioTitulo", Pagina = "MiGaraje.aspx", Descripcion = "Título cuando el cliente no tiene autos comprados", EsMensajeAlerta = false };
+            var eGarageVacioTxt = new Etiqueta { Clave = "lblGarageVacioTexto", Pagina = "MiGaraje.aspx", Descripcion = "Texto informativo cuando el garage está vacío", EsMensajeAlerta = false };
+            var eBtnExplorarCat = new Etiqueta { Clave = "btnExplorarCatalogo", Pagina = "MiGaraje.aspx", Descripcion = "Botón explorar catálogo desde garage vacío", EsMensajeAlerta = false };
+
+            // Tarjeta de vehículo comprado (Repeater)
+            var eBadgeEnProp = new Etiqueta { Clave = "lblBadgeEnPropiedad", Pagina = "MiGaraje.aspx", Descripcion = "Insignia de vehículo en propiedad", EsMensajeAlerta = false };
+            var eMejorasInst = new Etiqueta { Clave = "lblMejorasInstaladas", Pagina = "MiGaraje.aspx", Descripcion = "Título sección mejoras instaladas", EsMensajeAlerta = false };
+            var eFacturaNum = new Etiqueta { Clave = "lblFacturaNum", Pagina = "MiGaraje.aspx", Descripcion = "Etiqueta número de factura en tarjeta", EsMensajeAlerta = false };
+            var eVentaNum = new Etiqueta { Clave = "lblVentaNum", Pagina = "MiGaraje.aspx", Descripcion = "Etiqueta número de venta en tarjeta", EsMensajeAlerta = false };
+            var eFechaCompra = new Etiqueta { Clave = "lblFechaCompra", Pagina = "MiGaraje.aspx", Descripcion = "Etiqueta fecha de compra en tarjeta", EsMensajeAlerta = false };
+            var eMetodoPagoCard = new Etiqueta { Clave = "lblMetodoPagoCard", Pagina = "MiGaraje.aspx", Descripcion = "Etiqueta método de pago en tarjeta", EsMensajeAlerta = false };
+            var eMontoAbonado = new Etiqueta { Clave = "lblMontoAbonado", Pagina = "MiGaraje.aspx", Descripcion = "Etiqueta monto total abonado en tarjeta", EsMensajeAlerta = false };
+            var eBtnDescargarPdfGaraje = new Etiqueta { Clave = "lblBtnDescargarPdf", Pagina = "MiGaraje.aspx", Descripcion = "Botón descargar factura PDF en tarjeta", EsMensajeAlerta = false };
+            var eBtnVerFactura = new Etiqueta { Clave = "lblBtnVerFactura", Pagina = "MiGaraje.aspx", Descripcion = "Botón ver factura en tarjeta", EsMensajeAlerta = false };
+
+            // Textos y mensajes del Backend de MiGaraje.aspx.cs
+            var eTxtConfigFabrica = new Etiqueta { Clave = "texto_configuracion_fabrica", Pagina = "MiGaraje.aspx", Descripcion = "Tag para vehículo sin mejoras personalizadas", EsMensajeAlerta = false };
+            var eMsgFacturaNoEncontrada = new Etiqueta { Clave = "msg_factura_no_encontrada", Pagina = "MiGaraje.aspx", Descripcion = "Alerta cuando no se encuentra la factura solicitada", EsMensajeAlerta = true };
+
+            context.Etiquetas.AddOrUpdate(e => e.Clave,
+                eTitMiGarage, eSubMiGarage, eTitularBadge, eDniBadge, eTotalAutosBadge,
+                eGarageVacioTit, eGarageVacioTxt, eBtnExplorarCat, eBadgeEnProp,
+                eMejorasInst, eFacturaNum, eVentaNum, eFechaCompra, eMetodoPagoCard,
+                eMontoAbonado, eBtnDescargarPdfGaraje, eBtnVerFactura,
+                eTxtConfigFabrica, eMsgFacturaNoEncontrada
+            );
+            context.SaveChanges();
+
+            // 2. Traducciones asignadas al idioma Español para MiGaraje.aspx
+            context.Traducciones.AddOrUpdate(t => new { t.IdIdioma, t.IdEtiqueta },
+                new Traduccion { IdIdioma = idiomaEspanol.ID, IdEtiqueta = eTitMiGarage.ID, Texto = "Mi Garage Personal" },
+                new Traduccion { IdIdioma = idiomaEspanol.ID, IdEtiqueta = eSubMiGarage.ID, Texto = "Sección exclusiva de cliente: aquí puedes visualizar todos tus autos adquiridos y descargar sus facturas oficiales al instante." },
+                new Traduccion { IdIdioma = idiomaEspanol.ID, IdEtiqueta = eTitularBadge.ID, Texto = "Titular:" },
+                new Traduccion { IdIdioma = idiomaEspanol.ID, IdEtiqueta = eDniBadge.ID, Texto = "DNI / CUIT:" },
+                new Traduccion { IdIdioma = idiomaEspanol.ID, IdEtiqueta = eTotalAutosBadge.ID, Texto = "Total de Autos Adquiridos:" },
+                new Traduccion { IdIdioma = idiomaEspanol.ID, IdEtiqueta = eGarageVacioTit.ID, Texto = "Aún no tienes autos en tu garage personal" },
+                new Traduccion { IdIdioma = idiomaEspanol.ID, IdEtiqueta = eGarageVacioTxt.ID, Texto = "Explora nuestra exclusiva flota deportiva en el catálogo, personaliza alerones, suspensión, llantas y carrocería a tu medida, y completa tu compra en el checkout." },
+                new Traduccion { IdIdioma = idiomaEspanol.ID, IdEtiqueta = eBtnExplorarCat.ID, Texto = "Explorar Catálogo de Vehículos" },
+                new Traduccion { IdIdioma = idiomaEspanol.ID, IdEtiqueta = eBadgeEnProp.ID, Texto = "En Propiedad" },
+                new Traduccion { IdIdioma = idiomaEspanol.ID, IdEtiqueta = eMejorasInst.ID, Texto = "Mejoras Instaladas:" },
+                new Traduccion { IdIdioma = idiomaEspanol.ID, IdEtiqueta = eFacturaNum.ID, Texto = "Factura N°:" },
+                new Traduccion { IdIdioma = idiomaEspanol.ID, IdEtiqueta = eVentaNum.ID, Texto = "Venta N°:" },
+                new Traduccion { IdIdioma = idiomaEspanol.ID, IdEtiqueta = eFechaCompra.ID, Texto = "Fecha:" },
+                new Traduccion { IdIdioma = idiomaEspanol.ID, IdEtiqueta = eMetodoPagoCard.ID, Texto = "Método de Pago:" },
+                new Traduccion { IdIdioma = idiomaEspanol.ID, IdEtiqueta = eMontoAbonado.ID, Texto = "Monto Abonado:" },
+                new Traduccion { IdIdioma = idiomaEspanol.ID, IdEtiqueta = eBtnDescargarPdfGaraje.ID, Texto = "Descargar Factura (PDF)" },
+                new Traduccion { IdIdioma = idiomaEspanol.ID, IdEtiqueta = eBtnVerFactura.ID, Texto = "Ver Factura" },
+                new Traduccion { IdIdioma = idiomaEspanol.ID, IdEtiqueta = eTxtConfigFabrica.ID, Texto = "Configuración de Fábrica" },
+                new Traduccion { IdIdioma = idiomaEspanol.ID, IdEtiqueta = eMsgFacturaNoEncontrada.ID, Texto = "No se encontró la factura solicitada." }
+            );
+            context.SaveChanges();
+
+            // =========================================================================
+            // --- SEED ETIQUETAS Y TRADUCCIONES: Facturacion.aspx ---------------------
+            // =========================================================================
+
+            // 1. Catálogo Maestro de Etiquetas para Facturacion.aspx
+            var eFactVaciaTit = new Etiqueta { Clave = "lblFacturaVaciaTitulo", Pagina = "Facturacion.aspx", Descripcion = "Título cuando no hay facturas emitidas", EsMensajeAlerta = false };
+            var eFactVaciaTxt = new Etiqueta { Clave = "lblFacturaVaciaTexto", Pagina = "Facturacion.aspx", Descripcion = "Texto explicativo de facturación vacía", EsMensajeAlerta = false };
+            var eBtnIrCatalogo = new Etiqueta { Clave = "btnIrCatalogo", Pagina = "Facturacion.aspx", Descripcion = "Botón ir al catálogo desde facturación vacía", EsMensajeAlerta = false };
+            var eBtnIrMisAutos = new Etiqueta { Clave = "btnIrMisAutos", Pagina = "Facturacion.aspx", Descripcion = "Botón ir a Mi Garage desde facturación vacía", EsMensajeAlerta = false };
+
+            // Barra de herramientas de facturación
+            var eTitFacturacion = new Etiqueta { Clave = "lblTituloFacturacion", Pagina = "Facturacion.aspx", Descripcion = "Título en barra superior de facturación", EsMensajeAlerta = false };
+            var eSubFacturacion = new Etiqueta { Clave = "lblSubtituloFacturacion", Pagina = "Facturacion.aspx", Descripcion = "Subtítulo en barra superior de facturación", EsMensajeAlerta = false };
+            var eFactBtnDescargarPdf = new Etiqueta { Clave = "lblFactBtnDescargarPdf", Pagina = "Facturacion.aspx", Descripcion = "Botón descargar factura PDF en toolbar", EsMensajeAlerta = false };
+            var eBtnImprimir = new Etiqueta { Clave = "lblBtnImprimir", Pagina = "Facturacion.aspx", Descripcion = "Botón imprimir comprobante", EsMensajeAlerta = false };
+            var eBtnVerMisAutos = new Etiqueta { Clave = "lblBtnVerMisAutos", Pagina = "Facturacion.aspx", Descripcion = "Botón ir a mis vehículos comprados", EsMensajeAlerta = false };
+
+            // Encabezado del comprobante: Emisor y Receptor
+            var eSubEmisor = new Etiqueta { Clave = "lblSubtituloEmisor", Pagina = "Facturacion.aspx", Descripcion = "Subtítulo comercial del emisor", EsMensajeAlerta = false };
+            var eRazonSocialEmisor = new Etiqueta { Clave = "lblRazonSocialEmisor", Pagina = "Facturacion.aspx", Descripcion = "Etiqueta razón social del emisor", EsMensajeAlerta = false };
+            var eCuitEmisor = new Etiqueta { Clave = "lblCuitEmisor", Pagina = "Facturacion.aspx", Descripcion = "Etiqueta CUIT del emisor", EsMensajeAlerta = false };
+            var eIvaEmisor = new Etiqueta { Clave = "lblIvaEmisor", Pagina = "Facturacion.aspx", Descripcion = "Etiqueta condición IVA del emisor", EsMensajeAlerta = false };
+            var eValorIvaEmisor = new Etiqueta { Clave = "lblValorIvaEmisor", Pagina = "Facturacion.aspx", Descripcion = "Valor condición IVA del emisor (Responsable Inscripto)", EsMensajeAlerta = false };
+            var eIngresosBrutosEmisor = new Etiqueta { Clave = "lblIngresosBrutosEmisor", Pagina = "Facturacion.aspx", Descripcion = "Etiqueta ingresos brutos del emisor", EsMensajeAlerta = false };
+            var eDomicilioEmisor = new Etiqueta { Clave = "lblDomicilioEmisor", Pagina = "Facturacion.aspx", Descripcion = "Etiqueta domicilio comercial del emisor", EsMensajeAlerta = false };
+            var eInicioActEmisor = new Etiqueta { Clave = "lblInicioActividadesEmisor", Pagina = "Facturacion.aspx", Descripcion = "Etiqueta fecha inicio de actividades", EsMensajeAlerta = false };
+            var eCodigoComprobante = new Etiqueta { Clave = "lblCodigoComprobante", Pagina = "Facturacion.aspx", Descripcion = "Código fiscal del tipo de comprobante", EsMensajeAlerta = false };
+            var eFacturaElectronica = new Etiqueta { Clave = "lblFacturaElectronica", Pagina = "Facturacion.aspx", Descripcion = "Título tipo de documento Factura Electrónica", EsMensajeAlerta = false };
+            var eTxtFechaEmision = new Etiqueta { Clave = "lblTextoFechaEmision", Pagina = "Facturacion.aspx", Descripcion = "Etiqueta fecha de emisión de factura", EsMensajeAlerta = false };
+            var eTxtNumeroVenta = new Etiqueta { Clave = "lblTextoNumeroVenta", Pagina = "Facturacion.aspx", Descripcion = "Etiqueta número de venta asociada", EsMensajeAlerta = false };
+            var eTxtCondicionVenta = new Etiqueta { Clave = "lblTextoCondicionVenta", Pagina = "Facturacion.aspx", Descripcion = "Etiqueta condición de venta", EsMensajeAlerta = false };
+            var eValorCondicionVenta = new Etiqueta { Clave = "lblValorCondicionVenta", Pagina = "Facturacion.aspx", Descripcion = "Valor condición de venta (Contado Inmediato)", EsMensajeAlerta = false };
+            var eTxtMetodoPago = new Etiqueta { Clave = "lblTextoMetodoPago", Pagina = "Facturacion.aspx", Descripcion = "Etiqueta método de pago en factura", EsMensajeAlerta = false };
+
+            // Datos del cliente en la factura
+            var eTxtNombreCliente = new Etiqueta { Clave = "lblTextoNombreCliente", Pagina = "Facturacion.aspx", Descripcion = "Etiqueta nombre o razón social del cliente", EsMensajeAlerta = false };
+            var eTxtDniCliente = new Etiqueta { Clave = "lblTextoDniCliente", Pagina = "Facturacion.aspx", Descripcion = "Etiqueta DNI o CUIT del cliente", EsMensajeAlerta = false };
+            var eTxtEmailCliente = new Etiqueta { Clave = "lblTextoEmailCliente", Pagina = "Facturacion.aspx", Descripcion = "Etiqueta correo electrónico del cliente", EsMensajeAlerta = false };
+            var eTxtCondicionIvaCli = new Etiqueta { Clave = "lblTextoCondicionIvaCliente", Pagina = "Facturacion.aspx", Descripcion = "Etiqueta condición frente al IVA del cliente", EsMensajeAlerta = false };
+            var eValorCondicionIvaCli = new Etiqueta { Clave = "lblValorCondicionIvaCliente", Pagina = "Facturacion.aspx", Descripcion = "Valor condición frente al IVA del cliente (Consumidor Final)", EsMensajeAlerta = false };
+
+            // Tabla de ítems, totales y pie fiscal
+            var eColConcepto = new Etiqueta { Clave = "lblColConcepto", Pagina = "Facturacion.aspx", Descripcion = "Columna descripción o concepto facturado", EsMensajeAlerta = false };
+            var eColCantidad = new Etiqueta { Clave = "lblColCantidad", Pagina = "Facturacion.aspx", Descripcion = "Columna cantidad", EsMensajeAlerta = false };
+            var eColPrecioUnit = new Etiqueta { Clave = "lblColPrecioUnitario", Pagina = "Facturacion.aspx", Descripcion = "Columna precio unitario", EsMensajeAlerta = false };
+            var eColSubtotal = new Etiqueta { Clave = "lblColSubtotal", Pagina = "Facturacion.aspx", Descripcion = "Columna subtotal del ítem", EsMensajeAlerta = false };
+            var eTxtSubtotalNeto = new Etiqueta { Clave = "lblTextoSubtotalNeto", Pagina = "Facturacion.aspx", Descripcion = "Etiqueta subtotal neto", EsMensajeAlerta = false };
+            var eTxtIva21 = new Etiqueta { Clave = "lblTextoIva21", Pagina = "Facturacion.aspx", Descripcion = "Etiqueta IVA liquidado 21%", EsMensajeAlerta = false };
+            var eTxtTotalFactura = new Etiqueta { Clave = "lblTextoTotalFactura", Pagina = "Facturacion.aspx", Descripcion = "Etiqueta total facturado", EsMensajeAlerta = false };
+            var eTxtCae = new Etiqueta { Clave = "lblTextoCae", Pagina = "Facturacion.aspx", Descripcion = "Etiqueta número de CAE", EsMensajeAlerta = false };
+            var eTxtVtoCae = new Etiqueta { Clave = "lblTextoVtoCae", Pagina = "Facturacion.aspx", Descripcion = "Etiqueta fecha de vencimiento de CAE", EsMensajeAlerta = false };
+            var eLeyendaPieFactura = new Etiqueta { Clave = "lblLeyendaPieFactura", Pagina = "Facturacion.aspx", Descripcion = "Leyenda legal al pie del comprobante electrónico", EsMensajeAlerta = false };
+
+            context.Etiquetas.AddOrUpdate(e => e.Clave,
+                eFactVaciaTit, eFactVaciaTxt, eBtnIrCatalogo, eBtnIrMisAutos,
+                eTitFacturacion, eSubFacturacion, eFactBtnDescargarPdf, eBtnImprimir, eBtnVerMisAutos,
+                eSubEmisor, eRazonSocialEmisor, eCuitEmisor, eIvaEmisor, eValorIvaEmisor,
+                eIngresosBrutosEmisor, eDomicilioEmisor, eInicioActEmisor, eCodigoComprobante,
+                eFacturaElectronica, eTxtFechaEmision, eTxtNumeroVenta, eTxtCondicionVenta,
+                eValorCondicionVenta, eTxtMetodoPago, eTxtNombreCliente, eTxtDniCliente,
+                eTxtEmailCliente, eTxtCondicionIvaCli, eValorCondicionIvaCli, eColConcepto,
+                eColCantidad, eColPrecioUnit, eColSubtotal, eTxtSubtotalNeto, eTxtIva21,
+                eTxtTotalFactura, eTxtCae, eTxtVtoCae, eLeyendaPieFactura
+            );
+            context.SaveChanges();
+
+            // 2. Traducciones asignadas al idioma Español para Facturacion.aspx
+            context.Traducciones.AddOrUpdate(t => new { t.IdIdioma, t.IdEtiqueta },
+                new Traduccion { IdIdioma = idiomaEspanol.ID, IdEtiqueta = eFactVaciaTit.ID, Texto = "No se registran comprobantes emitidos por el momento" },
+                new Traduccion { IdIdioma = idiomaEspanol.ID, IdEtiqueta = eFactVaciaTxt.ID, Texto = "Tus facturas electrónicas oficiales aparecerán aquí automáticamente al confirmar la adquisición de un vehículo en nuestro taller." },
+                new Traduccion { IdIdioma = idiomaEspanol.ID, IdEtiqueta = eBtnIrCatalogo.ID, Texto = "Explorar Flota en Catálogo" },
+                new Traduccion { IdIdioma = idiomaEspanol.ID, IdEtiqueta = eBtnIrMisAutos.ID, Texto = "Ir a Mi Garage" },
+                new Traduccion { IdIdioma = idiomaEspanol.ID, IdEtiqueta = eTitFacturacion.ID, Texto = "Comprobante Electrónico Emitido" },
+                new Traduccion { IdIdioma = idiomaEspanol.ID, IdEtiqueta = eSubFacturacion.ID, Texto = "Factura válida como constancia fiscal y garantía oficial." },
+                new Traduccion { IdIdioma = idiomaEspanol.ID, IdEtiqueta = eFactBtnDescargarPdf.ID, Texto = "Descargar Factura (PDF)" },
+                new Traduccion { IdIdioma = idiomaEspanol.ID, IdEtiqueta = eBtnImprimir.ID, Texto = "Imprimir" },
+                new Traduccion { IdIdioma = idiomaEspanol.ID, IdEtiqueta = eBtnVerMisAutos.ID, Texto = "Mis Vehículos Comprados" },
+                new Traduccion { IdIdioma = idiomaEspanol.ID, IdEtiqueta = eSubEmisor.ID, Texto = "Modificaciones & Concesionaria Oficial" },
+                new Traduccion { IdIdioma = idiomaEspanol.ID, IdEtiqueta = eRazonSocialEmisor.ID, Texto = "Razón Social:" },
+                new Traduccion { IdIdioma = idiomaEspanol.ID, IdEtiqueta = eCuitEmisor.ID, Texto = "CUIT:" },
+                new Traduccion { IdIdioma = idiomaEspanol.ID, IdEtiqueta = eIvaEmisor.ID, Texto = "IVA:" },
+                new Traduccion { IdIdioma = idiomaEspanol.ID, IdEtiqueta = eValorIvaEmisor.ID, Texto = "Responsable Inscripto" },
+                new Traduccion { IdIdioma = idiomaEspanol.ID, IdEtiqueta = eIngresosBrutosEmisor.ID, Texto = "Ingresos Brutos:" },
+                new Traduccion { IdIdioma = idiomaEspanol.ID, IdEtiqueta = eDomicilioEmisor.ID, Texto = "Domicilio:" },
+                new Traduccion { IdIdioma = idiomaEspanol.ID, IdEtiqueta = eInicioActEmisor.ID, Texto = "Inicio de Actividades:" },
+                new Traduccion { IdIdioma = idiomaEspanol.ID, IdEtiqueta = eCodigoComprobante.ID, Texto = "COD. 06" },
+                new Traduccion { IdIdioma = idiomaEspanol.ID, IdEtiqueta = eFacturaElectronica.ID, Texto = "FACTURA ELECTRÓNICA" },
+                new Traduccion { IdIdioma = idiomaEspanol.ID, IdEtiqueta = eTxtFechaEmision.ID, Texto = "Fecha de Emisión:" },
+                new Traduccion { IdIdioma = idiomaEspanol.ID, IdEtiqueta = eTxtNumeroVenta.ID, Texto = "Número de Venta:" },
+                new Traduccion { IdIdioma = idiomaEspanol.ID, IdEtiqueta = eTxtCondicionVenta.ID, Texto = "Condición de Venta:" },
+                new Traduccion { IdIdioma = idiomaEspanol.ID, IdEtiqueta = eValorCondicionVenta.ID, Texto = "Contado Inmediato" },
+                new Traduccion { IdIdioma = idiomaEspanol.ID, IdEtiqueta = eTxtMetodoPago.ID, Texto = "Método de Pago:" },
+                new Traduccion { IdIdioma = idiomaEspanol.ID, IdEtiqueta = eTxtNombreCliente.ID, Texto = "Nombre y Apellido / Razón Social:" },
+                new Traduccion { IdIdioma = idiomaEspanol.ID, IdEtiqueta = eTxtDniCliente.ID, Texto = "DNI / CUIT:" },
+                new Traduccion { IdIdioma = idiomaEspanol.ID, IdEtiqueta = eTxtEmailCliente.ID, Texto = "Correo Electrónico:" },
+                new Traduccion { IdIdioma = idiomaEspanol.ID, IdEtiqueta = eTxtCondicionIvaCli.ID, Texto = "Condición frente al IVA:" },
+                new Traduccion { IdIdioma = idiomaEspanol.ID, IdEtiqueta = eValorCondicionIvaCli.ID, Texto = "Consumidor Final" },
+                new Traduccion { IdIdioma = idiomaEspanol.ID, IdEtiqueta = eColConcepto.ID, Texto = "Descripción / Concepto" },
+                new Traduccion { IdIdioma = idiomaEspanol.ID, IdEtiqueta = eColCantidad.ID, Texto = "Cant." },
+                new Traduccion { IdIdioma = idiomaEspanol.ID, IdEtiqueta = eColPrecioUnit.ID, Texto = "Precio Unitario" },
+                new Traduccion { IdIdioma = idiomaEspanol.ID, IdEtiqueta = eColSubtotal.ID, Texto = "Subtotal" },
+                new Traduccion { IdIdioma = idiomaEspanol.ID, IdEtiqueta = eTxtSubtotalNeto.ID, Texto = "Subtotal Neto:" },
+                new Traduccion { IdIdioma = idiomaEspanol.ID, IdEtiqueta = eTxtIva21.ID, Texto = "IVA Liquidado (21%):" },
+                new Traduccion { IdIdioma = idiomaEspanol.ID, IdEtiqueta = eTxtTotalFactura.ID, Texto = "TOTAL FACTURADO:" },
+                new Traduccion { IdIdioma = idiomaEspanol.ID, IdEtiqueta = eTxtCae.ID, Texto = "CAE N°:" },
+                new Traduccion { IdIdioma = idiomaEspanol.ID, IdEtiqueta = eTxtVtoCae.ID, Texto = "Fecha de Vto. de CAE:" },
+                new Traduccion { IdIdioma = idiomaEspanol.ID, IdEtiqueta = eLeyendaPieFactura.ID, Texto = "Comprobante Electrónico emitido por RedLine Customs. Válido como garantía de taller." }
+            );
+            context.SaveChanges();
+
+            // =========================================================================
             // --- SEED TRADUCCIONES EN INGLÉS (idiomaIngles) --------------------------
             // =========================================================================
 
@@ -1414,6 +1596,8 @@ context.SaveChanges();
                     new Traduccion { IdIdioma = idiomaIngles.ID, IdEtiqueta = eOptCrearAuto.ID, Texto = "Create Car" },
                     new Traduccion { IdIdioma = idiomaIngles.ID, IdEtiqueta = eOptCheckout.ID, Texto = "Checkout / Purchase" },
                     new Traduccion { IdIdioma = idiomaIngles.ID, IdEtiqueta = eOptPagoExitoso.ID, Texto = "Payment Confirmation" },
+                    new Traduccion { IdIdioma = idiomaIngles.ID, IdEtiqueta = eOptMiGaraje.ID, Texto = "My Garage" },
+                    new Traduccion { IdIdioma = idiomaIngles.ID, IdEtiqueta = eOptFacturacion.ID, Texto = "Billing" },
                     new Traduccion { IdIdioma = idiomaIngles.ID, IdEtiqueta = eOptHistVentas.ID, Texto = "Sales History" },
                     new Traduccion { IdIdioma = idiomaIngles.ID, IdEtiqueta = eOptInventario.ID, Texto = "Inventory Management" },
                     new Traduccion { IdIdioma = idiomaIngles.ID, IdEtiqueta = eOptClientes.ID, Texto = "Customer Management" },
@@ -1817,6 +2001,8 @@ context.SaveChanges();
                     new Traduccion { IdIdioma = idiomaIngles.ID, IdEtiqueta = eMenuTaller.ID, Texto = "Workshop & Sales" },
                     new Traduccion { IdIdioma = idiomaIngles.ID, IdEtiqueta = eMenuCrear.ID, Texto = "Create Car" },
                     new Traduccion { IdIdioma = idiomaIngles.ID, IdEtiqueta = eMenuPers.ID, Texto = "Customize Car" },
+                    new Traduccion { IdIdioma = idiomaIngles.ID, IdEtiqueta = eMenuGaraje.ID, Texto = "My Garage" },
+                    new Traduccion { IdIdioma = idiomaIngles.ID, IdEtiqueta = eMenuFact.ID, Texto = "Billing" },
                     new Traduccion { IdIdioma = idiomaIngles.ID, IdEtiqueta = eMenuInv.ID, Texto = "Inventory" },
                     new Traduccion { IdIdioma = idiomaIngles.ID, IdEtiqueta = eMenuHist.ID, Texto = "Sales History" },
                     new Traduccion { IdIdioma = idiomaIngles.ID, IdEtiqueta = eMenuAbm.ID, Texto = "CRUD Management" },
@@ -1858,6 +2044,78 @@ context.SaveChanges();
                     new Traduccion { IdIdioma = idiomaIngles.ID, IdEtiqueta = eMsgErrorFechas.ID, Texto = "The 'From' date cannot be greater than the 'To' date." }
                 );
                 context.SaveChanges();
+
+                // -------------------------------------------------------------------------
+                // 20. MiGaraje.aspx
+                // -------------------------------------------------------------------------
+                context.Traducciones.AddOrUpdate(t => new { t.IdIdioma, t.IdEtiqueta },
+                    new Traduccion { IdIdioma = idiomaIngles.ID, IdEtiqueta = eTitMiGarage.ID, Texto = "My Personal Garage" },
+                    new Traduccion { IdIdioma = idiomaIngles.ID, IdEtiqueta = eSubMiGarage.ID, Texto = "Exclusive customer section: here you can view all your purchased cars and download their official invoices instantly." },
+                    new Traduccion { IdIdioma = idiomaIngles.ID, IdEtiqueta = eTitularBadge.ID, Texto = "Owner:" },
+                    new Traduccion { IdIdioma = idiomaIngles.ID, IdEtiqueta = eDniBadge.ID, Texto = "ID / Tax ID:" },
+                    new Traduccion { IdIdioma = idiomaIngles.ID, IdEtiqueta = eTotalAutosBadge.ID, Texto = "Total Purchased Cars:" },
+                    new Traduccion { IdIdioma = idiomaIngles.ID, IdEtiqueta = eGarageVacioTit.ID, Texto = "You don't have any cars in your personal garage yet" },
+                    new Traduccion { IdIdioma = idiomaIngles.ID, IdEtiqueta = eGarageVacioTxt.ID, Texto = "Explore our exclusive sports fleet in the catalog, customize spoilers, suspension, wheels, and bodywork to your liking, and complete your purchase at checkout." },
+                    new Traduccion { IdIdioma = idiomaIngles.ID, IdEtiqueta = eBtnExplorarCat.ID, Texto = "Explore Vehicle Catalog" },
+                    new Traduccion { IdIdioma = idiomaIngles.ID, IdEtiqueta = eBadgeEnProp.ID, Texto = "Owned" },
+                    new Traduccion { IdIdioma = idiomaIngles.ID, IdEtiqueta = eMejorasInst.ID, Texto = "Installed Upgrades:" },
+                    new Traduccion { IdIdioma = idiomaIngles.ID, IdEtiqueta = eFacturaNum.ID, Texto = "Invoice #:" },
+                    new Traduccion { IdIdioma = idiomaIngles.ID, IdEtiqueta = eVentaNum.ID, Texto = "Sale #:" },
+                    new Traduccion { IdIdioma = idiomaIngles.ID, IdEtiqueta = eFechaCompra.ID, Texto = "Date:" },
+                    new Traduccion { IdIdioma = idiomaIngles.ID, IdEtiqueta = eMetodoPagoCard.ID, Texto = "Payment Method:" },
+                    new Traduccion { IdIdioma = idiomaIngles.ID, IdEtiqueta = eMontoAbonado.ID, Texto = "Amount Paid:" },
+                    new Traduccion { IdIdioma = idiomaIngles.ID, IdEtiqueta = eBtnDescargarPdfGaraje.ID, Texto = "Download Invoice (PDF)" },
+                    new Traduccion { IdIdioma = idiomaIngles.ID, IdEtiqueta = eBtnVerFactura.ID, Texto = "View Invoice" },
+                    new Traduccion { IdIdioma = idiomaIngles.ID, IdEtiqueta = eTxtConfigFabrica.ID, Texto = "Factory Standard" },
+                    new Traduccion { IdIdioma = idiomaIngles.ID, IdEtiqueta = eMsgFacturaNoEncontrada.ID, Texto = "The requested invoice could not be found." }
+                );
+                context.SaveChanges();
+
+                // -------------------------------------------------------------------------
+                // 21. Facturacion.aspx
+                // -------------------------------------------------------------------------
+                context.Traducciones.AddOrUpdate(t => new { t.IdIdioma, t.IdEtiqueta },
+                    new Traduccion { IdIdioma = idiomaIngles.ID, IdEtiqueta = eFactVaciaTit.ID, Texto = "No issued invoices found at the moment" },
+                    new Traduccion { IdIdioma = idiomaIngles.ID, IdEtiqueta = eFactVaciaTxt.ID, Texto = "Your official electronic invoices will appear here automatically once you confirm the purchase of a vehicle at our workshop." },
+                    new Traduccion { IdIdioma = idiomaIngles.ID, IdEtiqueta = eBtnIrCatalogo.ID, Texto = "Explore Fleet in Catalog" },
+                    new Traduccion { IdIdioma = idiomaIngles.ID, IdEtiqueta = eBtnIrMisAutos.ID, Texto = "Go to My Garage" },
+                    new Traduccion { IdIdioma = idiomaIngles.ID, IdEtiqueta = eTitFacturacion.ID, Texto = "Electronic Invoice Issued" },
+                    new Traduccion { IdIdioma = idiomaIngles.ID, IdEtiqueta = eSubFacturacion.ID, Texto = "Valid invoice as tax receipt and official warranty." },
+                    new Traduccion { IdIdioma = idiomaIngles.ID, IdEtiqueta = eFactBtnDescargarPdf.ID, Texto = "Download Invoice (PDF)" },
+                    new Traduccion { IdIdioma = idiomaIngles.ID, IdEtiqueta = eBtnImprimir.ID, Texto = "Print" },
+                    new Traduccion { IdIdioma = idiomaIngles.ID, IdEtiqueta = eBtnVerMisAutos.ID, Texto = "My Purchased Vehicles" },
+                    new Traduccion { IdIdioma = idiomaIngles.ID, IdEtiqueta = eSubEmisor.ID, Texto = "Official Dealership & Custom Modifications" },
+                    new Traduccion { IdIdioma = idiomaIngles.ID, IdEtiqueta = eRazonSocialEmisor.ID, Texto = "Company Name:" },
+                    new Traduccion { IdIdioma = idiomaIngles.ID, IdEtiqueta = eCuitEmisor.ID, Texto = "Tax ID (CUIT):" },
+                    new Traduccion { IdIdioma = idiomaIngles.ID, IdEtiqueta = eIvaEmisor.ID, Texto = "VAT Status:" },
+                    new Traduccion { IdIdioma = idiomaIngles.ID, IdEtiqueta = eValorIvaEmisor.ID, Texto = "Registered VAT Payer" },
+                    new Traduccion { IdIdioma = idiomaIngles.ID, IdEtiqueta = eIngresosBrutosEmisor.ID, Texto = "Gross Income Tax:" },
+                    new Traduccion { IdIdioma = idiomaIngles.ID, IdEtiqueta = eDomicilioEmisor.ID, Texto = "Address:" },
+                    new Traduccion { IdIdioma = idiomaIngles.ID, IdEtiqueta = eInicioActEmisor.ID, Texto = "Start of Activities:" },
+                    new Traduccion { IdIdioma = idiomaIngles.ID, IdEtiqueta = eCodigoComprobante.ID, Texto = "CODE 06" },
+                    new Traduccion { IdIdioma = idiomaIngles.ID, IdEtiqueta = eFacturaElectronica.ID, Texto = "ELECTRONIC INVOICE" },
+                    new Traduccion { IdIdioma = idiomaIngles.ID, IdEtiqueta = eTxtFechaEmision.ID, Texto = "Issue Date:" },
+                    new Traduccion { IdIdioma = idiomaIngles.ID, IdEtiqueta = eTxtNumeroVenta.ID, Texto = "Sale Number:" },
+                    new Traduccion { IdIdioma = idiomaIngles.ID, IdEtiqueta = eTxtCondicionVenta.ID, Texto = "Sale Terms:" },
+                    new Traduccion { IdIdioma = idiomaIngles.ID, IdEtiqueta = eValorCondicionVenta.ID, Texto = "Immediate Cash / Spot" },
+                    new Traduccion { IdIdioma = idiomaIngles.ID, IdEtiqueta = eTxtMetodoPago.ID, Texto = "Payment Method:" },
+                    new Traduccion { IdIdioma = idiomaIngles.ID, IdEtiqueta = eTxtNombreCliente.ID, Texto = "Full Name / Company Name:" },
+                    new Traduccion { IdIdioma = idiomaIngles.ID, IdEtiqueta = eTxtDniCliente.ID, Texto = "ID / Tax ID:" },
+                    new Traduccion { IdIdioma = idiomaIngles.ID, IdEtiqueta = eTxtEmailCliente.ID, Texto = "Email Address:" },
+                    new Traduccion { IdIdioma = idiomaIngles.ID, IdEtiqueta = eTxtCondicionIvaCli.ID, Texto = "VAT Condition:" },
+                    new Traduccion { IdIdioma = idiomaIngles.ID, IdEtiqueta = eValorCondicionIvaCli.ID, Texto = "Final Consumer" },
+                    new Traduccion { IdIdioma = idiomaIngles.ID, IdEtiqueta = eColConcepto.ID, Texto = "Description / Item" },
+                    new Traduccion { IdIdioma = idiomaIngles.ID, IdEtiqueta = eColCantidad.ID, Texto = "Qty." },
+                    new Traduccion { IdIdioma = idiomaIngles.ID, IdEtiqueta = eColPrecioUnit.ID, Texto = "Unit Price" },
+                    new Traduccion { IdIdioma = idiomaIngles.ID, IdEtiqueta = eColSubtotal.ID, Texto = "Subtotal" },
+                    new Traduccion { IdIdioma = idiomaIngles.ID, IdEtiqueta = eTxtSubtotalNeto.ID, Texto = "Net Subtotal:" },
+                    new Traduccion { IdIdioma = idiomaIngles.ID, IdEtiqueta = eTxtIva21.ID, Texto = "VAT (21%):" },
+                    new Traduccion { IdIdioma = idiomaIngles.ID, IdEtiqueta = eTxtTotalFactura.ID, Texto = "TOTAL INVOICED:" },
+                    new Traduccion { IdIdioma = idiomaIngles.ID, IdEtiqueta = eTxtCae.ID, Texto = "CAE #:" },
+                    new Traduccion { IdIdioma = idiomaIngles.ID, IdEtiqueta = eTxtVtoCae.ID, Texto = "CAE Expiration Date:" },
+                    new Traduccion { IdIdioma = idiomaIngles.ID, IdEtiqueta = eLeyendaPieFactura.ID, Texto = "Electronic receipt issued by RedLine Customs. Valid as a workshop warranty." }
+                );
+                context.SaveChanges();
             }
 
             var dalAutoBase = new DAL_AutoBase();
@@ -1866,9 +2124,14 @@ context.SaveChanges();
             var dalPermiso = new DAL_Permisos();
             var dalfamilia = new DAL_Familia();
 
-            dalPerfil.GuardarRelacion(perfilWebmaster.Id, 21);
-            dalPerfil.GuardarRelacion(perfilAdmin.Id, 22);
-            dalPerfil.GuardarRelacion(perfilCliente.Id, 23);
+            // Limpiamos relaciones previas para evitar duplicados o IDs viejos y asignamos las familias correctas (25, 26 y 27)
+            dalPerfil.EliminarRelacionesPorPerfil(perfilWebmaster.Id);
+            dalPerfil.EliminarRelacionesPorPerfil(perfilAdmin.Id);
+            dalPerfil.EliminarRelacionesPorPerfil(perfilCliente.Id);
+
+            dalPerfil.GuardarRelacion(perfilWebmaster.Id, 25);
+            dalPerfil.GuardarRelacion(perfilAdmin.Id, 26);
+            dalPerfil.GuardarRelacion(perfilCliente.Id, 27);
 
             dalAutoBase.RecalcularMisDigitosVerificadores();
             dalUsuario.RecalcularMisDigitosVerificadores();

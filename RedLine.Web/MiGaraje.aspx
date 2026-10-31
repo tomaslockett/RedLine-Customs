@@ -1,12 +1,12 @@
-﻿<%@ Page Title="Mis Vehículos Comprados" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="MiGaraje.aspx.cs" Inherits="RedLine.Web.MiGaraje" %>
+<%@ Page Title="Mis Vehículos Comprados" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="MiGaraje.aspx.cs" Inherits="RedLine.Web.MiGaraje" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
-    <link rel="stylesheet" href="Content/MisAutos.css" />
+    <link href="Content/MiGaraje.css" rel="stylesheet" type="text/css" />
 
     <main class="misautos-container">
         <!-- Encabezado de la página del cliente -->
         <header class="misautos-header">
-            <h1><i class="fa-solid fa-warehouse" style="color:#cf2a1d; margin-right:10px;"></i><asp:Label ID="lblTituloMiGarage" runat="server" Text="Mi Garage Personal" /></h1>
+            <h1><i class="fa-solid fa-warehouse icono-titulo-garage"></i><asp:Label ID="lblTituloMiGarage" runat="server" Text="Mi Garage Personal" /></h1>
             <p><asp:Label ID="lblSubtituloMiGarage" runat="server" Text="Sección exclusiva de cliente: aquí puedes visualizar todos tus autos adquiridos y descargar sus facturas oficiales al instante." /></p>
         </header>
 
@@ -34,7 +34,7 @@
                 </div>
                 <h2><asp:Label ID="lblGarageVacioTitulo" runat="server" Text="Aún no tienes autos en tu garage personal" /></h2>
                 <p><asp:Label ID="lblGarageVacioTexto" runat="server" Text="Explora nuestra exclusiva flota deportiva en el catálogo, personaliza alerones, suspensión, llantas y carrocería a tu medida, y completa tu compra en el checkout." /></p>
-                <a href="Catalogo.aspx" class="btn-descargar-pdf" style="display:inline-flex; width:auto; padding: 12px 28px; margin: 0 auto; text-decoration: none;">
+                <a href="Catalogo.aspx" class="btn-descargar-pdf btn-explorar-vacio">
                     <i class="fa-solid fa-magnifying-glass"></i> <asp:Label ID="btnExplorarCatalogo" runat="server" Text="Explorar Catálogo de Vehículos" />
                 </a>
             </div>
@@ -105,14 +105,14 @@
                                 <!-- Acciones: Descarga Instantánea de Factura PDF y Vista de Factura -->
                                 <div class="card-acciones">
                                     <a href='<%# "DescargarFactura.ashx?num=" + Eval("NumeroFactura") + "&vta=" + Eval("NumeroVenta") %>' 
-       class="btn-descargar-pdf" style="text-decoration:none;">
-        <i class="fa-solid fa-file-pdf"></i> <asp:Label ID="lblBtnDescargarPdf" runat="server" Text="Descargar Factura (PDF)" />
-    </a>
+                                       class="btn-descargar-pdf">
+                                        <i class="fa-solid fa-file-pdf"></i> <asp:Label ID="lblBtnDescargarPdf" runat="server" Text="Descargar Factura (PDF)" />
+                                    </a>
 
-    <a href='<%# "DescargarFactura.ashx?num=" + Eval("NumeroFactura") + "&vta=" + Eval("NumeroVenta") + "&modo=ver" %>' 
-       target="_blank" class="btn-ver-factura" style="text-decoration:none;">
-        <i class="fa-solid fa-file-invoice"></i> <asp:Label ID="lblBtnVerFactura" runat="server" Text="Ver Factura" />
-    </a>
+                                    <a href='<%# "DescargarFactura.ashx?num=" + Eval("NumeroFactura") + "&vta=" + Eval("NumeroVenta") + "&modo=ver" %>' 
+                                       target="_blank" class="btn-ver-factura">
+                                        <i class="fa-solid fa-file-invoice"></i> <asp:Label ID="lblBtnVerFactura" runat="server" Text="Ver Factura" />
+                                    </a>
                                 </div>
                             </div>
                         </article>

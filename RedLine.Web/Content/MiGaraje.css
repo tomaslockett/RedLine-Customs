@@ -1,4 +1,4 @@
-﻿/* Estilos para el Garage de Autos Comprados del Cliente (MisAutos.aspx) */
+/* Estilos para el Garage de Autos Comprados del Cliente (MiGaraje.aspx) */
 :root {
     --bg-main: #060913;
     --card-bg: #0b111e;
@@ -32,6 +32,12 @@
         .misautos-header h1 span {
             color: var(--brand-red);
         }
+
+/* Icono del encabezado principal del garage */
+.icono-titulo-garage {
+    color: var(--brand-red);
+    margin-right: 10px;
+}
 
     .misautos-header p {
         color: var(--text-muted);
@@ -95,6 +101,15 @@
     font-size: 0.98rem;
     margin-bottom: 25px;
     line-height: 1.6;
+}
+
+/* Botón de acción cuando el garage está vacío */
+.btn-explorar-vacio {
+    display: inline-flex;
+    width: auto;
+    padding: 12px 28px;
+    margin: 0 auto;
+    text-decoration: none;
 }
 
 /* Grid de Autos Comprados */
@@ -260,8 +275,15 @@
 .factura-row {
     display: flex;
     justify-content: space-between;
+    align-items: baseline;
+    gap: 10px;
     color: #94a3b8;
 }
+
+    .factura-row strong,
+    .factura-row span:last-child {
+        text-align: right;
+    }
 
     .factura-row strong {
         color: #f8fafc;
@@ -272,6 +294,7 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
+    gap: 10px;
     margin-top: 6px;
     padding-top: 8px;
     border-top: 1px dashed #1e293b;
@@ -295,10 +318,13 @@
     background: var(--brand-red);
     color: #ffffff;
     border: none;
-    padding: 10px;
+    padding: 10px 12px;
+    min-height: 42px;
     border-radius: 6px;
-    font-size: 0.88rem;
+    font-size: 0.86rem;
     font-weight: 600;
+    line-height: 1.25;
+    text-align: center;
     cursor: pointer;
     display: flex;
     align-items: center;
@@ -317,10 +343,13 @@
     background: #1e293b;
     color: #ffffff;
     border: 1px solid #334155;
-    padding: 10px;
+    padding: 10px 12px;
+    min-height: 42px;
     border-radius: 6px;
-    font-size: 0.88rem;
+    font-size: 0.86rem;
     font-weight: 600;
+    line-height: 1.25;
+    text-align: center;
     cursor: pointer;
     display: flex;
     align-items: center;
@@ -334,3 +363,29 @@
         background: #334155;
         color: #ffffff;
     }
+
+/* Ajustes responsivos para pantallas móviles y tablets */
+@media (max-width: 768px) {
+    .misautos-header h1 {
+        font-size: 1.75rem;
+    }
+
+    .cliente-badge-bar {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+    }
+
+    .grid-autos-comprados {
+        grid-template-columns: 1fr;
+    }
+
+    .card-specs-fila {
+        flex-wrap: wrap;
+        gap: 10px;
+    }
+
+    .card-acciones {
+        grid-template-columns: 1fr;
+    }
+}

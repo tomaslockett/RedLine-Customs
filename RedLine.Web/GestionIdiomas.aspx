@@ -1,4 +1,4 @@
-﻿<%@ Page Title="Gestión de Idiomas" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="GestionIdiomas.aspx.cs" Inherits="RedLine.Web.GestionIdiomas" %>
+<%@ Page Title="Gestión de Idiomas" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="GestionIdiomas.aspx.cs" Inherits="RedLine.Web.GestionIdiomas" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
     <link href="Content/GestionIdiomas.css" rel="stylesheet" type="text/css" />
@@ -41,6 +41,8 @@
                             <asp:ListItem Value="CrearAuto.aspx" Text="Crear Auto" />
                             <asp:ListItem Value="Checkout.aspx" Text="Checkout / Compra" />
                             <asp:ListItem Value="PagoExitoso.aspx" Text="Confirmación de Pago" />
+                            <asp:ListItem Value="MiGaraje.aspx" Text="Mi Garage" />
+                            <asp:ListItem Value="Facturacion.aspx" Text="Facturación" />
                             <asp:ListItem Value="HistorialVentas.aspx" Text="Historial de Ventas" />
                             <asp:ListItem Value="Inventario.aspx" Text="Gestión de Inventario" />
                             <asp:ListItem Value="GestionClientes.aspx" Text="Gestión de Clientes" />
