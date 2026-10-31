@@ -44,9 +44,7 @@ namespace RedLine.Web
                     BLL_Idioma bllIdioma = new BLL_Idioma();
                     var idiomasDb = bllIdioma.Listar();
 
-                    var idiomaSeleccionado = idiomasDb.FirstOrDefault(i => i.Nombre == idiomaUsuario)
-                                             ?? bllIdioma.ObtenerDefault()
-                                             ?? idiomasDb.FirstOrDefault();
+                    var idiomaSeleccionado = idiomasDb.FirstOrDefault(i => i.Nombre == idiomaUsuario) ?? bllIdioma.ObtenerDefault() ?? idiomasDb.FirstOrDefault();
 
                     if (idiomaSeleccionado != null)
                     {
@@ -55,13 +53,15 @@ namespace RedLine.Web
                         SubjectIdioma.Instancia.CargarTraducciones(idiomaSeleccionado.Nombre, traducciones);
                     }
 
-                    Response.Redirect("Catalogo.aspx");
+                    Response.Redirect("Catalogo.aspx", false);
+                    Context.ApplicationInstance.CompleteRequest();
                     return;
                 }
                 if (resultado == LoginResult.InconsistencyDVWebMaster)
                 {
                     Session.Add("Inconsistencia", true);
-                    Response.Redirect("RecuperacionDV.aspx");
+                    Response.Redirect("RecuperacionDV.aspx", false);
+                    Context.ApplicationInstance.CompleteRequest();
                     return;
                 }
                 if (resultado == LoginResult.InconsistencyDVUserNormal)

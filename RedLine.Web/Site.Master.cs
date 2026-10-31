@@ -17,6 +17,7 @@ namespace RedLine.Web
     {
         private readonly BLL_Idioma _bllIdioma = new BLL_Idioma();
 
+        #region Traduccion
         protected override void OnInit(EventArgs e)
         {
             base.OnInit(e);
@@ -68,6 +69,8 @@ namespace RedLine.Web
             }
         }
 
+        #endregion
+
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack)
@@ -91,7 +94,7 @@ namespace RedLine.Web
                 litNombreUsuario.Text = $"{clienteLogueado.Nombre} {clienteLogueado.Apellido}";
 
                 EstablecerMenuLogueado();
-                menuTallerVentas.Visible = true;
+                RenderizarMenuCliente();
             }
             else
             {
@@ -177,6 +180,23 @@ namespace RedLine.Web
             lnkLogout.Visible = true;
         }
 
+        private void RenderizarMenuCliente()
+        {
+            menuTallerVentas.Visible = true;
+
+            // El cliente autenticado ve Personalizar Auto y Mi Garage según su familia Seed
+            lnkPersonalizarAuto.Visible = true;
+            lnkMiGaraje.Visible = true;
+
+            // Las opciones de gestión y administración quedan ocultas para el cliente
+            lnkCrearAuto.Visible = false;
+            lnkInventario.Visible = false;
+            lnkHistorialVentas.Visible = false;
+            lnkFacturacion.Visible = false; // Descarga/ve su factura directamente desde su garaje con el handler
+        }
+
+
+
         private void RenderizarMenuPorPermisos(Usuario usuario)
         {
             if (usuario == null)
@@ -194,33 +214,77 @@ namespace RedLine.Web
             try
             {
                 BLL_Perfil bllPerfil = new BLL_Perfil();
-                List<ComponentePermiso> permisosUsuario = bllPerfil.ObtenerPermisosDePerfil(usuario.PerfilId.Value);
 
-                if (permisosUsuario == null || permisosUsuario.Count == 0)
+                // 1. Obtenemos las raíces de permisos asignadas al perfil
+                List<ComponentePermiso> permisosRaiz = bllPerfil.ObtenerPermisosDePerfil(usuario.PerfilId.Value);
+
+                if (permisosRaiz == null || permisosRaiz.Count == 0)
                 {
                     litNombreUsuario.Text = $"{usuario.Nombre} (Perfil ID: {usuario.PerfilId} sin permisos en BD)";
                     return;
                 }
 
-                bool tieneTaller = permisosUsuario.Any(p => p.Nombre == "GestionInventario" || p.Nombre == "PersonalizarAuto" || p.Nombre == "HistorialVentas");
+                // 2. Aplanamos todo el árbol usando el método nativo de tu arquitectura Composite (o recorriendo los hijos)
+                List<ComponentePermiso> permisosFinales = new List<ComponentePermiso>();
+                foreach (var raiz in permisosRaiz)
+                {
+                    if (raiz != null)
+                    {
+                        permisosFinales.AddRange(raiz.ObtenerHijos());
+                    }
+                }
+                // Aseguramos que no se repitan por ID si hay cruces de familias
+                permisosFinales = permisosFinales.GroupBy(p => p.Id).Select(g => g.First()).ToList();
+
+                // ==========================================
+                // 1. MENÚ TALLER Y VENTAS
+                // ==========================================
+                bool pInventario = permisosFinales.Any(p => p.Nombre == "GestionInventario");
+                bool pPersonalizar = permisosFinales.Any(p => p.Nombre == "PersonalizarAuto");
+                bool pHistorial = permisosFinales.Any(p => p.Nombre == "HistorialVentas");
+                bool pMiGaraje = permisosFinales.Any(p => p.Nombre == "MiGaraje");
+                bool pFacturacion = permisosFinales.Any(p => p.Nombre == "Facturacion");
+
+                bool tieneTaller = pInventario || pPersonalizar || pHistorial || pMiGaraje || pFacturacion;
                 menuTallerVentas.Visible = tieneTaller;
 
-                lnkInventario.Visible = permisosUsuario.Any(p => p.Nombre == "GestionInventario");
+                if (lnkCrearAuto != null) lnkCrearAuto.Visible = pInventario;
+                if (lnkInventario != null) lnkInventario.Visible = pInventario;
+                if (lnkPersonalizarAuto != null) lnkPersonalizarAuto.Visible = pPersonalizar;
+                if (lnkHistorialVentas != null) lnkHistorialVentas.Visible = pHistorial;
+                if (lnkMiGaraje != null) lnkMiGaraje.Visible = pMiGaraje;
+                if (lnkFacturacion != null) lnkFacturacion.Visible = pFacturacion;
 
-                bool tieneABM = permisosUsuario.Any(p => p.Nombre == "GestionUsuarios" || p.Nombre == "GestionClientes" || p.Nombre == "BitacoraEventos");
+                // ==========================================
+                // 2. MENÚ GESTIÓN ABM
+                // ==========================================
+                bool pUsuarios = permisosFinales.Any(p => p.Nombre == "GestionUsuarios");
+                bool pClientes = permisosFinales.Any(p => p.Nombre == "GestionClientes");
+                bool pEventos = permisosFinales.Any(p => p.Nombre == "BitacoraEventos");
+
+                bool tieneABM = pUsuarios || pClientes || pEventos;
                 menuGestionABM.Visible = tieneABM;
 
-                lnkGestionUsuarios.Visible = permisosUsuario.Any(p => p.Nombre == "GestionUsuarios");
-                lnkGestionClientes.Visible = permisosUsuario.Any(p => p.Nombre == "GestionClientes");
-                lnkGestionEventos.Visible = permisosUsuario.Any(p => p.Nombre == "BitacoraEventos");
+                if (lnkGestionUsuarios != null) lnkGestionUsuarios.Visible = pUsuarios;
+                if (lnkGestionClientes != null) lnkGestionClientes.Visible = pClientes;
+                if (lnkGestionEventos != null) lnkGestionEventos.Visible = pEventos;
 
-                bool tieneSistema = permisosUsuario.Any(p => p.Nombre == "GestionPerfiles" || p.Nombre == "GestionIdiomas" || p.Nombre == "BackupRestore" || p.Nombre == "RecuperarDV");
+                // ==========================================
+                // 3. MENÚ SISTEMA
+                // ==========================================
+                bool pPerfiles = permisosFinales.Any(p => p.Nombre == "GestionPerfiles");
+                bool pIdiomas = permisosFinales.Any(p => p.Nombre == "GestionIdiomas");
+                bool pBackup = permisosFinales.Any(p => p.Nombre == "BackupRestore");
+                bool pRecuperarDV = permisosFinales.Any(p => p.Nombre == "RecuperarDV");
+
+                bool pBackupCheck = permisosFinales.Any(p => p.Nombre == "BackupRestore");
+                bool tieneSistema = pPerfiles || pIdiomas || pBackupCheck || pRecuperarDV;
                 menuSistema.Visible = tieneSistema;
 
-                lnkGestionPermisos.Visible = permisosUsuario.Any(p => p.Nombre == "GestionPerfiles");
-                lnkGestionIdiomas.Visible = permisosUsuario.Any(p => p.Nombre == "GestionIdiomas");
-                lnkBackupRestore.Visible = permisosUsuario.Any(p => p.Nombre == "BackupRestore");
-                lnkDigitoVerificador.Visible = permisosUsuario.Any(p => p.Nombre == "RecuperarDV");
+                if (lnkGestionPermisos != null) lnkGestionPermisos.Visible = pPerfiles;
+                if (lnkGestionIdiomas != null) lnkGestionIdiomas.Visible = pIdiomas;
+                if (lnkBackupRestore != null) lnkBackupRestore.Visible = pBackupCheck;
+                if (lnkDigitoVerificador != null) lnkDigitoVerificador.Visible = pRecuperarDV;
             }
             catch (Exception ex)
             {
