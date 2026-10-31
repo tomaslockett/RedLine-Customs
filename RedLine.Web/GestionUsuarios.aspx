@@ -41,7 +41,7 @@
             <asp:Label ID="lblMensaje" runat="server" style="display: block; margin-bottom: 15px; font-weight: bold; color: #D93416;"></asp:Label>
 
             <div class="contenedor-tabla-scroll" style="width: 100%; overflow-x: auto;">
-                <asp:GridView ID="gvUsuarios" runat="server" AutoGenerateColumns="False" CssClass="grilla-usuarios-oscura" DataKeyNames="ID" OnRowDeleting="gvUsuarios_RowDeleting" OnSelectedIndexChanged="gvUsuarios_SelectedIndexChanged" OnRowCommand="gvUsuarios_RowCommand" OnRowDataBound="gvUsuarios_RowDataBound" GridLines="None" style="width: 100%; table-layout: fixed; word-wrap: break-word;">
+                <asp:GridView ID="gvUsuarios" runat="server" AutoGenerateColumns="False" CssClass="grilla-usuarios-oscura" DataKeyNames="ID" OnSelectedIndexChanged="gvUsuarios_SelectedIndexChanged" OnRowCommand="gvUsuarios_RowCommand" OnRowDataBound="gvUsuarios_RowDataBound" GridLines="None" style="width: 100%; table-layout: fixed; word-wrap: break-word;">
                     <Columns>
                         <asp:BoundField DataField="ID" HeaderText="col_UsuarioID" HeaderStyle-CssClass="columna-oculta" ItemStyle-CssClass="columna-oculta" />
                         <asp:BoundField DataField="DNI" HeaderText="DNI" HeaderStyle-Width="12%" />
@@ -67,9 +67,8 @@
                         <asp:TemplateField HeaderText="Acciones" HeaderStyle-Width="12%">
                             <ItemTemplate>
                                 <asp:LinkButton runat="server" CommandName="Select" Text='<%# Traducir("btn_grid_editar") %>' CssClass="link-accion-fila" />
-                                <asp:LinkButton ID="btnBorrarUsuario" runat="server" CommandName="Delete" Text='<%# Traducir("btn_grid_borrar") %>' CssClass="link-accion-fila link-accion-eliminar" />
                                 <div style="margin-top: 5px;">
-                                    <asp:LinkButton runat="server" CommandName="CambiarEstado" CommandArgument='<%# Eval("ID") %>' Text='<%# (bool)Eval("Activo") ? Traducir("btn_grid_desactivar") : Traducir("btn_grid_activar") %>' CssClass="link-accion-fila" />
+                                    <asp:LinkButton runat="server" CommandName="CambiarEstado" CommandArgument='<%# Eval("ID") %>' Text='<%# (bool)Eval("Activo") ? Traducir("btn_grid_desactivar") : Traducir("btn_grid_activar") %>' CssClass="link-accion-fila" style='<%# (bool)Eval("Activo") ? "color: #dc3545;" : "color: #28a745;" %>' />
                                     <asp:LinkButton runat="server" CommandName="Desbloquear" CommandArgument='<%# Eval("ID") %>' Text='<%# Traducir("btn_grid_desbloquear") %>' CssClass="link-accion-fila" style="color: #ffc107;" Visible='<%# Eval("Bloqueado") %>' />
                                 </div>
                             </ItemTemplate>

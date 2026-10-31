@@ -40,7 +40,6 @@ namespace RedLine.Web
         }
         protected void gvUsuarios_RowDataBound(object sender, GridViewRowEventArgs e)
         {
-            // Traducir Encabezados de la Grilla
             if (e.Row.RowType == DataControlRowType.Header)
             {
                 e.Row.Cells[1].Text = Traducir("col_UsuarioDNI");
@@ -62,13 +61,6 @@ namespace RedLine.Web
                     lblPerfil.Text = (u.Perfil != null && !string.IsNullOrEmpty(u.Perfil.Nombre))
                         ? u.Perfil.Nombre
                         : Traducir("texto_sin_perfil");
-                }
-
-                LinkButton btnBorrar = (LinkButton)e.Row.FindControl("btnBorrarUsuario");
-                if (btnBorrar != null)
-                {
-                    string confirmacion = Traducir("msg_confirmar_eliminar_usuario");
-                    btnBorrar.OnClientClick = $"return confirm('{confirmacion.Replace("'", "\\'")}');";
                 }
             }
         }
@@ -165,13 +157,6 @@ namespace RedLine.Web
 
             btnAgregar.Text = Traducir("btn_confirmar_cambios_usuario");
             txtDNI.Enabled = false;
-        }
-
-        protected void gvUsuarios_RowDeleting(object sender, GridViewDeleteEventArgs e)
-        {
-            int id = Convert.ToInt32(gvUsuarios.DataKeys[e.RowIndex].Value);
-            bllUsuario.Eliminar(id);
-            CargarGrilla();
         }
 
         protected void gvUsuarios_RowCommand(object sender, GridViewCommandEventArgs e)

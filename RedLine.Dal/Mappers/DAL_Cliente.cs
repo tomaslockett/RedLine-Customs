@@ -45,6 +45,7 @@ namespace RedLine.Dal
         {
             return new Cliente
             {
+                ID = Convert.ToInt32(lector["ID"]),
                 DNI = lector["DNI"].ToString(),
                 Nombre = lector["Nombre"].ToString(),
                 Apellido = lector["Apellido"].ToString(),

@@ -28,7 +28,7 @@ namespace RedLine.Dal
             cmd.Parameters.AddWithValue("@Nombre", entidad.Nombre);
             cmd.Parameters.AddWithValue("@Precio", entidad.Precio);
             cmd.Parameters.AddWithValue("@Stock", entidad.Stock);
-            cmd.Parameters.AddWithValue("@Categoria", entidad.Categoria);
+            cmd.Parameters.AddWithValue("@Categoria", (object)entidad.Categoria ?? DBNull.Value);
         }
 
         protected override void ConfigurarParametrosId(SqlCommand cmd, int id)
@@ -50,27 +50,40 @@ namespace RedLine.Dal
             }
         }
 
+
+        public Mejora ObtenerPorClave(string clave)
+        {
+            Mejora mejora = null;
+            string query = "SELECT * FROM Mejora WHERE LOWER(Nombre) LIKE @clave";
+
+            using (var con = new SqlConnection(cx))
+            {
+                con.Open();
+                using (var cmd = new SqlCommand(query, con))
+                {
+                    cmd.Parameters.AddWithValue("@clave", "%" + clave.ToLower() + "%");
+                    using (var lector = cmd.ExecuteReader())
+                    {
+                        if (lector.Read())
+                        {
+                            mejora = Mapear(lector);
+                        }
+                    }
+                }
+            }
+            return mejora;
+        }
+
         protected override Mejora Mapear(SqlDataReader lector)
         {
-            string cat = lector["Categoria"].ToString();
-            Mejora m;
-
-            switch (cat)
+            return new Mejora
             {
-                case "Aleron": m = new Aleron(); break;
-                case "Llantas": m = new Llantas(); break;
-                case "Suspension": m = new Suspension(); break;
-                case "Pintura": m = new Pintura(); break;
-                case "Kit": m = new KitCarroceria(); break;
-                default: throw new Exception("Categoría de mejora desconocida");
-            }
-
-            m.ID = Convert.ToInt32(lector["ID"]);
-            m.Nombre = lector["Nombre"].ToString();
-            m.Precio = Convert.ToDecimal(lector["Precio"]);
-            m.Stock = Convert.ToInt32(lector["Stock"]);
-            m.Categoria = cat;
-            return m;
+                ID = Convert.ToInt32(lector["ID"]),
+                Nombre = lector["Nombre"].ToString(),
+                Precio = Convert.ToDecimal(lector["Precio"]),
+                Stock = Convert.ToInt32(lector["Stock"]),
+                Categoria = lector["Categoria"] != DBNull.Value ? lector["Categoria"].ToString() : string.Empty
+            };
         }
 
         public override Mejora ObtenerPorEntidad(Mejora entidad) => ObtenerPorId(entidad.ID);
