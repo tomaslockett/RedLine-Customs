@@ -16,6 +16,26 @@ namespace RedLine.Be.Entidades
         public string MetodoPago { get; set; }
         public int IVA { get; set; }
         public Venta Venta { get; set; }
+        public decimal Subtotal
+        {
+            get
+            {
+                if (Venta != null && Venta.Subtotal > 0)
+                    return Venta.Subtotal;
+                if (Total > 0 && IVA > 0)
+                    return Math.Round(Total / (1 + (IVA / 100m)), 2);
+                return Total;
+            }
+        }
+
+        public decimal MontoIVA
+        {
+            get
+            {
+                return Total - Subtotal;
+            }
+        }
+
         public Factura() { }
     }
 }

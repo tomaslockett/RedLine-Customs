@@ -61,6 +61,7 @@
     <Compile Include="Mappers\DAL_Cliente.cs" />
     <Compile Include="Mappers\DAL_Etiqueta.cs" />
     <Compile Include="Mappers\DAL_Evento.cs" />
+    <Compile Include="Mappers\DAL_Factura.cs" />
     <Compile Include="Mappers\DAL_Familia.cs" />
     <Compile Include="Mappers\DAL_Idioma.cs" />
     <Compile Include="Mappers\DAL_Mejora.cs" />
@@ -145,6 +146,10 @@
     <Compile Include="Migrations\202610292204296_AgregadoCampoIdiomaUsuario.Designer.cs">
       <DependentUpon>202610292204296_AgregadoCampoIdiomaUsuario.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202610311230306_ActualizacionGarageYFacturacion.cs" />
+    <Compile Include="Migrations\202610311230306_ActualizacionGarageYFacturacion.Designer.cs">
+      <DependentUpon>202610311230306_ActualizacionGarageYFacturacion.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="ORM\SqlEnsamblador.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -222,6 +227,9 @@
       <DependentUpon>202610302149465_AutoMejoraMuchosAMuchos.cs</DependentUpon>
     <EmbeddedResource Include="Migrations\202610292204296_AgregadoCampoIdiomaUsuario.resx">
       <DependentUpon>202610292204296_AgregadoCampoIdiomaUsuario.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202610311230306_ActualizacionGarageYFacturacion.resx">
+      <DependentUpon>202610311230306_ActualizacionGarageYFacturacion.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

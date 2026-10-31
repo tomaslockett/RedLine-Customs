@@ -114,6 +114,7 @@
     <Content Include="Content\Catalogo.css" />
     <Content Include="Content\Checkout.css" />
     <Content Include="Content\estilos.css" />
+    <Content Include="Content\Facturacion.css" />
     <Content Include="Content\GestionClientes.css" />
     <Content Include="Content\GestionEventos.css" />
     <Content Include="Content\GestionIdiomas.css" />
@@ -125,6 +126,7 @@
     <Content Include="Content\LogIn.css" />
     <Content Include="Content\Logout.css" />
     <Content Include="Content\Master.css" />
+    <Content Include="Content\MiGaraje.css" />
     <Content Include="Content\PersonalizarAuto.css" />
     <Content Include="Content\RecuperacionDV.css" />
     <Content Include="Content\RegistroCliente.css" />
@@ -134,6 +136,8 @@
     <Content Include="Catalogo.aspx" />
     <Content Include="favicon.ico" />
     <Content Include="CrearAuto.aspx" />
+    <Content Include="Facturacion.aspx" />
+    <Content Include="MiGaraje.aspx" />
     <Content Include="GestionIdiomas.aspx" />
     <Content Include="Gestion_Perfiles_Permisos.aspx" />
     <Content Include="Inventario.aspx" />
@@ -196,6 +200,23 @@
     </Compile>
     <Compile Include="CrearAuto.aspx.designer.cs">
       <DependentUpon>CrearAuto.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="DescargarFactura.ashx.cs">
+      <DependentUpon>DescargarFactura.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="Facturacion.aspx.cs">
+      <DependentUpon>Facturacion.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Facturacion.aspx.designer.cs">
+      <DependentUpon>Facturacion.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="MiGaraje.aspx.cs">
+      <DependentUpon>MiGaraje.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="MiGaraje.aspx.designer.cs">
+      <DependentUpon>MiGaraje.aspx</DependentUpon>
     </Compile>
     <Compile Include="GestionIdiomas.aspx.cs">
       <DependentUpon>GestionIdiomas.aspx</DependentUpon>
@@ -318,6 +339,7 @@
     <Folder Include="App_Data\" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="DescargarFactura.ashx" />
     <None Include="packages.config" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
