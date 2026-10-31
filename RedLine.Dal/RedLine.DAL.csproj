@@ -142,6 +142,7 @@
     <Compile Include="Migrations\202610302149465_AutoMejoraMuchosAMuchos.cs" />
     <Compile Include="Migrations\202610302149465_AutoMejoraMuchosAMuchos.Designer.cs">
       <DependentUpon>202610302149465_AutoMejoraMuchosAMuchos.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\202610292204296_AgregadoCampoIdiomaUsuario.cs" />
     <Compile Include="Migrations\202610292204296_AgregadoCampoIdiomaUsuario.Designer.cs">
       <DependentUpon>202610292204296_AgregadoCampoIdiomaUsuario.cs</DependentUpon>
@@ -225,6 +226,7 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202610302149465_AutoMejoraMuchosAMuchos.resx">
       <DependentUpon>202610302149465_AutoMejoraMuchosAMuchos.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202610292204296_AgregadoCampoIdiomaUsuario.resx">
       <DependentUpon>202610292204296_AgregadoCampoIdiomaUsuario.cs</DependentUpon>
     </EmbeddedResource>
