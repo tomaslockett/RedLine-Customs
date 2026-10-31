@@ -1,6 +1,7 @@
-﻿document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', () => {
     const paymentOptions = document.querySelectorAll('.payment-option');
-    
+    const hfMetodoPago = document.getElementById('hfMetodoPago');
+
     paymentOptions.forEach(option => {
         const header = option.querySelector('.option-header');
         header.addEventListener('click', () => {
@@ -15,6 +16,17 @@
             option.classList.add('active');
             const targetPanel = document.getElementById(option.dataset.target);
             if (targetPanel) targetPanel.classList.add('open');
+
+            // Guarda en el HiddenField el método de pago elegido para enviarlo al servidor
+            if (hfMetodoPago) {
+                if (option.dataset.target === 'bank-panel') {
+                    hfMetodoPago.value = 'Transferencia Bancaria';
+                } else if (option.dataset.target === 'financing-panel') {
+                    hfMetodoPago.value = 'Financiación';
+                } else {
+                    hfMetodoPago.value = 'Tarjeta de Crédito';
+                }
+            }
         });
     });
 

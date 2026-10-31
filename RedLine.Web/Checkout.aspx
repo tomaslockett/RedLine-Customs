@@ -1,4 +1,4 @@
-﻿<%@ Page Title="Checkout" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="Checkout.aspx.cs" Inherits="RedLine.Web.Checkout" %>
+<%@ Page Title="Checkout" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="Checkout.aspx.cs" Inherits="RedLine.Web.Checkout" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
@@ -46,6 +46,7 @@
 
         <section class="payment-methods-card">
             <h2><asp:Label ID="lblMetodosPago" runat="server" Text="Métodos de Pago" /></h2>
+            <asp:HiddenField ID="hfMetodoPago" runat="server" ClientIDMode="Static" Value="Tarjeta de Crédito" />
 
             <div class="payment-option active" data-target="credit-card-panel">
                 <div class="option-header">
@@ -57,12 +58,12 @@
                 <div id="credit-card-panel" class="option-panel open">
                     <div class="form-group">
                         <label><asp:Label ID="lblNombreEnTarjeta" runat="server" Text="Nombre en la tarjeta" /></label>
-                        <asp:TextBox ID="txtCardName" runat="server" CssClass="form-control" placeholder="Juan Pérez"></asp:TextBox>
+                        <asp:TextBox ID="txtCardName" runat="server" ClientIDMode="Static" CssClass="form-control" placeholder="Juan Pérez"></asp:TextBox>
                     </div>
                     <div class="form-group">
                         <label><asp:Label ID="lblNumeroTarjeta" runat="server" Text="Número de tarjeta" /></label>
                         <div class="input-with-brands">
-                            <asp:TextBox ID="txtCardNumber" runat="server" CssClass="form-control" placeholder="1234 5678 9012 3456" maxlength="19"></asp:TextBox>
+                            <asp:TextBox ID="txtCardNumber" runat="server" ClientIDMode="Static" CssClass="form-control" placeholder="1234 5678 9012 3456" maxlength="19"></asp:TextBox>
                             <div class="card-brands">
                                 <i class="fa-brands fa-cc-visa brand-visa"></i>
                                 <i class="fa-brands fa-cc-mastercard brand-mastercard"></i>
@@ -72,14 +73,13 @@
                     <div class="form-row-grid">
                         <div class="form-group">
                             <label><asp:Label ID="lblExpiracion" runat="server" Text="Expiración (MM/AA)" /></label>
-                            <asp:TextBox ID="txtExpiry" runat="server" CssClass="form-control" placeholder="12/28" maxlength="5"></asp:TextBox>
+                            <asp:TextBox ID="txtExpiry" runat="server" ClientIDMode="Static" CssClass="form-control" placeholder="12/28" maxlength="5"></asp:TextBox>
                         </div>
                         <div class="form-group">
                             <label><asp:Label ID="lblCvv" runat="server" Text="CVV" /></label>
-                            <asp:TextBox ID="txtCvv" runat="server" CssClass="form-control" placeholder="123" maxlength="4"></asp:TextBox>
+                            <asp:TextBox ID="txtCvv" runat="server" ClientIDMode="Static" CssClass="form-control" placeholder="123" maxlength="4"></asp:TextBox>
                         </div>
                     </div>
-                    <asp:Button ID="btnProcesarPago" runat="server" CssClass="btnConfirmar" Text="Confirmar y Pagar Total" OnClick="btnProcesarPago_Click" Style="width: 100%; margin-top: 20px; display: block;" />
                 </div>
             </div>
 
@@ -104,6 +104,9 @@
                     <p class="panel-placeholder-text"><asp:Label ID="lblInfoFinanciacion" runat="server" Text="Opciones de financiación disponibles..." /></p>
                 </div>
             </div>
+
+            <asp:Label ID="lblErrorCheckout" runat="server" Visible="false" Style="display: block; color: #ef4444; margin-top: 12px; font-weight: 600;" />
+            <asp:Button ID="btnProcesarPago" runat="server" CssClass="btnConfirmar" Text="Confirmar y Pagar Total" OnClick="btnProcesarPago_Click" Style="width: 100%; margin-top: 20px; display: block;" />
 
             <footer class="security-badges">
                 <span class="badge badge-ssl"><i class="fa-solid fa-lock"></i> <asp:Label ID="lblBadgeSsl" runat="server" Text="SSL Seguro" /></span>

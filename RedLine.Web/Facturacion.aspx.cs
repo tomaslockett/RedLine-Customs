@@ -1,4 +1,4 @@
-﻿using Redline.Be;
+using Redline.Be;
 using RedLine.Be.Entidades;
 using RedLine.Bll;
 using RedLine.Servicios;
@@ -229,14 +229,28 @@ namespace RedLine.Web
                 AgregarFacturaSiNoExiste(resultado, sesFac);
             }
 
-            // 2. Del cliente en sesión
-            if (Session["ClienteSession"] is Cliente cliente)
+            // 2. Determinamos los datos del cliente o usuario actual
+            string dniActual = null;
+            string emailActual = null;
+
+            if (Session["ClienteSession"] is Cliente clienteSesion)
             {
-                string idCliente = !string.IsNullOrEmpty(cliente.DNI) ? cliente.DNI : cliente.Email;
-                var ventasCli = _bllVenta.ListarPorCliente(idCliente);
-                if (ventasCli != null)
+                dniActual = clienteSesion.DNI;
+                emailActual = clienteSesion.Email;
+            }
+            else if (SessionManager.Instancia.IsLogged() && SessionManager.Instancia.Usuario != null)
+            {
+                dniActual = SessionManager.Instancia.Usuario.DNI;
+                emailActual = SessionManager.Instancia.Usuario.Email;
+            }
+
+            // Cargamos las facturas propias de este cliente (por DNI y Email)
+            if (!string.IsNullOrEmpty(dniActual))
+            {
+                var ventasDni = _bllVenta.ListarPorCliente(dniActual);
+                if (ventasDni != null)
                 {
-                    foreach (var v in ventasCli)
+                    foreach (var v in ventasDni)
                     {
                         if (v?.Factura != null)
                         {
@@ -247,13 +261,12 @@ namespace RedLine.Web
                 }
             }
 
-            // 3. De todas las ventas registradas (priorizamos Ventas porque traen el AutoPersonalizado vinculado)
-            try
+            if (!string.IsNullOrEmpty(emailActual))
             {
-                var vtas = _bllVenta.Listar();
-                if (vtas != null)
+                var ventasEmail = _bllVenta.ListarPorCliente(emailActual);
+                if (ventasEmail != null)
                 {
-                    foreach (var v in vtas)
+                    foreach (var v in ventasEmail)
                     {
                         if (v?.Factura != null)
                         {
@@ -263,23 +276,73 @@ namespace RedLine.Web
                     }
                 }
             }
-            catch { }
 
-            // 4. De la tabla/servicio de Facturas
-            try
+            // 3. Solo si el usuario logueado es Administrador / personal interno (no un Cliente final),
+            // listamos también las facturas globales del sistema.
+            if (EsUsuarioConAccesoGlobalFacturas())
             {
-                var facs = _bllFactura.Listar();
-                if (facs != null)
+                try
                 {
-                    foreach (var f in facs)
+                    var vtas = _bllVenta.Listar();
+                    if (vtas != null)
                     {
-                        AgregarFacturaSiNoExiste(resultado, f);
+                        foreach (var v in vtas)
+                        {
+                            if (v?.Factura != null)
+                            {
+                                if (v.Factura.Venta == null) v.Factura.Venta = v;
+                                AgregarFacturaSiNoExiste(resultado, v.Factura);
+                            }
+                        }
                     }
                 }
+                catch { }
+
+                try
+                {
+                    var facs = _bllFactura.Listar();
+                    if (facs != null)
+                    {
+                        foreach (var f in facs)
+                        {
+                            AgregarFacturaSiNoExiste(resultado, f);
+                        }
+                    }
+                }
+                catch { }
             }
-            catch { }
 
             return resultado.OrderByDescending(f => f.FechaEmision).ToList();
+        }
+
+        /// <summary>
+        /// Verifica si el usuario actual es un perfil interno/administrativo (por ejemplo Admin o WebMaster)
+        /// que puede auditar todas las facturas del sistema, o si es un Cliente que solo debe ver las propias.
+        /// </summary>
+        private bool EsUsuarioConAccesoGlobalFacturas()
+        {
+            if (!SessionManager.Instancia.IsLogged() || SessionManager.Instancia.Usuario == null)
+            {
+                return false;
+            }
+
+            Usuario u = SessionManager.Instancia.Usuario;
+            if (u.Perfil != null && !string.IsNullOrEmpty(u.Perfil.Nombre))
+            {
+                if (string.Equals(u.Perfil.Nombre, "Cliente", StringComparison.OrdinalIgnoreCase))
+                {
+                    return false;
+                }
+                return true;
+            }
+
+            // En el Seed, el perfil Cliente tiene Id = 23
+            if (u.PerfilId.HasValue && u.PerfilId.Value == 23)
+            {
+                return false;
+            }
+
+            return true;
         }
 
         private void AgregarFacturaSiNoExiste(List<Factura> lista, Factura factura)

@@ -114,31 +114,6 @@ namespace RedLine.Web
         protected global::System.Web.UI.WebControls.Label lblFactBtnDescargarPdf;
 
         /// <summary>
-        /// Control lblSubtituloEmisor.
-        /// </summary>
-        protected global::System.Web.UI.WebControls.Label lblSubtituloEmisor;
-
-        /// <summary>
-        /// Control lblValorIvaEmisor.
-        /// </summary>
-        protected global::System.Web.UI.WebControls.Label lblValorIvaEmisor;
-
-        /// <summary>
-        /// Control lblValorCondicionVenta.
-        /// </summary>
-        protected global::System.Web.UI.WebControls.Label lblValorCondicionVenta;
-
-        /// <summary>
-        /// Control lblValorCondicionIvaCliente.
-        /// </summary>
-        protected global::System.Web.UI.WebControls.Label lblValorCondicionIvaCliente;
-
-        /// <summary>
-        /// Control lblLeyendaPieFactura.
-        /// </summary>
-        protected global::System.Web.UI.WebControls.Label lblLeyendaPieFactura;
-
-        /// <summary>
         /// Control lblBtnImprimir.
         /// </summary>
         /// <remarks>
@@ -155,6 +130,15 @@ namespace RedLine.Web
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lblBtnVerMisAutos;
+
+        /// <summary>
+        /// Control lblSubtituloEmisor.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblSubtituloEmisor;
 
         /// <summary>
         /// Control lblRazonSocialEmisor.
@@ -182,6 +166,15 @@ namespace RedLine.Web
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lblIvaEmisor;
+
+        /// <summary>
+        /// Control lblValorIvaEmisor.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblValorIvaEmisor;
 
         /// <summary>
         /// Control lblIngresosBrutosEmisor.
@@ -283,6 +276,15 @@ namespace RedLine.Web
         protected global::System.Web.UI.WebControls.Label lblTextoCondicionVenta;
 
         /// <summary>
+        /// Control lblValorCondicionVenta.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblValorCondicionVenta;
+
+        /// <summary>
         /// Control lblTextoMetodoPago.
         /// </summary>
         /// <remarks>
@@ -362,6 +364,15 @@ namespace RedLine.Web
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lblTextoCondicionIvaCliente;
+
+        /// <summary>
+        /// Control lblValorCondicionIvaCliente.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblValorCondicionIvaCliente;
 
         /// <summary>
         /// Control lblColConcepto.
@@ -488,5 +499,14 @@ namespace RedLine.Web
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lblVencimientoCae;
+
+        /// <summary>
+        /// Control lblLeyendaPieFactura.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblLeyendaPieFactura;
     }
 }

@@ -1,4 +1,4 @@
-﻿<%@ Page Title="Gestión de Eventos" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="GestionEventos.aspx.cs" Inherits="RedLine.Web.GestionEventos" %>
+<%@ Page Title="Gestión de Eventos" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="GestionEventos.aspx.cs" Inherits="RedLine.Web.GestionEventos" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
 
@@ -18,7 +18,7 @@
                             <asp:TextBox ID="txtFiltroUsuario" runat="server" CssClass="control-input-eventos" AutoPostBack="true" OnTextChanged="Filtro_Changed"></asp:TextBox>
                         </div>
                         <div class="campo-bitacora">
-                            <label><asp:Label ID="lblFiltroFechaDesde" runat="server" Text="Fecha (dd/mm/aaaa)" /></label>
+                            <label><asp:Label ID="lblFiltroFechaEventos" runat="server" Text="Fecha (dd/mm/aaaa)" /></label>
                             <asp:TextBox ID="txtFiltroFecha" runat="server" CssClass="control-input-eventos" AutoPostBack="true" OnTextChanged="Filtro_Changed"></asp:TextBox>
                         </div>
                         <div class="campo-bitacora">

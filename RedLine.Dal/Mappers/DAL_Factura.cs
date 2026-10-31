@@ -1,29 +1,26 @@
-﻿using RedLine.Be.Entidades;
+using RedLine.Be.Entidades;
 using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace RedLine.Dal.Mappers
 {
     public class DAL_Factura : AbstractDAL<int, Factura>
     {
-        protected override string NombreTabla => "Facturas";
+        protected override string NombreTabla => "Factura";
         protected override bool RequiereDigitoVerificador => false;
 
         protected override string SqlInsertar =>
-            @"INSERT INTO Facturas (NumeroFactura, FechaEmision, Total, MetodoPago, IVA) 
-              VALUES (@NumeroFactura, @FechaEmision, @Total, @MetodoPago, @IVA);
-              SELECT SCOPE_IDENTITY();";
+            @"INSERT INTO Factura (ID, NumeroFactura, FechaEmision, Total, MetodoPago, IVA) 
+              VALUES (@ID, @NumeroFactura, @FechaEmision, @Total, @MetodoPago, @IVA);";
 
         protected override string SqlModificar =>
-            @"UPDATE Facturas SET NumeroFactura = @NumeroFactura, FechaEmision = @FechaEmision, Total = @Total, MetodoPago = @MetodoPago, IVA = @IVA WHERE ID = @ID";
+            @"UPDATE Factura SET NumeroFactura = @NumeroFactura, FechaEmision = @FechaEmision, Total = @Total, MetodoPago = @MetodoPago, IVA = @IVA WHERE ID = @ID";
 
-        protected override string SqlEliminar => "DELETE FROM Facturas WHERE ID = @ID";
-        protected override string SqlListar => "SELECT * FROM Facturas ORDER BY FechaEmision DESC";
-        protected override string SqlObtenerPorId => "SELECT * FROM Facturas WHERE ID = @ID";
+        protected override string SqlEliminar => "DELETE FROM Factura WHERE ID = @ID";
+        protected override string SqlListar => "SELECT * FROM Factura ORDER BY FechaEmision DESC";
+        protected override string SqlObtenerPorId => "SELECT * FROM Factura WHERE ID = @ID";
 
         // Registro seguro en memoria persistente durante la ejecución
         private static readonly List<Factura> _registroFacturas = new List<Factura>();
@@ -32,7 +29,7 @@ namespace RedLine.Dal.Mappers
 
         protected override void ConfigurarParametros(SqlCommand cmd, Factura entidad)
         {
-            if (entidad.ID > 0) cmd.Parameters.AddWithValue("@ID", entidad.ID);
+            cmd.Parameters.AddWithValue("@ID", entidad.ID);
             cmd.Parameters.AddWithValue("@NumeroFactura", entidad.NumeroFactura ?? string.Empty);
             cmd.Parameters.AddWithValue("@FechaEmision", entidad.FechaEmision);
             cmd.Parameters.AddWithValue("@Total", entidad.Total);
@@ -50,10 +47,10 @@ namespace RedLine.Dal.Mappers
             return new Factura
             {
                 ID = Convert.ToInt32(lector["ID"]),
-                NumeroFactura = lector["NumeroFactura"].ToString(),
+                NumeroFactura = lector["NumeroFactura"] != DBNull.Value ? lector["NumeroFactura"].ToString() : string.Empty,
                 FechaEmision = Convert.ToDateTime(lector["FechaEmision"]),
                 Total = Convert.ToDecimal(lector["Total"]),
-                MetodoPago = lector["MetodoPago"].ToString(),
+                MetodoPago = lector["MetodoPago"] != DBNull.Value ? lector["MetodoPago"].ToString() : string.Empty,
                 IVA = Convert.ToInt32(lector["IVA"])
             };
         }
@@ -62,7 +59,12 @@ namespace RedLine.Dal.Mappers
         {
             lock (_lock)
             {
-                if (entidad.ID <= 0)
+                // En EF6 Factura tiene relación 1:1 con Venta donde Factura.ID es PK y FK a Venta.ID
+                if (entidad.Venta != null && entidad.Venta.ID > 0)
+                {
+                    entidad.ID = entidad.Venta.ID;
+                }
+                else if (entidad.ID <= 0)
                 {
                     entidad.ID = _contadorId++;
                 }
@@ -73,10 +75,15 @@ namespace RedLine.Dal.Mappers
                 }
                 catch
                 {
-                    // Fallback transparente si BD aún no migró
+                    // Fallback transparente en memoria si la relación 1:1 en SQL ya existe o no migró
                 }
 
-                if (!_registroFacturas.Any(f => f.ID == entidad.ID || (!string.IsNullOrEmpty(f.NumeroFactura) && f.NumeroFactura == entidad.NumeroFactura)))
+                int idxExistente = _registroFacturas.FindIndex(f => f.ID == entidad.ID || (!string.IsNullOrEmpty(f.NumeroFactura) && f.NumeroFactura == entidad.NumeroFactura));
+                if (idxExistente >= 0)
+                {
+                    _registroFacturas[idxExistente] = entidad;
+                }
+                else
                 {
                     _registroFacturas.Add(entidad);
                 }
@@ -94,7 +101,7 @@ namespace RedLine.Dal.Mappers
                     {
                         foreach (var f in desdeBd)
                         {
-                            if (!_registroFacturas.Any(r => r.ID == f.ID))
+                            if (!_registroFacturas.Any(r => r.ID == f.ID || (!string.IsNullOrEmpty(r.NumeroFactura) && r.NumeroFactura == f.NumeroFactura)))
                             {
                                 _registroFacturas.Add(f);
                             }

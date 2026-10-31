@@ -1,4 +1,4 @@
-﻿using Redline.Be;
+using Redline.Be;
 using RedLine.Be.Entidades;
 using RedLine.Bll;
 using RedLine.Servicios;
@@ -40,17 +40,35 @@ namespace RedLine.Web
                 AgregarSiNoExiste(autosComprados, ultimaVenta.AutoPersonalizado);
             }
 
-            // 2. Obtener desde las ventas registradas para este cliente
-            string identificador = !string.IsNullOrEmpty(cliente.DNI) ? cliente.DNI : cliente.Email;
-            var ventasCliente = _bllVenta.ListarPorCliente(identificador);
-            if (ventasCliente != null)
+            // 2. Obtener desde las ventas registradas para este cliente (por DNI y por Email)
+            if (!string.IsNullOrEmpty(cliente.DNI))
             {
-                foreach (var v in ventasCliente)
+                var ventasPorDni = _bllVenta.ListarPorCliente(cliente.DNI);
+                if (ventasPorDni != null)
                 {
-                    if (v?.AutoPersonalizado != null)
+                    foreach (var v in ventasPorDni)
                     {
-                        MapearDatosVentaEnAuto(v);
-                        AgregarSiNoExiste(autosComprados, v.AutoPersonalizado);
+                        if (v?.AutoPersonalizado != null)
+                        {
+                            MapearDatosVentaEnAuto(v);
+                            AgregarSiNoExiste(autosComprados, v.AutoPersonalizado);
+                        }
+                    }
+                }
+            }
+
+            if (!string.IsNullOrEmpty(cliente.Email))
+            {
+                var ventasPorEmail = _bllVenta.ListarPorCliente(cliente.Email);
+                if (ventasPorEmail != null)
+                {
+                    foreach (var v in ventasPorEmail)
+                    {
+                        if (v?.AutoPersonalizado != null)
+                        {
+                            MapearDatosVentaEnAuto(v);
+                            AgregarSiNoExiste(autosComprados, v.AutoPersonalizado);
+                        }
                     }
                 }
             }
@@ -101,7 +119,8 @@ namespace RedLine.Web
                 v.AutoPersonalizado.NumeroVenta = v.NumeroVenta;
             }
 
-            if (v.AutoPersonalizado.TotalPagado <= 0)
+            // Asignamos siempre v.Total (que incluye el 21% de IVA) para que coincida con Checkout y Facturación
+            if (v.Total > 0)
             {
                 v.AutoPersonalizado.TotalPagado = v.Total;
             }
@@ -174,7 +193,7 @@ namespace RedLine.Web
 
             if (auto.TotalPagado <= 0)
             {
-                auto.TotalPagado = auto.PrecioFinal > 0 ? auto.PrecioFinal : 50000m;
+                auto.TotalPagado = auto.PrecioFinal > 0 ? Math.Round(auto.PrecioFinal * 1.21m, 2) : 50000m;
             }
         }
 
@@ -251,13 +270,26 @@ namespace RedLine.Web
 
         private Cliente ObtenerClienteActual()
         {
-            if (SessionManager.Instancia.IsLogged())
+            if (Session["ClienteSession"] is Cliente sesionExistente && !string.IsNullOrEmpty(sesionExistente.Email))
+            {
+                return sesionExistente;
+            }
+
+            if (SessionManager.Instancia.IsLogged() && SessionManager.Instancia.Usuario != null)
             {
                 var usuario = SessionManager.Instancia.Usuario;
 
-                if (Session["ClienteSession"] is Cliente clienteEnSesion && clienteEnSesion.ID == usuario.ID)
+                try
                 {
-                    return clienteEnSesion;
+                    Cliente clienteBd = new BLL_Cliente().BuscarPorEmail(usuario.Email);
+                    if (clienteBd != null)
+                    {
+                        Session["ClienteSession"] = clienteBd;
+                        return clienteBd;
+                    }
+                }
+                catch
+                {
                 }
 
                 var cliente = new Cliente
@@ -272,11 +304,6 @@ namespace RedLine.Web
                 };
                 Session["ClienteSession"] = cliente;
                 return cliente;
-            }
-
-            if (Session["ClienteSession"] is Cliente sesionExistente)
-            {
-                return sesionExistente;
             }
 
             var clienteVisitante = new Cliente

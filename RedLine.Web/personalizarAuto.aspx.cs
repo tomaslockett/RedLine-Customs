@@ -1,6 +1,7 @@
-﻿using Redline.Be;
+using Redline.Be;
 using RedLine.Bll;
 using System;
+using System.Globalization;
 
 namespace RedLine.Web
 {
@@ -14,13 +15,15 @@ namespace RedLine.Web
             {
                 try
                 {
-                    if (Request.QueryString["id"] == null)
+                    // Si se accede sin un ID válido (por ejemplo desde el menú superior),
+                    // redirigimos a Catalogo.aspx para que tanto clientes como administradores puedan elegir un auto.
+                    if (string.IsNullOrEmpty(Request.QueryString["id"]) || !int.TryParse(Request.QueryString["id"], out int id))
                     {
-                        Response.Redirect("Inventario.aspx");
+                        Response.Redirect("Catalogo.aspx", false);
+                        Context.ApplicationInstance.CompleteRequest();
                         return;
                     }
 
-                    int id = int.Parse(Request.QueryString["id"]);
                     AutoBase auto = _bllAut.DevolverAuto(id);
 
                     if (auto != null)
@@ -29,6 +32,7 @@ namespace RedLine.Web
                         lblModelo.InnerText = auto.Modelo;
                         lblAnio.InnerText = auto.Anio.ToString();
                         lblPrecio.InnerText = "$ " + auto.PrecioBase.ToString("N2");
+                        lblPrecio.Attributes["data-precio-base"] = auto.PrecioBase.ToString(CultureInfo.InvariantCulture);
 
                         if (auto.ImagenBinaria != null && auto.ImagenBinaria.Length > 0)
                         {
@@ -47,18 +51,18 @@ namespace RedLine.Web
                 }
                 catch (Exception ex)
                 {
-                    Response.Write("<script>alert('" + ex.Message.Replace("'", "\\'") + "'); window.location='Inventario.aspx';</script>");
+                    Response.Write("<script>alert('" + ex.Message.Replace("'", "\\'") + "'); window.location='Catalogo.aspx';</script>");
                 }
             }
         }
 
         protected void btnConfirmar_Click(object sender, EventArgs e)
         {
-
             Session["Checkout_AutoId"] = Request.QueryString["id"];
             Session["Checkout_Extras"] = Request.Form["extras"];
 
-            Response.Redirect("Checkout.aspx");
+            Response.Redirect("Checkout.aspx", false);
+            Context.ApplicationInstance.CompleteRequest();
         }
     }
 }

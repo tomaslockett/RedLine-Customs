@@ -157,6 +157,7 @@ namespace RedLine.Web
 
         /// <summary>
         /// Determina si una ruta puede ser accedida por un cliente autenticado.
+        /// Incluye Facturacion para que el cliente pueda ver sus comprobantes desde MiGaraje o el menú.
         /// </summary>
         private bool EsPaginaPermitidaParaCliente(string rutaActual)
         {
@@ -166,6 +167,7 @@ namespace RedLine.Web
                 rutaActual.Contains("checkout") ||
                 rutaActual.Contains("pagoexitoso") ||
                 rutaActual.Contains("migaraje") ||
+                rutaActual.Contains("facturacion") ||
                 rutaActual.Contains("descargarfactura") ||
                 rutaActual.Contains("cambiocontraseña") ||
                 rutaActual.Contains("logout") ||
