@@ -83,7 +83,7 @@
 
                 <div class="grupo-form">
                     <label><asp:Label ID="lblAnio" runat="server" Text="Año *" /></label>
-                    <asp:TextBox ID="TextBoxAño" runat="server" CssClass="input-control" placeholder="ej: 2026"></asp:TextBox>
+                    <asp:TextBox ID="TextBoxAno" runat="server" CssClass="input-control" placeholder="ej: 2026"></asp:TextBox>
                 </div>
 
                 <div class="grupo-form">

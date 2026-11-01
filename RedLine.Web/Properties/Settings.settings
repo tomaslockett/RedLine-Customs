@@ -1,0 +1,9 @@
+﻿<?xml version='1.0' encoding='utf-8'?>
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="RedLine.Web.Properties" GeneratedClassName="Settings">
+  <Profiles />
+  <Settings>
+    <Setting Name="RedLine_Web_localhost_CalcularImpuestos" Type="(Web Service URL)" Scope="Application">
+      <Value Profile="(Default)">https://localhost:44385/CalcularImpuestos.asmx</Value>
+    </Setting>
+  </Settings>
+</SettingsFile>

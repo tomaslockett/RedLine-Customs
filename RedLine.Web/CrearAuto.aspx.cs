@@ -25,7 +25,7 @@ namespace RedLine.Web
                 if (string.IsNullOrWhiteSpace(TextBoxID.Text) ||
                     string.IsNullOrWhiteSpace(DropDownListMarca.SelectedValue) ||
                     string.IsNullOrWhiteSpace(TextBoxModelo.Text) ||
-                    string.IsNullOrWhiteSpace(TextBoxAño.Text) ||
+                    string.IsNullOrWhiteSpace(TextBoxAno.Text) ||
                     string.IsNullOrWhiteSpace(TextBoxPrecio.Text) ||
                     string.IsNullOrWhiteSpace(TextBoxTipo.Text))
                 {
@@ -45,7 +45,7 @@ namespace RedLine.Web
                     CodigoVehiculo = TextBoxID.Text.Trim(),
                     Marca = DropDownListMarca.SelectedValue,
                     Modelo = TextBoxModelo.Text.Trim(),
-                    Anio = Convert.ToInt32(TextBoxAño.Text),
+                    Anio = Convert.ToInt32(TextBoxAno.Text),
                     PrecioBase = Convert.ToDecimal(TextBoxPrecio.Text),
                     Tipo = TextBoxTipo.Text.Trim(),
                     Stock = 1,

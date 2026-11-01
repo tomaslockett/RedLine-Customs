@@ -10,7 +10,7 @@ namespace RedLine.Dal.Mappers
     public class DAL_Venta : AbstractDAL<int, Venta>
     {
         protected override string NombreTabla => "Venta";
-        protected override bool RequiereDigitoVerificador => false;
+        protected override bool RequiereDigitoVerificador => true;
 
         protected override string SqlInsertar =>
             @"INSERT INTO Venta (NumeroVenta, Fecha, IVA, Total, MetodoPago, Cliente_ID, AutoBase_ID, AutoPersonalizado_ID) 
