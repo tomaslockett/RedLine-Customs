@@ -46,7 +46,7 @@
 
         <section class="payment-methods-card">
             <h2><asp:Label ID="lblMetodosPago" runat="server" Text="Métodos de Pago" /></h2>
-            <asp:HiddenField ID="hfMetodoPago" runat="server" ClientIDMode="Static" Value="Tarjeta de Crédito" />
+            <asp:HiddenField ID="hfMetodoPago" runat="server" ClientIDMode="Static" Value="Tarjeta de Credito" />
 
             <div class="payment-option active" data-target="credit-card-panel">
                 <div class="option-header">

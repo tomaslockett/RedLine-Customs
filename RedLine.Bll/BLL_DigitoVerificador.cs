@@ -54,6 +54,10 @@ namespace RedLine.Bll
 
             foreach (var bll in listaBLLs)
             {
+                if(bll is BLL_Venta)
+                {
+                    string s = "stop";
+                }
                 string nombreTabla = bll.ObtenerNombreTabla();
                 ReporteIntegridad reporteActual = bll.CalcularIntegridadActual();
 
