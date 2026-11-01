@@ -1,4 +1,4 @@
-using RedLine.Bll;
+﻿using RedLine.Bll;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -44,9 +44,9 @@ namespace RedLine.Web
                 Response.Redirect("~/LogIn.aspx", false);
                 Context.ApplicationInstance.CompleteRequest();
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                lblError.Text = $"{Traducir("msg_error_logout_prefijo")} {ex.Message}";
+                lblError.Text = Traducir("msg_error_logout_prefijo");
                 lblError.Visible = true;
             }
         }

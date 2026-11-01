@@ -1,4 +1,6 @@
-﻿using RedLine.Be.Interfaces;
+using RedLine.Be.Entidades;
+using RedLine.Be.Interfaces;
+using RedLine.Bll;
 using RedLine.Servicios;
 using System;
 using System.Collections.Generic;
@@ -17,6 +19,7 @@ namespace RedLine.Web
         protected override void OnInit(EventArgs e)
         {
             base.OnInit(e);
+            AsegurarIdiomaCargado();
             SubjectIdioma.Instancia.AgregarObserver(this);
         }
 
@@ -40,6 +43,61 @@ namespace RedLine.Web
         public string Traducir(string clave)
         {
             return SubjectIdioma.Instancia.Traducir(clave);
+        }
+
+        /// <summary>
+        /// Traducción con respaldo: si la clave sigue sin sembrar (llega vacía o "[clave]")
+        /// devuelve el texto por defecto pasado como parámetro. Se usa en textos de binding
+        /// (Repeater/GridView) que OnPreRender no puede re-traducir ni sanear.
+        /// </summary>
+        public string TraducirSeguro(string clave, string predeterminado)
+        {
+            string texto = Traducir(clave);
+            if (string.IsNullOrWhiteSpace(texto) || (texto.StartsWith("[") && texto.EndsWith("]")))
+            {
+                return predeterminado;
+            }
+            return texto;
+        }
+
+        /// <summary>
+        /// Garantiza que el diccionario de traducciones de la sesión esté cargado antes
+        /// del Page_Load. La MasterPage carga el idioma en su propio Page_Load, que se
+        /// ejecuta DESPUÉS del Page_Load del contenido (donde DataBind consume Traducir());
+        /// en la primera request el diccionario en sesión está vacío y las etiquetas de
+        /// binding renderizan "[clave]". Se respeta el idioma de Session["IdiomaSeleccionado"]
+        /// y, si no existe, el idioma default del sistema. Cuando la MasterPage complete su
+        /// carga lo reemplazará con el mismo valor, por lo que este respaldo es transparente.
+        /// </summary>
+        private void AsegurarIdiomaCargado()
+        {
+            try
+            {
+                if (SubjectIdioma.Instancia.DiccionarioCargado) return;
+
+                BLL_Idioma bllIdioma = new BLL_Idioma();
+
+                Idioma idioma = null;
+                if (Session["IdiomaSeleccionado"] != null)
+                {
+                    idioma = bllIdioma.ObtenerPorId((int)Session["IdiomaSeleccionado"]);
+                }
+                if (idioma == null)
+                {
+                    idioma = bllIdioma.ObtenerDefault() ?? bllIdioma.Listar().FirstOrDefault();
+                }
+
+                if (idioma != null)
+                {
+                    Dictionary<string, string> traducciones = bllIdioma.ObtenerTraduccionesPorIdioma(idioma.ID);
+                    SubjectIdioma.Instancia.CargarTraducciones(idioma.Nombre, traducciones);
+                }
+            }
+            catch
+            {
+                // Sin conexión o sin datos aún: se mantiene el comportamiento previo y
+                // la MasterPage reintenta la carga en su Page_Load.
+            }
         }
 
         public void MostrarAlertaTraducida(string claveMensaje, string prefijo = "")
@@ -82,6 +140,21 @@ namespace RedLine.Web
             {
                 if (!string.IsNullOrEmpty(control.ID))
                 {
+                    // 1. Grillas: las columnas tienen sus propias claves (ej: col_VentaNumero)
+                    // aunque el GridView en sí (ej: dgvVentas) no tenga una etiqueta con su ID.
+                    if (control is GridView gv)
+                    {
+                        TraducirColumnasGridView(gv);
+                    }
+
+                    // 2. DropDownLists: sus ítems pueden tener claves propias por índice (ej: ddlFiltroPagina_0)
+                    // o por valor (ej: ddlFiltroPrecio_1), además de la etiqueta del control padre.
+                    if (control is DropDownList ddl)
+                    {
+                        TraducirItemsDropDownList(ddl);
+                    }
+
+                    // 3. Controles simples cuya clave de traducción es su propio ID
                     string traduccion = SubjectIdioma.Instancia.Traducir(control.ID);
 
                     if (EsTraduccionValida(traduccion))
@@ -93,9 +166,14 @@ namespace RedLine.Web
                                 btn.Text = traduccion;
                                 break;
 
-                            // Links de navegación y menú
+                            // Links de navegación con postback
                             case LinkButton lnk:
                                 lnk.Text = traduccion;
+                                break;
+
+                            // Hipervínculos directos (ej: lnkIrLogin en RegistroCliente.aspx)
+                            case HyperLink hlk:
+                                hlk.Text = traduccion;
                                 break;
 
                             // Etiquetas de texto fijas
@@ -118,44 +196,6 @@ namespace RedLine.Web
                             case TextBox txt when !string.IsNullOrEmpty(txt.Attributes["placeholder"]):
                                 txt.Attributes["placeholder"] = traduccion;
                                 break;
-
-                            case DropDownList ddl:
-                                // 1. Ítem por defecto (cuando Value es vacío)
-                                if (ddl.Items.Count > 0 && string.IsNullOrEmpty(ddl.Items[0].Value))
-                                {
-                                    ddl.Items[0].Text = traduccion;
-                                }
-
-                                // 2. Traducir ítems específicos si tienen clave en el diccionario (ej: ddlFiltroPagina_Catalogo.aspx)
-                                foreach (ListItem item in ddl.Items)
-                                {
-                                    if (!string.IsNullOrEmpty(item.Value))
-                                    {
-                                        string claveItem = $"{ddl.ID}_{item.Value}";
-                                        string itemTrad = SubjectIdioma.Instancia.Traducir(claveItem);
-                                        if (EsTraduccionValida(itemTrad))
-                                        {
-                                            item.Text = itemTrad;
-                                        }
-                                    }
-                                }
-                                break;
-
-
-                            // Grillas: traduce los HeaderText de las columnas
-                            case GridView gv:
-                                foreach (DataControlField col in gv.Columns)
-                                {
-                                    if (!string.IsNullOrEmpty(col.HeaderText))
-                                    {
-                                        string headerTrad = SubjectIdioma.Instancia.Traducir(col.HeaderText);
-                                        if (EsTraduccionValida(headerTrad))
-                                        {
-                                            col.HeaderText = headerTrad;
-                                        }
-                                    }
-                                }
-                                break;
                         }
                     }
                 }
@@ -163,6 +203,79 @@ namespace RedLine.Web
                 if (control.HasControls())
                 {
                     TraducirRecursivo(control);
+                }
+            }
+        }
+
+        /// <summary>
+        /// Traduce los encabezados de columna de un GridView usando la clave configurada en HeaderText
+        /// y actualiza también la fila de cabecera ya renderizada si DataBind() se ejecutó en Page_Load.
+        /// </summary>
+        private void TraducirColumnasGridView(GridView gv)
+        {
+            for (int i = 0; i < gv.Columns.Count; i++)
+            {
+                DataControlField col = gv.Columns[i];
+                string viewStateKey = $"HeaderKey_{gv.ID}_{i}";
+
+                // Guardamos la clave original la primera vez para poder retraducir tras un PostBack
+                string claveHeader = ViewState[viewStateKey] as string;
+                if (string.IsNullOrEmpty(claveHeader) && !string.IsNullOrEmpty(col.HeaderText))
+                {
+                    claveHeader = col.HeaderText;
+                    ViewState[viewStateKey] = claveHeader;
+                }
+
+                if (!string.IsNullOrEmpty(claveHeader))
+                {
+                    string headerTrad = SubjectIdioma.Instancia.Traducir(claveHeader);
+                    if (EsTraduccionValida(headerTrad))
+                    {
+                        col.HeaderText = headerTrad;
+
+                        if (gv.HeaderRow != null && i < gv.HeaderRow.Cells.Count)
+                        {
+                            gv.HeaderRow.Cells[i].Text = headerTrad;
+                        }
+                    }
+                }
+            }
+        }
+
+        /// <summary>
+        /// Traduce el ítem por defecto y cada opción de un DropDownList buscando tanto por índice ({ID}_{i})
+        /// como por valor ({ID}_{Value}).
+        /// </summary>
+        private void TraducirItemsDropDownList(DropDownList ddl)
+        {
+            string traduccionControl = SubjectIdioma.Instancia.Traducir(ddl.ID);
+            if (EsTraduccionValida(traduccionControl) && ddl.Items.Count > 0 && string.IsNullOrEmpty(ddl.Items[0].Value))
+            {
+                ddl.Items[0].Text = traduccionControl;
+            }
+
+            for (int i = 0; i < ddl.Items.Count; i++)
+            {
+                ListItem item = ddl.Items[i];
+
+                // 1. Buscar por índice (ej: ddlFiltroPagina_0, ddlFiltroCri_0, DropDownListMarca_0)
+                string clavePorIndice = $"{ddl.ID}_{i}";
+                string tradPorIndice = SubjectIdioma.Instancia.Traducir(clavePorIndice);
+                if (EsTraduccionValida(tradPorIndice))
+                {
+                    item.Text = tradPorIndice;
+                    continue;
+                }
+
+                // 2. Buscar por Value si no es vacío (ej: ddlFiltroPrecio_1)
+                if (!string.IsNullOrEmpty(item.Value))
+                {
+                    string clavePorValor = $"{ddl.ID}_{item.Value}";
+                    string tradPorValor = SubjectIdioma.Instancia.Traducir(clavePorValor);
+                    if (EsTraduccionValida(tradPorValor))
+                    {
+                        item.Text = tradPorValor;
+                    }
                 }
             }
         }

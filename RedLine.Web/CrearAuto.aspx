@@ -1,4 +1,4 @@
-﻿<%@ Page Title="Creación de Auto" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="CrearAuto.aspx.cs" Inherits="RedLine.Web.CrearAuto" %>
+<%@ Page Title="Creación de Auto" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="CrearAuto.aspx.cs" Inherits="RedLine.Web.CrearAuto" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
     <link href="Content/CrearAutosEstilo.css" rel="stylesheet" type="text/css" />
@@ -97,7 +97,7 @@
                 </div>
 
                 <div class="grupo-form">
-                    <label><asp:Label ID="lblPotencia" runat="server" Text="Potencia (CV)" /></label>
+                    <label><asp:Label ID="lblPotenciaCrear" runat="server" Text="Potencia (CV)" /></label>
                     <asp:TextBox ID="TextBoxPotencia" runat="server" CssClass="input-control" placeholder="ej: 525"></asp:TextBox>
                 </div>
 
@@ -107,7 +107,7 @@
                 </div>
                 
                 <div class="grupo-form ancho-completo">
-                    <label><asp:Label ID="lblAceleracion" runat="server" Text="Aceleración 0-100 Km/h (Segundos)" /></label>
+                    <label><asp:Label ID="lblAceleracionCrear" runat="server" Text="Aceleración 0-100 Km/h (Segundos)" /></label>
                     <asp:TextBox ID="TextBoxAceleracion" runat="server" CssClass="input-control" placeholder="ej: 3.2"></asp:TextBox>
                 </div>
 

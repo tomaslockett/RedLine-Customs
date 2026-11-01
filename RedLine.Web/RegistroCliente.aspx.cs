@@ -58,13 +58,15 @@ namespace RedLine.Web
                     return;
                 }
 
+                // Se envía la contraseña en texto plano para que BLL_Cliente y BLL_Usuario
+                // la hasheen una única vez con SHA-256, evitando el doble hasheo.
                 Cliente nuevoCliente = new Cliente
                 {
                     DNI = dni,
                     Nombre = nombre,
                     Apellido = apellido,
                     Email = email,
-                    Contraseña = Hashing.Sha256(pass),
+                    Contraseña = pass,
                     Telefono = telefono,
                     Direccion = direccion
                 };
@@ -92,9 +94,9 @@ namespace RedLine.Web
 
                 ScriptManager.RegisterStartupScript(this, GetType(), "Popup", script, true);
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                lblMensaje.Text = $"{Traducir("msg_registro_error_procesar")} {ex.Message}";
+                lblMensaje.Text = Traducir("msg_registro_error_procesar");
             }
         }
     }

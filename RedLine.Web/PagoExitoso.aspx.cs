@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -22,12 +22,15 @@ namespace RedLine.Web
 
         protected void btnHome_Click(object sender, EventArgs e)
         {
-            Response.Redirect("Catalogo.aspx");
+            Response.Redirect("Catalogo.aspx", false);
+            Context.ApplicationInstance.CompleteRequest();
         }
 
         protected void btnGarage_Click(object sender, EventArgs e)
         {
-            Response.Redirect("Inventario.aspx");
+            // Redirige a MiGaraje.aspx para que el cliente vea el vehículo recién comprado
+            Response.Redirect("MiGaraje.aspx", false);
+            Context.ApplicationInstance.CompleteRequest();
         }
     }
 }

@@ -1,4 +1,4 @@
-﻿using Redline.Be;
+using Redline.Be;
 using RedLine.Dal;
 using RedLine.Servicios;
 using System;
@@ -26,26 +26,29 @@ namespace RedLine.Bll
                 throw new Exception("El auto debe tener un cliente asignado.");
             }
 
-            if (auto.Mejoras.Count == 0)
+            // Si el cliente compró el auto estándar sin mejoras adicionales,
+            // inicializamos la lista vacía para poder guardarlo igualmente en su garaje.
+            if (auto.Mejoras == null)
             {
-                throw new Exception("Un auto personalizado debe tener al menos una mejora.");
+                auto.Mejoras = new List<Mejora>();
             }
 
             _dalAuto.GuardarAutoCompleto(auto);
 
             RegistrarEventoBitacora($"Auto personalizado guardado en el garage para el cliente DNI: {auto.DNI_Cliente}", 1);
         }
+
         public void GuardarAuto(AutoBase auto)
         {
             _dalBase.Insertar(auto);
 
             RegistrarEventoBitacora($"Se dio de alta un nuevo Auto Base en el sistema: {auto.Marca} {auto.Modelo}", 1);
         }
+
         public AutoBase DevolverAuto(int id)
         {
             return _dalBase.ObtenerPorId(id);
         }
-
 
         public List<AutoBase> MostrarAutosBase()
         {

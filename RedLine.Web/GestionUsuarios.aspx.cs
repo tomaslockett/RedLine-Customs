@@ -133,9 +133,9 @@ namespace RedLine.Web
                 CargarGrilla();
                 LimpiarCampos();
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                MostrarMensaje($"{Traducir("msg_error_usuario_prefijo")} {ex.Message}", true);
+                MostrarMensaje(Traducir("msg_error_usuario_prefijo"), true);
             }
         }
 

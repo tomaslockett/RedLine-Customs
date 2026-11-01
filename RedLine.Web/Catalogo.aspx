@@ -47,22 +47,22 @@
 
                         <div class="datos">
                             <div class="datosAuto">
-                                <p class="lblDatosAuto"><%# Traducir("lblVelMax") %></p>
+                                <p class="lblDatosAuto"><%# TraducirSeguro("lblVelMax", "Velocidad Máxima") %></p>
                                 <%# Eval("VelocidadMaxima") %> Km/h
                             </div>
                             <div class="datosAuto">
-                                <p class="lblDatosAuto"><%# Traducir("lblPotencia") %></p>
+                                <p class="lblDatosAuto"><%# TraducirSeguro("lblPotencia", "Potencia") %></p>
                                 <%# Eval("Potencia") %> HP
                             </div>
                             <div class="datosAuto">
-                                <p class="lblDatosAuto"><%# Traducir("lblAceleracion") %></p> 
+                                <p class="lblDatosAuto"><%# TraducirSeguro("lblAceleracion", "0-100 km/h") %></p> 
                                 <%# Eval("Aceleracion0a100") %> s
                             </div>
                         </div>
 
                         <h2 class="precio">$ <%# Eval("PrecioBase") %></h2>
                         <a class="botonBajo" href='personalizarAuto.aspx?id=<%# Eval("ID") %>'>
-                            <%# Traducir("btnPersonalizar") %>
+                            <%# TraducirSeguro("btnPersonalizar", "Personalizar") %>
                         </a>
                     </div>
                 </div>

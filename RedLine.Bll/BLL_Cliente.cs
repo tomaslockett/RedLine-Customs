@@ -1,4 +1,4 @@
-﻿using Redline.Be;
+using Redline.Be;
 using RedLine.Dal;
 using RedLine.Servicios;
 using System;
@@ -22,40 +22,47 @@ namespace RedLine.Bll
 
         public override void Insertar(Cliente cliente)
         {
+            string dniPlano = cliente.DNI ?? string.Empty;
+            string nombrePlano = cliente.Nombre ?? string.Empty;
+            string apellidoPlano = cliente.Apellido ?? string.Empty;
+            string emailPlano = cliente.Email ?? string.Empty;
+            string telefonoPlano = cliente.Telefono ?? string.Empty;
+            string direccionPlana = cliente.Direccion ?? string.Empty;
+            string passOriginal = cliente.Contraseña ?? string.Empty;
 
-            string dniPlano = cliente.DNI;
-            string nombrePlano = cliente.Nombre;
-            string apellidoPlano = cliente.Apellido;
-            string emailPlano = cliente.Email;
-            string passPlana = cliente.Contraseña;
-            string passHasheada = AsegurarSha256(passPlana);
-
+            // Asegura que la contraseña se hashee en SHA-256 una única vez
+            string passHasheada = AsegurarSha256(passOriginal);
 
             cliente.Nombre = Hashing.EncriptarAES(nombrePlano);
             cliente.Apellido = Hashing.EncriptarAES(apellidoPlano);
             cliente.DNI = Hashing.EncriptarAES(dniPlano);
-            cliente.Telefono = Hashing.EncriptarAES(cliente.Telefono ?? string.Empty);
-            cliente.Direccion = Hashing.EncriptarAES(cliente.Direccion ?? string.Empty);
+            cliente.Telefono = Hashing.EncriptarAES(telefonoPlano);
+            cliente.Direccion = Hashing.EncriptarAES(direccionPlana);
             cliente.Contraseña = passHasheada;
-
 
             base.Insertar(cliente);
 
- 
+            // Restauramos en memoria los datos desencriptados para el flujo actual
+            cliente.DNI = dniPlano;
+            cliente.Nombre = nombrePlano;
+            cliente.Apellido = apellidoPlano;
+            cliente.Telefono = telefonoPlano;
+            cliente.Direccion = direccionPlana;
+
             bool existeUsuario = _bllUsuario.Listar().Any(u => u.Email.Equals(emailPlano, StringComparison.OrdinalIgnoreCase));
             if (!existeUsuario)
             {
-
                 var perfilCliente = _bllPerfil.Listar().FirstOrDefault(p => p.Nombre.Equals("Cliente", StringComparison.OrdinalIgnoreCase));
                 int idPerfilCliente = perfilCliente != null ? perfilCliente.Id : 23;
 
+                // Enviamos passHasheada; BLL_Usuario detecta que ya es un hash SHA-256 y no vuelve a hashearla
                 Usuario nuevoUsuario = new Usuario
                 {
                     DNI = dniPlano,
                     Nombre = nombrePlano,
                     Apellido = apellidoPlano,
                     Email = emailPlano,
-                    Contraseña = passPlana, 
+                    Contraseña = passHasheada,
                     PerfilId = idPerfilCliente,
                     Intentos = 0,
                     Bloqueado = false,
@@ -213,14 +220,34 @@ namespace RedLine.Bll
             List<Cliente> lista = this.Listar();
             foreach (var c in lista)
             {
-                c.Nombre = Hashing.DesencriptarAES(c.Nombre);
-                c.Apellido = Hashing.DesencriptarAES(c.Apellido);
-                //c.DNI = Hashing.DesencriptarAES(c.DNI);
-                c.DNI = c.DNI;
-                c.Telefono = Hashing.DesencriptarAES(c.Telefono);
-                c.Direccion = Hashing.DesencriptarAES(c.Direccion);
+                c.Nombre = DesencriptarSeguro(c.Nombre);
+                c.Apellido = DesencriptarSeguro(c.Apellido);
+                c.DNI = DesencriptarSeguro(c.DNI);
+                c.Telefono = DesencriptarSeguro(c.Telefono);
+                c.Direccion = DesencriptarSeguro(c.Direccion);
             }
             return lista;
+        }
+
+        /// <summary>
+        /// Desencripta un texto en AES-256 de forma segura. Si el dato en base de datos
+        /// ya se encontraba en texto plano (por ejemplo, cargado por Seed), devuelve el valor original.
+        /// </summary>
+        private string DesencriptarSeguro(string valor)
+        {
+            if (string.IsNullOrEmpty(valor))
+            {
+                return string.Empty;
+            }
+
+            try
+            {
+                return Hashing.DesencriptarAES(valor);
+            }
+            catch
+            {
+                return valor;
+            }
         }
 
         public Cliente BuscarPorEmail(string email)

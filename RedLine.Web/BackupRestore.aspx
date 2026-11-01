@@ -1,9 +1,9 @@
-﻿<%@ Page Title="BackupRestore" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="BackupRestore.aspx.cs" Inherits="RedLine.Web.BackupRestore" %>
+<%@ Page Title="BackupRestore" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="BackupRestore.aspx.cs" Inherits="RedLine.Web.BackupRestore" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
 
     <link href="Content/BackupRestore.css" rel="stylesheet" type="text/css" />
 
-    <h1><asp:Label ID="lblTitulo" runat="server" Text="Gestión de Backup y Restore" /></h1>
+    <h1><asp:Label ID="lblTituloBackup" runat="server" Text="Gestión de Backup y Restore" /></h1>
     <div>
         <h2><asp:Label ID="lblSubtituloBackup" runat="server" Text="Copia de Seguridad" /></h2>
         <asp:TextBox ID="txtRutaBackup" runat="server" Width="350px"></asp:TextBox>

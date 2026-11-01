@@ -30,28 +30,29 @@
                 <div>
                     <label><asp:Label ID="lblFiltroPagina" runat="server" Text="Filtrar por Pantalla:" /></label>
                     <asp:DropDownList ID="ddlFiltroPagina" runat="server" CssClass="input-text" AutoPostBack="true" OnSelectedIndexChanged="DdlFiltroPagina_SelectedIndexChanged">
-                      <asp:ListItem Value="" Text="-- Todas las pantallas --" />
-                            <asp:ListItem Value="Global" Text="Global / Alertas del Sistema" />
-                            <asp:ListItem Value="Site.Master" Text="Menú Master / Navegación" />
-                            <asp:ListItem Value="Login.aspx" Text="Login" />
-                            <asp:ListItem Value="RegistroClientes.aspx" Text="Registro de Clientes" />
-                            <asp:ListItem Value="CambioContraseña.aspx" Text="Cambio de Contraseña" />
-                            <asp:ListItem Value="Catalogo.aspx" Text="Catálogo" />
-                            <asp:ListItem Value="PersonalizarAuto.aspx" Text="Personalizar Auto" />
-                            <asp:ListItem Value="CrearAuto.aspx" Text="Crear Auto" />
-                            <asp:ListItem Value="Checkout.aspx" Text="Checkout / Compra" />
-                            <asp:ListItem Value="PagoExitoso.aspx" Text="Confirmación de Pago" />
-                            <asp:ListItem Value="MiGaraje.aspx" Text="Mi Garage" />
-                            <asp:ListItem Value="Facturacion.aspx" Text="Facturación" />
-                            <asp:ListItem Value="HistorialVentas.aspx" Text="Historial de Ventas" />
-                            <asp:ListItem Value="Inventario.aspx" Text="Gestión de Inventario" />
-                            <asp:ListItem Value="GestionClientes.aspx" Text="Gestión de Clientes" />
-                            <asp:ListItem Value="GestionUsuarios.aspx" Text="Gestión de Usuarios" />
-                            <asp:ListItem Value="GestionPerfiles.aspx" Text="Gestión de Perfiles / Familias" />
-                            <asp:ListItem Value="GestionIdiomas.aspx" Text="Gestión de Idiomas" />
-                            <asp:ListItem Value="GestionEventos.aspx" Text="Bitácora de Eventos" />
-                            <asp:ListItem Value="BackupRestore.aspx" Text="Backup & Restore" />
-                            <asp:ListItem Value="RecuperarDV.aspx" Text="Dígito Verificador / Integridad" />
+                        <asp:ListItem Value="" Text="-- Todas las pantallas --" />
+                        <asp:ListItem Value="Global" Text="Global / Alertas del Sistema" />
+                        <asp:ListItem Value="Site.Master" Text="Menú Master / Navegación" />
+                        <asp:ListItem Value="LogIn.aspx" Text="Login" />
+                        <asp:ListItem Value="Logout.aspx" Text="Logout (Cierre de Sesión)" />
+                        <asp:ListItem Value="RegistroCliente.aspx" Text="Registro de Clientes" />
+                        <asp:ListItem Value="CambioContraseña.aspx" Text="Cambio de Contraseña" />
+                        <asp:ListItem Value="Catalogo.aspx" Text="Catálogo" />
+                        <asp:ListItem Value="personalizarAuto.aspx" Text="Personalizar Auto" />
+                        <asp:ListItem Value="CrearAuto.aspx" Text="Crear Auto" />
+                        <asp:ListItem Value="Checkout.aspx" Text="Checkout / Compra" />
+                        <asp:ListItem Value="PagoExitoso.aspx" Text="Confirmación de Pago" />
+                        <asp:ListItem Value="MiGaraje.aspx" Text="Mi Garage" />
+                        <asp:ListItem Value="Facturacion.aspx" Text="Facturación" />
+                        <asp:ListItem Value="HistorialVentas.aspx" Text="Historial de Ventas" />
+                        <asp:ListItem Value="Inventario.aspx" Text="Gestión de Inventario" />
+                        <asp:ListItem Value="GestionClientes.aspx" Text="Gestión de Clientes" />
+                        <asp:ListItem Value="GestionUsuarios.aspx" Text="Gestión de Usuarios" />
+                        <asp:ListItem Value="Gestion_Perfiles_Permisos.aspx" Text="Gestión de Perfiles / Familias" />
+                        <asp:ListItem Value="GestionIdiomas.aspx" Text="Gestión de Idiomas" />
+                        <asp:ListItem Value="GestionEventos.aspx" Text="Bitácora de Eventos" />
+                        <asp:ListItem Value="BackupRestore.aspx" Text="Backup & Restore" />
+                        <asp:ListItem Value="RecuperacionDV.aspx" Text="Dígito Verificador / Integridad" />
                     </asp:DropDownList>
                 </div>
 
@@ -67,19 +68,19 @@
 
             <asp:GridView ID="gvTraducciones" runat="server" AutoGenerateColumns="false" CssClass="grid-traducciones" DataKeyNames="IdEtiqueta">
                 <Columns>
-                    <asp:BoundField DataField="Etiqueta.Pagina" HeaderText="Pantalla / Módulo" ReadOnly="true" ItemStyle-Width="15%" />
-                    <asp:BoundField DataField="Etiqueta.Clave" HeaderText="Clave de Etiqueta" ReadOnly="true" ItemStyle-Width="20%" />
-                    <asp:BoundField DataField="Etiqueta.Descripcion" HeaderText="Descripción / Uso" ReadOnly="true" ItemStyle-Width="25%" />
+                    <asp:BoundField DataField="Etiqueta.Pagina" HeaderText="col_PantallaModulo" ReadOnly="true" ItemStyle-Width="15%" />
+                    <asp:BoundField DataField="Etiqueta.Clave" HeaderText="col_ClaveEtiqueta" ReadOnly="true" ItemStyle-Width="20%" />
+                    <asp:BoundField DataField="Etiqueta.Descripcion" HeaderText="col_DescripcionUso" ReadOnly="true" ItemStyle-Width="25%" />
                     
-                    <asp:TemplateField HeaderText="Tipo" ItemStyle-Width="10%" ItemStyle-HorizontalAlign="Center">
+                    <asp:TemplateField HeaderText="col_TipoElemento" ItemStyle-Width="10%" ItemStyle-HorizontalAlign="Center">
                         <ItemTemplate>
                             <span class='<%# Convert.ToBoolean(Eval("Etiqueta.EsMensajeAlerta")) ? "badge-alerta" : "badge-control" %>'>
-                                <%# Convert.ToBoolean(Eval("Etiqueta.EsMensajeAlerta")) ? "Alerta / Mensaje" : "Control Visual" %>
+                                <%# Convert.ToBoolean(Eval("Etiqueta.EsMensajeAlerta")) ? Traducir("texto_tipo_alerta") : Traducir("texto_tipo_control") %>
                             </span>
                         </ItemTemplate>
                     </asp:TemplateField>
 
-                    <asp:TemplateField HeaderText="Traducción" ItemStyle-Width="30%">
+                    <asp:TemplateField HeaderText="col_TraduccionTexto" ItemStyle-Width="30%">
                         <ItemTemplate>
                             <asp:TextBox ID="txtTextoTraducido" runat="server" Text='<%# Bind("Texto") %>' CssClass="input-text" Width="95%" />
                         </ItemTemplate>

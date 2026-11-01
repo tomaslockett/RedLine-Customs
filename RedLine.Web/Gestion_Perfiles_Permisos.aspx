@@ -6,7 +6,7 @@
         
         <header class="encabezado-seccion">
             <div class="header-navegacion">
-                <asp:LinkButton ID="btnVolverDashboard" runat="server" CssClass="btn-volver" PostBackUrl="~/AdminDashboard.aspx">
+                <asp:LinkButton ID="btnVolverDashboard" runat="server" CssClass="btn-volver" PostBackUrl="~/Catalogo.aspx">
                     <span>←</span> <asp:Label ID="lblVolverDashboard" runat="server" Text="Volver al Dashboard" />
                 </asp:LinkButton>
             </div>

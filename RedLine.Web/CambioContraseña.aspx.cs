@@ -62,9 +62,9 @@ namespace RedLine.Web
                 bllUsuario.Logout();
                 Response.Redirect("LogIn.aspx");
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                MostrarMensaje($"{Traducir("msg_error_prefijo")} {ex.Message}", true);
+                MostrarMensaje(Traducir("msg_error_prefijo"), true);
             }
         }
 

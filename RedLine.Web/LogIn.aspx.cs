@@ -94,10 +94,10 @@ namespace RedLine.Web
                     ManejarErrorLogin(ex.Result);
                 }
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 string textoError = Traducir("msgErrorTecnico");
-                MostrarMensaje($"{textoError}: {ex.Message}", true);
+                MostrarMensaje(textoError, true);
             }
         }
 

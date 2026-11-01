@@ -88,6 +88,16 @@ namespace RedLine.Servicios
             return $"[{clave}]";
         }
 
+        /// <summary>
+        /// Indica si el diccionario de traducciones de la sesión ya fue cargado.
+        /// BasePage lo consulta en OnInit para garantizar que ningún DataBind
+        /// se ejecute antes de que el idioma activo esté disponible.
+        /// </summary>
+        public bool DiccionarioCargado
+        {
+            get { return Traducciones != null && Traducciones.Count > 0; }
+        }
+
         public void AgregarObserver(IObserver observer)
         {
             if (!_observers.Contains(observer)) _observers.Add(observer);

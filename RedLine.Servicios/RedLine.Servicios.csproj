@@ -50,6 +50,8 @@
     <Compile Include="Evento.cs" />
     <Compile Include="MotorDigitoVerificador.cs" />
     <Compile Include="Hashing.cs" />
+    <Compile Include="InformeVentasServicio.cs" />
+    <Compile Include="TextosComercialesVentas.cs" />
     <Compile Include="PdfFacturaServicio.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SessionManager.cs" />

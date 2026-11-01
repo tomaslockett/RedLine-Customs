@@ -151,6 +151,10 @@
     <Compile Include="Migrations\202610311230306_ActualizacionGarageYFacturacion.Designer.cs">
       <DependentUpon>202610311230306_ActualizacionGarageYFacturacion.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202610312259532_SincronizarModeloFinal.cs" />
+    <Compile Include="Migrations\202610312259532_SincronizarModeloFinal.Designer.cs">
+      <DependentUpon>202610312259532_SincronizarModeloFinal.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="ORM\SqlEnsamblador.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -232,6 +236,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202610311230306_ActualizacionGarageYFacturacion.resx">
       <DependentUpon>202610311230306_ActualizacionGarageYFacturacion.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202610312259532_SincronizarModeloFinal.resx">
+      <DependentUpon>202610312259532_SincronizarModeloFinal.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

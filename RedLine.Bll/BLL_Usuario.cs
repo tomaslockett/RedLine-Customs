@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using Redline.Be;
 using RedLine.BLL;
@@ -49,8 +49,8 @@ namespace RedLine.Bll
 
             if (!user.Activo) throw new Exception("Usuario inactivo");
 
-            string passHasheada = Hashing.Sha256(contraseña);
-            if (!user.Contraseña.Equals(passHasheada))
+            string passHasheada = EsHashSha256(contraseña) ? contraseña.ToLower() : Hashing.Sha256(contraseña);
+            if (!user.Contraseña.Equals(passHasheada, StringComparison.OrdinalIgnoreCase))
             {
                 user.Intentos++;
                 user.UltimoIntento = DateTime.Now;
@@ -65,7 +65,7 @@ namespace RedLine.Bll
                     _bllEvento.Registrar(email, ModulosEventos.Seguridad, $"Intento de login fallido ({user.Intentos}/3)", 2);
                 }
 
-                this.Modificar(user); 
+                this.Modificar(user);
                 throw new LoginException(LoginResult.InvalidPassword);
             }
 
@@ -88,15 +88,15 @@ namespace RedLine.Bll
             _bllEvento.Registrar(user.Email, ModulosEventos.Seguridad, "Inicio de sesión exitoso", 1);
             return LoginResult.ValidUser;
         }
+
         private LoginResult LoginInconsistente(string email, string contraseña)
         {
             Usuario user = Repo.ObtenerPorEmail(email);
             if (user == null) throw new LoginException(LoginResult.InvalidUsername);
             if (user.Bloqueado || !user.Activo) throw new LoginException(LoginResult.UserBlocked, "Tu usuario esta inactivo o bloqueado.");
 
-            string passHasheada = Hashing.Sha256(contraseña);
-            if (!user.Contraseña.Equals(passHasheada)) throw new LoginException(LoginResult.InvalidPassword);
-
+            string passHasheada = EsHashSha256(contraseña) ? contraseña.ToLower() : Hashing.Sha256(contraseña);
+            if (!user.Contraseña.Equals(passHasheada, StringComparison.OrdinalIgnoreCase)) throw new LoginException(LoginResult.InvalidPassword);
 
             if (user.PerfilId.HasValue)
             {
@@ -127,19 +127,54 @@ namespace RedLine.Bll
 
             if (string.IsNullOrEmpty(usuario.Contraseña))
             {
-                string claveInicial = usuario.Nombre.Substring(0, 3) +usuario.Apellido.Substring(0, 3) +usuario.DNI.Substring(0, 3);
+                string claveInicial = usuario.Nombre.Substring(0, 3) + usuario.Apellido.Substring(0, 3) + usuario.DNI.Substring(0, 3);
 
                 usuario.Contraseña = Hashing.Sha256(claveInicial);
             }
             else
             {
-                usuario.Contraseña = Hashing.Sha256(usuario.Contraseña);
+                // Si la contraseña ya viene hasheada en SHA-256 (64 caracteres hexadecimales),
+                // no se vuelve a hashear para evitar el doble hasheo.
+                if (EsHashSha256(usuario.Contraseña))
+                {
+                    usuario.Contraseña = usuario.Contraseña.ToLower();
+                }
+                else
+                {
+                    usuario.Contraseña = Hashing.Sha256(usuario.Contraseña);
+                }
             }
 
             base.Insertar(usuario);
 
             string ejecutor = SessionManager.Instancia.IsLogged() ? SessionManager.Instancia.Usuario.Email : "Sistema";
             _bllEvento.Registrar(ejecutor, ModulosEventos.Usuarios, $"Se creó un nuevo usuario con Email: {usuario.Email}", 1);
+        }
+
+        /// <summary>
+        /// Verifica de forma simple si un texto ya es un hash SHA-256 válido (64 caracteres hexadecimales)
+        /// para evitar hashear dos veces la misma contraseña.
+        /// </summary>
+        private bool EsHashSha256(string texto)
+        {
+            if (string.IsNullOrEmpty(texto) || texto.Length != 64)
+            {
+                return false;
+            }
+
+            foreach (char c in texto)
+            {
+                bool esNumero = (c >= '0' && c <= '9');
+                bool esHexMinuscula = (c >= 'a' && c <= 'f');
+                bool esHexMayuscula = (c >= 'A' && c <= 'F');
+
+                if (!esNumero && !esHexMinuscula && !esHexMayuscula)
+                {
+                    return false;
+                }
+            }
+
+            return true;
         }
 
         public override List<Usuario> Listar()
@@ -193,7 +228,7 @@ namespace RedLine.Bll
             usuario.Bloqueado = false;
             usuario.Intentos = 0;
             string claveInicial = usuario.Nombre.Substring(0, 3) + usuario.Apellido.Substring(0, 3) + usuario.DNI.Substring(0, 3);
-            usuario.Contraseña = Hashing.Sha256(claveInicial); 
+            usuario.Contraseña = Hashing.Sha256(claveInicial);
             this.Modificar(usuario);
             string admin = SessionManager.Instancia.Usuario.Email;
             _bllEvento.Registrar(admin, ModulosEventos.Usuarios, $"Desbloqueo de usuario y reset de clave: {usuario.Email}", 2);
@@ -206,6 +241,7 @@ namespace RedLine.Bll
             SessionManager.Instancia.Logout();
             _bllEvento.Registrar(email, ModulosEventos.Seguridad, "Cierre de sesión", 1);
         }
+
         public void LogoutInconsistente()
         {
             if (!SessionManager.Instancia.IsLogged()) throw new Exception("No hay sesión iniciada");
@@ -241,7 +277,7 @@ namespace RedLine.Bll
             if (usuario != null)
             {
                 usuario.Idioma = nuevoIdioma;
-                this.Modificar(usuario); 
+                this.Modificar(usuario);
             }
         }
     }
