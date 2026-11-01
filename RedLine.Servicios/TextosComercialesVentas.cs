@@ -10,7 +10,7 @@ namespace RedLine.Servicios
     /// </summary>
     public static class TextosComercialesVentas
     {
-        public const string MetodoPagoTarjeta = "Tarjeta de Crédito";
+        public const string MetodoPagoTarjeta = "Tarjeta de Credito";
         public const string ConfiguracionEstandar = "Configuración Estándar";
     }
 }

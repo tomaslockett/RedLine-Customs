@@ -5,6 +5,7 @@ using RedLine.Servicios;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
@@ -150,7 +151,8 @@ namespace RedLine.Web
                     string vencimiento = txtExpiry != null ? txtExpiry.Text.Trim() : string.Empty;
                     string cvv = txtCvv != null ? txtCvv.Text.Trim() : string.Empty;
 
-                    if (string.IsNullOrEmpty(titular) || numeroTarjeta.Length < 12 || vencimiento.Length < 4 || cvv.Length < 3)
+                    // Aquí usamos el método de validación para el vencimiento
+                    if (string.IsNullOrEmpty(titular) || numeroTarjeta.Length < 12 || !ValidarVencimiento(vencimiento) || cvv.Length < 3)
                     {
                         if (lblErrorCheckout != null)
                         {
@@ -210,9 +212,11 @@ namespace RedLine.Web
                         }
                     }
                 }
+                // aca se llama al micro servicio
+                localhost.CalcularImpuestos calc = new localhost.CalcularImpuestos();
 
-                decimal ivaCalc = Math.Round(subtotal * 0.21m, 2);
-                decimal totalFinal = subtotal + ivaCalc;
+                decimal impuestosCalc = calc.CalcularImpuesto(subtotal);
+                decimal totalFinal = subtotal + impuestosCalc;
 
                 string marcaTiempo = DateTime.Now.ToString("yyyyMMdd-HHmmss");
                 string numVenta = "VTA-" + marcaTiempo;
@@ -307,7 +311,36 @@ namespace RedLine.Web
                 }
             }
         }
+        private bool ValidarVencimiento(string vencimiento)
+        {
+            if (string.IsNullOrEmpty(vencimiento)) return false;
 
+          
+            string[] partes = vencimiento.Split('/');
+            if (partes.Length != 2) return false;
+
+            
+            if (!int.TryParse(partes[0], out int mes) || !int.TryParse(partes[1], out int anio))
+                return false;
+
+            
+            if (mes < 1 || mes > 12 || anio < 0 || anio > 99)
+                return false;
+
+            
+            int anioCompleto = 2000 + anio;
+
+           
+            try
+            {
+                DateTime fechaExpiracion = new DateTime(anioCompleto, mes, 1).AddMonths(1).AddDays(-1);
+                return fechaExpiracion >= DateTime.Now.Date; 
+            }
+            catch
+            {
+                return false;
+            }
+        }
         /// <summary>
         /// Obtiene el Cliente actualmente autenticado (desde Session["ClienteSession"] o desde SessionManager).
         /// Si el usuario logueado del sistema aún no tiene registro en la tabla Cliente, lo crea para poder facturar.
