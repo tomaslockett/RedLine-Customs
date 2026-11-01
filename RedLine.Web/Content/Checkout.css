@@ -430,9 +430,9 @@ h2 {
         background-color: var(--brand-red-hover);
     }
 
-.btn-success-secondary {
-    background-color: #ffffff;
-    color: #0b111e;
+.btn-success-primary {
+    background-color: var(--brand-red);
+    color: #ffffff;
     border: none;
     padding: 14px;
     border-radius: 6px;
@@ -440,11 +440,12 @@ h2 {
     font-weight: 600;
     cursor: pointer;
     width: 100%;
+    display: block;
     transition: background-color 0.2s;
 }
 
-    .btn-success-secondary:hover {
-        background-color: #e2e8f0;
+    .btn-success-primary:hover {
+        background-color: var(--brand-red-hover);
     }
 
 .success-footer-text {

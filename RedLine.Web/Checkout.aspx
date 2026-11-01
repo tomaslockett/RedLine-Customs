@@ -106,7 +106,7 @@
             </div>
 
             <asp:Label ID="lblErrorCheckout" runat="server" Visible="false" Style="display: block; color: #ef4444; margin-top: 12px; font-weight: 600;" />
-            <asp:Button ID="btnProcesarPago" runat="server" CssClass="btnConfirmar" Text="Confirmar y Pagar Total" OnClick="btnProcesarPago_Click" Style="width: 100%; margin-top: 20px; display: block;" />
+            <asp:Button ID="btnProcesarPago" runat="server" CssClass="btn-success-primary" Text="Confirmar y Pagar Total" OnClick="btnProcesarPago_Click" Style="margin-top: 20px;" />
 
             <footer class="security-badges">
                 <span class="badge badge-ssl"><i class="fa-solid fa-lock"></i> <asp:Label ID="lblBadgeSsl" runat="server" Text="SSL Seguro" /></span>
