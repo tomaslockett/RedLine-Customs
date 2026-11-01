@@ -1,4 +1,4 @@
-<%@ Page Title="Checkout" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="Checkout.aspx.cs" Inherits="RedLine.Web.Checkout" %>
+﻿<%@ Page Title="Checkout" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="Checkout.aspx.cs" Inherits="RedLine.Web.Checkout" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
@@ -42,12 +42,48 @@
                     <span id="lblTotal" runat="server" class="text-red">$0</span>
                 </div>
             </div>
+
+            <!-- Conversor de divisas de referencia comercial -->
+            <div class="currency-converter-box">
+                <div class="converter-header">
+                    <i class="fa-solid fa-coins icon-gold"></i>
+                    <span class="converter-title"><asp:Label ID="lblTituloConversor" runat="server" Text="Moneda de referencia" /></span>
+                </div>
+                <div class="converter-body">
+                    <asp:DropDownList ID="ddlMonedaReferencia" runat="server" ClientIDMode="Static" CssClass="form-control-sm">
+                        <asp:ListItem Value="USD" Selected="True" Text="USD - Dólar Estadounidense" />
+                        <asp:ListItem Value="ARS_MEP" Text="ARS - Dólar MEP ($1.220)" />
+                        <asp:ListItem Value="ARS_OFICIAL" Text="ARS - Dólar Oficial ($1.050)" />
+                        <asp:ListItem Value="EUR" Text="EUR - Euro (€0.92)" />
+                        <asp:ListItem Value="BRL" Text="BRL - Real Brasileño (R$5.75)" />
+                    </asp:DropDownList>
+                    <div class="converter-details">
+                        <div class="converter-row">
+                            <span class="c-label"><asp:Label ID="lblEquivalenteReferencial" runat="server" Text="Importe referencial:" /></span>
+                            <span id="lblResultadoConversion" class="c-val">-</span>
+                        </div>
+                        <div class="converter-row">
+                            <span class="c-label"><asp:Label ID="lblTipoCambioAplicado" runat="server" Text="Tipo de cambio aplicado:" /></span>
+                            <span id="lblDetalleTipoCambio" class="c-val">-</span>
+                        </div>
+                    </div>
+                    <p class="converter-legal-note">
+                        <i class="fa-solid fa-circle-info"></i>
+                        <asp:Label ID="lblAvisoMonedaOficial" runat="server" Text="Facturación y cobro oficial emitidos en USD" />
+                    </p>
+                </div>
+            </div>
         </section>
 
         <section class="payment-methods-card">
             <h2><asp:Label ID="lblMetodosPago" runat="server" Text="Métodos de Pago" /></h2>
-            <asp:HiddenField ID="hfMetodoPago" runat="server" ClientIDMode="Static" Value="Tarjeta de Credito" />
+            
+            <!-- HiddenFields para total USD y contrato de método de pago -->
+            <asp:HiddenField ID="hfTotalUsd" runat="server" ClientIDMode="Static" />
+            <asp:HiddenField ID="hfMetodoPago" runat="server" ClientIDMode="Static" Value="Tarjeta de Crédito" />
+            <asp:HiddenField ID="hfPlanFinanciacionSeleccionado" runat="server" ClientIDMode="Static" />
 
+            <!-- Pestaña 1: Tarjeta de Crédito / Débito -->
             <div class="payment-option active" data-target="credit-card-panel">
                 <div class="option-header">
                     <span class="radio-indicator"></span>
@@ -65,10 +101,12 @@
                         <div class="input-with-brands">
                             <asp:TextBox ID="txtCardNumber" runat="server" ClientIDMode="Static" CssClass="form-control" placeholder="1234 5678 9012 3456" maxlength="19"></asp:TextBox>
                             <div class="card-brands">
-                                <i class="fa-brands fa-cc-visa brand-visa"></i>
-                                <i class="fa-brands fa-cc-mastercard brand-mastercard"></i>
+                                <i id="brandVisa" class="fa-brands fa-cc-visa brand-visa"></i>
+                                <i id="brandMastercard" class="fa-brands fa-cc-mastercard brand-mastercard"></i>
+                                <i id="brandAmex" class="fa-brands fa-cc-amex brand-amex"></i>
                             </div>
                         </div>
+                        <div id="cardValidationStatus" class="card-validation-status"></div>
                     </div>
                     <div class="form-row-grid">
                         <div class="form-group">
@@ -83,6 +121,7 @@
                 </div>
             </div>
 
+            <!-- Pestaña 2: Transferencia Bancaria -->
             <div class="payment-option" data-target="bank-panel">
                 <div class="option-header">
                     <span class="radio-indicator"></span>
@@ -90,10 +129,29 @@
                     <span class="option-title"><asp:Label ID="lblOpcionTransferencia" runat="server" Text="Transferencia Bancaria" /></span>
                 </div>
                 <div id="bank-panel" class="option-panel">
-                    <p class="panel-placeholder-text"><asp:Label ID="lblInfoTransferencia" runat="server" Text="Información para la transferencia bancaria..." /></p>
+                    <div class="bank-details-card">
+                        <div class="bank-grid">
+                            <div class="bank-item"><i class="fa-solid fa-building"></i> <asp:Label ID="lblTitularBanco" runat="server" Text="Titular: REDLINE CUSTOMS S.A." /></div>
+                            <div class="bank-item"><i class="fa-solid fa-id-card"></i> <asp:Label ID="lblCuitBanco" runat="server" Text="CUIT: 30-71829384-9" /></div>
+                            <div class="bank-item"><i class="fa-solid fa-university"></i> <asp:Label ID="lblEntidadBanco" runat="server" Text="Entidad: Banco Santander Río" /></div>
+                            <div class="bank-item"><i class="fa-solid fa-money-check"></i> <asp:Label ID="lblCbuBanco" runat="server" Text="CBU: 0720123400000012345678" /></div>
+                            <div class="bank-item"><i class="fa-solid fa-tag"></i> <asp:Label ID="lblAliasBanco" runat="server" Text="Alias: REDLINE.CUSTOMS.OFICIAL" /></div>
+                        </div>
+
+                        <div id="bankTransferEquivalentBox" class="bank-equivalent-box">
+                            <span class="eq-label"><asp:Label ID="lblMontoSugeridoPesos" runat="server" Text="Monto sugerido a transferir (ARS):" /></span>
+                            <span id="lblMontoSugeridoValor" class="eq-val">-</span>
+                        </div>
+
+                        <p class="panel-placeholder-text">
+                            <i class="fa-solid fa-circle-check text-green"></i>
+                            <asp:Label ID="lblInstruccionTransferencia" runat="server" Text="Realizá la transferencia y envianos el comprobante para habilitar la entrega." />
+                        </p>
+                    </div>
                 </div>
             </div>
 
+            <!-- Pestaña 3: Financiación -->
             <div class="payment-option" data-target="financing-panel">
                 <div class="option-header">
                     <span class="radio-indicator"></span>
@@ -101,7 +159,61 @@
                     <span class="option-title"><asp:Label ID="lblOpcionFinanciacion" runat="server" Text="Financiación" /></span>
                 </div>
                 <div id="financing-panel" class="option-panel">
-                    <p class="panel-placeholder-text"><asp:Label ID="lblInfoFinanciacion" runat="server" Text="Opciones de financiación disponibles..." /></p>
+                    <div class="financing-simulator-box">
+                        <div class="sim-header">
+                            <h4><asp:Label ID="lblTituloSimulador" runat="server" Text="Simulador de Financiación Prendaria" /></h4>
+                            <p class="simulator-subtitle"><asp:Label ID="lblSubtituloSimulador" runat="server" Text="Seleccioná el plazo y anticipo para simular cuotas fijas en USD." /></p>
+                        </div>
+
+                        <div class="form-row-grid">
+                            <div class="form-group">
+                                <label><asp:Label ID="lblCuotasPlazo" runat="server" Text="Plazo:" /></label>
+                                <asp:DropDownList ID="ddlCuotasFinanciacion" runat="server" ClientIDMode="Static" CssClass="form-control">
+                                    <asp:ListItem Value="12" Text="12 cuotas (TNA 9.5%)" />
+                                    <asp:ListItem Value="24" Selected="True" Text="24 cuotas (TNA 11.5%)" />
+                                    <asp:ListItem Value="36" Text="36 cuotas (TNA 13.5%)" />
+                                    <asp:ListItem Value="48" Text="48 cuotas (TNA 15.5%)" />
+                                </asp:DropDownList>
+                            </div>
+                            <div class="form-group">
+                                <label><asp:Label ID="lblAnticipoInicial" runat="server" Text="Anticipo (%):" /></label>
+                                <asp:DropDownList ID="ddlAnticipoFinanciacion" runat="server" ClientIDMode="Static" CssClass="form-control">
+                                    <asp:ListItem Value="20" Text="20%" />
+                                    <asp:ListItem Value="30" Selected="True" Text="30%" />
+                                    <asp:ListItem Value="40" Text="40%" />
+                                    <asp:ListItem Value="50" Text="50%" />
+                                </asp:DropDownList>
+                            </div>
+                        </div>
+
+                        <div class="financing-results-grid">
+                            <div class="result-card">
+                                <span class="res-title"><asp:Label ID="lblAnticipoCalculado" runat="server" Text="Anticipo inicial (USD):" /></span>
+                                <span id="lblFinAnticipoVal" class="res-val">$0</span>
+                            </div>
+                            <div class="result-card">
+                                <span class="res-title"><asp:Label ID="lblCapitalFinanciar" runat="server" Text="Saldo financiado (USD):" /></span>
+                                <span id="lblFinCapitalVal" class="res-val">$0</span>
+                            </div>
+                            <div class="result-card highlight-card">
+                                <span class="res-title"><asp:Label ID="lblValorCuotaMensual" runat="server" Text="Cuota mensual estimada (USD):" /></span>
+                                <span id="lblFinCuotaVal" class="res-val text-red">$0</span>
+                            </div>
+                            <div class="result-card">
+                                <span class="res-title"><asp:Label ID="lblTasaTnaCft" runat="server" Text="TNA / CFT estimado:" /></span>
+                                <span id="lblFinTasasVal" class="res-val">11.5% / 13.5%</span>
+                            </div>
+                            <div class="result-card full-span">
+                                <span class="res-title"><asp:Label ID="lblTotalPlanEstimado" runat="server" Text="Total estimado del plan (USD):" /></span>
+                                <span id="lblFinTotalPlanVal" class="res-val">$0</span>
+                            </div>
+                        </div>
+
+                        <p class="financing-legal-note">
+                            <i class="fa-solid fa-file-contract"></i>
+                            <asp:Label ID="lblAvisoFiscalFinanciacion" runat="server" Text="La factura oficial del vehículo se emite por el valor de lista + IVA en USD. El saldo se instrumenta mediante mutuo prendario." />
+                        </p>
+                    </div>
                 </div>
             </div>
 

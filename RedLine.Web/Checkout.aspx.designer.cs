@@ -1,4 +1,4 @@
-//------------------------------------------------------------------------------
+﻿//------------------------------------------------------------------------------
 // <generado automáticamente>
 //     Este código fue generado por una herramienta.
 //
@@ -9,18 +9,8 @@
 
 namespace RedLine.Web
 {
-
-
     public partial class Checkout
     {
-
-        /// <summary>
-        /// Control lblTituloCheckout.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
         protected global::System.Web.UI.WebControls.Label lblTituloCheckout;
 
         /// <summary>
@@ -148,32 +138,17 @@ namespace RedLine.Web
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl lblTotal;
-
-        /// <summary>
-        /// Control lblMetodosPago.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList ddlMonedaReferencia;
+        protected global::System.Web.UI.WebControls.DropDownList ddlCuotasFinanciacion;
+        protected global::System.Web.UI.WebControls.DropDownList ddlAnticipoFinanciacion;
+        protected global::System.Web.UI.WebControls.Label lblTituloConversor;
+        protected global::System.Web.UI.WebControls.Label lblEquivalenteReferencial;
+        protected global::System.Web.UI.WebControls.Label lblTipoCambioAplicado;
+        protected global::System.Web.UI.WebControls.Label lblAvisoMonedaOficial;
         protected global::System.Web.UI.WebControls.Label lblMetodosPago;
-
-        /// <summary>
-        /// Control hfMetodoPago.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
+        protected global::System.Web.UI.WebControls.HiddenField hfTotalUsd;
         protected global::System.Web.UI.WebControls.HiddenField hfMetodoPago;
-
-        /// <summary>
-        /// Control lblOpcionTarjeta.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
+        protected global::System.Web.UI.WebControls.HiddenField hfPlanFinanciacionSeleccionado;
         protected global::System.Web.UI.WebControls.Label lblOpcionTarjeta;
 
         /// <summary>
@@ -247,68 +222,27 @@ namespace RedLine.Web
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txtCvv;
-
-        /// <summary>
-        /// Control lblOpcionTransferencia.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
         protected global::System.Web.UI.WebControls.Label lblOpcionTransferencia;
-
-        /// <summary>
-        /// Control lblInfoTransferencia.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblInfoTransferencia;
-
-        /// <summary>
-        /// Control lblOpcionFinanciacion.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblTitularBanco;
+        protected global::System.Web.UI.WebControls.Label lblCuitBanco;
+        protected global::System.Web.UI.WebControls.Label lblEntidadBanco;
+        protected global::System.Web.UI.WebControls.Label lblCbuBanco;
+        protected global::System.Web.UI.WebControls.Label lblAliasBanco;
+        protected global::System.Web.UI.WebControls.Label lblMontoSugeridoPesos;
+        protected global::System.Web.UI.WebControls.Label lblInstruccionTransferencia;
         protected global::System.Web.UI.WebControls.Label lblOpcionFinanciacion;
-
-        /// <summary>
-        /// Control lblInfoFinanciacion.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblInfoFinanciacion;
-
-        /// <summary>
-        /// Control lblErrorCheckout.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblTituloSimulador;
+        protected global::System.Web.UI.WebControls.Label lblSubtituloSimulador;
+        protected global::System.Web.UI.WebControls.Label lblCuotasPlazo;
+        protected global::System.Web.UI.WebControls.Label lblAnticipoInicial;
+        protected global::System.Web.UI.WebControls.Label lblAnticipoCalculado;
+        protected global::System.Web.UI.WebControls.Label lblCapitalFinanciar;
+        protected global::System.Web.UI.WebControls.Label lblValorCuotaMensual;
+        protected global::System.Web.UI.WebControls.Label lblTasaTnaCft;
+        protected global::System.Web.UI.WebControls.Label lblTotalPlanEstimado;
+        protected global::System.Web.UI.WebControls.Label lblAvisoFiscalFinanciacion;
         protected global::System.Web.UI.WebControls.Label lblErrorCheckout;
-
-        /// <summary>
-        /// Control btnProcesarPago.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
         protected global::System.Web.UI.WebControls.Button btnProcesarPago;
-
-        /// <summary>
-        /// Control lblBadgeSsl.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
         protected global::System.Web.UI.WebControls.Label lblBadgeSsl;
 
         /// <summary>

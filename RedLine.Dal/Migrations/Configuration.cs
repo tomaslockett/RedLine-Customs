@@ -2502,6 +2502,164 @@ context.SaveChanges();
                 context.SaveChanges();
             }
 
+            // =========================================================================
+            // --- SEED ETIQUETAS Y TRADUCCIONES NUEVAS: FinanciacionService & Checkout -
+            // =========================================================================
+
+            var eTitConversor = new Etiqueta { Clave = "lblTituloConversor", Pagina = "Checkout.aspx", Descripcion = "Título conversor de divisas", EsMensajeAlerta = false };
+            var eAvisoMonedaOficial = new Etiqueta { Clave = "lblAvisoMonedaOficial", Pagina = "Checkout.aspx", Descripcion = "Nota de facturación oficial en USD", EsMensajeAlerta = false };
+            var eEquivRef = new Etiqueta { Clave = "lblEquivalenteReferencial", Pagina = "Checkout.aspx", Descripcion = "Etiqueta equivalente estimado de conversión", EsMensajeAlerta = false };
+            var eTipoCambio = new Etiqueta { Clave = "lblTipoCambioAplicado", Pagina = "Checkout.aspx", Descripcion = "Etiqueta tipo de cambio aplicado", EsMensajeAlerta = false };
+
+            var eTitBanco = new Etiqueta { Clave = "lblTitularBanco", Pagina = "Checkout.aspx", Descripcion = "Titular de cuenta bancaria", EsMensajeAlerta = false };
+            var eCuitBanco = new Etiqueta { Clave = "lblCuitBanco", Pagina = "Checkout.aspx", Descripcion = "CUIT de cuenta bancaria", EsMensajeAlerta = false };
+            var eEntBanco = new Etiqueta { Clave = "lblEntidadBanco", Pagina = "Checkout.aspx", Descripcion = "Entidad bancaria receptora", EsMensajeAlerta = false };
+            var eCbuBanco = new Etiqueta { Clave = "lblCbuBanco", Pagina = "Checkout.aspx", Descripcion = "CBU de cuenta bancaria", EsMensajeAlerta = false };
+            var eAliasBanco = new Etiqueta { Clave = "lblAliasBanco", Pagina = "Checkout.aspx", Descripcion = "Alias de cuenta bancaria", EsMensajeAlerta = false };
+            var eInstTransf = new Etiqueta { Clave = "lblInstruccionTransferencia", Pagina = "Checkout.aspx", Descripcion = "Instrucción de comprobante de transferencia", EsMensajeAlerta = false };
+            var eMontoSugerido = new Etiqueta { Clave = "lblMontoSugeridoPesos", Pagina = "Checkout.aspx", Descripcion = "Monto sugerido en ARS para transferencia", EsMensajeAlerta = false };
+
+            var eTitSimulador = new Etiqueta { Clave = "lblTituloSimulador", Pagina = "Checkout.aspx", Descripcion = "Título simulador de financiación", EsMensajeAlerta = false };
+            var eSubSimulador = new Etiqueta { Clave = "lblSubtituloSimulador", Pagina = "Checkout.aspx", Descripcion = "Subtítulo descriptivo de simulación de cuotas", EsMensajeAlerta = false };
+            var eCuotasPlazo = new Etiqueta { Clave = "lblCuotasPlazo", Pagina = "Checkout.aspx", Descripcion = "Etiqueta plazo de cuotas", EsMensajeAlerta = false };
+            var eAnticipoInicial = new Etiqueta { Clave = "lblAnticipoInicial", Pagina = "Checkout.aspx", Descripcion = "Etiqueta porcentaje de anticipo", EsMensajeAlerta = false };
+            var eAnticipoCalculado = new Etiqueta { Clave = "lblAnticipoCalculado", Pagina = "Checkout.aspx", Descripcion = "Anticipo calculado en USD", EsMensajeAlerta = false };
+            var eCapitalFinanciar = new Etiqueta { Clave = "lblCapitalFinanciar", Pagina = "Checkout.aspx", Descripcion = "Saldo a financiar en USD", EsMensajeAlerta = false };
+            var eValorCuota = new Etiqueta { Clave = "lblValorCuotaMensual", Pagina = "Checkout.aspx", Descripcion = "Valor de cuota mensual fija en USD", EsMensajeAlerta = false };
+            var eTasaTnaCft = new Etiqueta { Clave = "lblTasaTnaCft", Pagina = "Checkout.aspx", Descripcion = "Tasa TNA y CFT estimados", EsMensajeAlerta = false };
+            var eTotalPlan = new Etiqueta { Clave = "lblTotalPlanEstimado", Pagina = "Checkout.aspx", Descripcion = "Total estimado del plan financiado", EsMensajeAlerta = false };
+            var eAvisoFiscalFinanc = new Etiqueta { Clave = "lblAvisoFiscalFinanciacion", Pagina = "Checkout.aspx", Descripcion = "Aviso fiscal sobre facturación e instrumentación prendaria", EsMensajeAlerta = false };
+
+            var eErrLuhn = new Etiqueta { Clave = "msg_error_tarjeta_invalida_luhn", Pagina = "Checkout.aspx", Descripcion = "Error de validación de tarjeta por algoritmo de Luhn", EsMensajeAlerta = true };
+
+            var eJsValida = new Etiqueta { Clave = "js_tarjeta_valida", Pagina = "Checkout.aspx", Descripcion = "Texto dinámico tarjeta válida", EsMensajeAlerta = false };
+            var eJsInvalida = new Etiqueta { Clave = "js_tarjeta_invalida", Pagina = "Checkout.aspx", Descripcion = "Texto dinámico número de tarjeta inválido", EsMensajeAlerta = false };
+            var eJsCalculando = new Etiqueta { Clave = "js_calculando", Pagina = "Checkout.aspx", Descripcion = "Texto dinámico calculando cotización", EsMensajeAlerta = false };
+            var eJsErrorServ = new Etiqueta { Clave = "js_error_servicio", Pagina = "Checkout.aspx", Descripcion = "Texto dinámico servicio no disponible", EsMensajeAlerta = false };
+            var eJsCuotasDe = new Etiqueta { Clave = "js_cuotas_de", Pagina = "Checkout.aspx", Descripcion = "Texto dinámico cuotas fijas de", EsMensajeAlerta = false };
+
+            context.Etiquetas.AddOrUpdate(e => e.Clave,
+                eTitConversor, eAvisoMonedaOficial, eEquivRef, eTipoCambio,
+                eTitBanco, eCuitBanco, eEntBanco, eCbuBanco, eAliasBanco,
+                eInstTransf, eMontoSugerido,
+                eTitSimulador, eSubSimulador, eCuotasPlazo, eAnticipoInicial,
+                eAnticipoCalculado, eCapitalFinanciar, eValorCuota, eTasaTnaCft,
+                eTotalPlan, eAvisoFiscalFinanc, eErrLuhn,
+                eJsValida, eJsInvalida, eJsCalculando, eJsErrorServ, eJsCuotasDe
+            );
+            context.SaveChanges();
+
+            context.Traducciones.AddOrUpdate(t => new { t.IdIdioma, t.IdEtiqueta },
+                new Traduccion { IdIdioma = idiomaEspanol.ID, IdEtiqueta = eTitConversor.ID, Texto = "Moneda de referencia" },
+                new Traduccion { IdIdioma = idiomaEspanol.ID, IdEtiqueta = eAvisoMonedaOficial.ID, Texto = "Facturación y cobro oficial emitidos en USD" },
+                new Traduccion { IdIdioma = idiomaEspanol.ID, IdEtiqueta = eEquivRef.ID, Texto = "Importe referencial:" },
+                new Traduccion { IdIdioma = idiomaEspanol.ID, IdEtiqueta = eTipoCambio.ID, Texto = "Tipo de cambio aplicado:" },
+                new Traduccion { IdIdioma = idiomaEspanol.ID, IdEtiqueta = eTitBanco.ID, Texto = "Titular: REDLINE CUSTOMS S.A." },
+                new Traduccion { IdIdioma = idiomaEspanol.ID, IdEtiqueta = eCuitBanco.ID, Texto = "CUIT: 30-71829384-9" },
+                new Traduccion { IdIdioma = idiomaEspanol.ID, IdEtiqueta = eEntBanco.ID, Texto = "Entidad: Banco Santander Río" },
+                new Traduccion { IdIdioma = idiomaEspanol.ID, IdEtiqueta = eCbuBanco.ID, Texto = "CBU: 0720123400000012345678" },
+                new Traduccion { IdIdioma = idiomaEspanol.ID, IdEtiqueta = eAliasBanco.ID, Texto = "Alias: REDLINE.CUSTOMS.OFICIAL" },
+                new Traduccion { IdIdioma = idiomaEspanol.ID, IdEtiqueta = eInstTransf.ID, Texto = "Realizá la transferencia y envianos el comprobante para habilitar la entrega." },
+                new Traduccion { IdIdioma = idiomaEspanol.ID, IdEtiqueta = eMontoSugerido.ID, Texto = "Monto sugerido a transferir (ARS):" },
+                new Traduccion { IdIdioma = idiomaEspanol.ID, IdEtiqueta = eTitSimulador.ID, Texto = "Simulador de Financiación Prendaria" },
+                new Traduccion { IdIdioma = idiomaEspanol.ID, IdEtiqueta = eSubSimulador.ID, Texto = "Seleccioná el plazo y anticipo para simular cuotas fijas en USD." },
+                new Traduccion { IdIdioma = idiomaEspanol.ID, IdEtiqueta = eCuotasPlazo.ID, Texto = "Plazo:" },
+                new Traduccion { IdIdioma = idiomaEspanol.ID, IdEtiqueta = eAnticipoInicial.ID, Texto = "Anticipo (%):" },
+                new Traduccion { IdIdioma = idiomaEspanol.ID, IdEtiqueta = eAnticipoCalculado.ID, Texto = "Anticipo inicial (USD):" },
+                new Traduccion { IdIdioma = idiomaEspanol.ID, IdEtiqueta = eCapitalFinanciar.ID, Texto = "Saldo financiado (USD):" },
+                new Traduccion { IdIdioma = idiomaEspanol.ID, IdEtiqueta = eValorCuota.ID, Texto = "Cuota mensual estimada (USD):" },
+                new Traduccion { IdIdioma = idiomaEspanol.ID, IdEtiqueta = eTasaTnaCft.ID, Texto = "TNA / CFT estimado:" },
+                new Traduccion { IdIdioma = idiomaEspanol.ID, IdEtiqueta = eTotalPlan.ID, Texto = "Total estimado del plan (USD):" },
+                new Traduccion { IdIdioma = idiomaEspanol.ID, IdEtiqueta = eAvisoFiscalFinanc.ID, Texto = "La factura oficial del vehículo se emite por el valor de lista + IVA en USD. El saldo se instrumenta mediante mutuo prendario." },
+                new Traduccion { IdIdioma = idiomaEspanol.ID, IdEtiqueta = eErrLuhn.ID, Texto = "El número de tarjeta ingresado no es válido según el algoritmo de verificación." },
+                new Traduccion { IdIdioma = idiomaEspanol.ID, IdEtiqueta = eJsValida.ID, Texto = "Tarjeta válida" },
+                new Traduccion { IdIdioma = idiomaEspanol.ID, IdEtiqueta = eJsInvalida.ID, Texto = "Número de tarjeta inválido" },
+                new Traduccion { IdIdioma = idiomaEspanol.ID, IdEtiqueta = eJsCalculando.ID, Texto = "Calculando cotización..." },
+                new Traduccion { IdIdioma = idiomaEspanol.ID, IdEtiqueta = eJsErrorServ.ID, Texto = "Servicio de financiación no disponible momentáneamente" },
+                new Traduccion { IdIdioma = idiomaEspanol.ID, IdEtiqueta = eJsCuotasDe.ID, Texto = "cuotas fijas de" }
+            );
+            context.SaveChanges();
+
+            if (idiomaIngles != null)
+            {
+                context.Traducciones.AddOrUpdate(t => new { t.IdIdioma, t.IdEtiqueta },
+                    new Traduccion { IdIdioma = idiomaIngles.ID, IdEtiqueta = eTitConversor.ID, Texto = "Reference currency" },
+                    new Traduccion { IdIdioma = idiomaIngles.ID, IdEtiqueta = eAvisoMonedaOficial.ID, Texto = "Official billing and payment issued in USD" },
+                    new Traduccion { IdIdioma = idiomaIngles.ID, IdEtiqueta = eEquivRef.ID, Texto = "Estimated equivalent:" },
+                    new Traduccion { IdIdioma = idiomaIngles.ID, IdEtiqueta = eTipoCambio.ID, Texto = "Applied exchange rate:" },
+                    new Traduccion { IdIdioma = idiomaIngles.ID, IdEtiqueta = eTitBanco.ID, Texto = "Beneficiary: REDLINE CUSTOMS S.A." },
+                    new Traduccion { IdIdioma = idiomaIngles.ID, IdEtiqueta = eCuitBanco.ID, Texto = "Tax ID: 30-71829384-9" },
+                    new Traduccion { IdIdioma = idiomaIngles.ID, IdEtiqueta = eEntBanco.ID, Texto = "Bank: Banco Santander Río" },
+                    new Traduccion { IdIdioma = idiomaIngles.ID, IdEtiqueta = eCbuBanco.ID, Texto = "CBU: 0720123400000012345678" },
+                    new Traduccion { IdIdioma = idiomaIngles.ID, IdEtiqueta = eAliasBanco.ID, Texto = "Alias: REDLINE.CUSTOMS.OFICIAL" },
+                    new Traduccion { IdIdioma = idiomaIngles.ID, IdEtiqueta = eInstTransf.ID, Texto = "Complete the transfer and submit receipt to authorize delivery." },
+                    new Traduccion { IdIdioma = idiomaIngles.ID, IdEtiqueta = eMontoSugerido.ID, Texto = "Suggested transfer amount (ARS):" },
+                    new Traduccion { IdIdioma = idiomaIngles.ID, IdEtiqueta = eTitSimulador.ID, Texto = "Pledge Financing Simulator" },
+                    new Traduccion { IdIdioma = idiomaIngles.ID, IdEtiqueta = eSubSimulador.ID, Texto = "Select term and down payment to simulate fixed USD installments." },
+                    new Traduccion { IdIdioma = idiomaIngles.ID, IdEtiqueta = eCuotasPlazo.ID, Texto = "Term:" },
+                    new Traduccion { IdIdioma = idiomaIngles.ID, IdEtiqueta = eAnticipoInicial.ID, Texto = "Down payment (%):" },
+                    new Traduccion { IdIdioma = idiomaIngles.ID, IdEtiqueta = eAnticipoCalculado.ID, Texto = "Initial down payment (USD):" },
+                    new Traduccion { IdIdioma = idiomaIngles.ID, IdEtiqueta = eCapitalFinanciar.ID, Texto = "Financed balance (USD):" },
+                    new Traduccion { IdIdioma = idiomaIngles.ID, IdEtiqueta = eValorCuota.ID, Texto = "Estimated monthly installment (USD):" },
+                    new Traduccion { IdIdioma = idiomaIngles.ID, IdEtiqueta = eTasaTnaCft.ID, Texto = "Nominal Rate / Estimated Cost:" },
+                    new Traduccion { IdIdioma = idiomaIngles.ID, IdEtiqueta = eTotalPlan.ID, Texto = "Estimated plan total (USD):" },
+                    new Traduccion { IdIdioma = idiomaIngles.ID, IdEtiqueta = eAvisoFiscalFinanc.ID, Texto = "The vehicle tax invoice is issued for list price + VAT in USD. The balance is settled through a pledge loan." },
+                    new Traduccion { IdIdioma = idiomaIngles.ID, IdEtiqueta = eErrLuhn.ID, Texto = "The card number entered is invalid according to the verification algorithm." },
+                    new Traduccion { IdIdioma = idiomaIngles.ID, IdEtiqueta = eJsValida.ID, Texto = "Valid card" },
+                    new Traduccion { IdIdioma = idiomaIngles.ID, IdEtiqueta = eJsInvalida.ID, Texto = "Invalid card number" },
+                    new Traduccion { IdIdioma = idiomaIngles.ID, IdEtiqueta = eJsCalculando.ID, Texto = "Calculating quote..." },
+                    new Traduccion { IdIdioma = idiomaIngles.ID, IdEtiqueta = eJsErrorServ.ID, Texto = "Financing service temporarily unavailable" },
+                    new Traduccion { IdIdioma = idiomaIngles.ID, IdEtiqueta = eJsCuotasDe.ID, Texto = "fixed installments of" }
+                );
+                context.SaveChanges();
+            }
+
+            // Opciones DropDown Monedas
+            var eOptUsd = new Etiqueta { Clave = "ddlMonedaReferencia_USD", Pagina = "Checkout.aspx", Descripcion = "Opción USD conversor", EsMensajeAlerta = false };
+            var eOptMep = new Etiqueta { Clave = "ddlMonedaReferencia_ARS_MEP", Pagina = "Checkout.aspx", Descripcion = "Opción Dólar MEP conversor", EsMensajeAlerta = false };
+            var eOptOfi = new Etiqueta { Clave = "ddlMonedaReferencia_ARS_OFICIAL", Pagina = "Checkout.aspx", Descripcion = "Opción Dólar Oficial conversor", EsMensajeAlerta = false };
+            var eOptEur = new Etiqueta { Clave = "ddlMonedaReferencia_EUR", Pagina = "Checkout.aspx", Descripcion = "Opción Euro conversor", EsMensajeAlerta = false };
+            var eOptBrl = new Etiqueta { Clave = "ddlMonedaReferencia_BRL", Pagina = "Checkout.aspx", Descripcion = "Opción Real Brasileño conversor", EsMensajeAlerta = false };
+            // Opciones DropDown Cuotas Financiación
+            var eOptC12 = new Etiqueta { Clave = "ddlCuotasFinanciacion_12", Pagina = "Checkout.aspx", Descripcion = "Opción 12 cuotas financiación", EsMensajeAlerta = false };
+            var eOptC24 = new Etiqueta { Clave = "ddlCuotasFinanciacion_24", Pagina = "Checkout.aspx", Descripcion = "Opción 24 cuotas financiación", EsMensajeAlerta = false };
+            var eOptC36 = new Etiqueta { Clave = "ddlCuotasFinanciacion_36", Pagina = "Checkout.aspx", Descripcion = "Opción 36 cuotas financiación", EsMensajeAlerta = false };
+            var eOptC48 = new Etiqueta { Clave = "ddlCuotasFinanciacion_48", Pagina = "Checkout.aspx", Descripcion = "Opción 48 cuotas financiación", EsMensajeAlerta = false };
+            context.Etiquetas.AddOrUpdate(e => e.Clave,
+                eOptUsd, eOptMep, eOptOfi, eOptEur, eOptBrl,
+                eOptC12, eOptC24, eOptC36, eOptC48
+            );
+            context.SaveChanges();
+            // Traducciones en Español (ID = 1)
+            context.Traducciones.AddOrUpdate(t => new { t.IdIdioma, t.IdEtiqueta },
+                new Traduccion { IdIdioma = idiomaEspanol.ID, IdEtiqueta = eOptUsd.ID, Texto = "USD - Dólar Estadounidense" },
+                new Traduccion { IdIdioma = idiomaEspanol.ID, IdEtiqueta = eOptMep.ID, Texto = "ARS - Dólar MEP ($1.220)" },
+                new Traduccion { IdIdioma = idiomaEspanol.ID, IdEtiqueta = eOptOfi.ID, Texto = "ARS - Dólar Oficial ($1.050)" },
+                new Traduccion { IdIdioma = idiomaEspanol.ID, IdEtiqueta = eOptEur.ID, Texto = "EUR - Euro (€0.92)" },
+                new Traduccion { IdIdioma = idiomaEspanol.ID, IdEtiqueta = eOptBrl.ID, Texto = "BRL - Real Brasileño (R$5.75)" },
+                new Traduccion { IdIdioma = idiomaEspanol.ID, IdEtiqueta = eOptC12.ID, Texto = "12 cuotas (TNA 9.5%)" },
+                new Traduccion { IdIdioma = idiomaEspanol.ID, IdEtiqueta = eOptC24.ID, Texto = "24 cuotas (TNA 11.5%)" },
+                new Traduccion { IdIdioma = idiomaEspanol.ID, IdEtiqueta = eOptC36.ID, Texto = "36 cuotas (TNA 13.5%)" },
+                new Traduccion { IdIdioma = idiomaEspanol.ID, IdEtiqueta = eOptC48.ID, Texto = "48 cuotas (TNA 15.5%)" }
+            );
+            context.SaveChanges();
+            // Traducciones en Inglés (ID = 2)
+            if (idiomaIngles != null)
+            {
+                context.Traducciones.AddOrUpdate(t => new { t.IdIdioma, t.IdEtiqueta },
+                    new Traduccion { IdIdioma = idiomaIngles.ID, IdEtiqueta = eOptUsd.ID, Texto = "USD - US Dollar" },
+                    new Traduccion { IdIdioma = idiomaIngles.ID, IdEtiqueta = eOptMep.ID, Texto = "ARS - MEP Dollar ($1,220)" },
+                    new Traduccion { IdIdioma = idiomaIngles.ID, IdEtiqueta = eOptOfi.ID, Texto = "ARS - Official Dollar ($1,050)" },
+                    new Traduccion { IdIdioma = idiomaIngles.ID, IdEtiqueta = eOptEur.ID, Texto = "EUR - Euro (€0.92)" },
+                    new Traduccion { IdIdioma = idiomaIngles.ID, IdEtiqueta = eOptBrl.ID, Texto = "BRL - Brazilian Real (R$5.75)" },
+                    new Traduccion { IdIdioma = idiomaIngles.ID, IdEtiqueta = eOptC12.ID, Texto = "12 installments (9.5% APR)" },
+                    new Traduccion { IdIdioma = idiomaIngles.ID, IdEtiqueta = eOptC24.ID, Texto = "24 installments (11.5% APR)" },
+                    new Traduccion { IdIdioma = idiomaIngles.ID, IdEtiqueta = eOptC36.ID, Texto = "36 installments (13.5% APR)" },
+                    new Traduccion { IdIdioma = idiomaIngles.ID, IdEtiqueta = eOptC48.ID, Texto = "48 installments (15.5% APR)" }
+                );
+                context.SaveChanges();
+            }
+
             var dalAutoBase = new DAL_AutoBase();
             var dalUsuario = new DAL_Usuario();
             var dalPerfil = new DAL_Perfil();

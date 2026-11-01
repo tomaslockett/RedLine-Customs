@@ -222,14 +222,12 @@ namespace RedLine.Servicios
         private static string Escape(string text)
         {
             if (string.IsNullOrEmpty(text)) return string.Empty;
-
-            // Quitar o normalizar tildes para fuente estándar Type1
             string normal = text
                 .Replace("á", "a").Replace("é", "e").Replace("í", "i").Replace("ó", "o").Replace("ú", "u")
                 .Replace("Á", "A").Replace("É", "E").Replace("Í", "I").Replace("Ó", "O").Replace("Ú", "U")
                 .Replace("ñ", "n").Replace("Ñ", "N")
-                .Replace("°", "o").Replace("¿", "").Replace("¡", "");
-
+                .Replace("°", "o").Replace("¿", "").Replace("¡", "")
+                .Replace("€", "EUR ").Replace("–", "-").Replace("—", "-");
             return normal
                 .Replace("\\", "\\\\")
                 .Replace("(", "\\(")

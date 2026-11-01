@@ -10,6 +10,9 @@ namespace RedLine.Web
     {
         public static void RegisterRoutes(RouteCollection routes)
         {
+            // Evita que FriendlyUrls intercepte las peticiones WebMethod a servicios ASMX
+            routes.Ignore("{*allasmx}", new { allasmx = @".*\.asmx(/.*)?" });
+
             var settings = new FriendlyUrlSettings();
             //settings.AutoRedirectMode = RedirectMode.Permanent;
             routes.EnableFriendlyUrls(settings);

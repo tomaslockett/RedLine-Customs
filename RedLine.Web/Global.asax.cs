@@ -169,6 +169,7 @@ namespace RedLine.Web
                 rutaActual.Contains("migaraje") ||
                 rutaActual.Contains("facturacion") ||
                 rutaActual.Contains("descargarfactura") ||
+                rutaActual.Contains("financiacionservice") ||
                 rutaActual.Contains("cambiocontraseña") ||
                 rutaActual.Contains("logout") ||
                 rutaActual.Contains("login") ||
@@ -193,6 +194,7 @@ namespace RedLine.Web
                 rutaActual.Contains("login") ||
                 rutaActual.Contains("registrocliente") ||
                 rutaActual.Contains("logout") ||
+                rutaActual.Contains("financiacionservice") ||
                 rutaActual.Contains("descargarfactura"))
             {
                 return "libre";
