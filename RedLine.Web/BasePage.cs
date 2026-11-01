@@ -1,4 +1,4 @@
-using RedLine.Be.Entidades;
+﻿using RedLine.Be.Entidades;
 using RedLine.Be.Interfaces;
 using RedLine.Bll;
 using RedLine.Servicios;
@@ -108,7 +108,8 @@ namespace RedLine.Web
                 texto = $"{prefijo} {texto}";
             }
 
-            string script = $"alert('{texto.Replace("'", "\\'")}');";
+            string textoSanitizado = texto.Replace("\\", "\\\\").Replace("'", "\\'").Replace("\r", "").Replace("\n", "\\n");
+            string script = $"alert('{textoSanitizado}');";
             ScriptManager.RegisterStartupScript(this, GetType(), Guid.NewGuid().ToString(), script, true);
         }
 

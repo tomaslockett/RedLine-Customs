@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="..\packages\EntityFramework.6.5.2\build\EntityFramework.props" Condition="Exists('..\packages\EntityFramework.6.5.2\build\EntityFramework.props')" />
   <Import Project="..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props" Condition="Exists('..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" />
@@ -109,6 +109,7 @@
     <Content Include="BackupRestore.aspx" />
     <Content Include="CambioContraseña.aspx" />
     <Content Include="Checkout.aspx" />
+    <Content Include="FinanciacionService.asmx" />
     <Content Include="Content\BackupRestore.css" />
     <Content Include="Content\CambioContraseña.css" />
     <Content Include="Content\Catalogo.css" />
@@ -193,6 +194,10 @@
     </Compile>
     <Compile Include="Checkout.aspx.designer.cs">
       <DependentUpon>Checkout.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="FinanciacionService.asmx.cs">
+      <DependentUpon>FinanciacionService.asmx</DependentUpon>
+      <SubType>Component</SubType>
     </Compile>
     <Compile Include="CrearAuto.aspx.cs">
       <DependentUpon>CrearAuto.aspx</DependentUpon>

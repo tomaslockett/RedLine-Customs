@@ -4,8 +4,10 @@ using RedLine.Bll;
 using RedLine.Servicios;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Web;
+using System.Web.Script.Serialization;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
@@ -18,7 +20,24 @@ namespace RedLine.Web
             if (!IsPostBack)
             {
                 CargarDatosCheckout();
+                InyectarTraduccionesClienteJs();
             }
+        }
+
+        private void InyectarTraduccionesClienteJs()
+        {
+            var textosJs = new Dictionary<string, string>
+            {
+                { "tarjetaValida", TraducirSeguro("js_tarjeta_valida", "Tarjeta válida") },
+                { "tarjetaInvalida", TraducirSeguro("js_tarjeta_invalida", "Número de tarjeta inválido") },
+                { "calculando", TraducirSeguro("js_calculando", "Calculando cotización...") },
+                { "errorServicio", TraducirSeguro("js_error_servicio", "Servicio de financiación no disponible momentáneamente") },
+                { "cuotasDe", TraducirSeguro("js_cuotas_de", "cuotas fijas de") }
+            };
+
+            string json = new JavaScriptSerializer().Serialize(textosJs);
+            string script = $"window.CheckoutI18n = {json};";
+            ClientScript.RegisterStartupScript(this.GetType(), "CheckoutI18nScript", script, true);
         }
 
         private void CargarDatosCheckout()
@@ -40,7 +59,7 @@ namespace RedLine.Web
                     }
                     else
                     {
-                        imgAuto.Src = "Content/img/auto-reemplazo.png";
+                        imgAuto.Src = "Content/img/porsche.jfif";
                     }
 
                     decimal subtotal = auto.PrecioBase;
@@ -93,6 +112,11 @@ namespace RedLine.Web
                     lblSubtotal.InnerText = $"${subtotal:N0}";
                     lblIva.InnerText = $"${iva:N0}";
                     lblTotal.InnerText = $"${total:N0}";
+
+                    if (hfTotalUsd != null)
+                    {
+                        hfTotalUsd.Value = total.ToString(CultureInfo.InvariantCulture);
+                    }
                 }
                 else
                 {
@@ -142,7 +166,7 @@ namespace RedLine.Web
                     metodoPago = hfMetodoPago.Value;
                 }
 
-                // Si paga con tarjeta, validamos que haya completado los campos básicos
+                // Si paga con tarjeta, validamos campos básicos y algoritmo de Luhn mediante FinanciacionService
                 if (metodoPago == TextosComercialesVentas.MetodoPagoTarjeta)
                 {
                     string titular = txtCardName != null ? txtCardName.Text.Trim() : string.Empty;
@@ -154,7 +178,20 @@ namespace RedLine.Web
                     {
                         if (lblErrorCheckout != null)
                         {
-                            lblErrorCheckout.Text = Traducir("msg_error_datos_tarjeta_checkout");
+                            lblErrorCheckout.Text = TraducirSeguro("msg_error_datos_tarjeta_checkout", "Por favor completá todos los datos de la tarjeta antes de confirmar el pago.");
+                            lblErrorCheckout.Visible = true;
+                        }
+                        return;
+                    }
+
+                    // Validación de servidor por algoritmo de Luhn (100% offline)
+                    FinanciacionService service = new FinanciacionService();
+                    ResultadoValidacionTarjetaDto validacion = service.ValidarTarjeta(numeroTarjeta);
+                    if (!validacion.EsValida)
+                    {
+                        if (lblErrorCheckout != null)
+                        {
+                            lblErrorCheckout.Text = TraducirSeguro("msg_error_tarjeta_invalida_luhn", "El número de tarjeta ingresado no es válido según el algoritmo de verificación.");
                             lblErrorCheckout.Visible = true;
                         }
                         return;
@@ -302,7 +339,7 @@ namespace RedLine.Web
             {
                 if (lblErrorCheckout != null)
                 {
-                    lblErrorCheckout.Text = Traducir("msg_error_procesar_compra");
+                    lblErrorCheckout.Text = TraducirSeguro("msg_error_procesar_compra", "Ocurrió un error al procesar la compra. Intente nuevamente.");
                     lblErrorCheckout.Visible = true;
                 }
             }
