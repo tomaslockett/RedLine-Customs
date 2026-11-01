@@ -98,9 +98,9 @@ namespace RedLine.Web
 
                 MostrarAlertaTraducida("msg_perfil_creado_exito");
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                MostrarAlertaTraducida("msg_error_crear_perfil", ex.Message);
+                MostrarAlertaTraducida("msg_error_crear_perfil");
             }
         }
 
@@ -163,9 +163,9 @@ namespace RedLine.Web
 
                 MostrarAlertaTraducida("msg_cambios_guardados_exito");
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                MostrarAlertaTraducida("msg_error_general", ex.Message);
+                MostrarAlertaTraducida("msg_error_general");
             }
         }
 

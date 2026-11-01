@@ -1,4 +1,4 @@
-using Redline.Be;
+﻿using Redline.Be;
 using RedLine.Bll;
 using System;
 using System.Globalization;
@@ -49,9 +49,9 @@ namespace RedLine.Web
                         throw new Exception(Traducir("msg_auto_no_encontrado_stock"));
                     }
                 }
-                catch (Exception ex)
+                catch (Exception)
                 {
-                    Response.Write("<script>alert('" + ex.Message.Replace("'", "\\'") + "'); window.location='Catalogo.aspx';</script>");
+                    Response.Write("<script>alert('" + Traducir("msg_error_general").Replace("'", "\\'") + "'); window.location='Catalogo.aspx';</script>");
                 }
             }
         }

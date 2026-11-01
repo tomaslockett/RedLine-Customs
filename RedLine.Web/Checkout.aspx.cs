@@ -1,4 +1,4 @@
-using Redline.Be;
+﻿using Redline.Be;
 using RedLine.Be.Entidades;
 using RedLine.Bll;
 using RedLine.Servicios;
@@ -135,15 +135,15 @@ namespace RedLine.Web
                     return;
                 }
 
-                // Determinamos el método de pago elegido
-                string metodoPago = "Tarjeta de Crédito";
+                // Determinamos el método de pago elegido (contrato de datos persistido)
+                string metodoPago = TextosComercialesVentas.MetodoPagoTarjeta;
                 if (hfMetodoPago != null && !string.IsNullOrEmpty(hfMetodoPago.Value))
                 {
                     metodoPago = hfMetodoPago.Value;
                 }
 
                 // Si paga con tarjeta, validamos que haya completado los campos básicos
-                if (metodoPago == "Tarjeta de Crédito")
+                if (metodoPago == TextosComercialesVentas.MetodoPagoTarjeta)
                 {
                     string titular = txtCardName != null ? txtCardName.Text.Trim() : string.Empty;
                     string numeroTarjeta = txtCardNumber != null ? txtCardNumber.Text.Replace(" ", "").Trim() : string.Empty;
@@ -154,7 +154,7 @@ namespace RedLine.Web
                     {
                         if (lblErrorCheckout != null)
                         {
-                            lblErrorCheckout.Text = "Por favor completá todos los datos de la tarjeta antes de confirmar el pago.";
+                            lblErrorCheckout.Text = Traducir("msg_error_datos_tarjeta_checkout");
                             lblErrorCheckout.Visible = true;
                         }
                         return;
@@ -219,7 +219,8 @@ namespace RedLine.Web
                 string numFactura = "FC-B-0001-" + DateTime.Now.ToString("HHmmssff");
 
                 // Armamos la descripción de las mejoras para mostrar en MiGaraje, Facturación e HistorialVentas
-                string textoMejoras = "Configuración Estándar";
+                // Centinela persistido en BD (ver TextosComercialesVentas); la UI lo traduce al mostrarlo.
+                string textoMejoras = TextosComercialesVentas.ConfiguracionEstandar;
                 if (listaMejoras.Count > 0)
                 {
                     List<string> nombresMejoras = new List<string>();
@@ -297,11 +298,11 @@ namespace RedLine.Web
                 Response.Redirect("PagoExitoso.aspx", false);
                 Context.ApplicationInstance.CompleteRequest();
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 if (lblErrorCheckout != null)
                 {
-                    lblErrorCheckout.Text = "Error al procesar la compra: " + ex.Message;
+                    lblErrorCheckout.Text = Traducir("msg_error_procesar_compra");
                     lblErrorCheckout.Visible = true;
                 }
             }

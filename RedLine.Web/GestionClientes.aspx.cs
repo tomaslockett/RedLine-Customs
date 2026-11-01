@@ -78,9 +78,9 @@ namespace RedLine.Web
                     }
                 }
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                MostrarMensaje($"{Traducir("msg_xml_error_procesar")} {ex.Message}", false);
+                MostrarMensaje(Traducir("msg_xml_error_procesar"), false);
             }
         }
         private void MostrarMensaje(string mensaje, bool esExito)
@@ -94,7 +94,10 @@ namespace RedLine.Web
             if (e.CommandName == "VerPerfil")
             {
                 string clienteDni = e.CommandArgument.ToString();
-                Response.Redirect($"PerfilCliente.aspx?dni={clienteDni}");
+
+                // PerfilCliente.aspx no existe: redirigimos al historial de ventas filtrado por DNI,
+                // que muestra el perfil de compras del cliente (búsqueda por DNI ya soportada).
+                Response.Redirect($"HistorialVentas.aspx?dni={clienteDni}");
             }
         }
 

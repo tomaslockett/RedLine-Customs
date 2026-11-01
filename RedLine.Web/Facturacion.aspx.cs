@@ -110,7 +110,7 @@ namespace RedLine.Web
             lblNumeroFactura.Text = numFactura;
             lblFechaEmision.Text = fechaEmision.ToString("dd/MM/yyyy HH:mm");
             lblNumeroVenta.Text = !string.IsNullOrEmpty(factura.Venta?.NumeroVenta) ? factura.Venta.NumeroVenta : ("VTA-" + factura.ID.ToString("D6"));
-            lblMetodoPago.Text = !string.IsNullOrEmpty(factura.MetodoPago) ? factura.MetodoPago : (factura.Venta?.MetodoPago ?? "Tarjeta de Crédito");
+            lblMetodoPago.Text = !string.IsNullOrEmpty(factura.MetodoPago) ? factura.MetodoPago : (factura.Venta?.MetodoPago ?? Traducir("texto_metodo_pago_tarjeta"));
             lblVencimientoCae.Text = fechaEmision.AddDays(10).ToString("dd/MM/yyyy");
 
             // Datos del Cliente
@@ -181,7 +181,7 @@ namespace RedLine.Web
                     });
                 }
             }
-            else if (!string.IsNullOrEmpty(autoPers?.NombreExtra) && autoPers.NombreExtra != "Configuración Estándar")
+            else if (!string.IsNullOrEmpty(autoPers?.NombreExtra) && autoPers.NombreExtra != TextosComercialesVentas.ConfiguracionEstandar)
             {
                 string[] parts = autoPers.NombreExtra.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
                 foreach (var p in parts)

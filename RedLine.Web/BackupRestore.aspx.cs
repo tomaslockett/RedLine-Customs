@@ -54,9 +54,9 @@ namespace RedLine.Web
                 lblEstado.Text = Traducir("msgBackupExito") + entradaUsuario;
                 lblEstado.ForeColor = System.Drawing.Color.Green;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                lblEstado.Text = Traducir("msgBackupError") + ex.Message;
+                lblEstado.Text = Traducir("msgBackupError");
                 lblEstado.ForeColor = System.Drawing.Color.Red;
             }
         }
@@ -99,9 +99,9 @@ namespace RedLine.Web
                     Response.Redirect("LogIn.aspx");
                 }
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                lblEstado.Text = Traducir("msgRestoreError") + ex.Message;
+                lblEstado.Text = Traducir("msgRestoreError");
                 lblEstado.ForeColor = System.Drawing.Color.Red;
             }
             finally

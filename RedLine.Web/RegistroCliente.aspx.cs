@@ -1,4 +1,4 @@
-using Redline.Be;
+﻿using Redline.Be;
 using RedLine.Bll;
 using RedLine.Servicios;
 using System;
@@ -94,9 +94,9 @@ namespace RedLine.Web
 
                 ScriptManager.RegisterStartupScript(this, GetType(), "Popup", script, true);
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                lblMensaje.Text = $"{Traducir("msg_registro_error_procesar")} {ex.Message}";
+                lblMensaje.Text = Traducir("msg_registro_error_procesar");
             }
         }
     }

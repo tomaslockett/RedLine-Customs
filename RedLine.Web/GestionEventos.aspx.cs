@@ -50,9 +50,19 @@ namespace RedLine.Web
             {
                 DateTime fec;
                 if (DateTime.TryParse(txtFiltroFecha.Text, out fec))
+                {
                     lista = lista.Where(x => x.Fecha.Date == fec.Date).ToList();
+                }
+                else
+                {
+                    // Clave msg_eventos_error_fechas: la fecha ingresada no es valida
+                    MostrarAlertaTraducida("msg_eventos_error_fechas");
+                    txtFiltroFecha.Text = string.Empty;
+                }
             }
 
+            // Clave msg_eventos_sin_resultados: estado vacío de la grilla
+            gvEventos.EmptyDataText = Traducir("msg_eventos_sin_resultados");
             gvEventos.DataSource = lista;
             gvEventos.DataBind();
         }
@@ -95,13 +105,13 @@ namespace RedLine.Web
             {
                 
             }
-            catch (UnauthorizedAccessException ex)
+            catch (UnauthorizedAccessException)
             {
-                MostrarAlertaTraducida("msg_error_exportar_permisos", ex.Message);
+                MostrarAlertaTraducida("msg_error_exportar_permisos");
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                MostrarAlertaTraducida("msg_error_exportar_bitacora", ex.Message);
+                MostrarAlertaTraducida("msg_error_exportar_bitacora");
             }
         }
     }

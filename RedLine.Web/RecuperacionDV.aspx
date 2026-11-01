@@ -1,10 +1,9 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="RecuperacionDV.aspx.cs" Inherits="RedLine.Web.RecuperacionDV" %>
+﻿<%@ Page Title="Recuperación de Dígito Verificador" Language="C#" AutoEventWireup="true" CodeBehind="RecuperacionDV.aspx.cs" Inherits="RedLine.Web.RecuperacionDV" %>
 
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-    <title>Recuperación de Dígito Verificador</title>
     <link href="/Content/RecuperacionDV.css" rel="stylesheet" type="text/css" />
 </head>
 <body>

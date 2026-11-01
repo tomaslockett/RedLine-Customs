@@ -254,7 +254,7 @@ namespace RedLine.Web
         public string FormatearTagsMejoras(object nombreExtraObj)
         {
             string extras = nombreExtraObj?.ToString();
-            if (string.IsNullOrEmpty(extras) || extras == "Configuración Estándar")
+            if (string.IsNullOrEmpty(extras) || extras == TextosComercialesVentas.ConfiguracionEstandar)
             {
                 return "<span class='tag-mejora' style='background:#1e293b; color:#94a3b8; border-color:#334155;'><i class='fa-solid fa-car'></i> " + Traducir("texto_configuracion_fabrica") + "</span>";
             }

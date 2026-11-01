@@ -1,4 +1,6 @@
+using RedLine.Be.Entidades;
 using RedLine.Be.Interfaces;
+using RedLine.Bll;
 using RedLine.Servicios;
 using System;
 using System.Collections.Generic;
@@ -17,6 +19,7 @@ namespace RedLine.Web
         protected override void OnInit(EventArgs e)
         {
             base.OnInit(e);
+            AsegurarIdiomaCargado();
             SubjectIdioma.Instancia.AgregarObserver(this);
         }
 
@@ -40,6 +43,61 @@ namespace RedLine.Web
         public string Traducir(string clave)
         {
             return SubjectIdioma.Instancia.Traducir(clave);
+        }
+
+        /// <summary>
+        /// Traducción con respaldo: si la clave sigue sin sembrar (llega vacía o "[clave]")
+        /// devuelve el texto por defecto pasado como parámetro. Se usa en textos de binding
+        /// (Repeater/GridView) que OnPreRender no puede re-traducir ni sanear.
+        /// </summary>
+        public string TraducirSeguro(string clave, string predeterminado)
+        {
+            string texto = Traducir(clave);
+            if (string.IsNullOrWhiteSpace(texto) || (texto.StartsWith("[") && texto.EndsWith("]")))
+            {
+                return predeterminado;
+            }
+            return texto;
+        }
+
+        /// <summary>
+        /// Garantiza que el diccionario de traducciones de la sesión esté cargado antes
+        /// del Page_Load. La MasterPage carga el idioma en su propio Page_Load, que se
+        /// ejecuta DESPUÉS del Page_Load del contenido (donde DataBind consume Traducir());
+        /// en la primera request el diccionario en sesión está vacío y las etiquetas de
+        /// binding renderizan "[clave]". Se respeta el idioma de Session["IdiomaSeleccionado"]
+        /// y, si no existe, el idioma default del sistema. Cuando la MasterPage complete su
+        /// carga lo reemplazará con el mismo valor, por lo que este respaldo es transparente.
+        /// </summary>
+        private void AsegurarIdiomaCargado()
+        {
+            try
+            {
+                if (SubjectIdioma.Instancia.DiccionarioCargado) return;
+
+                BLL_Idioma bllIdioma = new BLL_Idioma();
+
+                Idioma idioma = null;
+                if (Session["IdiomaSeleccionado"] != null)
+                {
+                    idioma = bllIdioma.ObtenerPorId((int)Session["IdiomaSeleccionado"]);
+                }
+                if (idioma == null)
+                {
+                    idioma = bllIdioma.ObtenerDefault() ?? bllIdioma.Listar().FirstOrDefault();
+                }
+
+                if (idioma != null)
+                {
+                    Dictionary<string, string> traducciones = bllIdioma.ObtenerTraduccionesPorIdioma(idioma.ID);
+                    SubjectIdioma.Instancia.CargarTraducciones(idioma.Nombre, traducciones);
+                }
+            }
+            catch
+            {
+                // Sin conexión o sin datos aún: se mantiene el comportamiento previo y
+                // la MasterPage reintenta la carga en su Page_Load.
+            }
         }
 
         public void MostrarAlertaTraducida(string claveMensaje, string prefijo = "")

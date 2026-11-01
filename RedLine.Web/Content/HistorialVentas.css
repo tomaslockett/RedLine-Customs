@@ -219,3 +219,280 @@
     font-size: 12px;
     font-weight: 600;
 }
+
+/* ================== INFORME MENSUAL DE VENTAS ================== */
+
+.informe-panel {
+    padding: 25px 30px;
+}
+
+.informe-titulo {
+    font-size: 26px;
+    font-weight: 800;
+    color: #D93416;
+    text-transform: uppercase;
+    letter-spacing: -0.5px;
+    margin: 0;
+}
+
+.informe-subtitulo {
+    font-size: 14px;
+    color: darkgray;
+    margin: 6px 0 0 0;
+    line-height: 1.5;
+}
+
+.informe-selectores {
+    width: 100%;
+    margin-top: 22px;
+    font-size: 0;
+}
+
+.informe-selector {
+    display: inline-block;
+    width: 13%;
+    margin-right: 3%;
+    vertical-align: bottom;
+}
+
+    .informe-selector label {
+        display: block;
+        font-size: 12px;
+        font-weight: 600;
+        margin-bottom: 6px;
+        color: darkgray;
+        text-transform: uppercase;
+    }
+
+.informe-selectores .input-taller {
+    color: #0F141C;
+    background: #FFFFFF;
+    font-weight: 600;
+}
+
+.informe-acciones {
+    display: inline-block;
+    width: 55%;
+    text-align: right;
+    vertical-align: bottom;
+    font-size: 0;
+}
+
+.informe-btn {
+    display: inline-block;
+    width: auto;
+    min-width: 160px;
+    margin-left: 10px;
+    margin-bottom: 0;
+    padding: 10px 18px;
+    font-size: 12.5px;
+    vertical-align: bottom;
+}
+
+.btn-secundario {
+    background-color: #161D29;
+    color: #D93416;
+    border: 1px solid #D93416;
+    padding: 10px 18px;
+    border-radius: 6px;
+    font-size: 12.5px;
+    font-weight: 700;
+    cursor: pointer;
+    text-transform: uppercase;
+    transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+    .btn-secundario:hover {
+        background-color: rgba(217, 52, 22, 0.18);
+        color: #ffffff;
+    }
+
+/* Encabezado corporativo del informe */
+
+.informe-corporativo {
+    display: block;
+    width: 100%;
+    background: #161D29;
+    border: 1px solid darkgray;
+    border-left: 6px solid #D93416;
+    border-radius: 10px;
+    padding: 16px 20px;
+    margin-top: 22px;
+    box-sizing: border-box;
+    font-size: 0;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+}
+
+.informe-empresa,
+.informe-periodo {
+    display: inline-block;
+    vertical-align: top;
+    font-size: 13px;
+}
+
+.informe-empresa {
+    width: 62%;
+}
+
+.informe-periodo {
+    width: 38%;
+    text-align: right;
+}
+
+.informe-marca {
+    display: block;
+    font-size: 20px;
+    font-weight: 800;
+    color: #D93416;
+    letter-spacing: 0.5px;
+}
+
+.informe-razon {
+    display: block;
+    color: white;
+    font-weight: 600;
+    margin-top: 3px;
+}
+
+.informe-institucional {
+    display: block;
+    color: darkgray;
+    margin-top: 3px;
+}
+
+.informe-fiscal {
+    display: block;
+    color: darkgray;
+    font-size: 12px;
+    margin-top: 3px;
+}
+
+.informe-periodo span {
+    display: block;
+    color: darkgray;
+    font-size: 13px;
+    margin-bottom: 8px;
+}
+
+    .informe-periodo span strong {
+        color: white;
+        font-weight: 700;
+    }
+
+/* KPIs del período */
+
+.informe-kpis {
+    margin-top: 22px;
+}
+
+    .informe-kpis .kpi-tarjeta {
+        background-color: #161D29;
+    }
+
+.kpi-valor-compacto {
+    font-size: 17px !important;
+    line-height: 1.35;
+}
+
+/* Gráficos */
+
+.informe-graficos {
+    display: block;
+    width: 100%;
+    margin-top: 22px;
+    font-size: 0;
+}
+
+.informe-grafico {
+    display: inline-block;
+    width: 48.5%;
+    margin-right: 3%;
+    margin-bottom: 18px;
+    background: #161D29;
+    border: 1px solid darkgray;
+    border-radius: 10px;
+    padding: 18px 18px 12px 18px;
+    box-sizing: border-box;
+    vertical-align: top;
+    font-size: 13px;
+}
+
+    .informe-grafico:nth-child(2n) {
+        margin-right: 0;
+    }
+
+    .informe-grafico.ampliado {
+        width: 100%;
+    }
+
+.informe-grafico-titulo {
+    font-size: 13px;
+    font-weight: 700;
+    color: #D93416;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 12px;
+}
+
+.informe-grafico .informe-svg {
+    display: block;
+    width: 100%;
+    height: auto;
+}
+
+/* Estado vacío del informe */
+
+.informe-vacio {
+    display: block;
+    width: 100%;
+    margin-top: 22px;
+    padding: 40px 20px;
+    text-align: center;
+    background: #161D29;
+    border: 1px dashed darkgray;
+    border-radius: 10px;
+    box-sizing: border-box;
+}
+
+.informe-vacio-titulo {
+    display: block;
+    font-size: 20px;
+    font-weight: 800;
+    color: white;
+}
+
+.informe-vacio-texto {
+    display: block;
+    margin-top: 8px;
+    color: darkgray;
+    font-size: 14px;
+}
+
+@media (max-width: 900px) {
+    .informe-selector {
+        width: 30%;
+        margin-bottom: 12px;
+    }
+
+    .informe-acciones {
+        width: 100%;
+        text-align: left;
+        margin-top: 10px;
+    }
+
+        .informe-acciones .informe-btn {
+            margin-left: 0;
+            margin-right: 10px;
+        }
+
+    .informe-empresa,
+    .informe-periodo {
+        width: 100%;
+        text-align: left;
+    }
+
+    .informe-grafico {
+        width: 100%;
+        margin-right: 0;
+    }
+}

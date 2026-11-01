@@ -108,9 +108,9 @@ namespace RedLine.Web
                 CargarGrillaTraducciones();
                 MostrarMensaje(Traducir("msg_idioma_creado_exito"), false);
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                MostrarMensaje($"{Traducir("msg_error_crear_idioma")} {ex.Message}", true);
+                MostrarMensaje(Traducir("msg_error_crear_idioma"), true);
             }
         }
 
@@ -151,9 +151,9 @@ namespace RedLine.Web
                 CargarGrillaTraducciones();
                 MostrarMensaje(Traducir("msg_traducciones_guardadas"), false);
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                MostrarMensaje($"{Traducir("msg_error_guardar_traduccion")} {ex.Message}", true);
+                MostrarMensaje(Traducir("msg_error_guardar_traduccion"), true);
             }
         }
 

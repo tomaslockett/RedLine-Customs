@@ -49,6 +49,109 @@
             </div>
         </div>
 
+        <!-- ================= INFORME MENSUAL DE VENTAS ================= -->
+        <asp:PlaceHolder ID="phInformeMensual" runat="server">
+            <div class="tarjeta-chasis informe-panel">
+
+                <div class="informe-encabezado">
+                    <h2 class="informe-titulo"><asp:Label ID="lblTituloInformeMensual" runat="server" Text="Informe Mensual de Ventas" /></h2>
+                    <p class="informe-subtitulo"><asp:Label ID="lblSubtituloInformeMensual" runat="server" Text="Análisis estadístico del período seleccionado." /></p>
+                </div>
+
+                <div class="informe-selectores">
+                    <div class="informe-selector">
+                        <label><asp:Label ID="lblInformeMes" runat="server" Text="Mes:" /></label>
+                        <asp:DropDownList ID="ddlInformeMes" runat="server" CssClass="input-taller informe-ddl"></asp:DropDownList>
+                    </div>
+                    <div class="informe-selector">
+                        <label><asp:Label ID="lblInformeAnio" runat="server" Text="Año:" /></label>
+                        <asp:DropDownList ID="ddlInformeAnio" runat="server" CssClass="input-taller informe-ddl"></asp:DropDownList>
+                    </div>
+                    <div class="informe-acciones">
+                        <asp:Button ID="btnGenerarInforme" runat="server" Text="Generar Informe" CssClass="btn-primario informe-btn" OnClick="btnGenerarInforme_Click" />
+                        <asp:Button ID="btnVerInformePdf" runat="server" Text="Ver Informe (PDF)" CssClass="btn-secundario informe-btn" OnClick="btnVerInformePdf_Click" />
+                        <asp:Button ID="btnDescargarInformePdf" runat="server" Text="Descargar Informe (PDF)" CssClass="btn-primario informe-btn" OnClick="btnDescargarInformePdf_Click" />
+                    </div>
+                </div>
+
+                <asp:PlaceHolder ID="phInformeDatos" runat="server" Visible="false">
+                    <!-- Encabezado corporativo del informe -->
+                    <div class="informe-corporativo">
+                        <div class="informe-empresa">
+                            <span class="informe-marca">REDLINE CUSTOMS</span>
+                            <span class="informe-razon">RedLine Customs S.A. &middot; www.redlinecustoms.com</span>
+                            <span class="informe-institucional"><asp:Label ID="lblInformeEmpresaSubtitulo" runat="server" Text="Concesionaria y Taller de Personalización de Alta Gama" /></span>
+                            <span class="informe-fiscal">CUIT 30-71829384-9 &middot; Av. del Libertador 4500, CABA</span>
+                        </div>
+                        <div class="informe-periodo">
+                            <span><asp:Label ID="lblInformePeriodo" runat="server" Text="Período:" /> <strong><asp:Label ID="lblInformeValorPeriodo" runat="server" /></strong></span>
+                            <span><asp:Label ID="lblInformeFechaEmision" runat="server" Text="Fecha de emisión:" /> <strong><asp:Label ID="lblInformeValorFecha" runat="server" /></strong></span>
+                        </div>
+                    </div>
+
+                    <!-- KPIs del período -->
+                    <div class="kpi-contenedor informe-kpis">
+                        <div class="kpi-tarjeta">
+                            <span class="kpi-etiqueta"><asp:Label ID="lblKpiUnidadesMes" runat="server" Text="Unidades Vendidas" /></span>
+                            <asp:Label ID="lblValorUnidadesMes" runat="server" CssClass="kpi-valor">0</asp:Label>
+                        </div>
+                        <div class="kpi-tarjeta destacados">
+                            <span class="kpi-etiqueta"><asp:Label ID="lblKpiFacturacionMes" runat="server" Text="Facturación Total (IVA incl.)" /></span>
+                            <asp:Label ID="lblValorFacturacionMes" runat="server" CssClass="kpi-valor">US$ 0,00</asp:Label>
+                        </div>
+                        <div class="kpi-tarjeta">
+                            <span class="kpi-etiqueta"><asp:Label ID="lblKpiTicketPromedioMes" runat="server" Text="Ticket Promedio" /></span>
+                            <asp:Label ID="lblValorTicketPromedioMes" runat="server" CssClass="kpi-valor">US$ 0,00</asp:Label>
+                        </div>
+                        <div class="kpi-tarjeta">
+                            <span class="kpi-etiqueta"><asp:Label ID="lblKpiMarcaDestacadaMes" runat="server" Text="Marca / Modelo Destacado" /></span>
+                            <asp:Label ID="lblValorMarcaDestacadaMes" runat="server" CssClass="kpi-valor kpi-valor-compacto">-</asp:Label>
+                        </div>
+                        <div class="kpi-tarjeta">
+                            <span class="kpi-etiqueta"><asp:Label ID="lblKpiSubtotalNetoMes" runat="server" Text="Subtotal Neto" /></span>
+                            <asp:Label ID="lblValorSubtotalNetoMes" runat="server" CssClass="kpi-valor">US$ 0,00</asp:Label>
+                        </div>
+                        <div class="kpi-tarjeta">
+                            <span class="kpi-etiqueta"><asp:Label ID="lblKpiIvaMes" runat="server" Text="IVA del Período" /></span>
+                            <asp:Label ID="lblValorIvaMes" runat="server" CssClass="kpi-valor">US$ 0,00</asp:Label>
+                        </div>
+                        <div class="kpi-tarjeta">
+                            <span class="kpi-etiqueta"><asp:Label ID="lblKpiPersonalizadosMes" runat="server" Text="Personalizados vs. Estándar" /></span>
+                            <asp:Label ID="lblValorPersonalizadosMes" runat="server" CssClass="kpi-valor kpi-valor-compacto">0 / 0 (0%)</asp:Label>
+                        </div>
+                    </div>
+
+                    <!-- Gráficos estadísticos del mes -->
+                    <div class="informe-graficos">
+                        <div class="informe-grafico ampliado">
+                            <div class="informe-grafico-titulo"><asp:Label ID="lblGraficoEvolucionDiaria" runat="server" Text="Evolución Diaria de Ingresos" /></div>
+                            <asp:Literal ID="ltGraficoEvolucionDiaria" runat="server" />
+                        </div>
+                        <div class="informe-grafico">
+                            <div class="informe-grafico-titulo"><asp:Label ID="lblGraficoVentasMarca" runat="server" Text="Facturación por Marca / Modelo" /></div>
+                            <asp:Literal ID="ltGraficoVentasMarca" runat="server" />
+                        </div>
+                        <div class="informe-grafico">
+                            <div class="informe-grafico-titulo"><asp:Label ID="lblGraficoPersonalizadosEstandar" runat="server" Text="Personalizados vs. Estándar de Fábrica" /></div>
+                            <asp:Literal ID="ltGraficoPersonalizadosEstandar" runat="server" />
+                        </div>
+                        <div class="informe-grafico ampliado">
+                            <div class="informe-grafico-titulo"><asp:Label ID="lblGraficoMetodosPago" runat="server" Text="Distribución por Método de Pago" /></div>
+                            <asp:Literal ID="ltGraficoMetodosPago" runat="server" />
+                        </div>
+                    </div>
+                </asp:PlaceHolder>
+
+                <asp:PlaceHolder ID="phInformeVacio" runat="server" Visible="false">
+                    <div class="informe-vacio">
+                        <asp:Label ID="lblInformeSinVentasTitulo" runat="server" CssClass="informe-vacio-titulo" Text="Sin ventas en este período" />
+                        <asp:Label ID="lblInformeSinVentasTexto" runat="server" CssClass="informe-vacio-texto" Text="No se registraron operaciones en el mes y año seleccionados. Probá con otro período." />
+                    </div>
+                </asp:PlaceHolder>
+
+            </div>
+        </asp:PlaceHolder>
+
         <div class="tarjeta-chasis panel-tabla">
             <div class="tabla-contenedor">
                 <asp:GridView ID="dgvVentas" runat="server" AutoGenerateColumns="False" CssClass="gridview-custom">

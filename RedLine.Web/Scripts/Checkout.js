@@ -24,6 +24,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 } else if (option.dataset.target === 'financing-panel') {
                     hfMetodoPago.value = 'Financiación';
                 } else {
+                    // CONTRATO DE DATOS: este valor se persiste en BD (TextosComercialesVentas.MetodoPagoTarjeta
+                    // en RedLine.Servicios). Si cambia el contrato, actualizar también Checkout.aspx (hfMetodoPago).
                     hfMetodoPago.value = 'Tarjeta de Crédito';
                 }
             }

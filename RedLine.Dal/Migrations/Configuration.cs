@@ -402,8 +402,8 @@ context.SaveChanges();
                 new Traduccion { IdIdioma = idiomaEspanol.ID, IdEtiqueta = eMsgNomVacio.ID, Texto = "Ingrese un nombre válido para el idioma." },
                 new Traduccion { IdIdioma = idiomaEspanol.ID, IdEtiqueta = eMsgCreadoExito.ID, Texto = "Idioma creado exitosamente." },
                 new Traduccion { IdIdioma = idiomaEspanol.ID, IdEtiqueta = eMsgTradGuardadas.ID, Texto = "Traducciones guardadas correctamente." },
-                new Traduccion { IdIdioma = idiomaEspanol.ID, IdEtiqueta = eMsgErrCrear.ID, Texto = "Error al crear el idioma:" },
-                new Traduccion { IdIdioma = idiomaEspanol.ID, IdEtiqueta = eMsgErrGuardar.ID, Texto = "Error al guardar traducciones:" }
+                new Traduccion { IdIdioma = idiomaEspanol.ID, IdEtiqueta = eMsgErrCrear.ID, Texto = "Error al crear el idioma." },
+                new Traduccion { IdIdioma = idiomaEspanol.ID, IdEtiqueta = eMsgErrGuardar.ID, Texto = "Error al guardar las traducciones." }
             );
             context.SaveChanges();
 
@@ -447,10 +447,10 @@ context.SaveChanges();
                 new Traduccion { IdIdioma = idiomaEspanol.ID, IdEtiqueta = eBtnRestaurar.ID, Texto = "Restaurar" },
                 new Traduccion { IdIdioma = idiomaEspanol.ID, IdEtiqueta = eMsgSinOperacion.ID, Texto = "Esperando operación..." },
                 new Traduccion { IdIdioma = idiomaEspanol.ID, IdEtiqueta = eMsgBackupExito.ID, Texto = "Copia de seguridad generada con éxito en: " },
-                new Traduccion { IdIdioma = idiomaEspanol.ID, IdEtiqueta = eMsgBackupError.ID, Texto = "Error al generar la copia de seguridad: " },
+                new Traduccion { IdIdioma = idiomaEspanol.ID, IdEtiqueta = eMsgBackupError.ID, Texto = "Error al generar la copia de seguridad." },
                 new Traduccion { IdIdioma = idiomaEspanol.ID, IdEtiqueta = eMsgArchivoInvalido.ID, Texto = "Debe seleccionar un archivo válido con extensión .bak." },
                 new Traduccion { IdIdioma = idiomaEspanol.ID, IdEtiqueta = eMsgRestoreExito.ID, Texto = "Base de datos restaurada correctamente." },
-                new Traduccion { IdIdioma = idiomaEspanol.ID, IdEtiqueta = eMsgRestoreError.ID, Texto = "Error al restaurar la base de datos: " }
+                new Traduccion { IdIdioma = idiomaEspanol.ID, IdEtiqueta = eMsgRestoreError.ID, Texto = "Error al restaurar la base de datos." }
             );
             context.SaveChanges();
 
@@ -488,7 +488,7 @@ context.SaveChanges();
                 new Traduccion { IdIdioma = idiomaEspanol.ID, IdEtiqueta = eMsgCamposObligatorios.ID, Texto = "Todos los campos son obligatorios." },
                 new Traduccion { IdIdioma = idiomaEspanol.ID, IdEtiqueta = eMsgPassNoCoinciden.ID, Texto = "Las nuevas contraseñas no coinciden." },
                 new Traduccion { IdIdioma = idiomaEspanol.ID, IdEtiqueta = eMsgPassActualIncorrecta.ID, Texto = "La contraseña actual es incorrecta." },
-                new Traduccion { IdIdioma = idiomaEspanol.ID, IdEtiqueta = eMsgErrorPrefijo.ID, Texto = "Error: " }
+                new Traduccion { IdIdioma = idiomaEspanol.ID, IdEtiqueta = eMsgErrorPrefijo.ID, Texto = "Se produjo un error inesperado." }
             );
             context.SaveChanges();
 
@@ -514,6 +514,24 @@ context.SaveChanges();
             var eBtnPersonalizar = new Etiqueta { Clave = "btnPersonalizar", Pagina = "Catalogo.aspx", Descripcion = "Botón de acceso al taller de personalización", EsMensajeAlerta = false };
 
             context.Etiquetas.AddOrUpdate(e => e.Clave, eTituloCatalogo, eSubTituloCatalogo, eTxtBuscarCatalogo, eBtnAplicarFiltros, eLblTextoEncontrados, eDdlFiltroMarca, eDdlFiltroPrecio, eLblVelMax, eLblPotencia, eLblAceleracion, eBtnPersonalizar
+            );
+            context.SaveChanges();
+
+            // Traducciones asignadas al idioma Español (Catalogo.aspx):
+            // sin este bloque, con idioma Español activo Traducir() devolvía "[clave]"
+            // para las etiquetas del Repeater y del botón Personalizar.
+            context.Traducciones.AddOrUpdate(t => new { t.IdIdioma, t.IdEtiqueta },
+                new Traduccion { IdIdioma = idiomaEspanol.ID, IdEtiqueta = eTituloCatalogo.ID, Texto = "Catálogo de autos deportivos" },
+                new Traduccion { IdIdioma = idiomaEspanol.ID, IdEtiqueta = eSubTituloCatalogo.ID, Texto = "Descubra nuestra selección de autos de alta gama" },
+                new Traduccion { IdIdioma = idiomaEspanol.ID, IdEtiqueta = eTxtBuscarCatalogo.ID, Texto = "Buscar por modelo o marca..." },
+                new Traduccion { IdIdioma = idiomaEspanol.ID, IdEtiqueta = eBtnAplicarFiltros.ID, Texto = "Aplicar" },
+                new Traduccion { IdIdioma = idiomaEspanol.ID, IdEtiqueta = eLblTextoEncontrados.ID, Texto = "Autos disponibles en catálogo" },
+                new Traduccion { IdIdioma = idiomaEspanol.ID, IdEtiqueta = eDdlFiltroMarca.ID, Texto = "Marca" },
+                new Traduccion { IdIdioma = idiomaEspanol.ID, IdEtiqueta = eDdlFiltroPrecio.ID, Texto = "Precio" },
+                new Traduccion { IdIdioma = idiomaEspanol.ID, IdEtiqueta = eLblVelMax.ID, Texto = "Velocidad Máxima" },
+                new Traduccion { IdIdioma = idiomaEspanol.ID, IdEtiqueta = eLblPotencia.ID, Texto = "Potencia" },
+                new Traduccion { IdIdioma = idiomaEspanol.ID, IdEtiqueta = eLblAceleracion.ID, Texto = "0-100 km/h" },
+                new Traduccion { IdIdioma = idiomaEspanol.ID, IdEtiqueta = eBtnPersonalizar.ID, Texto = "Personalizar" }
             );
             context.SaveChanges();
 
@@ -746,9 +764,9 @@ context.SaveChanges();
                 new Traduccion { IdIdioma = idiomaEspanol.ID, IdEtiqueta = eBtnGuardarCambios.ID, Texto = "Guardar Cambios de Accesos" },
                 new Traduccion { IdIdioma = idiomaEspanol.ID, IdEtiqueta = eMsgIngreseNombrePerfil.ID, Texto = "Por favor, ingresá un nombre para el perfil." },
                 new Traduccion { IdIdioma = idiomaEspanol.ID, IdEtiqueta = eMsgPerfilCreadoExito.ID, Texto = "¡Perfil creado con éxito!" },
-                new Traduccion { IdIdioma = idiomaEspanol.ID, IdEtiqueta = eMsgErrorCrearPerfil.ID, Texto = "Error al crear perfil: " },
+                new Traduccion { IdIdioma = idiomaEspanol.ID, IdEtiqueta = eMsgErrorCrearPerfil.ID, Texto = "Error al crear perfil." },
                 new Traduccion { IdIdioma = idiomaEspanol.ID, IdEtiqueta = eMsgCambiosGuardadosExito.ID, Texto = "Cambios guardados con éxito." },
-                new Traduccion { IdIdioma = idiomaEspanol.ID, IdEtiqueta = eMsgErrorGeneral.ID, Texto = "Error: " }
+                new Traduccion { IdIdioma = idiomaEspanol.ID, IdEtiqueta = eMsgErrorGeneral.ID, Texto = "Se produjo un error inesperado." }
             );
             context.SaveChanges();
 
@@ -824,7 +842,7 @@ context.SaveChanges();
                 new Traduccion { IdIdioma = idiomaEspanol.ID, IdEtiqueta = eMsgXmlInvalido.ID, Texto = "El archivo seleccionado no es un XML válido." },
                 new Traduccion { IdIdioma = idiomaEspanol.ID, IdEtiqueta = eMsgXmlExito.ID, Texto = "¡Proceso completado! Se importaron {0} clientes correctamente." },
                 new Traduccion { IdIdioma = idiomaEspanol.ID, IdEtiqueta = eMsgXmlSinRegistros.ID, Texto = "No se importó ningún cliente. Todos los registros eran duplicados o el archivo no tenía contenido válido." },
-                new Traduccion { IdIdioma = idiomaEspanol.ID, IdEtiqueta = eMsgXmlErrorProc.ID, Texto = "Error al procesar el archivo: " }
+                new Traduccion { IdIdioma = idiomaEspanol.ID, IdEtiqueta = eMsgXmlErrorProc.ID, Texto = "Error al procesar el archivo." }
             );
             context.SaveChanges();
 
@@ -858,7 +876,6 @@ context.SaveChanges();
             var eEstBloqueado = new Etiqueta { Clave = "estado_usuario_bloqueado", Pagina = "GestionUsuarios.aspx", Descripcion = "Texto estado Bloqueado", EsMensajeAlerta = false };
             var eEstDesbloqueado = new Etiqueta { Clave = "estado_usuario_desbloqueado", Pagina = "GestionUsuarios.aspx", Descripcion = "Texto estado Desbloqueado", EsMensajeAlerta = false };
             var eBtnGridEdit = new Etiqueta { Clave = "btn_grid_editar", Pagina = "GestionUsuarios.aspx", Descripcion = "Texto acción editar en grilla", EsMensajeAlerta = false };
-            var eBtnGridBorr = new Etiqueta { Clave = "btn_grid_borrar", Pagina = "GestionUsuarios.aspx", Descripcion = "Texto acción borrar en grilla", EsMensajeAlerta = false };
             var eBtnGridDesact = new Etiqueta { Clave = "btn_grid_desactivar", Pagina = "GestionUsuarios.aspx", Descripcion = "Texto acción desactivar", EsMensajeAlerta = false };
             var eBtnGridAct = new Etiqueta { Clave = "btn_grid_activar", Pagina = "GestionUsuarios.aspx", Descripcion = "Texto acción activar", EsMensajeAlerta = false };
             var eBtnGridDesbloq = new Etiqueta { Clave = "btn_grid_desbloquear", Pagina = "GestionUsuarios.aspx", Descripcion = "Texto acción desbloquear", EsMensajeAlerta = false };
@@ -878,7 +895,7 @@ context.SaveChanges();
                 eTitPersonal, eLblDniU, eLblNomU, eLblApeU, eLblEmailU, eLblRolU,
                 eBtnGuardarU, eBtnLimpiarU, eColUId, eColUDni, eColUNom, eColUApe,
                 eColUEmail, eColUPerf, eColUEst, eColUAcc, eEstActivo, eEstInactivo,
-                eEstBloqueado, eEstDesbloqueado, eBtnGridEdit, eBtnGridBorr,
+                eEstBloqueado, eEstDesbloqueado, eBtnGridEdit,
                 eBtnGridDesact, eBtnGridAct, eBtnGridDesbloq, eSinPerfil,
                 eBtnConfirmarCambios, eMsgSelPerfil, eMsgCamposOblig,
                 eMsgUsuarioActualizado, eMsgUsuarioCreado, eMsgConfirmarEliminar,
@@ -909,7 +926,6 @@ context.SaveChanges();
                 new Traduccion { IdIdioma = idiomaEspanol.ID, IdEtiqueta = eEstBloqueado.ID, Texto = "BLOQUEADO" },
                 new Traduccion { IdIdioma = idiomaEspanol.ID, IdEtiqueta = eEstDesbloqueado.ID, Texto = "Desbloqueado" },
                 new Traduccion { IdIdioma = idiomaEspanol.ID, IdEtiqueta = eBtnGridEdit.ID, Texto = "Editar" },
-                new Traduccion { IdIdioma = idiomaEspanol.ID, IdEtiqueta = eBtnGridBorr.ID, Texto = "Borrar" },
                 new Traduccion { IdIdioma = idiomaEspanol.ID, IdEtiqueta = eBtnGridDesact.ID, Texto = "Desactivar" },
                 new Traduccion { IdIdioma = idiomaEspanol.ID, IdEtiqueta = eBtnGridAct.ID, Texto = "Activar" },
                 new Traduccion { IdIdioma = idiomaEspanol.ID, IdEtiqueta = eBtnGridDesbloq.ID, Texto = "Desbloquear" },
@@ -920,7 +936,7 @@ context.SaveChanges();
                 new Traduccion { IdIdioma = idiomaEspanol.ID, IdEtiqueta = eMsgUsuarioActualizado.ID, Texto = "Usuario actualizado correctamente." },
                 new Traduccion { IdIdioma = idiomaEspanol.ID, IdEtiqueta = eMsgUsuarioCreado.ID, Texto = "Usuario creado correctamente." },
                 new Traduccion { IdIdioma = idiomaEspanol.ID, IdEtiqueta = eMsgConfirmarEliminar.ID, Texto = "¿Está seguro de que desea eliminar este usuario?" },
-                new Traduccion { IdIdioma = idiomaEspanol.ID, IdEtiqueta = eMsgErrorPref.ID, Texto = "Error: " },
+                new Traduccion { IdIdioma = idiomaEspanol.ID, IdEtiqueta = eMsgErrorPref.ID, Texto = "Se produjo un error inesperado." },
                 new Traduccion { IdIdioma = idiomaEspanol.ID, IdEtiqueta = eMsgDniInvalido.ID, Texto = "El DNI es invalido." }
             );
             context.SaveChanges();
@@ -987,6 +1003,230 @@ context.SaveChanges();
                 new Traduccion { IdIdioma = idiomaEspanol.ID, IdEtiqueta = eColVTot.ID, Texto = "Total" },
                 new Traduccion { IdIdioma = idiomaEspanol.ID, IdEtiqueta = eTxtEstandar.ID, Texto = "Estándar de Fábrica" },
                 new Traduccion { IdIdioma = idiomaEspanol.ID, IdEtiqueta = eMsgErrorCargarVentas.ID, Texto = "Error al recuperar el historial de ventas del sistema." }
+            );
+            context.SaveChanges();
+
+            // =========================================================================
+            // --- SEED ETIQUETAS Y TRADUCCIONES: HistorialVentas.aspx — INFORME MENSUAL ----
+            // =========================================================================
+
+            // 1. Catálogo Maestro de Etiquetas para el Informe Mensual de Ventas
+            var eTitInforme = new Etiqueta { Clave = "lblTituloInformeMensual", Pagina = "HistorialVentas.aspx", Descripcion = "Título del módulo Informe Mensual de Ventas", EsMensajeAlerta = false };
+            var eSubInforme = new Etiqueta { Clave = "lblSubtituloInformeMensual", Pagina = "HistorialVentas.aspx", Descripcion = "Subtítulo del informe estadístico", EsMensajeAlerta = false };
+            var eInformeMes = new Etiqueta { Clave = "lblInformeMes", Pagina = "HistorialVentas.aspx", Descripcion = "Etiqueta selector de mes del informe", EsMensajeAlerta = false };
+            var eInformeAnio = new Etiqueta { Clave = "lblInformeAnio", Pagina = "HistorialVentas.aspx", Descripcion = "Etiqueta selector de año del informe", EsMensajeAlerta = false };
+            var eBtnGenerarInforme = new Etiqueta { Clave = "btnGenerarInforme", Pagina = "HistorialVentas.aspx", Descripcion = "Botón generar informe mensual", EsMensajeAlerta = false };
+            var eBtnVerInfPdf = new Etiqueta { Clave = "btnVerInformePdf", Pagina = "HistorialVentas.aspx", Descripcion = "Botón ver informe en PDF", EsMensajeAlerta = false };
+            var eBtnDescInfPdf = new Etiqueta { Clave = "btnDescargarInformePdf", Pagina = "HistorialVentas.aspx", Descripcion = "Botón descargar informe en PDF", EsMensajeAlerta = false };
+            var eInfEmpSub = new Etiqueta { Clave = "lblInformeEmpresaSubtitulo", Pagina = "HistorialVentas.aspx", Descripcion = "Línea institucional del encabezado corporativo", EsMensajeAlerta = false };
+            var eInfPeriodo = new Etiqueta { Clave = "lblInformePeriodo", Pagina = "HistorialVentas.aspx", Descripcion = "Etiqueta período del informe", EsMensajeAlerta = false };
+            var eInfFechaEmision = new Etiqueta { Clave = "lblInformeFechaEmision", Pagina = "HistorialVentas.aspx", Descripcion = "Etiqueta fecha de emisión del informe", EsMensajeAlerta = false };
+
+            // KPIs del informe mensual
+            var eKpiUniMes = new Etiqueta { Clave = "lblKpiUnidadesMes", Pagina = "HistorialVentas.aspx", Descripcion = "KPI unidades vendidas en el período", EsMensajeAlerta = false };
+            var eKpiFactMes = new Etiqueta { Clave = "lblKpiFacturacionMes", Pagina = "HistorialVentas.aspx", Descripcion = "KPI facturación total del período", EsMensajeAlerta = false };
+            var eKpiTicketMes = new Etiqueta { Clave = "lblKpiTicketPromedioMes", Pagina = "HistorialVentas.aspx", Descripcion = "KPI ticket promedio del período", EsMensajeAlerta = false };
+            var eKpiSubNetoMes = new Etiqueta { Clave = "lblKpiSubtotalNetoMes", Pagina = "HistorialVentas.aspx", Descripcion = "KPI subtotal neto del período", EsMensajeAlerta = false };
+            var eKpiIvaMes = new Etiqueta { Clave = "lblKpiIvaMes", Pagina = "HistorialVentas.aspx", Descripcion = "KPI IVA liquidado del período", EsMensajeAlerta = false };
+            var eKpiPersMes = new Etiqueta { Clave = "lblKpiPersonalizadosMes", Pagina = "HistorialVentas.aspx", Descripcion = "KPI proporción personalizados vs estándar", EsMensajeAlerta = false };
+            var eKpiMarcaMes = new Etiqueta { Clave = "lblKpiMarcaDestacadaMes", Pagina = "HistorialVentas.aspx", Descripcion = "KPI marca/modelo más vendido", EsMensajeAlerta = false };
+
+            // Gráficos y leyendas
+            var eGrafEvoDiaria = new Etiqueta { Clave = "lblGraficoEvolucionDiaria", Pagina = "HistorialVentas.aspx", Descripcion = "Título gráfico evolución diaria de ingresos", EsMensajeAlerta = false };
+            var eGrafVentasMarca = new Etiqueta { Clave = "lblGraficoVentasMarca", Pagina = "HistorialVentas.aspx", Descripcion = "Título gráfico facturación por marca", EsMensajeAlerta = false };
+            var eGrafPersEst = new Etiqueta { Clave = "lblGraficoPersonalizadosEstandar", Pagina = "HistorialVentas.aspx", Descripcion = "Título gráfico personalizados vs estándar", EsMensajeAlerta = false };
+            var eGrafMetodosPago = new Etiqueta { Clave = "lblGraficoMetodosPago", Pagina = "HistorialVentas.aspx", Descripcion = "Título gráfico distribución por método de pago", EsMensajeAlerta = false };
+            var eLeyFact = new Etiqueta { Clave = "lblLeyendaFacturacion", Pagina = "HistorialVentas.aspx", Descripcion = "Leyenda facturación en gráficos", EsMensajeAlerta = false };
+            var eLeyOperaciones = new Etiqueta { Clave = "lblLeyendaOperaciones", Pagina = "HistorialVentas.aspx", Descripcion = "Leyenda cantidad de operaciones en gráficos", EsMensajeAlerta = false };
+            var eTxtPersInforme = new Etiqueta { Clave = "texto_personalizado_informe", Pagina = "HistorialVentas.aspx", Descripcion = "Etiqueta de vehículos personalizados en gráficos e informe", EsMensajeAlerta = false };
+
+            // Estado vacío y mensajes del informe
+            var eInfVacioTit = new Etiqueta { Clave = "lblInformeSinVentasTitulo", Pagina = "HistorialVentas.aspx", Descripcion = "Título estado vacío del informe", EsMensajeAlerta = false };
+            var eInfVacioTxt = new Etiqueta { Clave = "lblInformeSinVentasTexto", Pagina = "HistorialVentas.aspx", Descripcion = "Texto estado vacío del informe", EsMensajeAlerta = false };
+            var eMsgInfSinDatos = new Etiqueta { Clave = "msg_informe_sin_datos", Pagina = "HistorialVentas.aspx", Descripcion = "Alerta sin ventas para el informe seleccionado", EsMensajeAlerta = true };
+            var eMsgInfError = new Etiqueta { Clave = "msg_informe_error_generar", Pagina = "HistorialVentas.aspx", Descripcion = "Error generando el informe mensual", EsMensajeAlerta = true };
+
+            // Textos del PDF del informe
+            var ePdfInfTitulo = new Etiqueta { Clave = "pdfInformeTitulo", Pagina = "HistorialVentas.aspx", Descripcion = "Título del informe mensual en PDF", EsMensajeAlerta = false };
+            var ePdfCantVentas = new Etiqueta { Clave = "pdfTextoCantVentas", Pagina = "HistorialVentas.aspx", Descripcion = "Etiqueta cantidad de ventas en PDF", EsMensajeAlerta = false };
+            var ePdfUnidades = new Etiqueta { Clave = "pdfTextoUnidades", Pagina = "HistorialVentas.aspx", Descripcion = "Etiqueta unidades vendidas en PDF", EsMensajeAlerta = false };
+            var ePdfFact = new Etiqueta { Clave = "pdfTextoFacturacion", Pagina = "HistorialVentas.aspx", Descripcion = "Etiqueta facturación total en PDF", EsMensajeAlerta = false };
+            var ePdfTkt = new Etiqueta { Clave = "pdfTextoTicketPromedio", Pagina = "HistorialVentas.aspx", Descripcion = "Etiqueta ticket promedio en PDF", EsMensajeAlerta = false };
+            var ePdfMarcaDest = new Etiqueta { Clave = "pdfTextoMarcaDestacada", Pagina = "HistorialVentas.aspx", Descripcion = "Etiqueta marca/modelo destacado en PDF", EsMensajeAlerta = false };
+            var ePdfSecDetalle = new Etiqueta { Clave = "pdfSeccionDetalleVentas", Pagina = "HistorialVentas.aspx", Descripcion = "Título sección detalle de ventas del PDF", EsMensajeAlerta = false };
+            var ePdfColFactura = new Etiqueta { Clave = "pdfColFactura", Pagina = "HistorialVentas.aspx", Descripcion = "Columna N° factura en PDF del informe", EsMensajeAlerta = false };
+            var ePdfColMetodoPago = new Etiqueta { Clave = "pdfColMetodoPago", Pagina = "HistorialVentas.aspx", Descripcion = "Columna método de pago en PDF del informe", EsMensajeAlerta = false };
+            var ePdfTextoPagina = new Etiqueta { Clave = "pdfTextoPagina", Pagina = "HistorialVentas.aspx", Descripcion = "Numeración de páginas del PDF", EsMensajeAlerta = false };
+            var ePdfLeyendaPie = new Etiqueta { Clave = "pdfLeyendaPie", Pagina = "HistorialVentas.aspx", Descripcion = "Leyenda pie de página del PDF", EsMensajeAlerta = false };
+
+            // Meses del año (por valor de ítem: ddlInformeMes_01..12)
+            var eMes01 = new Etiqueta { Clave = "ddlInformeMes_01", Pagina = "HistorialVentas.aspx", Descripcion = "Mes Enero", EsMensajeAlerta = false };
+            var eMes02 = new Etiqueta { Clave = "ddlInformeMes_02", Pagina = "HistorialVentas.aspx", Descripcion = "Mes Febrero", EsMensajeAlerta = false };
+            var eMes03 = new Etiqueta { Clave = "ddlInformeMes_03", Pagina = "HistorialVentas.aspx", Descripcion = "Mes Marzo", EsMensajeAlerta = false };
+            var eMes04 = new Etiqueta { Clave = "ddlInformeMes_04", Pagina = "HistorialVentas.aspx", Descripcion = "Mes Abril", EsMensajeAlerta = false };
+            var eMes05 = new Etiqueta { Clave = "ddlInformeMes_05", Pagina = "HistorialVentas.aspx", Descripcion = "Mes Mayo", EsMensajeAlerta = false };
+            var eMes06 = new Etiqueta { Clave = "ddlInformeMes_06", Pagina = "HistorialVentas.aspx", Descripcion = "Mes Junio", EsMensajeAlerta = false };
+            var eMes07 = new Etiqueta { Clave = "ddlInformeMes_07", Pagina = "HistorialVentas.aspx", Descripcion = "Mes Julio", EsMensajeAlerta = false };
+            var eMes08 = new Etiqueta { Clave = "ddlInformeMes_08", Pagina = "HistorialVentas.aspx", Descripcion = "Mes Agosto", EsMensajeAlerta = false };
+            var eMes09 = new Etiqueta { Clave = "ddlInformeMes_09", Pagina = "HistorialVentas.aspx", Descripcion = "Mes Septiembre", EsMensajeAlerta = false };
+            var eMes10 = new Etiqueta { Clave = "ddlInformeMes_10", Pagina = "HistorialVentas.aspx", Descripcion = "Mes Octubre", EsMensajeAlerta = false };
+            var eMes11 = new Etiqueta { Clave = "ddlInformeMes_11", Pagina = "HistorialVentas.aspx", Descripcion = "Mes Noviembre", EsMensajeAlerta = false };
+            var eMes12 = new Etiqueta { Clave = "ddlInformeMes_12", Pagina = "HistorialVentas.aspx", Descripcion = "Mes Diciembre", EsMensajeAlerta = false };
+
+            context.Etiquetas.AddOrUpdate(e => e.Clave,
+                eTitInforme, eSubInforme, eInformeMes, eInformeAnio, eBtnGenerarInforme,
+                eBtnVerInfPdf, eBtnDescInfPdf, eInfEmpSub, eInfPeriodo, eInfFechaEmision,
+                eKpiUniMes, eKpiFactMes, eKpiTicketMes, eKpiSubNetoMes, eKpiIvaMes,
+                eKpiPersMes, eKpiMarcaMes, eGrafEvoDiaria, eGrafVentasMarca, eGrafPersEst,
+                eGrafMetodosPago, eLeyFact, eLeyOperaciones, eTxtPersInforme,
+                eInfVacioTit, eInfVacioTxt, eMsgInfSinDatos, eMsgInfError,
+                ePdfInfTitulo, ePdfCantVentas, ePdfUnidades, ePdfFact, ePdfTkt, ePdfMarcaDest,
+                ePdfSecDetalle, ePdfColFactura, ePdfColMetodoPago, ePdfTextoPagina, ePdfLeyendaPie
+            );
+            context.Etiquetas.AddOrUpdate(e => e.Clave,
+                eMes01, eMes02, eMes03, eMes04, eMes05, eMes06,
+                eMes07, eMes08, eMes09, eMes10, eMes11, eMes12
+            );
+            context.SaveChanges();
+
+            // 2. Traducciones asignadas al idioma Español (Informe Mensual)
+            context.Traducciones.AddOrUpdate(t => new { t.IdIdioma, t.IdEtiqueta },
+                new Traduccion { IdIdioma = idiomaEspanol.ID, IdEtiqueta = eTitInforme.ID, Texto = "Informe Mensual de Ventas" },
+                new Traduccion { IdIdioma = idiomaEspanol.ID, IdEtiqueta = eSubInforme.ID, Texto = "Análisis estadístico del período seleccionado, con descarga en PDF." },
+                new Traduccion { IdIdioma = idiomaEspanol.ID, IdEtiqueta = eInformeMes.ID, Texto = "Mes:" },
+                new Traduccion { IdIdioma = idiomaEspanol.ID, IdEtiqueta = eInformeAnio.ID, Texto = "Año:" },
+                new Traduccion { IdIdioma = idiomaEspanol.ID, IdEtiqueta = eBtnGenerarInforme.ID, Texto = "Generar Informe" },
+                new Traduccion { IdIdioma = idiomaEspanol.ID, IdEtiqueta = eBtnVerInfPdf.ID, Texto = "Ver Informe (PDF)" },
+                new Traduccion { IdIdioma = idiomaEspanol.ID, IdEtiqueta = eBtnDescInfPdf.ID, Texto = "Descargar Informe (PDF)" },
+                new Traduccion { IdIdioma = idiomaEspanol.ID, IdEtiqueta = eInfEmpSub.ID, Texto = "Concesionaria y Taller de Personalización de Alta Gama" },
+                new Traduccion { IdIdioma = idiomaEspanol.ID, IdEtiqueta = eInfPeriodo.ID, Texto = "Período:" },
+                new Traduccion { IdIdioma = idiomaEspanol.ID, IdEtiqueta = eInfFechaEmision.ID, Texto = "Fecha de emisión:" },
+                new Traduccion { IdIdioma = idiomaEspanol.ID, IdEtiqueta = eKpiUniMes.ID, Texto = "Unidades Vendidas" },
+                new Traduccion { IdIdioma = idiomaEspanol.ID, IdEtiqueta = eKpiFactMes.ID, Texto = "Facturación Total (IVA incl.)" },
+                new Traduccion { IdIdioma = idiomaEspanol.ID, IdEtiqueta = eKpiTicketMes.ID, Texto = "Ticket Promedio" },
+                new Traduccion { IdIdioma = idiomaEspanol.ID, IdEtiqueta = eKpiSubNetoMes.ID, Texto = "Subtotal Neto" },
+                new Traduccion { IdIdioma = idiomaEspanol.ID, IdEtiqueta = eKpiIvaMes.ID, Texto = "IVA del Período" },
+                new Traduccion { IdIdioma = idiomaEspanol.ID, IdEtiqueta = eKpiPersMes.ID, Texto = "Personalizados vs. Estándar" },
+                new Traduccion { IdIdioma = idiomaEspanol.ID, IdEtiqueta = eKpiMarcaMes.ID, Texto = "Marca / Modelo Destacado" },
+                new Traduccion { IdIdioma = idiomaEspanol.ID, IdEtiqueta = eGrafEvoDiaria.ID, Texto = "Evolución Diaria de Ingresos" },
+                new Traduccion { IdIdioma = idiomaEspanol.ID, IdEtiqueta = eGrafVentasMarca.ID, Texto = "Facturación por Marca / Modelo" },
+                new Traduccion { IdIdioma = idiomaEspanol.ID, IdEtiqueta = eGrafPersEst.ID, Texto = "Personalizados vs. Estándar de Fábrica" },
+                new Traduccion { IdIdioma = idiomaEspanol.ID, IdEtiqueta = eGrafMetodosPago.ID, Texto = "Distribución por Método de Pago" },
+                new Traduccion { IdIdioma = idiomaEspanol.ID, IdEtiqueta = eLeyFact.ID, Texto = "Facturación (US$)" },
+                new Traduccion { IdIdioma = idiomaEspanol.ID, IdEtiqueta = eLeyOperaciones.ID, Texto = "Operaciones" },
+                new Traduccion { IdIdioma = idiomaEspanol.ID, IdEtiqueta = eTxtPersInforme.ID, Texto = "Personalizado" },
+                new Traduccion { IdIdioma = idiomaEspanol.ID, IdEtiqueta = eInfVacioTit.ID, Texto = "Sin ventas en este período" },
+                new Traduccion { IdIdioma = idiomaEspanol.ID, IdEtiqueta = eInfVacioTxt.ID, Texto = "No se registraron operaciones en el mes y año seleccionados. Probá con otro período." },
+                new Traduccion { IdIdioma = idiomaEspanol.ID, IdEtiqueta = eMsgInfSinDatos.ID, Texto = "No hay ventas registradas en el período seleccionado." },
+                new Traduccion { IdIdioma = idiomaEspanol.ID, IdEtiqueta = eMsgInfError.ID, Texto = "Error al generar el informe mensual de ventas." },
+                new Traduccion { IdIdioma = idiomaEspanol.ID, IdEtiqueta = ePdfInfTitulo.ID, Texto = "Informe Mensual de Ventas" },
+                new Traduccion { IdIdioma = idiomaEspanol.ID, IdEtiqueta = ePdfCantVentas.ID, Texto = "Cantidad de ventas:" },
+                new Traduccion { IdIdioma = idiomaEspanol.ID, IdEtiqueta = ePdfUnidades.ID, Texto = "Unidades Vendidas" },
+                new Traduccion { IdIdioma = idiomaEspanol.ID, IdEtiqueta = ePdfFact.ID, Texto = "Facturación Total" },
+                new Traduccion { IdIdioma = idiomaEspanol.ID, IdEtiqueta = ePdfTkt.ID, Texto = "Ticket Promedio" },
+                new Traduccion { IdIdioma = idiomaEspanol.ID, IdEtiqueta = ePdfMarcaDest.ID, Texto = "Marca / Modelo Destacado" },
+                new Traduccion { IdIdioma = idiomaEspanol.ID, IdEtiqueta = ePdfSecDetalle.ID, Texto = "Detalle de Ventas del Período" },
+                new Traduccion { IdIdioma = idiomaEspanol.ID, IdEtiqueta = ePdfColFactura.ID, Texto = "N° Factura" },
+                new Traduccion { IdIdioma = idiomaEspanol.ID, IdEtiqueta = ePdfColMetodoPago.ID, Texto = "Método Pago" },
+                new Traduccion { IdIdioma = idiomaEspanol.ID, IdEtiqueta = ePdfTextoPagina.ID, Texto = "Página" },
+                new Traduccion { IdIdioma = idiomaEspanol.ID, IdEtiqueta = ePdfLeyendaPie.ID, Texto = "Informe Mensual de Ventas generado automáticamente por RedLine Customs S.A." },
+                new Traduccion { IdIdioma = idiomaEspanol.ID, IdEtiqueta = eMes01.ID, Texto = "Enero" },
+                new Traduccion { IdIdioma = idiomaEspanol.ID, IdEtiqueta = eMes02.ID, Texto = "Febrero" },
+                new Traduccion { IdIdioma = idiomaEspanol.ID, IdEtiqueta = eMes03.ID, Texto = "Marzo" },
+                new Traduccion { IdIdioma = idiomaEspanol.ID, IdEtiqueta = eMes04.ID, Texto = "Abril" },
+                new Traduccion { IdIdioma = idiomaEspanol.ID, IdEtiqueta = eMes05.ID, Texto = "Mayo" },
+                new Traduccion { IdIdioma = idiomaEspanol.ID, IdEtiqueta = eMes06.ID, Texto = "Junio" },
+                new Traduccion { IdIdioma = idiomaEspanol.ID, IdEtiqueta = eMes07.ID, Texto = "Julio" },
+                new Traduccion { IdIdioma = idiomaEspanol.ID, IdEtiqueta = eMes08.ID, Texto = "Agosto" },
+                new Traduccion { IdIdioma = idiomaEspanol.ID, IdEtiqueta = eMes09.ID, Texto = "Septiembre" },
+                new Traduccion { IdIdioma = idiomaEspanol.ID, IdEtiqueta = eMes10.ID, Texto = "Octubre" },
+                new Traduccion { IdIdioma = idiomaEspanol.ID, IdEtiqueta = eMes11.ID, Texto = "Noviembre" },
+                new Traduccion { IdIdioma = idiomaEspanol.ID, IdEtiqueta = eMes12.ID, Texto = "Diciembre" }
+            );
+            context.SaveChanges();
+
+            // =========================================================================
+            // --- SEED ETIQUETAS: Titulos de pestaña del navegador (Page.Title) --------
+            // BasePage traduce la pestaña usando el propio Title como clave:
+            // solo se activan si existe traducción para ese texto.
+            // =========================================================================
+
+            var eTitTabCatalogo = new Etiqueta { Clave = "Catálogo", Pagina = "Catalogo.aspx", Descripcion = "Título de pestaña del catálogo", EsMensajeAlerta = false };
+            var eTitTabCrearAuto = new Etiqueta { Clave = "Creación de Auto", Pagina = "CrearAuto.aspx", Descripcion = "Título de pestaña de CrearAuto", EsMensajeAlerta = false };
+            var eTitTabPersonalizar = new Etiqueta { Clave = "Personalizar Auto", Pagina = "personalizarAuto.aspx", Descripcion = "Título de pestaña de personalización", EsMensajeAlerta = false };
+            var eTitTabMiGaraje = new Etiqueta { Clave = "Mis Vehículos Comprados", Pagina = "MiGaraje.aspx", Descripcion = "Título de pestaña de MiGaraje", EsMensajeAlerta = false };
+            var eTitTabFacturacion = new Etiqueta { Clave = "Facturación Oficial", Pagina = "Facturacion.aspx", Descripcion = "Título de pestaña de Facturación", EsMensajeAlerta = false };
+            var eTitTabHistorial = new Etiqueta { Clave = "Historial de Ventas", Pagina = "HistorialVentas.aspx", Descripcion = "Título de pestaña de HistorialVentas", EsMensajeAlerta = false };
+            var eTitTabInventario = new Etiqueta { Clave = "Inventario", Pagina = "Inventario.aspx", Descripcion = "Título de pestaña del inventario", EsMensajeAlerta = false };
+            var eTitTabUsuarios = new Etiqueta { Clave = "Gestión de Usuarios", Pagina = "GestionUsuarios.aspx", Descripcion = "Título de pestaña de Gestión de Usuarios", EsMensajeAlerta = false };
+            var eTitTabClientes = new Etiqueta { Clave = "Gestión De Clientes", Pagina = "GestionClientes.aspx", Descripcion = "Título de pestaña de Gestión de Clientes", EsMensajeAlerta = false };
+            var eTitTabEventos = new Etiqueta { Clave = "Gestión de Eventos", Pagina = "GestionEventos.aspx", Descripcion = "Título de pestaña de la bitácora", EsMensajeAlerta = false };
+            var eTitTabPerfiles = new Etiqueta { Clave = "Gestión de Perfiles", Pagina = "Gestion_Perfiles_Permisos.aspx", Descripcion = "Título de pestaña de perfiles y permisos", EsMensajeAlerta = false };
+            var eTitTabIdiomas = new Etiqueta { Clave = "Gestión de Idiomas", Pagina = "GestionIdiomas.aspx", Descripcion = "Título de pestaña de gestión de idiomas", EsMensajeAlerta = false };
+            var eTitTabBackup = new Etiqueta { Clave = "BackupRestore", Pagina = "BackupRestore.aspx", Descripcion = "Título de pestaña de copias y restauración", EsMensajeAlerta = false };
+            var eTitTabCheckout = new Etiqueta { Clave = "Checkout", Pagina = "Checkout.aspx", Descripcion = "Título de pestaña del checkout", EsMensajeAlerta = false };
+            var eTitTabPagoExitoso = new Etiqueta { Clave = "Pago Exitoso", Pagina = "PagoExitoso.aspx", Descripcion = "Título de pestaña de pago aceptado", EsMensajeAlerta = false };
+            var eTitTabLogIn = new Etiqueta { Clave = "LogIn", Pagina = "LogIn.aspx", Descripcion = "Título de pestaña de inicio de sesión", EsMensajeAlerta = false };
+            var eTitTabLogout = new Etiqueta { Clave = "Logout", Pagina = "Logout.aspx", Descripcion = "Título de pestaña de cierre de sesión", EsMensajeAlerta = false };
+            var eTitTabCambioPass = new Etiqueta { Clave = "Cambiar Contraseña", Pagina = "CambioContraseña.aspx", Descripcion = "Título de pestaña de cambio de contraseña", EsMensajeAlerta = false };
+            var eTitTabRegistro = new Etiqueta { Clave = "Registro de Cliente", Pagina = "RegistroCliente.aspx", Descripcion = "Título de pestaña del registro de clientes", EsMensajeAlerta = false };
+            var eTitTabRecuperacionDV = new Etiqueta { Clave = "Recuperación de Dígito Verificador", Pagina = "RecuperacionDV.aspx", Descripcion = "Título de pestaña de recuperación de DV", EsMensajeAlerta = false };
+
+            // Placeholders de los campos de tarjeta del Checkout
+            var ePhCardName = new Etiqueta { Clave = "txtCardName", Pagina = "Checkout.aspx", Descripcion = "Placeholder titular de la tarjeta", EsMensajeAlerta = false };
+            var ePhExpiry = new Etiqueta { Clave = "txtExpiry", Pagina = "Checkout.aspx", Descripcion = "Placeholder vencimiento de la tarjeta", EsMensajeAlerta = false };
+            var ePhCvv = new Etiqueta { Clave = "txtCvv", Pagina = "Checkout.aspx", Descripcion = "Placeholder código de seguridad", EsMensajeAlerta = false };
+
+            // Mensajes de error del Checkout (lblErrorCheckout)
+            var eMsgErrorTarjetaCheckout = new Etiqueta { Clave = "msg_error_datos_tarjeta_checkout", Pagina = "Checkout.aspx", Descripcion = "Validación datos de tarjeta incompletos", EsMensajeAlerta = false };
+            var eMsgErrorProcesarCompra = new Etiqueta { Clave = "msg_error_procesar_compra", Pagina = "Checkout.aspx", Descripcion = "Error al procesar la compra", EsMensajeAlerta = false };
+
+            // Texto de método de pago persistido (equivalente traducido para interfaces)
+            var eTxtMetodoPagoTarjeta = new Etiqueta { Clave = "texto_metodo_pago_tarjeta", Pagina = "Facturacion.aspx", Descripcion = "Nombre mostrable del método de pago tarjeta", EsMensajeAlerta = false };
+
+            // Error genérico de alta de vehículo
+            var eMsgErrorGuardarAuto = new Etiqueta { Clave = "msg_error_guardar_auto", Pagina = "CrearAuto.aspx", Descripcion = "Error al guardar el vehículo", EsMensajeAlerta = true };
+
+            context.Etiquetas.AddOrUpdate(e => e.Clave,
+                eTitTabCatalogo, eTitTabCrearAuto, eTitTabPersonalizar, eTitTabMiGaraje,
+                eTitTabFacturacion, eTitTabHistorial, eTitTabInventario, eTitTabUsuarios,
+                eTitTabClientes, eTitTabEventos, eTitTabPerfiles, eTitTabIdiomas, eTitTabBackup,
+                eTitTabCheckout, eTitTabPagoExitoso, eTitTabLogIn, eTitTabLogout, eTitTabCambioPass,
+                eTitTabRegistro, eTitTabRecuperacionDV,
+                ePhCardName, ePhExpiry, ePhCvv,
+                eMsgErrorTarjetaCheckout, eMsgErrorProcesarCompra,
+                eTxtMetodoPagoTarjeta, eMsgErrorGuardarAuto
+            );
+            context.SaveChanges();
+
+            context.Traducciones.AddOrUpdate(t => new { t.IdIdioma, t.IdEtiqueta },
+                new Traduccion { IdIdioma = idiomaEspanol.ID, IdEtiqueta = eTitTabCatalogo.ID, Texto = "Catálogo" },
+                new Traduccion { IdIdioma = idiomaEspanol.ID, IdEtiqueta = eTitTabCrearAuto.ID, Texto = "Creación de Auto" },
+                new Traduccion { IdIdioma = idiomaEspanol.ID, IdEtiqueta = eTitTabPersonalizar.ID, Texto = "Personalizar Auto" },
+                new Traduccion { IdIdioma = idiomaEspanol.ID, IdEtiqueta = eTitTabMiGaraje.ID, Texto = "Mis Vehículos Comprados" },
+                new Traduccion { IdIdioma = idiomaEspanol.ID, IdEtiqueta = eTitTabFacturacion.ID, Texto = "Facturación Oficial" },
+                new Traduccion { IdIdioma = idiomaEspanol.ID, IdEtiqueta = eTitTabHistorial.ID, Texto = "Historial de Ventas" },
+                new Traduccion { IdIdioma = idiomaEspanol.ID, IdEtiqueta = eTitTabInventario.ID, Texto = "Inventario" },
+                new Traduccion { IdIdioma = idiomaEspanol.ID, IdEtiqueta = eTitTabUsuarios.ID, Texto = "Gestión de Usuarios" },
+                new Traduccion { IdIdioma = idiomaEspanol.ID, IdEtiqueta = eTitTabClientes.ID, Texto = "Gestión De Clientes" },
+                new Traduccion { IdIdioma = idiomaEspanol.ID, IdEtiqueta = eTitTabEventos.ID, Texto = "Gestión de Eventos" },
+                new Traduccion { IdIdioma = idiomaEspanol.ID, IdEtiqueta = eTitTabPerfiles.ID, Texto = "Gestión de Perfiles" },
+                new Traduccion { IdIdioma = idiomaEspanol.ID, IdEtiqueta = eTitTabIdiomas.ID, Texto = "Gestión de Idiomas" },
+                new Traduccion { IdIdioma = idiomaEspanol.ID, IdEtiqueta = eTitTabBackup.ID, Texto = "BackupRestore" },
+                new Traduccion { IdIdioma = idiomaEspanol.ID, IdEtiqueta = eTitTabCheckout.ID, Texto = "Checkout" },
+                new Traduccion { IdIdioma = idiomaEspanol.ID, IdEtiqueta = eTitTabPagoExitoso.ID, Texto = "Pago Exitoso" },
+                new Traduccion { IdIdioma = idiomaEspanol.ID, IdEtiqueta = eTitTabLogIn.ID, Texto = "LogIn" },
+                new Traduccion { IdIdioma = idiomaEspanol.ID, IdEtiqueta = eTitTabLogout.ID, Texto = "Logout" },
+                new Traduccion { IdIdioma = idiomaEspanol.ID, IdEtiqueta = eTitTabCambioPass.ID, Texto = "Cambiar Contraseña" },
+                new Traduccion { IdIdioma = idiomaEspanol.ID, IdEtiqueta = eTitTabRegistro.ID, Texto = "Registro de Cliente" },
+                new Traduccion { IdIdioma = idiomaEspanol.ID, IdEtiqueta = eTitTabRecuperacionDV.ID, Texto = "Recuperación de Dígito Verificador" },
+                new Traduccion { IdIdioma = idiomaEspanol.ID, IdEtiqueta = ePhCardName.ID, Texto = "Nombre del Titular" },
+                new Traduccion { IdIdioma = idiomaEspanol.ID, IdEtiqueta = ePhExpiry.ID, Texto = "MM/AA" },
+                new Traduccion { IdIdioma = idiomaEspanol.ID, IdEtiqueta = ePhCvv.ID, Texto = "Código de Seguridad" },
+                new Traduccion { IdIdioma = idiomaEspanol.ID, IdEtiqueta = eMsgErrorTarjetaCheckout.ID, Texto = "Por favor completá todos los datos de la tarjeta antes de confirmar el pago." },
+                new Traduccion { IdIdioma = idiomaEspanol.ID, IdEtiqueta = eMsgErrorProcesarCompra.ID, Texto = "Error al procesar la compra." },
+                new Traduccion { IdIdioma = idiomaEspanol.ID, IdEtiqueta = eTxtMetodoPagoTarjeta.ID, Texto = "Tarjeta de Crédito" },
+                new Traduccion { IdIdioma = idiomaEspanol.ID, IdEtiqueta = eMsgErrorGuardarAuto.ID, Texto = "Error al guardar el vehículo en el inventario." }
             );
             context.SaveChanges();
 
@@ -1102,7 +1342,7 @@ context.SaveChanges();
                 new Traduccion { IdIdioma = idiomaEspanol.ID, IdEtiqueta = ePregLogout.ID, Texto = "¿Está seguro de que desea cerrar su sesión?" },
                 new Traduccion { IdIdioma = idiomaEspanol.ID, IdEtiqueta = eBtnSalir.ID, Texto = "Sí, salir" },
                 new Traduccion { IdIdioma = idiomaEspanol.ID, IdEtiqueta = eBtnVolver.ID, Texto = "No, volver" },
-                new Traduccion { IdIdioma = idiomaEspanol.ID, IdEtiqueta = eMsgErrorLogout.ID, Texto = "Error al cerrar sesión: " }
+                new Traduccion { IdIdioma = idiomaEspanol.ID, IdEtiqueta = eMsgErrorLogout.ID, Texto = "Error al cerrar sesión." }
             );
             context.SaveChanges();
 
@@ -1252,7 +1492,7 @@ context.SaveChanges();
                 new Traduccion { IdIdioma = idiomaEspanol.ID, IdEtiqueta = eMsgCamposObligReg.ID, Texto = "Los campos principales son obligatorios." },
                 new Traduccion { IdIdioma = idiomaEspanol.ID, IdEtiqueta = eMsgPassNoCoincidenReg.ID, Texto = "Las contraseñas no coinciden." },
                 new Traduccion { IdIdioma = idiomaEspanol.ID, IdEtiqueta = eMsgEmailDuplicado.ID, Texto = "El correo electrónico ya se encuentra registrado." },
-                new Traduccion { IdIdioma = idiomaEspanol.ID, IdEtiqueta = eMsgErrorProcesarReg.ID, Texto = "Error al procesar el registro: " },
+                new Traduccion { IdIdioma = idiomaEspanol.ID, IdEtiqueta = eMsgErrorProcesarReg.ID, Texto = "Error al procesar el registro." },
                 new Traduccion { IdIdioma = idiomaEspanol.ID, IdEtiqueta = eSwalTitulo.ID, Texto = "¡Bienvenido!" },
                 new Traduccion { IdIdioma = idiomaEspanol.ID, IdEtiqueta = eSwalTexto.ID, Texto = "Tu cuenta de cliente fue creada con éxito." },
                 new Traduccion { IdIdioma = idiomaEspanol.ID, IdEtiqueta = eSwalBtn.ID, Texto = "Ir al Login" }
@@ -1335,7 +1575,6 @@ context.SaveChanges();
             var eFiltroActividad = new Etiqueta { Clave = "lblFiltroActividad", Pagina = "GestionEventos.aspx", Descripcion = "Filtro por actividad", EsMensajeAlerta = false };
             var eFiltroCriticidad = new Etiqueta { Clave = "lblFiltroCriticidad", Pagina = "GestionEventos.aspx", Descripcion = "Filtro por nivel de criticidad", EsMensajeAlerta = false };
             var eFiltroFechaDesde = new Etiqueta { Clave = "lblFiltroFechaEventos", Pagina = "GestionEventos.aspx", Descripcion = "Filtro fecha desde", EsMensajeAlerta = false };
-            var eFiltroFechaHasta = new Etiqueta { Clave = "lblFiltroFechaHasta", Pagina = "GestionEventos.aspx", Descripcion = "Filtro fecha hasta", EsMensajeAlerta = false };
             var eBtnFiltrarEv = new Etiqueta { Clave = "btnFiltrarEventos", Pagina = "GestionEventos.aspx", Descripcion = "Botón para aplicar filtros", EsMensajeAlerta = false };
             var eBtnExportarEv = new Etiqueta { Clave = "btnExportar", Pagina = "GestionEventos.aspx", Descripcion = "Botón para exportar bitácora a XML", EsMensajeAlerta = false };
             var eDdlCri0 = new Etiqueta { Clave = "ddlFiltroCri_0", Pagina = "GestionEventos.aspx", Descripcion = "Opción criticidad Todas", EsMensajeAlerta = false };
@@ -1357,7 +1596,7 @@ context.SaveChanges();
 
             context.Etiquetas.AddOrUpdate(e => e.Clave,
                 eTitGestionEv, eFiltroUsuario, eFiltroModulo, eFiltroActividad, eFiltroCriticidad,
-                eFiltroFechaDesde, eFiltroFechaHasta, eBtnFiltrarEv, eBtnLimpiarEv, eBtnExportarEv, eDdlCri0, eDdlCri1, eDdlCri2, eDdlCri3,
+                eFiltroFechaDesde, eBtnFiltrarEv, eBtnLimpiarEv, eBtnExportarEv, eDdlCri0, eDdlCri1, eDdlCri2, eDdlCri3,
                 eColFecha, eColUsuario, eColModulo, eColCriticidad, eColDescripcion,
                 eMsgSinResultados, eMsgErrorFechas, eMsgErrExpPerm, eMsgErrExpBit
             );
@@ -1370,7 +1609,6 @@ context.SaveChanges();
                 new Traduccion { IdIdioma = idiomaEspanol.ID, IdEtiqueta = eFiltroActividad.ID, Texto = "Actividad" },
                 new Traduccion { IdIdioma = idiomaEspanol.ID, IdEtiqueta = eFiltroCriticidad.ID, Texto = "Criticidad" },
                 new Traduccion { IdIdioma = idiomaEspanol.ID, IdEtiqueta = eFiltroFechaDesde.ID, Texto = "Fecha" },
-                new Traduccion { IdIdioma = idiomaEspanol.ID, IdEtiqueta = eFiltroFechaHasta.ID, Texto = "Fecha Hasta" },
                 new Traduccion { IdIdioma = idiomaEspanol.ID, IdEtiqueta = eBtnFiltrarEv.ID, Texto = "Filtrar" },
                 new Traduccion { IdIdioma = idiomaEspanol.ID, IdEtiqueta = eBtnLimpiarEv.ID, Texto = "Limpiar Filtros" },
                 new Traduccion { IdIdioma = idiomaEspanol.ID, IdEtiqueta = eBtnExportarEv.ID, Texto = "Exportar Bitácora a XML" },
@@ -1378,8 +1616,8 @@ context.SaveChanges();
                 new Traduccion { IdIdioma = idiomaEspanol.ID, IdEtiqueta = eDdlCri1.ID, Texto = "1 - Baja" },
                 new Traduccion { IdIdioma = idiomaEspanol.ID, IdEtiqueta = eDdlCri2.ID, Texto = "2 - Media" },
                 new Traduccion { IdIdioma = idiomaEspanol.ID, IdEtiqueta = eDdlCri3.ID, Texto = "3 - Alta (Peligro)" },
-                new Traduccion { IdIdioma = idiomaEspanol.ID, IdEtiqueta = eMsgErrExpPerm.ID, Texto = "Error de permisos al exportar la bitácora: " },
-                new Traduccion { IdIdioma = idiomaEspanol.ID, IdEtiqueta = eMsgErrExpBit.ID, Texto = "Error al exportar la bitácora: " },
+                new Traduccion { IdIdioma = idiomaEspanol.ID, IdEtiqueta = eMsgErrExpPerm.ID, Texto = "Error de permisos al exportar la bitácora." },
+                new Traduccion { IdIdioma = idiomaEspanol.ID, IdEtiqueta = eMsgErrExpBit.ID, Texto = "Error al exportar la bitácora." },
                 new Traduccion { IdIdioma = idiomaEspanol.ID, IdEtiqueta = eColFecha.ID, Texto = "Fecha / Hora" },
                 new Traduccion { IdIdioma = idiomaEspanol.ID, IdEtiqueta = eColUsuario.ID, Texto = "Usuario" },
                 new Traduccion { IdIdioma = idiomaEspanol.ID, IdEtiqueta = eColModulo.ID, Texto = "Módulo" },
@@ -1625,8 +1863,8 @@ context.SaveChanges();
                     new Traduccion { IdIdioma = idiomaIngles.ID, IdEtiqueta = eMsgNomVacio.ID, Texto = "Please enter a valid language name." },
                     new Traduccion { IdIdioma = idiomaIngles.ID, IdEtiqueta = eMsgCreadoExito.ID, Texto = "Language successfully created." },
                     new Traduccion { IdIdioma = idiomaIngles.ID, IdEtiqueta = eMsgTradGuardadas.ID, Texto = "Translations saved successfully." },
-                    new Traduccion { IdIdioma = idiomaIngles.ID, IdEtiqueta = eMsgErrCrear.ID, Texto = "Error creating language: " },
-                    new Traduccion { IdIdioma = idiomaIngles.ID, IdEtiqueta = eMsgErrGuardar.ID, Texto = "Error saving translations: " }
+                    new Traduccion { IdIdioma = idiomaIngles.ID, IdEtiqueta = eMsgErrCrear.ID, Texto = "Error creating the language." },
+                    new Traduccion { IdIdioma = idiomaIngles.ID, IdEtiqueta = eMsgErrGuardar.ID, Texto = "Error saving translations." }
                 );
                 context.SaveChanges();
 
@@ -1643,10 +1881,10 @@ context.SaveChanges();
                     new Traduccion { IdIdioma = idiomaIngles.ID, IdEtiqueta = eBtnRestaurar.ID, Texto = "Restore" },
                     new Traduccion { IdIdioma = idiomaIngles.ID, IdEtiqueta = eMsgSinOperacion.ID, Texto = "Waiting for operation..." },
                     new Traduccion { IdIdioma = idiomaIngles.ID, IdEtiqueta = eMsgBackupExito.ID, Texto = "Backup generated successfully at: " },
-                    new Traduccion { IdIdioma = idiomaIngles.ID, IdEtiqueta = eMsgBackupError.ID, Texto = "Error generating backup: " },
+                    new Traduccion { IdIdioma = idiomaIngles.ID, IdEtiqueta = eMsgBackupError.ID, Texto = "Error generating backup." },
                     new Traduccion { IdIdioma = idiomaIngles.ID, IdEtiqueta = eMsgArchivoInvalido.ID, Texto = "You must select a valid .bak file." },
                     new Traduccion { IdIdioma = idiomaIngles.ID, IdEtiqueta = eMsgRestoreExito.ID, Texto = "Database restored successfully." },
-                    new Traduccion { IdIdioma = idiomaIngles.ID, IdEtiqueta = eMsgRestoreError.ID, Texto = "Error restoring database: " }
+                    new Traduccion { IdIdioma = idiomaIngles.ID, IdEtiqueta = eMsgRestoreError.ID, Texto = "Error restoring database." }
                 );
                 context.SaveChanges();
 
@@ -1662,7 +1900,7 @@ context.SaveChanges();
                     new Traduccion { IdIdioma = idiomaIngles.ID, IdEtiqueta = eMsgCamposObligatorios.ID, Texto = "All fields are required." },
                     new Traduccion { IdIdioma = idiomaIngles.ID, IdEtiqueta = eMsgPassNoCoinciden.ID, Texto = "New passwords do not match." },
                     new Traduccion { IdIdioma = idiomaIngles.ID, IdEtiqueta = eMsgPassActualIncorrecta.ID, Texto = "Current password is incorrect." },
-                    new Traduccion { IdIdioma = idiomaIngles.ID, IdEtiqueta = eMsgErrorPrefijo.ID, Texto = "Error: " }
+                    new Traduccion { IdIdioma = idiomaIngles.ID, IdEtiqueta = eMsgErrorPrefijo.ID, Texto = "An unexpected error occurred." }
                 );
                 context.SaveChanges();
 
@@ -1778,9 +2016,9 @@ context.SaveChanges();
                     new Traduccion { IdIdioma = idiomaIngles.ID, IdEtiqueta = eBtnGuardarCambios.ID, Texto = "Save Permission Changes" },
                     new Traduccion { IdIdioma = idiomaIngles.ID, IdEtiqueta = eMsgIngreseNombrePerfil.ID, Texto = "Please enter a name for the profile." },
                     new Traduccion { IdIdioma = idiomaIngles.ID, IdEtiqueta = eMsgPerfilCreadoExito.ID, Texto = "Profile successfully created!" },
-                    new Traduccion { IdIdioma = idiomaIngles.ID, IdEtiqueta = eMsgErrorCrearPerfil.ID, Texto = "Error creating profile: " },
+                    new Traduccion { IdIdioma = idiomaIngles.ID, IdEtiqueta = eMsgErrorCrearPerfil.ID, Texto = "Error creating profile." },
                     new Traduccion { IdIdioma = idiomaIngles.ID, IdEtiqueta = eMsgCambiosGuardadosExito.ID, Texto = "Changes saved successfully." },
-                    new Traduccion { IdIdioma = idiomaIngles.ID, IdEtiqueta = eMsgErrorGeneral.ID, Texto = "Error: " }
+                    new Traduccion { IdIdioma = idiomaIngles.ID, IdEtiqueta = eMsgErrorGeneral.ID, Texto = "An unexpected error occurred." }
                 );
                 context.SaveChanges();
 
@@ -1812,7 +2050,7 @@ context.SaveChanges();
                     new Traduccion { IdIdioma = idiomaIngles.ID, IdEtiqueta = eMsgXmlInvalido.ID, Texto = "The selected file is not a valid XML." },
                     new Traduccion { IdIdioma = idiomaIngles.ID, IdEtiqueta = eMsgXmlExito.ID, Texto = "Process completed! {0} customers imported successfully." },
                     new Traduccion { IdIdioma = idiomaIngles.ID, IdEtiqueta = eMsgXmlSinRegistros.ID, Texto = "No customers imported. All records were duplicates or file had invalid content." },
-                    new Traduccion { IdIdioma = idiomaIngles.ID, IdEtiqueta = eMsgXmlErrorProc.ID, Texto = "Error processing file: " }
+                    new Traduccion { IdIdioma = idiomaIngles.ID, IdEtiqueta = eMsgXmlErrorProc.ID, Texto = "Error processing file." }
                 );
                 context.SaveChanges();
 
@@ -1841,7 +2079,6 @@ context.SaveChanges();
                     new Traduccion { IdIdioma = idiomaIngles.ID, IdEtiqueta = eEstBloqueado.ID, Texto = "LOCKED" },
                     new Traduccion { IdIdioma = idiomaIngles.ID, IdEtiqueta = eEstDesbloqueado.ID, Texto = "Unlocked" },
                     new Traduccion { IdIdioma = idiomaIngles.ID, IdEtiqueta = eBtnGridEdit.ID, Texto = "Edit" },
-                    new Traduccion { IdIdioma = idiomaIngles.ID, IdEtiqueta = eBtnGridBorr.ID, Texto = "Delete" },
                     new Traduccion { IdIdioma = idiomaIngles.ID, IdEtiqueta = eBtnGridDesact.ID, Texto = "Deactivate" },
                     new Traduccion { IdIdioma = idiomaIngles.ID, IdEtiqueta = eBtnGridAct.ID, Texto = "Activate" },
                     new Traduccion { IdIdioma = idiomaIngles.ID, IdEtiqueta = eBtnGridDesbloq.ID, Texto = "Unlock" },
@@ -1852,7 +2089,7 @@ context.SaveChanges();
                     new Traduccion { IdIdioma = idiomaIngles.ID, IdEtiqueta = eMsgUsuarioActualizado.ID, Texto = "User updated successfully." },
                     new Traduccion { IdIdioma = idiomaIngles.ID, IdEtiqueta = eMsgUsuarioCreado.ID, Texto = "User created successfully." },
                     new Traduccion { IdIdioma = idiomaIngles.ID, IdEtiqueta = eMsgConfirmarEliminar.ID, Texto = "Are you sure you want to delete this user?" },
-                    new Traduccion { IdIdioma = idiomaIngles.ID, IdEtiqueta = eMsgErrorPref.ID, Texto = "Error: " },
+                    new Traduccion { IdIdioma = idiomaIngles.ID, IdEtiqueta = eMsgErrorPref.ID, Texto = "An unexpected error occurred." },
                     new Traduccion { IdIdioma = idiomaIngles.ID, IdEtiqueta = eMsgDniInvalido.ID, Texto = "The ID  number is invalid." }
                 );
                 context.SaveChanges();
@@ -1881,6 +2118,98 @@ context.SaveChanges();
                     new Traduccion { IdIdioma = idiomaIngles.ID, IdEtiqueta = eColVTot.ID, Texto = "Total" },
                     new Traduccion { IdIdioma = idiomaIngles.ID, IdEtiqueta = eTxtEstandar.ID, Texto = "Factory Standard" },
                     new Traduccion { IdIdioma = idiomaIngles.ID, IdEtiqueta = eMsgErrorCargarVentas.ID, Texto = "Error retrieving system sales history." }
+                );
+                context.SaveChanges();
+
+                // -------------------------------------------------------------------------
+                // 10b. HistorialVentas.aspx — Informe Mensual de Ventas
+                // -------------------------------------------------------------------------
+                context.Traducciones.AddOrUpdate(t => new { t.IdIdioma, t.IdEtiqueta },
+                    new Traduccion { IdIdioma = idiomaIngles.ID, IdEtiqueta = eTitInforme.ID, Texto = "Monthly Sales Report" },
+                    new Traduccion { IdIdioma = idiomaIngles.ID, IdEtiqueta = eSubInforme.ID, Texto = "Statistical analysis of the selected period, with PDF download." },
+                    new Traduccion { IdIdioma = idiomaIngles.ID, IdEtiqueta = eInformeMes.ID, Texto = "Month:" },
+                    new Traduccion { IdIdioma = idiomaIngles.ID, IdEtiqueta = eInformeAnio.ID, Texto = "Year:" },
+                    new Traduccion { IdIdioma = idiomaIngles.ID, IdEtiqueta = eBtnGenerarInforme.ID, Texto = "Generate Report" },
+                    new Traduccion { IdIdioma = idiomaIngles.ID, IdEtiqueta = eBtnVerInfPdf.ID, Texto = "View Report (PDF)" },
+                    new Traduccion { IdIdioma = idiomaIngles.ID, IdEtiqueta = eBtnDescInfPdf.ID, Texto = "Download Report (PDF)" },
+                    new Traduccion { IdIdioma = idiomaIngles.ID, IdEtiqueta = eInfEmpSub.ID, Texto = "High-End Dealership and Customization Workshop" },
+                    new Traduccion { IdIdioma = idiomaIngles.ID, IdEtiqueta = eInfPeriodo.ID, Texto = "Period:" },
+                    new Traduccion { IdIdioma = idiomaIngles.ID, IdEtiqueta = eInfFechaEmision.ID, Texto = "Issue date:" },
+                    new Traduccion { IdIdioma = idiomaIngles.ID, IdEtiqueta = eKpiUniMes.ID, Texto = "Units Sold" },
+                    new Traduccion { IdIdioma = idiomaIngles.ID, IdEtiqueta = eKpiFactMes.ID, Texto = "Total Revenue (VAT incl.)" },
+                    new Traduccion { IdIdioma = idiomaIngles.ID, IdEtiqueta = eKpiTicketMes.ID, Texto = "Average Order Value" },
+                    new Traduccion { IdIdioma = idiomaIngles.ID, IdEtiqueta = eKpiSubNetoMes.ID, Texto = "Net Subtotal" },
+                    new Traduccion { IdIdioma = idiomaIngles.ID, IdEtiqueta = eKpiIvaMes.ID, Texto = "VAT for the Period" },
+                    new Traduccion { IdIdioma = idiomaIngles.ID, IdEtiqueta = eKpiPersMes.ID, Texto = "Custom vs. Standard" },
+                    new Traduccion { IdIdioma = idiomaIngles.ID, IdEtiqueta = eKpiMarcaMes.ID, Texto = "Top Make / Model" },
+                    new Traduccion { IdIdioma = idiomaIngles.ID, IdEtiqueta = eGrafEvoDiaria.ID, Texto = "Daily Revenue Trend" },
+                    new Traduccion { IdIdioma = idiomaIngles.ID, IdEtiqueta = eGrafVentasMarca.ID, Texto = "Revenue by Make / Model" },
+                    new Traduccion { IdIdioma = idiomaIngles.ID, IdEtiqueta = eGrafPersEst.ID, Texto = "Custom vs. Factory Standard" },
+                    new Traduccion { IdIdioma = idiomaIngles.ID, IdEtiqueta = eGrafMetodosPago.ID, Texto = "Breakdown by Payment Method" },
+                    new Traduccion { IdIdioma = idiomaIngles.ID, IdEtiqueta = eLeyFact.ID, Texto = "Revenue (US$)" },
+                    new Traduccion { IdIdioma = idiomaIngles.ID, IdEtiqueta = eLeyOperaciones.ID, Texto = "Transactions" },
+                    new Traduccion { IdIdioma = idiomaIngles.ID, IdEtiqueta = eTxtPersInforme.ID, Texto = "Custom Build" },
+                    new Traduccion { IdIdioma = idiomaIngles.ID, IdEtiqueta = eInfVacioTit.ID, Texto = "No sales in this period" },
+                    new Traduccion { IdIdioma = idiomaIngles.ID, IdEtiqueta = eInfVacioTxt.ID, Texto = "No transactions were registered in the selected month and year. Try another period." },
+                    new Traduccion { IdIdioma = idiomaIngles.ID, IdEtiqueta = eMsgInfSinDatos.ID, Texto = "There are no recorded sales in the selected period." },
+                    new Traduccion { IdIdioma = idiomaIngles.ID, IdEtiqueta = eMsgInfError.ID, Texto = "Error generating the monthly sales report." },
+                    new Traduccion { IdIdioma = idiomaIngles.ID, IdEtiqueta = ePdfInfTitulo.ID, Texto = "Monthly Sales Report" },
+                    new Traduccion { IdIdioma = idiomaIngles.ID, IdEtiqueta = ePdfCantVentas.ID, Texto = "Number of sales:" },
+                    new Traduccion { IdIdioma = idiomaIngles.ID, IdEtiqueta = ePdfUnidades.ID, Texto = "Units Sold" },
+                    new Traduccion { IdIdioma = idiomaIngles.ID, IdEtiqueta = ePdfFact.ID, Texto = "Total Revenue" },
+                    new Traduccion { IdIdioma = idiomaIngles.ID, IdEtiqueta = ePdfTkt.ID, Texto = "Average Order Value" },
+                    new Traduccion { IdIdioma = idiomaIngles.ID, IdEtiqueta = ePdfMarcaDest.ID, Texto = "Top Make / Model" },
+                    new Traduccion { IdIdioma = idiomaIngles.ID, IdEtiqueta = ePdfSecDetalle.ID, Texto = "Sales Detail for the Period" },
+                    new Traduccion { IdIdioma = idiomaIngles.ID, IdEtiqueta = ePdfColFactura.ID, Texto = "Invoice #" },
+                    new Traduccion { IdIdioma = idiomaIngles.ID, IdEtiqueta = ePdfColMetodoPago.ID, Texto = "Payment" },
+                    new Traduccion { IdIdioma = idiomaIngles.ID, IdEtiqueta = ePdfTextoPagina.ID, Texto = "Page" },
+                    new Traduccion { IdIdioma = idiomaIngles.ID, IdEtiqueta = ePdfLeyendaPie.ID, Texto = "Monthly Sales Report automatically generated by RedLine Customs S.A." },
+                    new Traduccion { IdIdioma = idiomaIngles.ID, IdEtiqueta = eMes01.ID, Texto = "January" },
+                    new Traduccion { IdIdioma = idiomaIngles.ID, IdEtiqueta = eMes02.ID, Texto = "February" },
+                    new Traduccion { IdIdioma = idiomaIngles.ID, IdEtiqueta = eMes03.ID, Texto = "March" },
+                    new Traduccion { IdIdioma = idiomaIngles.ID, IdEtiqueta = eMes04.ID, Texto = "April" },
+                    new Traduccion { IdIdioma = idiomaIngles.ID, IdEtiqueta = eMes05.ID, Texto = "May" },
+                    new Traduccion { IdIdioma = idiomaIngles.ID, IdEtiqueta = eMes06.ID, Texto = "June" },
+                    new Traduccion { IdIdioma = idiomaIngles.ID, IdEtiqueta = eMes07.ID, Texto = "July" },
+                    new Traduccion { IdIdioma = idiomaIngles.ID, IdEtiqueta = eMes08.ID, Texto = "August" },
+                    new Traduccion { IdIdioma = idiomaIngles.ID, IdEtiqueta = eMes09.ID, Texto = "September" },
+                    new Traduccion { IdIdioma = idiomaIngles.ID, IdEtiqueta = eMes10.ID, Texto = "October" },
+                    new Traduccion { IdIdioma = idiomaIngles.ID, IdEtiqueta = eMes11.ID, Texto = "November" },
+                    new Traduccion { IdIdioma = idiomaIngles.ID, IdEtiqueta = eMes12.ID, Texto = "December" }
+                );
+                context.SaveChanges();
+
+                // -------------------------------------------------------------------------
+                // 10c. Titulos de pestaña + Checkout + textos comerciales
+                // -------------------------------------------------------------------------
+                context.Traducciones.AddOrUpdate(t => new { t.IdIdioma, t.IdEtiqueta },
+                    new Traduccion { IdIdioma = idiomaIngles.ID, IdEtiqueta = eTitTabCatalogo.ID, Texto = "Catalog" },
+                    new Traduccion { IdIdioma = idiomaIngles.ID, IdEtiqueta = eTitTabCrearAuto.ID, Texto = "Vehicle Builder" },
+                    new Traduccion { IdIdioma = idiomaIngles.ID, IdEtiqueta = eTitTabPersonalizar.ID, Texto = "Customize Vehicle" },
+                    new Traduccion { IdIdioma = idiomaIngles.ID, IdEtiqueta = eTitTabMiGaraje.ID, Texto = "My Purchased Vehicles" },
+                    new Traduccion { IdIdioma = idiomaIngles.ID, IdEtiqueta = eTitTabFacturacion.ID, Texto = "Official Invoicing" },
+                    new Traduccion { IdIdioma = idiomaIngles.ID, IdEtiqueta = eTitTabHistorial.ID, Texto = "Sales History" },
+                    new Traduccion { IdIdioma = idiomaIngles.ID, IdEtiqueta = eTitTabInventario.ID, Texto = "Inventory" },
+                    new Traduccion { IdIdioma = idiomaIngles.ID, IdEtiqueta = eTitTabUsuarios.ID, Texto = "User Management" },
+                    new Traduccion { IdIdioma = idiomaIngles.ID, IdEtiqueta = eTitTabClientes.ID, Texto = "Customer Management" },
+                    new Traduccion { IdIdioma = idiomaIngles.ID, IdEtiqueta = eTitTabEventos.ID, Texto = "Events Log" },
+                    new Traduccion { IdIdioma = idiomaIngles.ID, IdEtiqueta = eTitTabPerfiles.ID, Texto = "Profile Management" },
+                    new Traduccion { IdIdioma = idiomaIngles.ID, IdEtiqueta = eTitTabIdiomas.ID, Texto = "Language Management" },
+                    new Traduccion { IdIdioma = idiomaIngles.ID, IdEtiqueta = eTitTabBackup.ID, Texto = "Backup & Restore" },
+                    new Traduccion { IdIdioma = idiomaIngles.ID, IdEtiqueta = eTitTabCheckout.ID, Texto = "Checkout" },
+                    new Traduccion { IdIdioma = idiomaIngles.ID, IdEtiqueta = eTitTabPagoExitoso.ID, Texto = "Successful Payment" },
+                    new Traduccion { IdIdioma = idiomaIngles.ID, IdEtiqueta = eTitTabLogIn.ID, Texto = "User Login" },
+                    new Traduccion { IdIdioma = idiomaIngles.ID, IdEtiqueta = eTitTabLogout.ID, Texto = "Log Out" },
+                    new Traduccion { IdIdioma = idiomaIngles.ID, IdEtiqueta = eTitTabCambioPass.ID, Texto = "Change Password" },
+                    new Traduccion { IdIdioma = idiomaIngles.ID, IdEtiqueta = eTitTabRegistro.ID, Texto = "Customer Registration" },
+                    new Traduccion { IdIdioma = idiomaIngles.ID, IdEtiqueta = eTitTabRecuperacionDV.ID, Texto = "DV Recovery" },
+                    new Traduccion { IdIdioma = idiomaIngles.ID, IdEtiqueta = ePhCardName.ID, Texto = "Cardholder Name" },
+                    new Traduccion { IdIdioma = idiomaIngles.ID, IdEtiqueta = ePhExpiry.ID, Texto = "MM/YY" },
+                    new Traduccion { IdIdioma = idiomaIngles.ID, IdEtiqueta = ePhCvv.ID, Texto = "Security Code" },
+                    new Traduccion { IdIdioma = idiomaIngles.ID, IdEtiqueta = eMsgErrorTarjetaCheckout.ID, Texto = "Please complete all card details before confirming the payment." },
+                    new Traduccion { IdIdioma = idiomaIngles.ID, IdEtiqueta = eMsgErrorProcesarCompra.ID, Texto = "Error processing the order." },
+                    new Traduccion { IdIdioma = idiomaIngles.ID, IdEtiqueta = eTxtMetodoPagoTarjeta.ID, Texto = "Credit Card" },
+                    new Traduccion { IdIdioma = idiomaIngles.ID, IdEtiqueta = eMsgErrorGuardarAuto.ID, Texto = "Error saving the vehicle to the inventory." }
                 );
                 context.SaveChanges();
 
@@ -1929,7 +2258,7 @@ context.SaveChanges();
                     new Traduccion { IdIdioma = idiomaIngles.ID, IdEtiqueta = ePregLogout.ID, Texto = "Are you sure you want to log out?" },
                     new Traduccion { IdIdioma = idiomaIngles.ID, IdEtiqueta = eBtnSalir.ID, Texto = "Yes, log out" },
                     new Traduccion { IdIdioma = idiomaIngles.ID, IdEtiqueta = eBtnVolver.ID, Texto = "No, go back" },
-                    new Traduccion { IdIdioma = idiomaIngles.ID, IdEtiqueta = eMsgErrorLogout.ID, Texto = "Error logging out: " }
+                    new Traduccion { IdIdioma = idiomaIngles.ID, IdEtiqueta = eMsgErrorLogout.ID, Texto = "Error logging out." }
                 );
                 context.SaveChanges();
 
@@ -1993,7 +2322,7 @@ context.SaveChanges();
                     new Traduccion { IdIdioma = idiomaIngles.ID, IdEtiqueta = eMsgCamposObligReg.ID, Texto = "Main fields are required." },
                     new Traduccion { IdIdioma = idiomaIngles.ID, IdEtiqueta = eMsgPassNoCoincidenReg.ID, Texto = "Passwords do not match." },
                     new Traduccion { IdIdioma = idiomaIngles.ID, IdEtiqueta = eMsgEmailDuplicado.ID, Texto = "The email address is already registered." },
-                    new Traduccion { IdIdioma = idiomaIngles.ID, IdEtiqueta = eMsgErrorProcesarReg.ID, Texto = "Error processing registration: " },
+                    new Traduccion { IdIdioma = idiomaIngles.ID, IdEtiqueta = eMsgErrorProcesarReg.ID, Texto = "Error processing registration." },
                     new Traduccion { IdIdioma = idiomaIngles.ID, IdEtiqueta = eSwalTitulo.ID, Texto = "Welcome!" },
                     new Traduccion { IdIdioma = idiomaIngles.ID, IdEtiqueta = eSwalTexto.ID, Texto = "Your customer account was successfully created." },
                     new Traduccion { IdIdioma = idiomaIngles.ID, IdEtiqueta = eSwalBtn.ID, Texto = "Go to Login" }
@@ -2039,7 +2368,6 @@ context.SaveChanges();
                     new Traduccion { IdIdioma = idiomaIngles.ID, IdEtiqueta = eFiltroActividad.ID, Texto = "Activity" },
                     new Traduccion { IdIdioma = idiomaIngles.ID, IdEtiqueta = eFiltroCriticidad.ID, Texto = "Severity Level" },
                     new Traduccion { IdIdioma = idiomaIngles.ID, IdEtiqueta = eFiltroFechaDesde.ID, Texto = "Date" },
-                    new Traduccion { IdIdioma = idiomaIngles.ID, IdEtiqueta = eFiltroFechaHasta.ID, Texto = "To Date" },
                     new Traduccion { IdIdioma = idiomaIngles.ID, IdEtiqueta = eBtnFiltrarEv.ID, Texto = "Filter" },
                     new Traduccion { IdIdioma = idiomaIngles.ID, IdEtiqueta = eBtnLimpiarEv.ID, Texto = "Clear Filters" },
                     new Traduccion { IdIdioma = idiomaIngles.ID, IdEtiqueta = eBtnExportarEv.ID, Texto = "Export Log to XML" },
@@ -2047,8 +2375,8 @@ context.SaveChanges();
                     new Traduccion { IdIdioma = idiomaIngles.ID, IdEtiqueta = eDdlCri1.ID, Texto = "1 - Low" },
                     new Traduccion { IdIdioma = idiomaIngles.ID, IdEtiqueta = eDdlCri2.ID, Texto = "2 - Medium" },
                     new Traduccion { IdIdioma = idiomaIngles.ID, IdEtiqueta = eDdlCri3.ID, Texto = "3 - High (Danger)" },
-                    new Traduccion { IdIdioma = idiomaIngles.ID, IdEtiqueta = eMsgErrExpPerm.ID, Texto = "Permission error exporting event log: " },
-                    new Traduccion { IdIdioma = idiomaIngles.ID, IdEtiqueta = eMsgErrExpBit.ID, Texto = "Error exporting event log: " },
+                    new Traduccion { IdIdioma = idiomaIngles.ID, IdEtiqueta = eMsgErrExpPerm.ID, Texto = "Permission error exporting the event log." },
+                    new Traduccion { IdIdioma = idiomaIngles.ID, IdEtiqueta = eMsgErrExpBit.ID, Texto = "Error exporting the event log." },
                     new Traduccion { IdIdioma = idiomaIngles.ID, IdEtiqueta = eColFecha.ID, Texto = "Date / Time" },
                     new Traduccion { IdIdioma = idiomaIngles.ID, IdEtiqueta = eColUsuario.ID, Texto = "User" },
                     new Traduccion { IdIdioma = idiomaIngles.ID, IdEtiqueta = eColModulo.ID, Texto = "Module" },

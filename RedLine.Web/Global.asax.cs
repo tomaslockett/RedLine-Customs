@@ -202,7 +202,7 @@ namespace RedLine.Web
             if (rutaActual.Contains("crearauto")) return "GestionInventario";
             if (rutaActual.Contains("personalizarauto")) return "PersonalizarAuto";
             if (rutaActual.Contains("inventario")) return "GestionInventario";
-            if (rutaActual.Contains("historialventas")) return "HistorialVentas";
+            if (rutaActual.Contains("historialventas") || rutaActual.Contains("descargarinformeventas")) return "HistorialVentas";
             if (rutaActual.Contains("migaraje")) return "MiGaraje";
             if (rutaActual.Contains("facturacion")) return "Facturacion";
 

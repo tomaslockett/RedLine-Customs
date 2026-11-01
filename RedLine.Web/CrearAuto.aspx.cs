@@ -71,9 +71,9 @@ namespace RedLine.Web
                 _bllAuto.GuardarAuto(auto);
                 Response.Redirect("Inventario.aspx");
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                MostrarAlertaTraducida(ex.Message);
+                MostrarAlertaTraducida("msg_error_guardar_auto");
             }
         }
 
